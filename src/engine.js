@@ -190,6 +190,10 @@ function lemmas(w){const c=[w],seen=new Set(c),add=x=>{if(x.length>1&&!seen.has(
 function wordLevel(w){w=w.replace(/[’']s$/,'').replace(/[’']/g,'');let mx=-1;
   for(const p of w.split('-')){if(p.length<2||isFunc(p))continue;let lv=2;for(const c of lemmas(p)){if(NGSL.has(c)||XTRA.has(c)||isFunc(c)){lv=0;break;}if(NAWL.has(c))lv=1;}mx=Math.max(mx,lv);}return mx;}
 /* ---- vague and worn words ---- */
+/* abstract nouns that, after "this" or "these", name something already said ("this decline", "these findings"): this page's own list */
+const SHELLN=S('approach approaches finding findings result results trend trends pattern patterns limitation limitations problem problems issue issues question questions argument arguments claim claims view views idea ideas assumption assumptions hypothesis hypotheses explanation explanations interpretation interpretations conclusion conclusions observation observations difference differences effect effects relationship relationships association associations change changes increase increases decrease decreases decline declines shift shifts rise fall growth loss gain gains process processes method methods technique techniques procedure procedures strategy strategies analysis analyses model models framework frameworks theory theories concept concepts notion notions distinction distinctions contrast example examples case cases situation situations context condition conditions factor factors reason reasons evidence fact facts phenomenon phenomena tendency tendencies outcome outcomes implication implications possibility possibilities point points aspect aspects feature features measure measures study studies gap gaps debate debates response responses decision decisions failure failures success paradox puzzle discrepancy inconsistency mechanism mechanisms account accounts estimate estimates figure figures number numbers step steps stage stages period event events development developments');
+/* the action of a verb as a noun, for suggesting "this decline" after "trust declined" */
+const NOUNOF={grow:'growth',fail:'failure',lose:'loss',differ:'difference',vary:'variation',respond:'response',choose:'choice',believe:'belief',argue:'argument',find:'finding',suggest:'suggestion',improve:'improvement',develop:'development',agree:'agreement',decide:'decision',explain:'explanation',expand:'expansion',exclude:'exclusion',conclude:'conclusion',observe:'observation',tend:'tendency',perceive:'perception',withdraw:'withdrawal',react:'reaction',resist:'resistance',depend:'dependence',exist:'existence',emerge:'emergence',occur:'occurrence',appear:'appearance',perform:'performance',prefer:'preference',compete:'competition',protect:'protection',predict:'prediction',interact:'interaction',contribute:'contribution',distribute:'distribution',restrict:'restriction',relate:'relationship',associate:'association',correlate:'correlation',collapse:'collapse',reform:'reform',protest:'protest',support:'support',control:'control',benefit:'benefit',fall:'fall',drop:'drop',report:'report',claim:'claim',attempt:'attempt',approach:'approach',result:'result',show:'finding',indicate:'finding',reveal:'finding',demonstrate:'finding',estimate:'estimate',measure:'measure',limit:'limit',contrast:'contrast',increase:'increase',decrease:'decrease',decline:'decline',rise:'rise',shift:'shift',change:'change',gain:'gain'};
 /* clause openers beyond the relatives, and the prepositions that some noun-or-verb words govern as verbs */
 const WHC=S('what how why');
 const CAUS=S('make makes made making let lets letting help helps helped helping see sees saw seeing watch watches watched watching hear hears heard hearing');
@@ -508,8 +512,13 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     splitSents(pt).forEach(r=>{const st=parse(pt.slice(r.s,r.e));st.i=sents.length;st.p=pi;st.s=p.s+r.s;st.e=p.s+r.e;st.pfirst=p.sents.length===0;p.sents.push(st.i);sents.push(st);});});
   const seen=new Set(),hit=new Set();
   const met=k=>{if(seen.has(k)||hit.has(k))return true;for(const s of seen){const n=Math.min(s.length,k.length);if(n<5)continue;let p=0;while(p<n&&s[p]===k[p])p++;if(p>=5&&p>=0.8*n){hit.add(k);return true;}}return false;};
-  sents.forEach(st=>{const here=new Set();st.cw=[];
+  sents.forEach((st,si)=>{const here=new Set();st.cw=[];st.shell=null;
     st.T.forEach((tk,i)=>{if(!isContent(tk))return;const k=stem(tk.l);st.cw.push({i,k,old:met(k)});here.add(k);});
+    /* "this decline", "these findings": the noun is new as a word, but it names what the reader already has */
+    if(si>0){const W=[];st.T.forEach((tk,i)=>{if(tk.w&&W.length<5)W.push(i);});let f=0;if(W.length>1&&(INTRO.has(st.T[W[0]].l)||CONJ.has(st.T[W[0]].l)))f=1;
+      const d=W[f],n1=W[f+1],n2=W[f+2];
+      if(d!=null&&/^(?:this|these|those|such)$/.test(st.T[d].l)){const hit=n1!=null&&SHELLN.has(st.T[n1].l)?n1:n1!=null&&n2!=null&&!isFunc(st.T[n1].l)&&SHELLN.has(st.T[n2].l)?n2:null;
+        if(hit!=null){st.shell={d,i:hit};const c=st.cw.find(x=>x.i===hit);if(c){c.wasNew=!c.old;c.old=true;c.shell=true;}}}}
     here.forEach(k=>seen.add(k));});
   const acrCount=new Map(),acrFirst=new Map(),nvals=[],uniq=a=>[...new Set(a)],vc={n:0,l:[0,0,0],off:new Map()};
   {let ord=0;paras.forEach(p=>{if(!p.head&&p.sents.length)p.ord=ord++;});}
@@ -560,7 +569,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
           tip:'Say how this follows. Start from a term already in play, or write in the step of logic that is missing.',starters:[]});}
     }
     mk('topic',ta,tb,'hl hb-blue',tId!=null?{f:tId}:null);
-    olds.forEach(c=>{mk('topic',c.i,c.i,'dot hu-teal');mk('flow',c.i,c.i,'dot hu-teal');});
+    olds.forEach(c=>{mk('topic',c.i,c.i,'dot hu-teal');mk('flow',c.i,c.i,'dot hu-teal',c.shell&&c.wasNew?{tip:'A noun that points back. With “'+T[st.shell.d].t.toLowerCase()+'” before it, it names something the reader already has, so it counts as old. The rules do not check that the name fits.'}:undefined);});
     news.forEach(c=>{mk('flow',c.i,c.i,'hl hb-amber');mk('stress',c.i,c.i,'dot hu-amber');});
     /* 3 stress position */
     if(st.stress){const[sa,sb]=st.stress;let sId=null;const why=[];
@@ -631,7 +640,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         let ptr=false;for(let i=ta;i<=tb;i++)if(T[i].w&&POINT.has(T[i].l))ptr=true;
         const trans=INTRO.has(T[first].l)||TRANS.test(text);
         if(front.length){K.type='fluid';K.via=front;}
-        else if(ptr||trans){K.type='fluid';K.weak=ptr?'pointer':'transition';K.via=back;}
+        else if(ptr||trans){K.type='fluid';K.weak=st.shell?'named':ptr?'pointer':'transition';K.via=back;}
         else if(back.length){K.type='inverted';K.via=back;}
         else for(let j=st.i-2;j>=Math.max(0,st.i-6)&&K.type==='disconnected';j--){const far=[];st.cw.forEach(c=>{const q=sents[j].cw.find(x=>near(x.k,c.k));if(q)far.push({i:c.i,w:T[c.i].t,from:j,pw:sents[j].T[q.i].t,at:''});});if(far.length){K.type='outofsync';K.via=far;}}
         K.via.forEach(x=>mk('grid',x.i,x.i,'ul hu-teal',{tip:'Links back to “'+x.pw+'” in '+(x.at?'the '+x.at+' of ':'')+'sentence '+(x.from+1)+'.'}));}}
@@ -1046,14 +1055,14 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         const lv=wordLevel(tk.l);if(lv<=0)cg++;else if(lv===1)ca++;else co++;});});
       R.cover={n:cn0,ngsl:cg,nawl:ca,off:co,proper:cp,share:cn0?(cg+ca)/cn0:0,shareP:cn0?(cg+ca+cp)/cn0:0};}
     /* thematic progression: where the opening of each sentence comes from (Danes 1974) */
-    {const BACK=S('it they this these those he she such both each'),tot={constant:0,linear:0,ret:0,ref:0,fresh:0};let tn=0;
+    {const BACK=S('it they this these those he she such both each'),tot={constant:0,linear:0,ret:0,named:0,ref:0,fresh:0};let tn=0;
       const split=st=>{const th=new Set(),rh=new Set(),v=st.vTok!=null&&st.vTok>=0?st.vTok:(st.topic?st.topic[1]+1:0);st.cw.forEach(c=>{(c.i<v?th:rh).add(c.k);});let fw=null;for(const tk of st.T){if(tk.w){fw=tk.l;break;}}
-        return{th,rh,back:fw!=null&&BACK.has(fw),we:fw==='we'||fw==='i'||fw==='our'||fw==='my'};};
+        return{th,rh,named:!!st.shell,back:fw!=null&&BACK.has(fw),we:fw==='we'||fw==='i'||fw==='our'||fw==='my'};};
       const hit=(a,b)=>{for(const k of a)if(b.has(k))return k;return null;};
-      body.forEach(p=>{p.prog=null;if(p.sents.length<2)return;const parts=p.sents.map(i=>split(sents[i])),seq=[],cnt={constant:0,linear:0,ret:0,ref:0,fresh:0};
+      body.forEach(p=>{p.prog=null;if(p.sents.length<2)return;const parts=p.sents.map(i=>split(sents[i])),seq=[],cnt={constant:0,linear:0,ret:0,named:0,ref:0,fresh:0};
         for(let q=1;q<parts.length;q++){const c=parts[q],pv=parts[q-1];let kind='fresh',k=null;
           if((k=hit(c.th,pv.th))||(c.we&&pv.we&&!c.th.size))kind='constant';else if((k=hit(c.th,pv.rh)))kind='linear';
-          else{for(let z=q-2;z>=0&&!k;z--)k=hit(c.th,parts[z].th)||hit(c.th,parts[z].rh);if(k)kind='ret';else if(c.back)kind='ref';}
+          else{for(let z=q-2;z>=0&&!k;z--)k=hit(c.th,parts[z].th)||hit(c.th,parts[z].rh);if(k)kind='ret';else if(c.named)kind='named';else if(c.back)kind='ref';}
           seq.push({i:p.sents[q],kind,w:k?wOf.get(k)||k:null});cnt[kind]++;tot[kind]++;tn++;sents[p.sents[q]].prog=kind;}
         const m=seq.length;p.prog={seq,cnt,label:cnt.constant>=m/2&&cnt.constant>cnt.linear?'constant':cnt.linear>=m/2&&cnt.linear>cnt.constant?'linear':cnt.fresh>m/2?'fresh':'mixed'};});
       R.prog=Object.assign({n:tn},tot);}
@@ -1110,8 +1119,13 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       body.forEach(p=>{let c=0,w=0;p.sents.forEach(i=>{c+=sents[i].cw.length;w+=sents[i].nW;});p.ld=w?c/w:0;});
       const v=ser.ld.filter(x=>x!=null).sort((a,b)=>a-b);let mi=-1,mx=-1;ser.ld.forEach((x,i)=>{if(x!=null&&x>mx){mx=x;mi=i;}});
       R.ld={all:nWd?100*cwT/nWd:0,median:v.length?v[Math.floor(v.length/2)]:null,min:v.length?v[0]:null,max:mx<0?null:mx,maxI:mi};R.series=ser;}
+    R.point={named:sents.filter(s=>s.shell).length,bare:findings.filter(f=>/ what\?$/.test(f.title)).length};
     return R;})();
-  findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title))f.nouns=pw;});
+  findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title)){const dm=f.title.split(' ')[0],plural=/^(these|those)$/i.test(dm),ns=[];
+      /* the action of the sentence before, as a noun: "trust declined" gives "this decline" */
+      if(pv&&!plural){const vi=pv.ve>=0?pv.ve:pv.v,fm=vi>=0?FORMS.get(pv.T[vi].l):null,b=fm?fm.b:null;let n=b?(NOUNOF[b]||null):null;if(!n&&b)for(const k in NOMX)if(NOMX[k]===b){n=k;break;}if(n)ns.push(n);}
+      pw.slice().reverse().forEach(w=>{const fm=FORMS.get(w.toLowerCase());if(fm&&!AMBIG.has(fm.b))return;if(ns.length<4&&!ns.some(x=>x.toLowerCase()===w.toLowerCase())&&(!plural||/s$/.test(w))&&(plural||!/[^s]s$/.test(w)))ns.push(w);});
+      f.nouns=ns;if(ns.length)f.tip='Add the noun it stands for. From the sentence before: '+ns.slice(0,2).map(n=>'“'+dm+' '+n.toLowerCase()+'…”').join(', ')+'.';}});
   /* lens moves: empty openers sit with clutter; typing slips and source matches have lenses of their own */
   {const isRep=f=>f&&f.lens==='worn'&&/^Repeated word/.test(f.title),isSrc=f=>f&&f.lens==='terms'&&/match your source$/.test(f.title);
     sents.forEach(st=>{const M=st.marks,mv=(from,to,test)=>{if(!M[from])return;const keep=[];M[from].forEach(m=>{if(test(m))(M[to]||(M[to]=[])).push(m);else keep.push(m);});M[from]=keep;};

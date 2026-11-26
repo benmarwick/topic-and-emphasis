@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.3 (2026-11-26)
+
+- Old → new: a noun that points back after "this", "these" or "such" ("this decline", "these findings") now counts as old, and a new research box counts sentences that point back with a noun and those that use a bare "this" (Wulff, Römer & Swales 2012; Crossley et al. 2017).
+- Topic grid: the strip above each paragraph has a label of its own for "this + noun", apart from a pronoun alone.
+- The "This what?" note offers nouns drawn from the sentence before, starting with its action as a noun ("trust declined" gives "this decline").
+
 ## 0.9.2 (2026-11-26)
 
 - Subject → verb: about 170 more verbs for writing about people and institutions; rules for words that can be a noun or a verb ("results show", "levels support", "changes in policy design influence"); a base-form verb is matched to a plural subject across "of" and "in" phrases; a sentence left with no verb gets a second look; a relative clause with no "that" ("the sensation he felt was ...") and a what-clause subject no longer take the main verb.
