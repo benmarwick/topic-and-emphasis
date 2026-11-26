@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.0 (2026-11-26)
+
+- Notes that link to the Academic Phrasebank now also link to the matching rhetorical-function page of UEFAP.
+- Workbench: "Check a phrase in other people's writing" sends up to eight selected words to SkELL or Linggle, or copies them for Ludwig. Nothing else leaves the page.
+- Guide: "Where to find wording", covering phrase collections, books, corpora of published and student writing, how much of a stock phrase may be reused, and tools that read moves.
+- Twelve new references, among them Swales & Feak 2012, Glasman-Deal 2020, Graff & Birkenstein 2024, Baisa & Suchomel 2014, Boisson et al. 2013, Römer & O'Donnell 2011, Alsop & Nesi 2009, Cotos et al. 2015 and Davis & Morley 2015.
+
 ## 0.14.1 (2026-11-26)
 
 - The pictures draw themselves in once on arriving at a lens or a new text: bars rise, links are drawn, rows settle. Nothing replays while you type.
