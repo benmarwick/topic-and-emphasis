@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Topic & Emphasis: A revision workbench for research writing"
+type: software
+authors:
+  - family-names: Marwick
+    given-names: Ben
+version: 0.1.0
+date-released: 2026-11-25
+license: MIT
+repository-code: "https://github.com/benmarwick/topic-and-emphasis"
+abstract: >-
+  A single-page browser application that marks a pasted draft with rule-based
+  annotations following Gopen and Swan's "The Science of Scientific Writing"
+  (1990) and related guidance, so that students can revise their own writing.
+  Every mark comes from a fixed rule; no AI model is involved.
+keywords:
+  - academic writing
+  - revision
+  - writing feedback
+  - reader expectations
+references:
+  - type: article
+    authors:
+      - family-names: Gopen
+        given-names: George D.
+      - family-names: Swan
+        given-names: Judith A.
+    title: "The science of scientific writing"
+    journal: "American Scientist"
+    volume: 78
+    issue: 6
+    start: 550
+    end: 558
+    year: 1990

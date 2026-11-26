@@ -1,0 +1,140 @@
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1><span class="t" data-tip="The topic position: the opening of a sentence, marked in blue throughout.">Topic</span><span class="amp">&amp;</span><span class="s" data-tip="The close of a sentence, where readers place the emphasis. Gopen and Swan call it the stress position. Marked in rose throughout.">Emphasis</span></h1>
+      <p class="tagline">A revision workbench for research writing, built on Gopen and Swan&rsquo;s &ldquo;The Science of Scientific Writing&rdquo; (1990).</p>
+    </div>
+    <details class="about" id="about" open>
+      <summary data-tip="What this page does, how to begin, and a caution. It folds away after your first visit and remembers how you leave it."><span>About this workbench</span></summary>
+      <div class="aboutgrid">
+        <div class="abouttext">
+          <p>Gopen and Swan showed that readers look for particular things in particular places: the verb soon after its subject, familiar material at the opening of a sentence, and the news at its close. Paste a draft and the lenses mark where its structure meets those expectations and where it works against them. Tap a sentence to rewrite it in place and watch the marks change.</p>
+          <p class="invite">New here? Try the <button type="button" class="link" id="lnkExample" data-tip="Load the built-in example: six sentences with four quick things to fix.">example</button>, or <button type="button" class="link" id="lnkPractice" data-tip="Open the practice drills: six short sentences with fixed answers.">practise</button> on six short sentences, before you paste your own draft. Or let the page <button type="button" class="link" id="lnkTour" data-tip="A four-step walk through one fix on the built-in example.">show you how it works</button>.</p>
+          <p class="caution"><b>You do not need to settle every note.</b> Each note is a question about what a reader expects, and a sentence can be right as it stands. Mark it as checked and move on. George Orwell closed his own six rules for writers by telling them to break any of the six before writing something ugly. They are in <a href="https://www.orwellfoundation.com/the-orwell-foundation/orwell/essays-and-other-works/politics-and-the-english-language/" target="_blank" rel="noopener">&ldquo;Politics and the English Language&rdquo; (1946)</a>.</p>
+        </div>
+        <figure class="diagram" id="diagram">
+          <p class="dg-prev" id="dgPrev">Every writer starts with a messy first <span class="dg-old">draft</span>.</p>
+          <div class="dg-sent">
+            <div class="dg-part dg-open"><span class="dg-words" id="dgOpen">That <u>draft</u></span><span class="dg-lab"><b>Opening</b> Something familiar, linking back to the sentence before.</span></div>
+            <div class="dg-part dg-verb"><span class="dg-words" id="dgVerb"><u>holds</u></span><span class="dg-lab"><b>Verb</b> Straight after its subject.</span></div>
+            <div class="dg-part dg-close"><span class="dg-words" id="dgClose">the sentence you were looking for.</span><span class="dg-lab"><b>Close</b> The news, where readers give it most weight.</span></div>
+          </div>
+          <figcaption>An invented sentence about writing, marked with the three places readers look (Gopen and Swan, 1990). <button type="button" class="link" id="dgNext" data-tip="There are ten of these. One is chosen at random each time the page opens.">Show another</button></figcaption>
+        </figure>
+      </div>
+    </details>
+    <div class="actions">
+      <button class="btn primary" id="btnEdit" type="button" data-tip="Open the whole draft in one box, to paste a new text or make large edits.">Paste your text</button>
+      <button class="btn" id="btnSample" type="button" data-tip="Load the built-in example: six invented sentences with four quick things to fix. A harder example is offered once it is loaded.">Try the example</button>
+      <button class="btn" id="btnPractice" type="button" data-tip="Six short sentences with fixed answers, and two drills built from whatever draft is loaded.">Practise</button>
+      <button class="btn" id="btnClear" type="button" hidden data-tip="Empty the box.">Clear</button>
+    </div>
+    <ul class="facts">
+        <li data-tip="Every mark comes from a fixed rule written into this page. The same text always gets the same marks. No AI model is involved.">Deterministic · no AI</li>
+        <li data-tip="Once the page has loaded, the analysis needs no internet connection. The only thing fetched from the web is the typefaces, and the page falls back to system fonts without them.">Works offline</li>
+        <li data-tip="Your text is analysed inside this browser tab and is never uploaded or sent anywhere. So you do not lose work, this browser keeps your draft on this device. You can erase it from the About section at the foot of the page.">Nothing uploaded</li>
+      </ul>
+  </header>
+
+  <main class="desk" id="desk">
+    <nav class="rail" aria-label="Lenses">
+      <div class="lensgroup" id="rail0"></div>
+      <h2 data-tip="The lenses built on the principles in Gopen and Swan’s article. Start here. Pick one to see the structure it reads.">Gopen &amp; Swan&rsquo;s principles</h2>
+      <div class="lensgroup" id="rail1"></div>
+      <section class="rg" id="g2"><h2 data-tip="Lenses on the argument as a whole: what each paragraph is for, and how strongly each claim is worded. Some ask you for something first: your claim, your evidence, or a label."><button type="button" class="rgh" id="rgh-2" data-rg="2" aria-expanded="true">Is the argument clear?</button></h2><div class="lensgroup" id="rail2"></div></section>
+      <section class="rg" id="g3"><h2 data-tip="Lenses on how sentences and paragraphs connect."><button type="button" class="rgh" id="rgh-3" data-rg="3" aria-expanded="true">Does it flow?</button></h2><div class="lensgroup" id="rail3"></div></section>
+      <section class="rg" id="g4"><h2 data-tip="Lenses on single sentences: their length, their density, their voice, and the words to cut."><button type="button" class="rgh" id="rgh-4" data-rg="4" aria-expanded="true">Is each sentence easy to read?</button></h2><div class="lensgroup" id="rail4"></div></section>
+      <section class="rg" id="g5"><h2 data-tip="Lenses on single words: vague ones, rare ones, the names you give things, and the words you use for people."><button type="button" class="rgh" id="rgh-5" data-rg="5" aria-expanded="true">Are the words well chosen?</button></h2><div class="lensgroup" id="rail5"></div></section>
+      <section class="rg" id="g6"><h2 data-tip="Proofreading: statistics, citations and figures, typing slips, and overlap with a source."><button type="button" class="rgh" id="rgh-6" data-rg="6" aria-expanded="true">Is it polished?</button></h2><div class="lensgroup" id="rail6"></div></section>
+      <section class="rg" id="g7"><h2 data-tip="What you have changed so far, and drills to practise on."><button type="button" class="rgh" id="rgh-7" data-rg="7" aria-expanded="true">Your progress</button></h2><div class="lensgroup" id="rail7"></div></section>
+    </nav>
+
+    <section class="center">
+      <div id="startBox"></div>
+      <div class="lenscard" id="lensCard"></div>
+      <div class="stripwrap">
+        <div class="readout" id="readout"></div>
+        <div class="strip" id="strip" aria-label="Sentence lengths"></div>
+      </div>
+      <div id="extra"></div>
+      <div class="tools" id="tools">
+        <button type="button" class="btn sm" id="btnUndo" data-tip="Undo the last change to the text, wherever it was made.">Undo</button>
+        <button type="button" class="btn sm" id="btnRedo" data-tip="Redo the change you just undid.">Redo</button>
+        <button type="button" class="btn sm" id="btnCopy" data-tip="Copy the whole text as it now stands, ready to paste back into your document.">Copy revised text</button>
+        <span class="hint" id="copyMsg" aria-live="polite"></span>
+        <details class="readset" id="readset"><summary data-tip="Text size, spacing and colour, for comfortable reading. Your choices are remembered on this device.">Reading comfort</summary>
+          <div class="readbox">
+            <div class="row"><span>Text size</span><button type="button" class="btn sm" id="fsDown" aria-label="Smaller text">A&minus;</button><span id="fsVal">100%</span><button type="button" class="btn sm" id="fsUp" aria-label="Larger text">A+</button></div>
+            <label><input type="checkbox" id="rsSpace"> Wider spacing in the draft</label>
+            <label><input type="checkbox" id="rsColour"> Less colour</label>
+          </div>
+        </details>
+      </div>
+      <article class="ms" id="ms">
+        <p class="sampletag" id="sampleTag" hidden>Sample text, invented for the demonstration. Choose Paste your text to work on your own.</p>
+        <section class="wb" id="wb" hidden aria-label="Sentence workbench">
+          <div class="guide" id="wbGuide" hidden><span id="gPos"></span><span class="gbtns"><button type="button" id="gPrev" data-tip="Go back to the previous open note.">Back</button><button type="button" id="gNext" data-tip="Go to the next open note. A note you have resolved or marked as checked is skipped.">Next</button><button type="button" id="gEnd" data-tip="Leave the guided pass. Your edits are kept.">End pass</button></span></div>
+          <div class="wbhead"><span id="wbTitle"></span><span id="wbWords"></span><button type="button" id="wbClose" aria-label="Close" data-tip="Close the workbench. Your edits are kept.">×</button></div>
+          <div class="anatrow">
+            <div class="anat" id="wbAnat" role="img" aria-label="Sentence anatomy"></div>
+            <button type="button" class="help" aria-label="How to read this bar" data-tip="This bar is the sentence laid out left to right, one unit of width per word. Blue top edge: the topic position. Solid amber: the subject and its verb. Hatched amber: words that separate them. Grey: the middle. Rose: the stress position. Point at any segment for detail.">?</button>
+          </div>
+          <div class="anatkey" id="wbKey"></div>
+          <div class="status" id="wbStatus"></div>
+          <label class="cap" for="wbText" data-tip="Edit the sentence directly. Coloured and underlined words are the ones the open notes point at, and they update as you type. The Enter key does not add a line break, so your paragraphs stay as they are.">Rewrite it here. The marks change as you type.</label>
+          <div class="tawrap"><div class="tabk" id="wbBack" aria-hidden="true"></div><textarea id="wbText" rows="2" spellcheck="true" aria-describedby="wbHint"></textarea></div>
+          <div class="wkeys" id="wbKeys"></div>
+          <p class="wbhint" id="wbHint" aria-live="polite"></p>
+          <div class="scrub" id="wbScrub" hidden><label class="cap" for="histRange" data-tip="Every pause in your editing of this sentence is kept. Drag back to see an earlier wording in the box above, with its marks, and drag forward to return. Wherever you stop becomes the current wording.">Edits to this sentence</label><input type="range" id="histRange" min="0" max="0" step="1" value="0"><span id="histPos"></span></div>
+          <div class="was" id="wbWas" hidden></div>
+          <div class="tabs" role="tablist">
+            <button type="button" role="tab" data-tab="notes" id="tab-notes" data-tip="What the lenses found in this sentence, each starting with a question.">Notes</button>
+            <button type="button" role="tab" data-tab="move" id="tab-move" data-tip="Move the parts of the sentence around and watch its structure change.">Rearrange</button>
+            <button type="button" role="tab" data-tab="mark" id="tab-mark" data-tip="Say what the sentence means to you, then check whether its structure agrees.">Mark it yourself</button>
+            <button type="button" role="tab" data-tab="read" id="tab-read" data-tip="Watch the sentence arrive one word at a time, with a meter for how much the reader is holding while waiting for the verb.">Replay</button>
+            <button type="button" role="tab" data-tab="vers" id="tab-vers" data-tip="Keep up to three wordings of this sentence and compare them side by side before you choose.">Versions</button>
+          </div>
+          <div id="pNotes"></div>
+          <div id="pMove" hidden></div>
+          <div id="pMark" hidden></div>
+          <div id="pRead" hidden></div>
+          <div id="pVers" hidden></div>
+        </section>
+      </article>
+      <div class="draftwrap">
+        <label class="cap" for="draft">Your text</label>
+        <textarea id="draft" spellcheck="true" placeholder="Paste a paragraph, an abstract, or a whole section. A blank line starts a new paragraph."></textarea>
+        <p>Nothing is uploaded. The analysis runs in this browser tab, with fixed rules and no AI.</p>
+      </div>
+    </section>
+
+    <aside class="notes" aria-label="Notes">
+      <h2 id="notesTitle">Notes</h2>
+      <ol class="notelist" id="noteList"></ol>
+      <details id="settled" hidden><summary id="settledSum" data-tip="Notes you marked as checked, and strong wording that fits the evidence you named. They no longer count as open.">Settled</summary><ol class="notelist" id="settledList"></ol></details>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="tour" id="tour" hidden role="status" aria-live="polite"><p id="tourText"></p><div class="tilebar"><button type="button" class="btn sm primary" id="tourNext">Next</button><button type="button" class="btn sm" id="tourSkip">Skip the tour</button></div></div>
+  <button type="button" class="fab" id="fab" hidden data-tip="Go to the next open note in this lens.">Next note</button>
+  <footer class="foot">
+    <section>
+      <h2>About this tool</h2>
+      <p><b>Deterministic, with no AI.</b> Every mark comes from a fixed rule written into this page, so the same text always produces the same marks. No language model or other AI is involved, here or on any server.</p>
+      <p><b>Private, and usable offline.</b> Your text is analysed inside this browser tab. It is never uploaded, sent or stored on any server. Once the page has loaded the analysis needs no internet connection; the only thing the page fetches is its typefaces, and it falls back to system fonts without them. So that you do not lose work, this browser keeps your draft on this device and nowhere else. <button type="button" class="link" id="eraseDraft" data-tip="Remove the draft and everything you entered from this browser, and return to the sample.">Erase the saved draft</button></p>
+      <p><b>Phrasebank links.</b> Some notes link to a section of the University of Manchester&rsquo;s Academic Phrasebank. Those links open its site in a new tab and need a connection. The sentence openers, wording ladders and move checklists inside this tool are its own, and none of the Phrasebank&rsquo;s text is copied here.</p>
+      <p><b>Statistics.</b> The p values are recomputed with standard formulas for t, F, r, chi-square and z tests, written for this page, and only for results reported in the usual form, such as t(28) = 2.20, p = .036. A result written another way is not checked, so no mark does not mean no error.</p>
+      <p><b>Word lists.</b> The Vocabulary level lens uses the New General Service List and the New Academic Word List by Charles Browne, Brent Culligan and Joseph Phillips. Both are built into this page under a Creative Commons Attribution-ShareAlike 4.0 licence, so the copies here may be reused on the same terms. A word on neither list is not an error. The lists cover general English, so every field has ordinary terms that fall outside them.</p>
+      <p><b>Length and rhythm.</b> The four length bands are fixed, so a sentence gets the same colour in any draft. Their edges sit on the scale of average sentence lengths that Rudolf Flesch published in 1948. The rules for runs, for words before the main verb and for neighbour contrast are this tool&rsquo;s working values, set out with their sources in the guide inside that lens. They are not published norms, and the lens sets no target score.</p>
+      <p><b>Research measures.</b> The Research profile and the box headed &ldquo;Research measure&rdquo; in fourteen of the lenses reproduce counts described in published research on cohesion, vocabulary, syntax, readability and mechanical errors. The publications are named on each box and listed under Sources. Every count is recomputed here by a fixed rule. This page has no parser, no part-of-speech tagger, no lemmatiser and no model of meaning, so its figures will not match the published tools exactly; each box says how its count differs. The figures describe a draft. None of them is a score, and none has a target.</p>
+      <p><b>Limits.</b> The rules read structure and have no idea what your sentences mean. They will misjudge some sentences, especially where a verb form doubles as a noun or modifier. When a rule is wrong, choose &ldquo;I checked this&rdquo; and move on.</p>
+    </section>
+    <section>
+      <h2>Sources</h2>
+      <p>The names above each lens link here. A DOI is given wherever one could be confirmed. Books, technical reports and a few older articles are listed without one.</p>
+      <ol class="refs" id="refs"></ol>
+    </section>
+  </footer>
+</div>
