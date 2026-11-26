@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 (2026-11-25)
+
+The optional meaning model now also works in four more lenses.
+
+- Claim tracer: the sentence that states the claim most directly, and how close each paragraph is to the claim.
+- Source overlap: the sentences closest in meaning to a source sentence, and the parts of the source the draft says least about.
+- Term tracker: the closest pairs in meaning among the draft's terms.
+- Before & after: how far each rewritten sentence has moved from the one it replaced.
+
 ## 0.2.0 (2026-11-25)
 
 - Optional meaning model, off by default: a small sentence-embedding model (all-MiniLM-L6-v2) that runs in the browser from the files in `model/`.
