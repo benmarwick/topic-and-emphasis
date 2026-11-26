@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.32.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.33.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.32.0},
+  version = {0.33.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -81,7 +81,7 @@ You do not need to clear every note. A note is a question about the sentence, an
 | Topic position | What opens each sentence, and whether it names the topic | [Gopen & Swan](https://www.americanscientist.org/node/924), principles 3, 4; [Williams (1990)](https://catalog.hathitrust.org/Record/002224980) |
 | Stress position | What closes each sentence, where readers place the emphasis | [Gopen & Swan](https://www.americanscientist.org/node/924), principles 2, 7 |
 | Old → new | Whether each sentence starts from what the reader already holds | [Gopen & Swan](https://www.americanscientist.org/node/924), principles 4, 6; [Haviland & Clark (1974)](https://doi.org/10.1016/S0022-5371%2874%2980003-4) |
-| Action in verbs | Actions hidden in nouns while the verb says little | [Gopen & Swan](https://www.americanscientist.org/node/924), principle 5; [Biber & Gray (2010)](https://doi.org/10.1016/j.jeap.2010.01.001) |
+| Action in verbs | Actions hidden in nouns while the verb says little; the sentences that rest on "be", "have" or a light verb, listed | [Gopen & Swan](https://www.americanscientist.org/node/924), principle 5; [Biber & Gray (2010)](https://doi.org/10.1016/j.jeap.2010.01.001); [Hohmann et al. (2025)](https://doi.org/10.1007/s11192-025-05353-8) |
 
 ### Is the argument clear?
 
@@ -106,7 +106,7 @@ You do not need to clear every note. A note is a question about the sentence, an
 | Lens | What it reads | Drawn from |
 |---|---|---|
 | Length & rhythm | Sentence length on a fixed scale, runs of equal length, readability formulas | [Flesch (1948)](https://doi.org/10.1037/h0057532); [Choi & Crossley (2021)](https://easychair.org/publications/preprint/pgb8) |
-| Dense phrases | Noun stacks and chains of prepositions | [Williams (1990)](https://catalog.hathitrust.org/Record/002224980); [Kyle & Crossley (2018)](https://doi.org/10.1111/modl.12468) |
+| Dense phrases | Noun stacks and chains of prepositions; runs of three nouns shown without a note | [Williams (1990)](https://catalog.hathitrust.org/Record/002224980); [Kyle & Crossley (2018)](https://doi.org/10.1111/modl.12468); [Hohmann et al. (2025)](https://doi.org/10.1007/s11192-025-05353-8) |
 | Voice | Passives, and whether each names who acted | [Gopen & Swan](https://www.americanscientist.org/node/924); [McNamara et al. (2014)](https://doi.org/10.1017/CBO9780511894664) |
 | Clutter | Stock phrases, empty openers and stacked negatives | [Zinsser (2006)](https://search.worldcat.org/oclc/62421288); [Williams (1990)](https://catalog.hathitrust.org/Record/002224980) |
 
@@ -124,7 +124,7 @@ You do not need to clear every note. A note is a question about the sentence, an
 
 | Lens | What it reads | Drawn from |
 |---|---|---|
-| Statistics reporting | Reported test results, rechecked by arithmetic | [Nuijten et al. (2016)](https://doi.org/10.3758/s13428-015-0664-2); [Appelbaum et al. (2018)](https://doi.org/10.1037/amp0000191) |
+| Statistics reporting | Reported test results, rechecked by arithmetic; a count of the figures in each sentence | [Nuijten et al. (2016)](https://doi.org/10.3758/s13428-015-0664-2); [Appelbaum et al. (2018)](https://doi.org/10.1037/amp0000191); [Hohmann et al. (2025)](https://doi.org/10.1007/s11192-025-05353-8) |
 | Mechanical checks | Figure and table order, missing citations, tense | [McNamara et al. (2014)](https://doi.org/10.1017/CBO9780511894664) |
 | Typing slips | Doubled words, stray spaces, "a" for "an", look-alike words | [Crossley, Bradfield & Bustamante (2019)](https://doi.org/10.17239/jowr-2019.11.02.01) |
 | Source overlap | Runs of words shared with a source you paste | [Crossley, Kyle, Davenport & McNamara (2016)](https://asu.elsevierpure.com/en/publications/automatic-assessment-of-constructed-response-data-in-a-chemistry-) |
@@ -155,6 +155,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Numbers, three-noun runs and weak verbs, shown and not flagged** (0.33.0). Three counts taken from a study of 20 million abstracts in health and medicine ([Hohmann et al. 2025](https://doi.org/10.1007/s11192-025-05353-8)), each added to a lens that already exists and none of them making a note. *Dense phrases* underlines runs of exactly three nouns with dots (a note still starts at four). *Action in verbs* lists the sentences whose main verb is a form of "be" or "have" or a light verb, so that they can be read one after another. *Statistics reporting* gains "Where the numbers are", a count of the figures in digits in each sentence, and the Load map gains a Numbers row. The paper's averages (under 15 words per sentence, about 31 nouns and 11 verbs per 100 words) are shown beside the page's own counts as comparisons for one kind of text in one field, and are not given as ranges. The "About this project" button now matches the badges beside it, the box opens its Corrections section by saying what to expect of fixed rules, and every item in the Licence list links to the work it names.
 
 - **Toulmin layout, folded boxes and quiet drafting** (0.32.0). *Toulmin layout* (Claim tracer) sets your claim out in Toulmin's six parts: grounds, warrant, backing, qualifier, rebuttal and the claim itself. You choose the sentences that do each job, or write the part in your own words when the draft never says it, as is usual for the warrant. The page offers candidates by cue and makes no notes ([Reed & Rowe 2005](https://doi.org/10.1007/s10503-005-4416-9)). In every lens that shows the text, the boxes of pictures and measures now **start folded**, each with a triangle that glows once when the lens opens, so that the text sits near the top; a box you open stays open for the visit. The text box has a **Quiet drafting** switch that hides the live counts while you write (Silvia 2019).
 
@@ -265,7 +267,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 174 sources are listed at the foot of the application, 76 of them with a DOI and 64 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 175 sources are listed at the foot of the application, 77 of them with a DOI and 64 more with a link to the full text or the publisher's page.
 
 ---
 

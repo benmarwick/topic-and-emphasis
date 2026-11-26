@@ -320,6 +320,11 @@
      "citation": "Brath, R., & Banissi, E. (2016). Using typography to expand the design space of data visualization. She Ji: The Journal of Design, Economics, and Innovation, 2(1), 59–87.",
      "doi": "10.1016/j.sheji.2016.05.003",
      "url": "https://doi.org/10.1016/j.sheji.2016.05.003"
+    },
+    {
+     "citation": "Hohmann, M. H., Barnett, A. G., King, N., & Connell, S. D. (2025). The evolution of scientific writing: An analysis of 20 million abstracts over 70 years in health and medical science. Scientometrics, 130(7), 3349–3366.",
+     "doi": "10.1007/s11192-025-05353-8",
+     "url": "https://doi.org/10.1007/s11192-025-05353-8"
     }
    ]
   },
@@ -956,10 +961,14 @@
     {
      "label": "chain of prepositions",
      "meaning": "A chain of prepositional phrases."
+    },
+    {
+     "label": "three nouns in a row",
+     "meaning": "Three nouns in a row. Shown so that you can see them, with no note. Many are the ordinary terms of a field."
     }
    ],
    "research_measure": {
-    "what_the_research_found": "In essays by second-language writers, measures of complexity inside the phrase predicted rated quality better than measures of the sentence or the clause (Kyle & Crossley 2018). Academic prose packs its meaning into noun phrases more than into clauses (Biber & Gray 2010). So the phrase is where density lives. A stack or a chain is compact for the writer, and slow for a reader who does not already know how its nouns relate.",
+    "what_the_research_found": "In essays by second-language writers, measures of complexity inside the phrase predicted rated quality better than measures of the sentence or the clause (Kyle & Crossley 2018). Academic prose packs its meaning into noun phrases more than into clauses (Biber & Gray 2010). So the phrase is where density lives. A stack or a chain is compact for the writer, and slow for a reader who does not already know how its nouns relate. In 20 million abstracts from health and medicine, runs of three or more nouns have become much more common since the 1950s (Hohmann et al. 2025). That study counts a run from three nouns up. This page makes a note from four, and only shows a run of three, because a rule cannot tell a term of the field (“climate change policy”) from a pile-up.",
     "how_this_count_differs": "Kyle and Crossley used a parser to measure every noun phrase. This page counts only the two patterns its rules can find: nouns stacked in a row before a head noun, and prepositional phrases in a row."
    },
    "with_meaning_model": null,
@@ -999,6 +1008,11 @@
      "citation": "van Ham, F., Wattenberg, M., & Viégas, F. B. (2009). Mapping text with Phrase Nets. IEEE Transactions on Visualization and Computer Graphics, 15(6), 1169–1176.",
      "doi": null,
      "url": null
+    },
+    {
+     "citation": "Hohmann, M. H., Barnett, A. G., King, N., & Connell, S. D. (2025). The evolution of scientific writing: An analysis of 20 million abstracts over 70 years in health and medical science. Scientometrics, 130(7), 3349–3366.",
+     "doi": "10.1007/s11192-025-05353-8",
+     "url": "https://doi.org/10.1007/s11192-025-05353-8"
     }
    ]
   },
@@ -1416,6 +1430,11 @@
      "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
      "doi": null,
      "url": "https://github.com/labarba/sciwrite"
+    },
+    {
+     "citation": "Hohmann, M. H., Barnett, A. G., King, N., & Connell, S. D. (2025). The evolution of scientific writing: An analysis of 20 million abstracts over 70 years in health and medical science. Scientometrics, 130(7), 3349–3366.",
+     "doi": "10.1007/s11192-025-05353-8",
+     "url": "https://doi.org/10.1007/s11192-025-05353-8"
     }
    ]
   },

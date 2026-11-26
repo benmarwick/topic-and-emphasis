@@ -21,7 +21,7 @@
   "need": "a draft you have revised",
   "file": "data/guide/load-structure-and-vocabulary-with-where-each-rewritten-sentence-.webp",
   "w": 1044,
-  "h": 678
+  "h": 677
  },
  {
   "lens": "rhythm",
@@ -29,7 +29,7 @@
   "need": "a draft you have revised",
   "file": "data/guide/rhythm-the-draft-as-a-line-over-the-starting-draft.webp",
   "w": 1044,
-  "h": 490
+  "h": 491
  },
  {
   "lens": "load",
@@ -37,7 +37,7 @@
   "need": "optional data, loaded from the lens",
   "file": "data/guide/load-sentence-length-against-the-age-at-which-words-are-learned.webp",
   "w": 1044,
-  "h": 677
+  "h": 678
  },
  {
   "lens": "load",
@@ -77,7 +77,7 @@
   "need": "the meaning model",
   "file": "data/guide/mviews-meaning-views-thread.webp",
   "w": 1044,
-  "h": 481
+  "h": 480
  },
  {
   "lens": "mviews",
@@ -85,7 +85,7 @@
   "need": "the meaning model",
   "file": "data/guide/mviews-meaning-views-quilt.webp",
   "w": 1044,
-  "h": 951
+  "h": 950
  },
  {
   "lens": "mviews",
@@ -101,7 +101,7 @@
   "need": "the meaning model",
   "file": "data/guide/mviews-meaning-views-map.webp",
   "w": 1044,
-  "h": 785
+  "h": 784
  },
  {
   "lens": "mviews",

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.33.0 (2026-11-26)
+
+- Dense phrases: runs of exactly three nouns are underlined with dots in the text and make no note; a note still starts at four. The measure reports how many there are. Hohmann et al. (2025) count a "noun chunk" from three nouns up.
+- Action in verbs: "What your sentences do" lists the sentences whose main verb is a form of "be" or "have" or a light verb, each opening its sentence. No note.
+- Statistics reporting: "Where the numbers are" counts the figures written in digits in each sentence and lists the sentences holding three or more (a working threshold). The years and reference numbers of citations, the numbers of tables, figures and sections, and numbers written as words are not counted. The Load map gains a Numbers row under Argument.
+- Comparison values from Hohmann et al. (2025), for abstracts in health and medicine: under 15 words per sentence now (about 29 in the 1960s), in the two sentence-length tooltips; about 31 nouns and 11 verbs per 100 words, in the part-of-speech panel. Given as averages for one kind of text, not as ranges or targets.
+- About box: the button is now a text button in the style of the badges beside it. "Corrections and suggestions" opens by saying that fixed rules about language are sometimes wrong and that some misjudgements cannot be fixed. Every item in the Licence list links to the work it names.
+- Sources: Hohmann, Barnett, King & Connell (2025) added.
+
 ## 0.32.0 (2026-11-26)
 
 - Claim tracer: "Toulmin layout". Six parts round the claim (grounds, warrant, backing, qualifier, rebuttal). For each, the writer picks sentences from the draft or writes the part in their own words. Candidates are offered by cue: sentences naming a source or a figure for grounds and backing, sentences with a word of contrast or limitation for the rebuttal, hedging words found in the claim for the qualifier. The warrant has no candidates, because it cannot be found by rule. A table sets out how the paragraphs feed the claim. Stored in this browser, kept with a set-aside draft, reset by a new draft. No notes.

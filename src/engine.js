@@ -757,6 +757,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       if(j-i+1>=4){const id=add({lens:'dense',s:st.i,a:T[i].s,b:T[j].e,sev:2,title:'Noun stack',
           detail:(j-i+1)+' nouns in a row: “'+tx(i,j)+'”. The reader has to work out how each one relates to the next.',tip:'Unpack it with a preposition or a verb, so the phrase says what acts on what.'});
         mk('dense',i,j,'hl hb-olive',{f:id});}
+      else if(j-i+1===3){mk('dense',i,j,'ul dt hu-olive',{tip:'Three nouns in a row: “'+tx(i,j)+'”. Shown, with no note. Many runs of three are the ordinary terms of a field. Ask only whether a reader new to the subject can tell how the three relate.'});st.nn3=(st.nn3||0)+1;}
       i=j+1;}
     {let chain=[];const flush=()=>{if(chain.length>=4){const a=chain[0];let b=chain[chain.length-1],c=0;while(b+1<N&&T[b+1].w&&c<3&&!VK[b+1]){b++;c++;}
           const id=add({lens:'dense',s:st.i,a:T[a].s,b:T[b].e,sev:2,title:'Chain of prepositions',detail:chain.length+' prepositional phrases in a row: '+chain.map(i=>T[i].l).join(' … ')+'.',
@@ -1214,7 +1215,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     {let stacks=0,chains=0,noms=0,nomNotes=0,letters=0,p1=0,p2=0,p3=0;const P1=S('i me my mine myself we us our ours ourselves'),P2=S('you your yours yourself yourselves'),P3=S('he him his she her hers it its they them their theirs himself herself itself themselves');
       findings.forEach(f=>{if(f.lens==='dense'){if(f.title==='Noun stack')stacks++;else if(f.title==='Chain of prepositions')chains++;}else if(f.lens==='action'&&f.title==='The action is in a noun')nomNotes++;});
       sents.forEach(st=>st.T.forEach(tk=>{if(!tk.w)return;if(isNom(tk.l))noms++;letters+=(tk.t.match(/\p{L}/gu)||[]).length;if(P1.has(tk.l))p1++;else if(P2.has(tk.l))p2++;else if(P3.has(tk.l))p3++;}));
-      R.phrase={stacks,chains,per:nWd?100*(stacks+chains)/nWd:0,noms,nomNotes,nomPer:nWd?100*noms/nWd:0};
+      R.phrase={stacks,chains,threes:sents.reduce((a,s)=>a+(s.nn3||0),0),per:nWd?100*(stacks+chains)/nWd:0,noms,nomNotes,nomPer:nWd?100*noms/nWd:0};
       R.simple={lpw:nWd?letters/nWd:0,spp:body.length?n/body.length:0,wpp:body.length?nWd/body.length:0,p1,p2,p3};}
     /* the writer's own word list: lines to track, and lines starting with - to avoid */
     {const mine=[];(opts.list||'').split(/[\n,]/).slice(0,200).forEach(raw0=>{let w=raw0.trim(),avoid=false;if(/^[-!]/.test(w)){avoid=true;w=w.slice(1).trim();}if(!w||w.length>80||!/[\p{L}\p{N}]/u.test(w))return;
