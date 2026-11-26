@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 (2026-11-26)
+
+- Readability formulas now run on cleaned text (citations, numbers and abbreviations dropped, hyphenated words split); the figures for the text as typed are shown beside them.
+- Syllable counts: a better spelling rule plus 1,961 exceptions from the CMU Pronouncing Dictionary (`src/syllables.txt`, rebuilt by `tools/make_syllables.js`).
+- Vocabulary level: general science jargon (Plavén-Sigray et al. 2017).
+- Word norms: sentences with the hardest vocabulary; age of acquisition leads the panel.
+- Guide: "What the counts track", from `tests/validation/clear.js` run on the CLEAR corpus.
+
 ## 0.7.1 (2026-11-26)
 
 - Mechanical checks: a note on a view given to nobody in particular ("some argue", "it is widely believed", "is said to") when the sentence cites no source.

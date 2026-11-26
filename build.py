@@ -5,7 +5,7 @@
     python3 build.py --fragment F    also writes F, the same page without the outer
                                      <html>, <head> and <body> tags, for hosts that add their own
 """
-import argparse, io, os
+import argparse, io, json, os
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,9 +27,20 @@ def fragment():
              'github.com/words/dale-chall (MIT). Style words from the excess-vocabulary list of '
              'Kobak et al. (2025), github.com/berenslab/llm-excess-vocab (MIT). */\n'
              'const DALE_RAW="' + ' '.join(read('dalechall.txt').split()) + '";\n'
-             'const EXCESS_RAW="' + ' '.join(read('excess.txt').split()) + '";')
+             'const EXCESS_RAW="' + ' '.join(read('excess.txt').split()) + '";'
+             '\n/* Syllable counts for words the spelling rule gets wrong, from the CMU Pronouncing '
+             'Dictionary, Copyright (C) 1993-2015 Carnegie Mellon University, BSD 2-clause licence. '
+             'General science jargon: Plaven-Sigray et al. (2017), github.com/wiheto/readabilityinscience (MIT). */\n'
+             'const SYL_RAW="' + read('syllables.txt').strip() + '";\n'
+             'const JARGON_RAW="' + ' '.join(read('jargon.txt').split()) + '";')
+    # how each count tracks judged reading ease (tests/validation), shown in the Guide
+    vpath = os.path.join(ROOT, 'tests', 'validation', 'results.json')
+    valid = 'null'
+    if os.path.exists(vpath):
+        with io.open(vpath, encoding='utf-8') as f:
+            valid = json.dumps(json.load(f), ensure_ascii=False, separators=(',', ':'))
     return (head + body + '\n<script>\n/*ENGINE-START*/' + lists + engine +
-            '/*ENGINE-END*/\n' + ui + '</script>\n')
+            '/*ENGINE-END*/\nconst VALID=' + valid + ';\n' + ui + '</script>\n')
 
 
 # What a bare page needs that an embedding host would otherwise supply.

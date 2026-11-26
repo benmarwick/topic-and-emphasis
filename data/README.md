@@ -11,6 +11,15 @@ If you reuse them, cite the publication and follow that licence.
 | `dale-chall.txt` | The list of about 3,000 familiar words used by the New Dale–Chall readability formula (Chall & Dale 1995). | Copied from the open-source package [words/dale-chall](https://github.com/words/dale-chall) by Titus Wormer. `src/dalechall.txt` is the same list with apostrophes and full stops removed. | MIT (the package). The formula and list were published in Chall, J. S., & Dale, E. (1995). *Readability Revisited: The New Dale-Chall Readability Formula*. Brookline Books. |
 | `excess_words.csv` | The 900 words that became unexpectedly common in biomedical abstracts between 2013 and 2024, each marked as a content or a style word. Unchanged. | [berenslab/llm-excess-vocab](https://github.com/berenslab/llm-excess-vocab), `results/excess_words.csv`. `src/excess.txt` is the 407 words marked `style`. | MIT. Cite Kobak, D., González-Márquez, R., Horvát, E.-Á., & Lause, J. (2025). Delving into LLM-assisted writing in biomedical publications through excess vocabulary. *Science Advances*, 11(27), eadt3813. <https://doi.org/10.1126/sciadv.adt3813> |
 
+| `science_common_words_Plaven-Sigray_et_al_2017.csv` | The 2,949 words most common in scientific abstracts that are not on the Dale–Chall list, with the 2,138 the authors classed as general science jargon marked `1`. Unchanged. | [wiheto/readabilityinscience](https://github.com/wiheto/readabilityinscience), `jargon/jargonListFinal.csv`. `src/jargon.txt` is the 2,138 marked words. | MIT. Cite Plavén-Sigray, P., Matheson, G. J., Schiffler, B. C., & Thompson, W. H. (2017). The readability of scientific texts is decreasing over time. *eLife*, 6, e27725. <https://doi.org/10.7554/eLife.27725> |
+
+`src/syllables.txt` holds syllable counts for 1,961 common words that the engine's spelling
+rule gets wrong. The counts come from the [CMU Pronouncing Dictionary](https://github.com/cmusphinx/cmudict)
+(Copyright 1993–2015 Carnegie Mellon University, BSD 2-clause; the licence text is in
+`lists/CMUdict-LICENSE.txt`). The dictionary itself is not in this repository.
+`tools/make_syllables.js` rebuilds the file. It chooses which words to keep using the
+page's own lists and the yearly word counts published with Kobak et al. (2025), MIT.
+
 The promotional adjectives used in the Claim strength lens are the ones reported in
 Millar, N., Batalo, B., & Budgell, B. (2022), *JAMA Network Open*, 5(8), e2228676,
 <https://doi.org/10.1001/jamanetworkopen.2022.28676>, an open-access article under CC BY.

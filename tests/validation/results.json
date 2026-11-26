@@ -1,0 +1,151 @@
+{
+ "corpus": "CLEAR (Crossley et al. 2023)",
+ "passages": 4724,
+ "single": [
+  {
+   "measure": "Mean age of acquisition (word norms)",
+   "r": -0.63,
+   "norms": true
+  },
+  {
+   "measure": "SMOG",
+   "r": -0.57,
+   "norms": false
+  },
+  {
+   "measure": "Dale-Chall score",
+   "r": -0.56,
+   "norms": false
+  },
+  {
+   "measure": "Flesch reading ease",
+   "r": 0.55,
+   "norms": false
+  },
+  {
+   "measure": "LIX",
+   "r": -0.55,
+   "norms": false
+  },
+  {
+   "measure": "Gunning Fog",
+   "r": -0.54,
+   "norms": false
+  },
+  {
+   "measure": "Flesch-Kincaid grade",
+   "r": -0.53,
+   "norms": false
+  },
+  {
+   "measure": "Words off the Dale-Chall list (%)",
+   "r": -0.5,
+   "norms": false
+  },
+  {
+   "measure": "ARI",
+   "r": -0.49,
+   "norms": false
+  },
+  {
+   "measure": "Coleman-Liau",
+   "r": -0.48,
+   "norms": false
+  },
+  {
+   "measure": "Rare words, Zipf under 3 (%) (word norms)",
+   "r": -0.47,
+   "norms": true
+  },
+  {
+   "measure": "Letters per word",
+   "r": -0.4,
+   "norms": false
+  },
+  {
+   "measure": "Mean Zipf frequency (word norms)",
+   "r": 0.4,
+   "norms": true
+  },
+  {
+   "measure": "Personal pronouns per 100 words",
+   "r": 0.39,
+   "norms": false
+  },
+  {
+   "measure": "Words per sentence",
+   "r": -0.38,
+   "norms": false
+  },
+  {
+   "measure": "Mean concreteness (word norms)",
+   "r": 0.36,
+   "norms": true
+  },
+  {
+   "measure": "General science jargon (%)",
+   "r": -0.35,
+   "norms": false
+  },
+  {
+   "measure": "Passives per sentence",
+   "r": -0.35,
+   "norms": false
+  },
+  {
+   "measure": "Nominalisations per 100 words",
+   "r": -0.35,
+   "norms": false
+  },
+  {
+   "measure": "Mean prevalence (word norms)",
+   "r": 0.33,
+   "norms": true
+  },
+  {
+   "measure": "Content words already given (%)",
+   "r": 0.29,
+   "norms": false
+  },
+  {
+   "measure": "Median words before the main verb",
+   "r": -0.22,
+   "norms": false
+  },
+  {
+   "measure": "Running words on NGSL or NAWL (%)",
+   "r": 0.21,
+   "norms": false
+  },
+  {
+   "measure": "Connectives per 1,000 words",
+   "r": 0.16,
+   "norms": false
+  },
+  {
+   "measure": "Word variety, MTLD",
+   "r": -0.12,
+   "norms": false
+  },
+  {
+   "measure": "Negatives per 1,000 words",
+   "r": 0.1,
+   "norms": false
+  },
+  {
+   "measure": "Word variety, MATTR",
+   "r": -0.09,
+   "norms": false
+  },
+  {
+   "measure": "Neighbouring sentences sharing a content word (%)",
+   "r": -0.06,
+   "norms": false
+  }
+ ],
+ "combined": {
+  "flesch_reading_ease_alone": 0.55,
+  "all_counts_without_word_norms": 0.68,
+  "all_counts_with_word_norms": 0.73
+ }
+}

@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.7.1) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.8.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.7.1},
+  version = {0.8.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -152,6 +152,15 @@ The Overview carries a **Research profile**: 22 counts that writing researchers 
 None of these raises a note except GRIM, which asks a question. The word norms keep their authors' non-commercial licences; see [`data/README.md`](data/README.md). The Academic Formulas List is not included, because it carries no open licence. References with no link above are books, or articles whose DOI could not be confirmed; their full details are in the page's reference list.
 
 `tests/readability/` holds five fixed passages, this page's figures for them, and two scripts (Python with textstat, R with quanteda.textstats; [Benoit et al. 2018](https://doi.org/10.21105/joss.00774)) that record what those calculators give for the same passages, because readability calculators are known to disagree.
+
+### Added in 0.8.0: cleaner readability figures, science jargon, and a check on the counts
+
+- **Readability on cleaned text.** Before the formulas run, bracketed citations, numbers, abbreviations and stray single letters are dropped and hyphenated words are split, as [Plavén-Sigray et al. (2017)](https://doi.org/10.7554/eLife.27725) did for 709,577 abstracts. The box also gives the figures for the text as typed.
+- **Syllables.** A better spelling rule, backed by counts from the [CMU Pronouncing Dictionary](https://github.com/cmusphinx/cmudict) for 1,961 common words the rule gets wrong. On the test passages the figures now sit within about half a grade of quanteda.textstats.
+- **General science jargon** (Vocabulary level): the share of words on the 2,138-word list of [Plavén-Sigray et al. (2017)](https://doi.org/10.7554/eLife.27725), with the words used most.
+- **Sentences with the hardest vocabulary** (word norms): the three sentences whose content words are learned latest, following the per-sentence averages of [Lee & Lee (2023)](https://aclanthology.org/2023.bea-1.1).
+- **What the counts track** (Guide, and [`tests/validation/RESULTS.md`](tests/validation/RESULTS.md)): the correlation of each count with teachers' judgements of reading ease on the 4,724 passages of the CLEAR corpus ([Crossley et al. 2023](https://doi.org/10.3758/s13428-022-01802-x)). The best single count reaches about 0.6, word variety and sentence overlap are near zero, and all counts together reach 0.73. The corpus is not in the repository; `tests/validation/clear.js` reproduces the table from its CSV file.
+- **Weasel words** (0.7.1): notes on views attributed to nobody, vague degree words and comment words; the lens search and the Guide find all five lenses that cover them.
 
 ### Meaning model (optional)
 

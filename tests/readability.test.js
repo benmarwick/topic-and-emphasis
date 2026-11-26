@@ -1,4 +1,5 @@
 // Readability figures on a fixed set of passages. Run:  node tests/readability.test.js
+// The passages hold no numbers, citations or abbreviations, so cleaning only splits hyphens.
 // It fails if the engine's own figures drift from tests/readability/ours.json, or if the
 // formulas that need no syllable count stop matching an independent count.
 // Reference figures from other calculators, when present, are printed beside ours.
@@ -10,7 +11,8 @@ const ROOT = path.join(__dirname, '..');
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const j = f => JSON.stringify(read(f).split(/\s+/).join(' '));
 const E = new Function('const NGSL_RAW=' + j('src/ngsl.txt') + ';const NAWL_RAW=' + j('src/nawl.txt') +
-  ';const DALE_RAW=' + j('src/dalechall.txt') + ';const EXCESS_RAW=' + j('src/excess.txt') + ';' +
+  ';const DALE_RAW=' + j('src/dalechall.txt') + ';const EXCESS_RAW=' + j('src/excess.txt') +
+  ';const SYL_RAW=' + JSON.stringify(read('src/syllables.txt').trim()) + ';const JARGON_RAW=' + j('src/jargon.txt') + ';' +
   read('src/engine.js') + ';return E;')();
 
 const DIR = path.join(__dirname, 'readability');
@@ -25,7 +27,8 @@ files.forEach(f => {
   ours[f] = { fre: r2(X.fre), fk: r2(X.fk), ari: r2(X.ari), smog: r2(X.smog), cl: r2(X.cl), fog: r2(X.fog), lix: r2(X.lix), dale: r2(X.dale.score) };
 
   // an independent count for the formulas that need no syllables
-  const words = text.match(/[\p{L}\p{N}]+(?:[-'’][\p{L}\p{N}]+)*/gu) || [];
+  // (the engine drops numbers, abbreviations and stray single letters, and splits hyphenated words)
+  const words = (text.match(/\p{L}+(?:['’]\p{L}+)*/gu) || []).filter(w => w.length > 1 || /^[aAI]$/.test(w));
   const sents = (text.match(/[.!?]+(?=\s|$)/g) || []).length;
   const letters = words.reduce((a, w) => a + (w.match(/\p{L}/gu) || []).length, 0);
   const chars = words.reduce((a, w) => a + (w.match(/[\p{L}\p{N}]/gu) || []).length, 0);

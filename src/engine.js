@@ -154,6 +154,21 @@ const NEGSIG=/\b(?:not|no|never|without|fail(?:ed|s)? to|did not|does not|do not
 const PCT=[[/(\d[\d,]*)\s+(?:of|out of)\s+(?:the\s+)?(\d[\d,]*)\b[^.;()%]{0,40}\((\d+(?:\.\d+)?)\s?%\)/g,1,2,3],[/(\d+(?:\.\d+)?)\s?%\s*\(\s*(?:n\s*=\s*)?(\d[\d,]*)\s*\/\s*(\d[\d,]*)\s*\)/g,2,3,1],[/(\d[\d,]*)\s*\/\s*(\d[\d,]*)\s*[,(]\s*(\d+(?:\.\d+)?)\s?%/g,1,2,3]];
 /* ---- vocabulary level: New General Service List 1.2 and New Academic Word List 1.2 (Browne, Culligan & Phillips), CC BY-SA 4.0 ---- */
 const NGSL=new Set(NGSL_RAW.split(' ')),NAWL=new Set(NAWL_RAW.split(' '));
+/* syllables: a rule that reads the spelling, then exceptions taken from the CMU Pronouncing Dictionary */
+function sylGuess(x){x=x.toLowerCase().replace(/[^a-z]/g,'');if(!x||x.length<=3)return 1;
+  let w=x.replace(/([aeiouy][^aeiouy]+)e(?=(?:ly|ments?|ful|fully|less|ness|ty)$)/,'$1');
+  if(/[^aeiouyl]les?$/.test(w)||/[^aeiouyl]led$/.test(w)){if(/[sd]$/.test(w))w=w.slice(0,-1);}
+  else if(/es$/.test(w))w=w.slice(0,/(?:[sxzcg]|ch|sh)es$/.test(w)?-1:-2);
+  else if(/ed$/.test(w)){if(!/[td]ed$/.test(w))w=w.slice(0,-2);}
+  else if(/e$/.test(w)&&!/[aeiouy]e$/.test(w))w=w.slice(0,-1);
+  w=w.replace(/^y/,'');let n=(w.match(/[aeiouy]{1,2}/g)||[]).length;
+  const m=w.match(/(?<![ct])ia(?=l)|(?<![ctg])ia(?=n)|ia(?![ln]|ge)|io$|ios$|^[^aeiouy]{0,2}io|io(?=[dt]$|[dt]s$)|iu|(?<![qg])ua|(?<![ct])ie(?=t|nc|nt)|(?<!p|th)eo(?!u)|^rea(?=ct)/g);if(m)n+=m.length;
+  if(/[^aeiouy][eo]ing$/.test(x))n++;if(/isms?$/.test(x))n++;if(x.length>4&&/[^aeiouy]ea$/.test(x))n++;
+  return n||1;}
+const SYLX=new Map();(typeof SYL_RAW!=='undefined'?SYL_RAW:'').split('|').forEach(g=>{const i=g.indexOf(':');if(i<0)return;const k=+g.slice(0,i);g.slice(i+1).split(' ').forEach(w=>{if(w)SYLX.set(w,k);});});
+function syl(x){const k=x.toLowerCase().replace(/[^a-z]/g,''),v=SYLX.get(k);return v!=null?v:sylGuess(k);}
+/* general science jargon: the 2,138 words of Plaven-Sigray et al. (2017) */
+const JARGON=new Set((typeof JARGON_RAW!=='undefined'?JARGON_RAW:'').split(' ').filter(Boolean));
 /* optional lists: the New Dale-Chall familiar words, and the style words of Kobak et al. (2025) */
 const DALE=new Set((typeof DALE_RAW!=='undefined'?DALE_RAW:'').split(' ').filter(Boolean)),EXCESS=new Set((typeof EXCESS_RAW!=='undefined'?EXCESS_RAW:'').split(' ').filter(Boolean));
 const XTRA=S('one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand million billion zero first second third fourth fifth sixth seventh eighth ninth tenth monday tuesday wednesday thursday friday saturday sunday january february march april may june july august september october november december okay etc');
@@ -861,19 +876,26 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     /* words before the main verb */
     {const pv=sents.filter(s=>s.preV!=null).map(s=>s.preV).sort((a,b)=>a-b);let mx=-1,mi=-1;sents.forEach(s=>{if(s.preV!=null&&s.preV>mx){mx=s.preV;mi=s.i;}});
       R.pre={n:pv.length,median:pv.length?(pv.length%2?pv[(pv.length-1)/2]:(pv[pv.length/2-1]+pv[pv.length/2])/2):null,max:mx<0?null:mx,maxI:mi};}
-    /* readability formulas, with syllables estimated from spelling */
-    {const syl=x=>{x=x.toLowerCase().replace(/[^a-z]/g,'');if(!x)return 1;if(x.length<=3)return 1;x=x.replace(/(?:[^laeiouy]es|[^aeiouytd]ed|[^laeiouy]e)$/,'').replace(/^y/,'');const m=x.match(/[aeiouy]{1,2}/g);return m?m.length:1;};
-      let sy=0,poly=0,ch=0,lett=0,long=0,dn=0,dhard=0;const hardW=new Map();
-      const famil=l=>{l=l.replace(/[’'.]/g,'');if(DALE.has(l))return true;for(const c of lemmas(l))if(DALE.has(c))return true;return false;};
-      sents.forEach(st=>{let fw=-1;st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;const k=syl(tk.t);sy+=k;if(k>=3)poly++;ch+=(tk.t.match(/[\p{L}\p{N}]/gu)||[]).length;
-        const L=(tk.t.match(/\p{L}/gu)||[]).length;lett+=L;if(L>6)long++;
-        if(DALE.size){dn++;const proper=tk.l!=='i'&&(/[A-Z]/.test(tk.t.slice(1))||(i!==fw&&/^[A-Z]/.test(tk.t)));
-          if(!(/\d/.test(tk.t)||proper||famil(tk.l)||(tk.l.indexOf('-')>0&&tk.l.split('-').every(famil)))){dhard++;hardW.set(tk.l,(hardW.get(tk.l)||0)+1);}}});});
-      if(n&&nWd){const asl=nWd/n,asw=sy/nWd,fk=0.39*asl+11.8*asw-15.59,ari=4.71*(ch/nWd)+0.5*asl-21.43,smog=1.043*Math.sqrt(poly*30/n)+3.1291;
-        const cl=0.0588*(100*lett/nWd)-0.296*(100*n/nWd)-15.8,fog=0.4*(asl+100*poly/nWd),lix=asl+100*long/nWd,pdw=dn?100*dhard/dn:0;
-        R.read={fre:206.835-1.015*asl-84.6*asw,fk,ari,smog,cl,fog,lix,long:100*long/nWd,
-          dale:DALE.size?{pdw,score:0.1579*pdw+0.0496*asl+(pdw>5?3.6365:0),n:dn,hard:[...hardW.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,12)}:null,
-          lo:Math.min(fk,ari,smog,cl,fog),hi:Math.max(fk,ari,smog,cl,fog),n};}else R.read=null;}
+    /* readability formulas. The text is cleaned first, as Plaven-Sigray et al. (2017) did: bracketed citations, numbers, abbreviations and
+       stray single letters are dropped and hyphenated words are split. Sentences left with one word are not counted. */
+    {const famil=l=>{l=l.replace(/[’'.]/g,'');if(DALE.has(l))return true;for(const c of lemmas(l))if(DALE.has(c))return true;return false;};
+      const CR=/\([^()]*(?:\b(?:19|20)\d\d[a-z]?\b|\bet al\b)[^()]*\)|\[\d[\d,\s–-]*\]/g;let cut=0;
+      const prop=(tk,i,fw)=>tk.l!=='i'&&(/[A-Z]/.test(tk.t.slice(1))||(i!==fw&&/^[A-Z]/.test(tk.t)));
+      const prose=st=>{const out=[],skip=[];let m,fw=-1;CR.lastIndex=0;while((m=CR.exec(st.text)))skip.push([m.index,m.index+m[0].length]);
+        st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;if(skip.some(([a,b])=>tk.s>=a&&tk.e<=b)||/\d/.test(tk.t)||/\./.test(tk.t)||/^[A-Z]{2,}s?$/.test(tk.t)){cut++;return;}
+          const proper=prop(tk,i,fw);let any=false;tk.t.replace(/%$/,'').split(/[-\/]/).forEach(p=>{if(!/\p{L}/u.test(p))return;if(p.length===1&&!/^[aAI]$/.test(p))return;any=true;out.push({t:p,l:p.toLowerCase(),proper});});if(!any)cut++;});return out;};
+      const typed=st=>{const out=[];let fw=-1;st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;out.push({t:tk.t,l:tk.l,proper:prop(tk,i,fw)});});return out;};
+      const calc=(lists,minW)=>{let ns=0,nw=0,sy=0,poly=0,ch=0,lett=0,long=0,dhard=0;const hardW=new Map();
+        lists.forEach(W=>{if(W.length<minW)return;ns++;W.forEach(w=>{nw++;const k=syl(w.t);sy+=k;if(k>=3)poly++;ch+=(w.t.match(/[\p{L}\p{N}]/gu)||[]).length;const L=(w.t.match(/\p{L}/gu)||[]).length;lett+=L;if(L>6)long++;
+          if(DALE.size&&!(/\d/.test(w.t)||w.proper||famil(w.l)||(w.l.indexOf('-')>0&&w.l.split('-').every(famil)))){dhard++;hardW.set(w.l,(hardW.get(w.l)||0)+1);}});});
+        if(!ns||!nw)return null;const asl=nw/ns,asw=sy/nw,fk=0.39*asl+11.8*asw-15.59,ari=4.71*(ch/nw)+0.5*asl-21.43,smog=1.043*Math.sqrt(poly*30/ns)+3.1291,
+          cl=0.0588*(100*lett/nw)-0.296*(100*ns/nw)-15.8,fog=0.4*(asl+100*poly/nw),lix=asl+100*long/nw,pdw=100*dhard/nw;
+        return{fre:206.835-1.015*asl-84.6*asw,fk,ari,smog,cl,fog,lix,long:100*long/nw,
+          dale:DALE.size?{pdw,score:0.1579*pdw+0.0496*asl+(pdw>5?3.6365:0),n:nw,hard:[...hardW.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,12)}:null,
+          lo:Math.min(fk,ari,smog,cl,fog),hi:Math.max(fk,ari,smog,cl,fog),n:ns,words:nw};};
+      const X=calc(sents.map(prose),2),raw=calc(sents.map(typed),1);
+      if(X){X.cut=cut;X.skipped=n-X.n;X.dict=SYLX.size;X.raw=raw?{fre:raw.fre,fk:raw.fk,ari:raw.ari,smog:raw.smog,cl:raw.cl,fog:raw.fog,lix:raw.lix,lo:raw.lo,hi:raw.hi,words:raw.words}:null;}
+      R.read=X||raw||null;}
     /* negation: density, litotes with a plain form, and two negatives in one clause */
     const LIT={uncommon:'common',unlikely:'likely',unusual:'usual',unreasonable:'reasonable',unimportant:'important',unrelated:'related',unlike:'like',infrequent:'frequent',infrequently:'often',inconsiderable:'considerable',inconsistent:'consistent',impossible:'possible',implausible:'plausible',improbable:'probable',dissimilar:'similar',unaware:'aware',unwilling:'willing',unexpected:'expected',unfamiliar:'familiar',unjustified:'justified',irrelevant:'relevant',unhelpful:'helpful',unwelcome:'welcome',without:'with'};
     const LITRE=new RegExp('\\bnot ('+Object.keys(LIT).join('|')+')\\b','gi');let stack=0;
@@ -958,6 +980,9 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         const dk=[...freq.keys()],key=[...sf.entries()].filter(x=>x[1]>=2).sort((x,y)=>y[1]-x[1]).slice(0,12).map(([k,c])=>({w:s0.get(k),c,used:freq.has(k)||dk.some(d=>near(d,k))}));
         R.source={n:sw.length,N:SN,shared,share:nWd?shared/nWd:0,runs,quoted,key};}}
 
+    /* general science jargon (Plaven-Sigray et al. 2017): word forms, matched as typed */
+    {const cnt=new Map(),first=new Map();let jn=0,jw=0;if(JARGON.size)sents.forEach(st=>st.T.forEach(tk=>{if(!tk.w||!/^\p{L}/u.test(tk.t))return;jw++;if(!JARGON.has(tk.l))return;jn++;cnt.set(tk.l,(cnt.get(tk.l)||0)+1);if(!first.has(tk.l))first.set(tk.l,st.i);}));
+      R.jargon=JARGON.size?{n:jn,of:jw,share:jw?jn/jw:0,types:cnt.size,list:JARGON.size,words:[...cnt.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,16).map(([w,c])=>({w,c,s:first.get(w)}))}:null;}
     /* running-word coverage by the two word lists; proper nouns are counted apart (Nation 2006) */
     {let cn0=0,cg=0,ca=0,co=0,cp=0;
       sents.forEach(st=>{let fw=-1;st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;if(!/^\p{L}[\p{L}'’-]*$/u.test(tk.t))return;cn0++;
@@ -1050,17 +1075,17 @@ function parseNorms(src){const N={conc:new Map(),aoa:new Map(),zipf:new Map(),pr
   lines(src.prev).forEach(l=>{const c=l.split('\t');if(c[0]&&c[1]!==undefined&&c[1]!=='')N.prev.set(c[0].toLowerCase(),phi(+c[1]));});
   return N;}
 function norms(A,N){const look=(M,l)=>{let v=M.get(l);if(v!=null)return v;for(const c of lemmas(l)){v=M.get(c);if(v!=null)return v;}return null;};
-  const acc=()=>({n:0,sum:0,miss:0}),C=acc(),Ao=acc(),Z=acc(),P=acc(),seen=new Map(),per=[];let lowP=0,rare=0;
-  A.sents.forEach(st=>{let fw=-1,sc=0,sn=0;const cwI=new Set(st.cw.map(c=>c.i));
+  const acc=()=>({n:0,sum:0,miss:0}),C=acc(),Ao=acc(),Z=acc(),P=acc(),seen=new Map(),per=[],perA=[];let lowP=0,rare=0;
+  A.sents.forEach(st=>{let fw=-1,sc=0,sn=0,sa=0,an=0;const cwI=new Set(st.cw.map(c=>c.i));
     st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;if(!/^[a-z][a-z'’-]*$/i.test(tk.t))return;if(tk.l!=='i'&&(/[A-Z]/.test(tk.t.slice(1))||(i!==fw&&/^[A-Z]/.test(tk.t))))return;
       const l=tk.l.replace(/[’']s$/,'').replace(/[’']/g,''),zz=look(N.zipf,l);if(zz!=null){Z.n++;Z.sum+=zz;if(zz<3)rare++;}else{Z.miss++;rare++;}
       if(!cwI.has(i))return;let e=seen.get(l);if(!e){e={w:l,c:0,conc:look(N.conc,l),aoa:look(N.aoa,l),prev:look(N.prev,l),zipf:zz,s:st.i};seen.set(l,e);}e.c++;
       if(e.conc!=null){C.n++;C.sum+=e.conc;sc+=e.conc;sn++;}else C.miss++;
-      if(e.aoa!=null){Ao.n++;Ao.sum+=e.aoa;}else Ao.miss++;
+      if(e.aoa!=null){Ao.n++;Ao.sum+=e.aoa;sa+=e.aoa;an++;}else Ao.miss++;
       if(e.prev!=null){P.n++;P.sum+=e.prev;if(e.prev<0.9)lowP++;}else P.miss++;});
-    per.push(sn>=3?sc/sn:null);});
+    per.push(sn>=3?sc/sn:null);perA.push(an>=3?sa/an:null);});
   const W=[...seen.values()],top=(f,dir,k)=>W.filter(e=>e[f]!=null).sort((a,b)=>dir*(a[f]-b[f])||a.w.localeCompare(b.w)).slice(0,k).map(e=>({w:e.w,v:e[f],s:e.s})),mean=a=>a.n?a.sum/a.n:null;
   return{conc:{mean:mean(C),n:C.n,miss:C.miss,low:top('conc',1,8)},aoa:{mean:mean(Ao),n:Ao.n,miss:Ao.miss,high:top('aoa',-1,8)},zipf:{mean:mean(Z),n:Z.n,miss:Z.miss,rare,low:top('zipf',1,8)},
-    prev:{mean:mean(P),n:P.n,miss:P.miss,under90:lowP,low:top('prev',1,8)},abstract:per.map((v,i)=>({i,v})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v).slice(0,3),sent:per};}
-return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
+    prev:{mean:mean(P),n:P.n,miss:P.miss,under90:lowP,low:top('prev',1,8)},abstract:per.map((v,i)=>({i,v})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v).slice(0,3),hardest:perA.map((v,i)=>({i,v})).filter(x=>x.v!=null).sort((a,b)=>b.v-a.v).slice(0,3),sent:per,sentAoa:perA};}
+return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,syl,sylGuess,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();
