@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.22.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.23.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.22.0},
+  version = {0.23.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -156,6 +156,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **Three more pictures from the meaning model** (0.23.0; optional, labelled AI, no notes). *Old → new*: a given-new ribbon, described in the table below. *Reverse outline*: every sentence ranked by how far it sits below its own paragraph. *Meaning views, Abstract & ending*: the sentences that set the draft going (the claim, and sentences signalling a gap or an aim) joined to the sentences of the last paragraph closest to them, with open circles for what is not returned to and what appears only at the end. Each mark has a tooltip with the sentences and the scores behind it. Tested first on small sets: the given-new measure picked the chain in five joins of six and in one of six when shuffled; a planted sentence was ranked lowest in seven paragraphs of nine; the model scores an ending that reports the opposite finding almost as close as one that answers the aim, and the page says so.
+
 - **A part-of-speech lexicon** (0.22.0, optional data). The lexicon of the Brill tagger ([Brill 1992](https://doi.org/10.3115/974499.974526)), as packaged in [words/brill](https://github.com/words/brill) (MIT): about 54,000 words with the parts of speech each can take, 670 KB, loaded on request. *Subject → verb* lists the sentences where the lexicon and the rules disagree about the main verb: a word the rules took as the verb that has no verb reading, and a likely finite verb in a sentence where the rules found none. *Dense phrases* counts lexical density the published way, by part of speech, with the ratio of nouns to lexical verbs. The page has the lexicon and none of the tagger's contextual rules, so each word takes its most likely class. It changes no note and no mark. `tests/pos.test.js`.
 
 - **The Academic Keyword List, and four open lists** (0.21.0). The AKL ([Paquot 2010](https://uclouvain.be/en/research-institutes/ilc/cecl/the-academic-keyword-list-akl), *Academic Vocabulary in Learner Writing*, Continuum, 56–58) is published under CC BY 4.0, so it is built into the page whole: 928 entries in five classes, multi-word entries included. *Vocabulary level* reports the share of running words that are AKL nouns, verbs, adjectives or adverbs, by class, with the words used most. Four MIT-licensed lists from [github.com/words](https://github.com/words) are also built in and only counted: a wider list of hedges (*Hedging*, showing the words this page's own rule does not mark), weasel words and buzzwords (*Vague & worn words*), and fillers (*Clutter*). None raises a note. `tests/akl.test.js`.
@@ -203,7 +205,8 @@ Switched off unless the student turns it on. It loads a small sentence-embedding
 | Lens | What the model adds |
 |---|---|
 | Topic grid | Sentences that are close in meaning to the one before but repeat none of its words; how close each paragraph is to the one before, and the weakest join in the draft |
-| Reverse outline | The sentence closest in meaning to the rest of its paragraph, and whether it sits at an edge; the sentence that best carries the point you stated |
+| Old → new | A ribbon picture of each paragraph. Each sentence is divided at its main verb into an opening and a close, and the opening is compared with the close and the opening of the sentence before: a ribbon where it picks up the last close, a dashed line where it keeps the last opening, an amber line where it reaches further back, an open circle for a fresh start |
+| Reverse outline | The sentence closest in meaning to the rest of its paragraph, and whether it sits at an edge; the sentence that best carries the point you stated; a strip of dots and a table ranking every sentence of the draft by how far it sits below its own paragraph |
 | Claim tracer | The sentence that states your claim most directly, in your words or others; how close each paragraph is to the claim |
 | Source overlap | Your sentences closest in meaning to a source sentence, including restatements that share no run of words; the parts of the source the draft says least about |
 | Term tracker | The closest pairs in meaning among your terms, as candidates for two names for one thing |

@@ -180,7 +180,7 @@
     "what_the_research_found": "Crossley, Kyle & McNamara call this givenness: how much of each sentence the reader can recover from what came before. It is the idea behind putting old information before new (Haviland & Clark 1974). In their study, essays with a higher ratio of pronouns to nouns were rated lower in quality (Crossley et al. 2016). A pronoun is given information only if the reader can tell what it points to.",
     "how_this_count_differs": "This page has no part-of-speech tagger, so it cannot count nouns. It reports pronouns per 100 words where the study used pronouns per noun, and it counts only I, we, you, he, she, it, they and their object forms."
    },
-   "with_meaning_model": null,
+   "with_meaning_model": "A ribbon picture of each paragraph. Every sentence is divided at its main verb into an opening and a close, and the opening is compared with the close and the opening of the sentence before: a ribbon where it picks up the last close, a dashed line where it keeps the last opening, an amber line where it reaches further back, and an open circle for a fresh start.",
    "limits": "“Old” means a word used in an earlier sentence, matched by its stem. A synonym or a pronoun counts as new.",
    "sources": [
     {
@@ -275,7 +275,7 @@
     "what_the_research_found": "In the interactive textbooks studied by Morris et al. (2025), readers write a summary in their own words at the end of each section. The same move works on your own draft. Say what a paragraph is for, then check that the paragraph says it where readers look: at its opening or its close (Gopen & Swan 1990).",
     "how_this_count_differs": "In that study trained language models score each summary. Here a fixed rule checks only whether at least half of your point’s content words appear in the first sentence or in the last. Nothing judges whether the point is a good one."
    },
-   "with_meaning_model": "Each paragraph shows which sentence is closest in meaning to the rest, whether that sentence sits at an edge, and which sentence is furthest from the rest. If you typed the paragraph’s point, it shows which sentence carries that point best.",
+   "with_meaning_model": "Each paragraph shows which sentence is closest in meaning to the rest, whether that sentence sits at an edge, and which sentence is furthest from the rest. A strip of dots ranks every sentence of the draft by how far it sits below its own paragraph. If you typed the paragraph’s point, it shows which sentence carries that point best.",
    "limits": "It shows first and last sentences and checks the words of the point you type. It does not judge whether the point is a good one.",
    "sources": [
     {
@@ -710,7 +710,7 @@
    "to_revise": "Each view is a way of seeing where the draft holds together and where it does not. Tap any dot, square or bar to open the sentence behind it.",
    "marks": [],
    "research_measure": null,
-   "with_meaning_model": "Eight views. Thread: closeness of each sentence to the one before, and to your claim. Quilt: every sentence against every other. Topics: the model’s grouping of sentences, as a band of colour. Map: sentences as dots on a flat map. Reorder: move paragraphs and watch the joins. Ask: find the sentences closest to a question. Abstract & ending: what the abstract covers, and whether the ending returns to the opening. Drills: two exercises built from your draft.",
+   "with_meaning_model": "Eight views. Thread: closeness of each sentence to the one before, and to your claim. Quilt: every sentence against every other. Topics: the model’s grouping of sentences, as a band of colour. Map: sentences as dots on a flat map. Reorder: move paragraphs and watch the joins. Ask: find the sentences closest to a question. Abstract & ending: which opening sentences the last paragraph takes up and what is new at the end, whether the ending returns to the opening, and what the abstract covers. Drills: two exercises built from your draft.",
    "limits": "Everything in this lens comes from the model, which does not see negation or logic, and whose scores only rank things inside one draft.",
    "sources": [
     {

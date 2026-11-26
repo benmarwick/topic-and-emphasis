@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.23.0 (2026-11-26)
+
+Three additions to the optional meaning model. All are labelled as coming from the model, and none makes a note or changes the receipt.
+
+- Old → new: a given-new ribbon. The opening of each sentence (up to the main verb) and its close are embedded as spans of their own, and each opening is compared with the close and the opening of the sentence before. Kinds: picks up the last close, keeps the last opening, near both, reaches further back, a fresh start, a pointing word, not measured. A fresh start is an opening no closer to the sentence before than three in four unrelated pairs of spans in the same draft.
+- Reverse outline: a strip of dots, one row a paragraph, and a table of up to five sentences that sit furthest below the middle of their own paragraph.
+- Meaning views, Abstract & ending: the claim and the early sentences that signal a gap or an aim, joined to the sentences of the last paragraph that score 0.50 or more against them.
+- Embedding work rises to about three texts a sentence; the spans are skipped above 400 sentences.
+- Tried and not built, with the test results recorded in the reply that proposed them: a paragraph-split detector, a citation-to-claim check, and a synthesis-versus-summary measure.
+
 ## 0.22.0 (2026-11-26)
 
 - Optional part-of-speech lexicon: `data/pos/brill-lexicon.txt`, 53,883 lower-case words from github.com/words/brill (MIT; the lexicon of the Brill tagger, Brill 1992), each with the classes it can take, most likely first. `tools/make_pos.js`.
