@@ -458,6 +458,11 @@
      "citation": "Mihalcea, R., & Tarau, P. (2004). TextRank: Bringing order into texts. In Proceedings of the 2004 Conference on Empirical Methods in Natural Language Processing (pp. 404–411). Association for Computational Linguistics.",
      "doi": null,
      "url": "https://aclanthology.org/W04-3252/"
+    },
+    {
+     "citation": "Chang, D., Lin, M. P.-C., & Hwang, G.-J. (2025). Charting the field: A review of argument visualization research for writing, learning, and reasoning. Frontiers in Education, 10, 1672105.",
+     "doi": "10.3389/feduc.2025.1672105",
+     "url": "https://doi.org/10.3389/feduc.2025.1672105"
     }
    ]
   },
@@ -627,6 +632,11 @@
      "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
      "doi": "10.1017/CBO9780511894664",
      "url": "https://doi.org/10.1017/CBO9780511894664"
+    },
+    {
+     "citation": "Lachner, A., Backfisch, I., & Nückles, M. (2018). Does the accuracy matter? Accurate concept map feedback helps students improve the cohesion of their explanations. Educational Technology Research and Development, 66(5), 1051–1067.",
+     "doi": "10.1007/s11423-018-9571-4",
+     "url": "https://doi.org/10.1007/s11423-018-9571-4"
     }
    ]
   },
@@ -737,6 +747,11 @@
      "citation": "Thomson, P. (2011–). patter [blog on academic writing]. Posts used here: “the lightbulb test” (2026), “three ways to link paragraphs” (2025), “saving words – check your citations” (2023), “can you have too much signposting?” (2023), “check the passive voice” (2021), “the disappearing writer” (2021), “making your writing authoritative” (2021), “a very neat hack to avoid repetition and duplication” (2021) and “check for ‘code words’” (2018).",
      "doi": null,
      "url": "https://patthomson.net/category/academic-writing/"
+    },
+    {
+     "citation": "Fok, R., Kambhamettu, H., Soldaini, L., Bragg, J., Lo, K., Hearst, M., Head, A., & Weld, D. S. (2023). Scim: Intelligent skimming support for scientific papers. In Proceedings of the 28th International Conference on Intelligent User Interfaces. [Link: the authors’ preprint.]",
+     "doi": null,
+     "url": "https://arxiv.org/abs/2205.04561"
     }
    ]
   },
@@ -1280,6 +1295,11 @@
      "citation": "Wattenberg, M., & Viégas, F. B. (2008). The Word Tree, an interactive visual concordance. IEEE Transactions on Visualization and Computer Graphics, 14(6), 1221–1228.",
      "doi": null,
      "url": null
+    },
+    {
+     "citation": "Collins, C., Viégas, F. B., & Wattenberg, M. (2009). Parallel tag clouds to explore and analyze faceted text corpora. In 2009 IEEE Symposium on Visual Analytics Science and Technology. [IEEE VIS Test of Time Award, 2019.]",
+     "doi": null,
+     "url": null
     }
    ]
   },
@@ -1437,6 +1457,16 @@
      "citation": "Thomson, P. (2011–). patter [blog on academic writing]. Posts used here: “the lightbulb test” (2026), “three ways to link paragraphs” (2025), “saving words – check your citations” (2023), “can you have too much signposting?” (2023), “check the passive voice” (2021), “the disappearing writer” (2021), “making your writing authoritative” (2021), “a very neat hack to avoid repetition and duplication” (2021) and “check for ‘code words’” (2018).",
      "doi": null,
      "url": "https://patthomson.net/category/academic-writing/"
+    },
+    {
+     "citation": "Hearst, M. A. (1995). TileBars: Visualization of term distribution information in full text information access. In Proceedings of the ACM SIGCHI Conference on Human Factors in Computing Systems.",
+     "doi": null,
+     "url": "https://people.ischool.berkeley.edu/~hearst/research/tilebars.html"
+    },
+    {
+     "citation": "Chang, J. C., Zhang, A. X., Bragg, J., Head, A., Lo, K., Downey, D., & Weld, D. S. (2023). CiteSee: Augmenting citations in scientific papers with persistent and personalized historical context. In Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems. [Best Paper Award. Link: the authors’ preprint.]",
+     "doi": null,
+     "url": "https://arxiv.org/pdf/2302.07302"
     }
    ]
   },

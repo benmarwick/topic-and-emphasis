@@ -37,6 +37,7 @@
         <li id="factAI" data-tip="Every mark comes from a fixed rule written into this page. The same text always gets the same marks. No AI model is involved.">Deterministic · no AI</li>
         <li data-tip="Once the page has loaded, the rules need no internet connection. The typefaces are fetched from the web, and the page falls back to system fonts without them. The optional extras (word norms, the two academic lists, the phrase bank and the meaning model) are fetched from this site only when you ask for them.">Works offline</li>
         <li data-tip="Your text is analysed inside this browser tab and is never uploaded. The one thing that can leave the page is a phrase you choose to look up: the line under the rewrite box sends the words you select, eight at most, to the site you pick. So you do not lose work, this browser keeps your draft on this device. You can erase it from the About section at the foot of the page.">Nothing uploaded</li>
+        <li class="infoli"><button type="button" class="infobtn" id="btnInfo" aria-label="About this project" aria-haspopup="dialog" data-tip="About this project: who made it, how to cite it, where to send corrections and suggestions, the licence, and details of how it works. Opens a box over the page.">i</button></li>
       </ul>
   </header>
 
@@ -131,6 +132,51 @@
     </aside>
   </main>
 
+  <dialog id="infoDlg" aria-labelledby="infT">
+    <div class="inf">
+      <div class="inf-head"><div><h2 id="infT">Topic &amp; Emphasis</h2><p id="infV"></p></div><button type="button" class="btn sm" id="infClose" data-tip="Close this box. The Esc key does the same.">Close</button></div>
+      <div class="inf-body" tabindex="0" autofocus>
+        <h3>What this is</h3>
+        <p>A revision workbench for research writing. It marks a draft with questions about what a reader expects to find, and where, so that the writer can revise it. It does not rewrite anything. The method is that of George Gopen and Judith Swan&rsquo;s &ldquo;The Science of Scientific Writing&rdquo; (1990), with later work on cohesion, vocabulary, hedging and argument added lens by lens.</p>
+        <h3>Author</h3>
+        <p>Ben Marwick chose the sources, set the design and its constraints, and is responsible for the result. The code was written with the help of an AI coding tool (Claude, by Anthropic) under his direction.</p>
+        <h3>How to cite</h3>
+        <p class="inf-cite" id="infCite"></p>
+        <pre id="infBib"></pre>
+        <p><button type="button" class="btn sm" id="infCopy" data-tip="Copy the reference and the BibTeX entry to the clipboard. If the browser refuses, the BibTeX entry is selected so that you can copy it yourself.">Copy the citation</button></p>
+        <p>Please also cite the article it is built on: Gopen, G. D., &amp; Swan, J. A. (1990). The science of scientific writing. <i>American Scientist</i>, 78(6), 550&ndash;558.</p>
+        <h3>Corrections and suggestions</h3>
+        <p>A rule that misjudges a sentence, a citation that is wrong, a link that is dead, a lens you wish existed: please <a href="https://github.com/benmarwick/topic-and-emphasis/issues" target="_blank" rel="noopener">open an issue on GitHub</a>. For a misjudged sentence, give the sentence and the name of the lens. The <a href="https://github.com/benmarwick/topic-and-emphasis" target="_blank" rel="noopener">repository</a> holds the source, the tests and the <a href="https://github.com/benmarwick/topic-and-emphasis/blob/main/CHANGELOG.md" target="_blank" rel="noopener">record of changes</a>.</p>
+        <h3>Licence</h3>
+        <p>The application is under the <a href="https://github.com/benmarwick/topic-and-emphasis/blob/main/LICENSE" target="_blank" rel="noopener">MIT licence</a>, &copy; 2026 Ben Marwick. You may use, copy, change and share it, provided the notice stays with it. It comes with no warranty.</p>
+        <p>Other people&rsquo;s work inside it keeps its own terms:</p>
+        <ul>
+          <li>New General Service List and New Academic Word List (Browne, Culligan &amp; Phillips): CC BY-SA 4.0.</li>
+          <li>Academic Keyword List (Paquot 2010): CC BY 4.0.</li>
+          <li>Dale-Chall list, excess-vocabulary list, science-jargon list, the hedge, weasel, filler and buzzword lists, and the part-of-speech lexicon: MIT.</li>
+          <li>Syllable counts from the CMU Pronouncing Dictionary: BSD 2-Clause.</li>
+          <li>Optional word norms (concreteness, age of acquisition, frequency, prevalence): Creative Commons non-commercial licences. They are fetched only when asked for.</li>
+          <li>Optional phrase bank: GNU GPL 3.</li>
+          <li>Academic Word List and Academic Formulas List: the words and their published numbers only. No permission was sought, on the view that bare words and measurements are not protected.</li>
+          <li>Optional meaning model: all-MiniLM-L6-v2 and Transformers.js, Apache 2.0; ONNX Runtime Web, MIT.</li>
+          <li>Typefaces: IBM Plex and Newsreader, SIL Open Font License, served by Google Fonts.</li>
+        </ul>
+        <h3>For the curious</h3>
+        <p class="inf-nums" id="infNums"></p>
+        <ul>
+          <li><b>Rules, not a language model.</b> Every mark and every note comes from a fixed rule, so the same text always gets the same marks. The rules read structure and know nothing of meaning. They have no parser: sentences are split by punctuation, and verbs and subjects are found by word lists and position, so some sentences are misjudged.</li>
+          <li><b>Thresholds.</b> Where a published norm exists it is cited. Where the page uses a working threshold of its own, the Guide says so.</li>
+          <li><b>What the optional parts may do.</b> The meaning model and the optional data add marks, counts and pictures. They never make a note and never change the record of your revision.</li>
+          <li><b>Checked against judgement.</b> The Guide reports how each count tracks teachers&rsquo; ratings of reading ease on 4,721 passages. Several track them weakly, and the Guide says which.</li>
+          <li><b>Tests.</b> Seventeen test files run the rule engine against fixed sentences before each release. The pictures are checked by eye, on constructed drafts more than on real papers.</li>
+          <li><b>What is kept, and where.</b> Your draft, the draft you began with, your choices and your settings are kept in this browser&rsquo;s local storage, on this device, so that work survives a closed tab. Nothing is sent to a server. To erase it, clear this site&rsquo;s data in the browser&rsquo;s settings.</li>
+          <li><b>What can leave the page.</b> Only a phrase you choose to look up, eight words at most, sent to the site you pick. The typefaces and the optional files are fetched; the draft is not part of any request.</li>
+          <li><b>For other programs.</b> The repository includes a Model Context Protocol server that gives an AI agent the same rules, so that a tutor built on one cannot disagree with this page.</li>
+          <li><b>How it is made.</b> One HTML file, built by a short Python script from four source files. The pictures are SVG drawn by hand-written code.</li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   <div class="tour" id="tour" hidden role="status" aria-live="polite"><p id="tourText"></p><div class="tilebar"><button type="button" class="btn sm primary" id="tourNext">Next</button><button type="button" class="btn sm" id="tourSkip">Skip the tour</button></div></div>
   <button type="button" class="fab" id="fab" hidden data-tip="Go to the next open note in this lens.">Next note</button>

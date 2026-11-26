@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.28.0 (2026-11-26)
+
+- Topic grid: "Cohesion map" after Lachner, Backfisch & Nückles (2018). Up to 22 repeated terms on a ring, joined where a sentence uses both; groups joined to nothing else are drawn in amber and named. Cited authors are left out.
+- Claim tracer: "Argument board". The writer labels each paragraph (supports, qualifies, answers an objection, background); the page draws the claim with a line from each paragraph and asks up to five questions about the shape. Stored in this browser; reset by a new draft.
+- Signal phrases: "The reader's skim" after Fok et al. (2023): the sentences with a signalled move only, the count of unsignalled sentences between them, and the share of sentences and words a skimming reader meets.
+- Term tracker: "Words that mark out each part" after Collins, Viégas & Wattenberg (2009): up to 11 words a column by log-likelihood, alphabetical, weight by score, a line where neighbouring columns share a word. Columns are sections under headings (two to six), or thirds of the draft; a second mode sets the starting draft against the draft now.
+- Mechanical checks: "Where each source is cited": sources by paragraphs, matched by first author and year, by number or by citation key; the 40 most cited are drawn.
+- All five are counts and pictures. None makes a note or changes the revision receipt.
+- Information button at the upper right, opening a box with author, citation (with a copy button), where to send corrections, licences and details of how the page works. The version and date are read from CITATION.cff at build time.
+- Stage buttons: the marks in the Overview text now follow the stage, as the notes and the lens list already did. Their tooltips say what a click does and which lenses the stage holds.
+- Tooltips: every button, select, switch and summary now has one. Controls without a written tooltip get one from a table of rules when first pointed at.
+- Rule fix: "this paper aims to", "this study seeks to", "we aim" and similar are now read as stating an aim.
+
 ## 0.27.0 (2026-11-26)
 
 - Length & rhythm: "The draft as a line", a sentence drawing after Posavec. Segment length is the word count, a right turn at each full stop, colour by length band, a dot at each new paragraph, the starting draft behind.

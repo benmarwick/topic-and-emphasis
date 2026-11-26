@@ -45,7 +45,21 @@ def fragment():
         with io.open(vpath, encoding='utf-8') as f:
             valid = json.dumps(json.load(f), ensure_ascii=False, separators=(',', ':'))
     return (head + body + '\n<script>\n/*ENGINE-START*/' + lists + engine +
-            '/*ENGINE-END*/\nconst VALID=' + valid + ';\n' + ui + '</script>\n')
+            '/*ENGINE-END*/\nconst VALID=' + valid + ';\nconst APP=' + app_meta() + ';\n' + ui + '</script>\n')
+
+
+def app_meta():
+    """The version and release date, read from CITATION.cff, for the information box."""
+    v = d = ''
+    p = os.path.join(ROOT, 'CITATION.cff')
+    if os.path.exists(p):
+        with io.open(p, encoding='utf-8') as f:
+            for line in f:
+                if line.startswith('version:'):
+                    v = line.split(':', 1)[1].strip().strip('"')
+                elif line.startswith('date-released:'):
+                    d = line.split(':', 1)[1].strip().strip('"')
+    return json.dumps({'v': v, 'date': d})
 
 
 # What a bare page needs that an embedding host would otherwise supply.

@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.27.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.28.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.27.0},
+  version = {0.28.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -156,6 +156,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **Five pictures from tools for reading and teaching, and an information box** (0.28.0). *Cohesion map* (Topic grid): the main terms round a ring, joined where one sentence uses two of them; terms that no sentence ties to the main group stand apart in amber ([Lachner, Backfisch & Nückles 2018](https://doi.org/10.1007/s11423-018-9571-4)). *Argument board* (Claim tracer): the writer says what each paragraph does for the claim (supports, qualifies, answers an objection, background) and the page draws the result and asks about its shape ([Chang, Lin & Hwang 2025](https://doi.org/10.3389/feduc.2025.1672105)). *The reader's skim* (Signal phrases): only the sentences that signal a move, with the unsignalled sentences counted between them ([Fok et al. 2023](https://arxiv.org/abs/2205.04561)). *Words that mark out each part* (Term tracker): the distinctive words of each section in parallel alphabetical columns, by log-likelihood, with a line where neighbouring columns share a word; also the starting draft against the draft now (Collins, Viégas & Wattenberg 2009). *Where each source is cited* (Mechanical checks): a row a source, a column a paragraph (Hearst 1995; [Chang et al. 2023](https://arxiv.org/pdf/2302.07302)). All five are counts and pictures; none makes a note. An **information button** at the upper right opens a box with the author, the citation, where to send corrections, the licences and details of how the page works. The stage buttons now also narrow the marks in the Overview, and every button on the page has a tooltip that says what it does.
+
 - **Three well-known pictures of text** (0.27.0). *The draft as a line* (Length & rhythm): one straight run a sentence, as long as its word count, turning right at every full stop, with the starting draft drawn faintly behind; after Stefanie Posavec's sentence drawings (*Writing Without Words*). *Word tree* (Term tracker): every use of a chosen term with what follows it, or what comes before it, merged into branches where the wording is shared (Wattenberg & Viégas 2008, *IEEE TVCG* 14(6)). *Phrase net* (Dense phrases): the content words the draft joins with "of", "and" or "is", as rows and arcs (van Ham, Wattenberg & Viégas 2009, *IEEE TVCG* 15(6)). The net is laid out as rows, not by a force simulation, so the same draft always gives the same picture. Rule-based; no notes.
 
 - **Mosaics, a term index, and more typographic mappings** (0.26.0), after [Brath & Banissi (2016)](https://doi.org/10.1016/j.sheji.2016.05.003). *What your sentences do* (Action in verbs): every main verb as a word, grouped as be and have, reporting, light verbs and other actions, heavier the more sentences it leads and italic when mostly passive. *Whose story the draft tells* (Topic position): every grammatical subject as a word, grouped as I and we, pointing words, other pronouns, actions named as things, and people and things named. *Term index, in type* (Term tracker): the repeated terms in alphabetical order, heavier for more uses, small capitals for claim words, italics for a term that stays in one paragraph. *Typographic view* (Load map) gains *the parts of each sentence* (opening italic, subject in small capitals, verb heavy), which also prints in black and white, and *load, sentence by sentence*; for the weight mappings the words can be held in place by drawing weight as stroke, so that flipping to plain text moves nothing.
@@ -255,7 +257,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 143 sources are listed at the foot of the application, 69 of them with a DOI and 43 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 149 sources are listed at the foot of the application, 71 of them with a DOI and 46 more with a link to the full text or the publisher's page.
 
 ---
 
