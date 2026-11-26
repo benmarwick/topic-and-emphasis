@@ -920,7 +920,7 @@ function stem(w){
   if(w.length>4&&/e$/.test(w))w=w.slice(0,-1);
   return w;
 }
-const isContent=tk=>tk.w&&/\p{L}/u.test(tk.t)&&(tk.l.length>2||/^[A-Z]{2}$/.test(tk.t))&&!isFunc(tk.l)&&!STOPX.has(tk.l);
+const isContent=tk=>tk.w&&!tk.cite&&/\p{L}/u.test(tk.t)&&(tk.l.length>2||/^[A-Z]{2}$/.test(tk.t))&&!isFunc(tk.l)&&!STOPX.has(tk.l);
 
 /* nominalizations */
 const NOMX={analysis:'analyze',synthesis:'synthesize',hydrolysis:'hydrolyze',comparison:'compare',description:'describe',transcription:'transcribe',absorption:'absorb',adsorption:'adsorb',reduction:'reduce',production:'produce',induction:'induce',introduction:'introduce',destruction:'destroy',assumption:'assume',consumption:'consume',recognition:'recognize',acquisition:'acquire',definition:'define',decomposition:'decompose',deposition:'deposit',repetition:'repeat',competition:'compete',expansion:'expand',extension:'extend',conversion:'convert',inversion:'invert',dispersion:'disperse',emission:'emit',transmission:'transmit',submission:'submit',division:'divide',decision:'decide',provision:'provide',revision:'revise',conclusion:'conclude',inclusion:'include',exclusion:'exclude',diffusion:'diffuse',resolution:'resolve',dissolution:'dissolve',evolution:'evolve',distribution:'distribute',contribution:'contribute',attribution:'attribute',substitution:'substitute',application:'apply',publication:'publish',variation:'vary',degradation:'degrade',observation:'observe',determination:'determine',examination:'examine',preparation:'prepare',combination:'combine',explanation:'explain',oxidation:'oxidize',occurrence:'occur',appearance:'appear',performance:'perform',maintenance:'maintain',emergence:'emerge',existence:'exist',persistence:'persist',interference:'interfere',acceptance:'accept',avoidance:'avoid',dependence:'depend',resistance:'resist',disturbance:'disturb',divergence:'diverge',convergence:'converge',adherence:'adhere',preference:'prefer',inference:'infer',tolerance:'tolerate',clearance:'clear',resemblance:'resemble',reliance:'rely',compliance:'comply',removal:'remove',survival:'survive',proposal:'propose',retrieval:'retrieve',withdrawal:'withdraw',reversal:'reverse',exposure:'expose',failure:'fail',growth:'grow',loss:'lose',discussion:'discuss',suppression:'suppress',expression:'express',inhibition:'inhibit'};
@@ -982,7 +982,7 @@ const EVID={
  novel:[['search','I searched, and I cite the closest earlier work',true,'A novelty claim holds up when the closest earlier work is cited beside it.'],['afaik','As far as I know',false,'Write “to our knowledge” and cite the closest earlier work, or drop the claim and let the result speak.']]};
 const CATWHY={causal:'This wording says one thing produces another.',certain:'This wording says the matter is settled.',absolute:'This wording allows no exceptions.',novel:'This wording claims priority or exceptional importance.'};
 const CATQ={causal:'What kind of evidence shows that one produces the other?',certain:'How direct is the evidence, and has it been repeated?',absolute:'How many of the cases did you check?',novel:'What is the closest earlier work, and do you cite it?'};
-const CITE=/\[\d[\d,\s–-]*\]|\([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*\)|\bet al\b/;
+const CITE=/\[\d[\d,\s–-]*\]|\([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*\)|\bet al\b|(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]|\\[a-zA-Z]*cite[a-zA-Z]*(?![a-zA-Z])/u;
 const UNCITED=/\b(?:previous(?:ly)?|earlier|prior|recent|several|many|numerous|other) (?:stud(?:y|ies)|work|workers|research|reports?|authors|investigations|experiments)\b|\b(?:studies|research|reports|workers|authors) (?:have|has) (?:shown|found|reported|suggested|demonstrated|indicated)\b|\b(?:has|have) (?:long |previously |already )?been (?:shown|reported|demonstrated|suggested|established|documented|proposed)\b|\bit is (?:well |widely |generally )?known that\b|\b(?:is|are) (?:well |widely )?known to\b|\bin the literature\b|\bwidely (?:accepted|believed|recognized)\b/i;
 const STAT=/\bp\s*[<>=≤]\s*0?\.\d|[<>=≤]\s*0?\.0\d|\b(?:t|F|r|z|d|U|H|W|R2|R²|χ2|χ²)\s*(?:\([^)]*\))?\s*=\s*-?\d|\bCI\b|confidence interval|±|\bn\s*=\s*\d|\b(?:ANOVA|t-test|regression|Mann|Wilcoxon|Tukey|Bonferroni|chi-square|Kruskal)\b/i;
 const JOBS=[['context','Context'],['gap','Gap or problem'],['aim','Aim or approach'],['method','Method'],['result','Result'],['interp','Interpretation'],['implication','Implication'],['limit','Limitation']];
@@ -1166,8 +1166,14 @@ function Q(f){const t=f.title;switch(f.lens){
  case'acr':return'Will every reader you are writing for know this abbreviation?';}
  return'';}
 
-function tokenize(text){const T=[];const re=/[\p{L}\p{N}]+(?:[-'’.\/][\p{L}\p{N}]+)*%?|[^\s\p{L}\p{N}]/gu;let m;
-  while((m=re.exec(text))){const t=m[0];T.push({t,l:t.toLowerCase().replace(/’/g,"'"),s:m.index,e:m.index+t.length,w:/[\p{L}\p{N}]/u.test(t)});}return T;}
+/* A citation key in the style of pandoc, Quarto and R Markdown (@Marwick2026, [@a; @b, p. 3], -@a) is one token.
+   Inside square brackets the key and its page reference are citation apparatus, so they do not count as words.
+   Outside brackets the key stands for the author's name, so it counts as one word but never as a term. */
+function tokenize(text){const T=[];const re=/(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]*(?:[:.#$%&+?<>~\/-][\p{L}\p{N}_]+)*|[\p{L}\p{N}]+(?:[-'’.\/][\p{L}\p{N}]+)*%?|[^\s\p{L}\p{N}]/gu;let m,any=false;
+  while((m=re.exec(text))){const t=m[0],ck=/^-?@./.test(t);if(ck)any=true;T.push({t,l:t.toLowerCase().replace(/’/g,"'"),s:m.index,e:m.index+t.length,w:/[\p{L}\p{N}]/u.test(t),cite:ck||undefined});}
+  if(any)for(let i=0;i<T.length;i++){if(T[i].t!=='[')continue;let j=i+1,has=false;while(j<T.length&&T[j].t!==']'&&T[j].t!=='['){if(T[j].cite)has=true;j++;}
+    if(has&&j<T.length&&T[j].t===']'){for(let q=i+1;q<j;q++){T[q].w=false;T[q].cite=true;}i=j;}}
+  return T;}
 function splitParas(raw){const out=[];let cur=null,pos=0;
   for(const line of raw.split('\n')){const s=pos;pos+=line.length+1;const tr=line.trim();
     if(!tr){if(cur){out.push(cur);cur=null;}continue;}
@@ -1176,9 +1182,11 @@ function splitParas(raw){const out=[];let cur=null,pos=0;
     if(!cur&&tr.length<70&&tr.split(/\s+/).length<=8&&!/[.!?:;,]["'”’)\]]*$/.test(tr)){out.push({s:ls,e:le,head:true});continue;}
     if(cur)cur.e=le;else cur={s:ls,e:le};}
   if(cur)out.push(cur);return out;}
-function splitSents(text){const out=[];let start=0;const re=/[.!?]+["'”’)\]]*\s+(?=["'“‘(\[]?[A-Z0-9])/g;let m;
+function splitSents(text){const out=[];let start=0;const re=/[.!?]+["'”’)\]]*\s+(?=["'“‘(\[]?(?:[A-Z0-9]|-?@[A-Za-z_]))/g;let m;
   while((m=re.exec(text))){const lastWord=(text.slice(start,m.index).match(/([A-Za-z.]+)$/)||[])[1]||'';
     if(text[m.index]==='.'&&(ABBR.has(lastWord.toLowerCase())||/(?:^|[\s(])(?:[A-Z]\.)*[A-Z]$/.test(text.slice(start,m.index))))continue;
+    /* a page, chapter or section reference inside a citation: "p. 4", "pp. 12-15", "ch. 2" */
+    if(text[m.index]==='.'&&m[0].charAt(1)!=='.'&&/^(?:p|pp|ch|chs|chap|chaps|sec|secs|vol|vols|para|paras|n|nn)$/i.test(lastWord)&&/^\d/.test(text.slice(m.index+m[0].length)))continue;
     out.push({s:start,e:m.index+m[0].replace(/\s+$/,'').length});start=m.index+m[0].length;}
   const rest=text.slice(start);if(rest.trim())out.push({s:start+rest.search(/\S/),e:start+rest.replace(/\s+$/,'').length});return out;}
 
@@ -1291,7 +1299,7 @@ function parse(text){
     while(end>=0){const t=T[end];if(t.w)break;
       if(t.t===')'||t.t===']'){const open=t.t===')'?'(':'[';let o=end-1;while(o>=0&&T[o].t!==open)o--;if(o<0){end--;continue;}
         const inner=text.slice(T[o].e,t.s);
-        if((open==='['&&/^[\d,\s–-]+$/.test(inner))||/(19|20)\d\d|et al/.test(inner)||/^\s*(figs?|figure|tables?|eqs?|refs?|see|supplementary|data not shown)\b/i.test(inner)){st.cite=true;end=o-1;continue;}
+        if((open==='['&&/^[\d,\s–-]+$/.test(inner))||/(19|20)\d\d|et al|(?:^|[\s;\[-])@[\p{L}_]/u.test(inner)||/^\s*(figs?|figure|tables?|eqs?|refs?|see|supplementary|data not shown)\b/i.test(inner)){st.cite=true;end=o-1;continue;}
         end--;continue;}
       end--;}
     if(end<0)return;const lastW=end,nW=wpos[lastW]+1;let start=-1,dp=0;
@@ -1748,10 +1756,10 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     /* readability formulas. The text is cleaned first, as Plaven-Sigray et al. (2017) did: bracketed citations, numbers, abbreviations and
        stray single letters are dropped and hyphenated words are split. Sentences left with one word are not counted. */
     {const famil=l=>{l=l.replace(/[’'.]/g,'');if(DALE.has(l))return true;for(const c of lemmas(l))if(DALE.has(c))return true;return false;};
-      const CR=/\([^()]*(?:\b(?:19|20)\d\d[a-z]?\b|\bet al\b)[^()]*\)|\[\d[\d,\s–-]*\]/g;let cut=0;
+      const CR=/\([^()]*(?:\b(?:19|20)\d\d[a-z]?\b|\bet al\b)[^()]*\)|\[\d[\d,\s–-]*\]|\\[a-zA-Z]*cite[a-zA-Z]*\*?(?:\[[^\]]*\])*\{[^}]*\}/g;let cut=0;
       const prop=(tk,i,fw)=>tk.l!=='i'&&(/[A-Z]/.test(tk.t.slice(1))||(i!==fw&&/^[A-Z]/.test(tk.t)));
       const prose=st=>{const out=[],skip=[];let m,fw=-1;CR.lastIndex=0;while((m=CR.exec(st.text)))skip.push([m.index,m.index+m[0].length]);
-        st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;if(skip.some(([a,b])=>tk.s>=a&&tk.e<=b)||/\d/.test(tk.t)||/\./.test(tk.t)||/^[A-Z]{2,}s?$/.test(tk.t)){cut++;return;}
+        st.T.forEach((tk,i)=>{if(!tk.w){if(tk.cite&&/^-?@/.test(tk.t))cut++;return;}if(fw<0)fw=i;if(tk.cite||skip.some(([a,b])=>tk.s>=a&&tk.e<=b)||/\d/.test(tk.t)||/\./.test(tk.t)||/^[A-Z]{2,}s?$/.test(tk.t)){cut++;return;}
           const proper=prop(tk,i,fw);let any=false;tk.t.replace(/%$/,'').split(/[-\/]/).forEach(p=>{if(!/\p{L}/u.test(p))return;if(p.length===1&&!/^[aAI]$/.test(p))return;any=true;out.push({t:p,l:p.toLowerCase(),proper});});if(!any)cut++;});return out;};
       const typed=st=>{const out=[];let fw=-1;st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;out.push({t:tk.t,l:tk.l,proper:prop(tk,i,fw)});});return out;};
       const calc=(lists,minW)=>{let ns=0,nw=0,sy=0,poly=0,ch=0,lett=0,long=0,dhard=0;const hardW=new Map();

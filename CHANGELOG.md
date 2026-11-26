@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.1 (2026-11-26)
+
+- Citation keys in the style of pandoc, Quarto and R Markdown (`@Marwick2026`, `[@a; @b, p. 4]`, `-@a`) and LaTeX `\cite` commands are read as citations. A bracketed key is not counted as words, and a key is never taken for a term.
+- Fix: a page or chapter reference inside a citation ("p. 4", "pp. 12-15", "ch. 2") no longer ends the sentence.
+
 ## 0.8.0 (2026-11-26)
 
 - Readability formulas now run on cleaned text (citations, numbers and abbreviations dropped, hyphenated words split); the figures for the text as typed are shown beside them.
