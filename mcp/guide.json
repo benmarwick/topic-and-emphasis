@@ -910,6 +910,11 @@
      "citation": "Brath, R. (2020). Visualizing with text. A K Peters/CRC Press.",
      "doi": null,
      "url": "https://richardbrath.wordpress.com/books-and-chapters-by-richard-brath/visualizing-with-text-book-companion-web-site/"
+    },
+    {
+     "citation": "Posavec, S. Writing Without Words [a design project that draws the sentences of a novel as a path which turns at each full stop].",
+     "doi": null,
+     "url": "https://www.stefanieposavec.com/writing-without-words"
     }
    ]
   },
@@ -965,6 +970,11 @@
      "citation": "Brill, E. (1992). A simple rule-based part of speech tagger. In Proceedings of the Third Conference on Applied Natural Language Processing (pp. 152–155). Association for Computational Linguistics. [Its lexicon, as packaged in github.com/words/brill under the MIT licence, is optional data in this page.]",
      "doi": "10.3115/974499.974526",
      "url": "https://doi.org/10.3115/974499.974526"
+    },
+    {
+     "citation": "van Ham, F., Wattenberg, M., & Viégas, F. B. (2009). Mapping text with Phrase Nets. IEEE Transactions on Visualization and Computer Graphics, 15(6), 1169–1176.",
+     "doi": null,
+     "url": null
     }
    ]
   },
@@ -1265,6 +1275,11 @@
      "citation": "Brath, R., & Banissi, E. (2016). Using typography to expand the design space of data visualization. She Ji: The Journal of Design, Economics, and Innovation, 2(1), 59–87.",
      "doi": "10.1016/j.sheji.2016.05.003",
      "url": "https://doi.org/10.1016/j.sheji.2016.05.003"
+    },
+    {
+     "citation": "Wattenberg, M., & Viégas, F. B. (2008). The Word Tree, an interactive visual concordance. IEEE Transactions on Visualization and Computer Graphics, 14(6), 1221–1228.",
+     "doi": null,
+     "url": null
     }
    ]
   },

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.27.0 (2026-11-26)
+
+- Length & rhythm: "The draft as a line", a sentence drawing after Posavec. Segment length is the word count, a right turn at each full stop, colour by length band, a dot at each new paragraph, the starting draft behind.
+- Term tracker: "Word tree" for any of the twelve most used terms or a selected term, in either direction, up to six words a branch and sixty uses, with single-child runs merged.
+- Dense phrases: "Phrase net" for "X of Y", "X and Y" and "X is Y", found by pattern over the word stream, drawn as rows and arcs in a fixed order; up to 28 words.
+- Rule-based counts; no notes.
+
 ## 0.26.0 (2026-11-26)
 
 After Brath & Banissi (2016). Rule-based; no notes.
