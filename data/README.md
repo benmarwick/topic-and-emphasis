@@ -42,6 +42,12 @@ The licence terms above are as stated by the authors on the linked pages and as 
 the `lexopsdata` package. If you plan any commercial use of this application, remove
 `data/norms/`. The page works without it.
 
+## `phrases/` — optional, fetched only when a reader presses “Load the phrase bank”
+
+`academic-phrases.json`: about 590 sentence frames for research papers, converted from the Emacs package
+[nashamri/academic-phrases](https://github.com/nashamri/academic-phrases) (GPL-3.0-or-later), which was made from
+Adrian Wallwork's "Useful Phrases" with the permission of Springer Nature and the author. See `phrases/README.md`.
+
 ## Not included
 
 The **Academic Formulas List** (Simpson-Vlach & Ellis 2010, *Applied Linguistics*, 31(4),

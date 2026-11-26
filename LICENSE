@@ -52,6 +52,15 @@ McCormick & Keuleers 2019) are licensed CC BY-NC-SA 4.0. They are for
 non-commercial use, are loaded only on request, and can be deleted without
 affecting the rest of the application.
 
+data/phrases/academic-phrases.json is NOT under the MIT licence. It is a JSON
+conversion of the phrase table in the Emacs package academic-phrases, Copyright
+(C) 2017-2018 Nasser Alshammari, licensed under the GNU General Public License
+version 3 or later (text in data/phrases/LICENSE-GPL-3.0.txt). The package
+states that it is based on Adrian Wallwork's "English for Writing Research
+Papers: Useful Phrases" and was made with the permission of Springer Nature and
+Adrian Wallwork. The file is kept apart from the application, is fetched only on
+request, and can be deleted without affecting the rest of the application.
+
 src/syllables.txt, and the copy of it in index.html, holds syllable counts taken
 from the CMU Pronouncing Dictionary, Copyright (C) 1993-2015 Carnegie Mellon
 University, distributed under a BSD 2-clause licence whose full text is in

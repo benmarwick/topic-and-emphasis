@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.16.0 (2026-11-26)
+
+- Phrases tab in the workbench: about 590 sentence frames in 57 groups, by paper section, by search, or by the paragraph's job and the move the sentence signals. Each blank is a choice; "Put in the box" adds the frame at the cursor.
+- The frames are optional data in `data/phrases/` (GPL-3.0-or-later, from nashamri/academic-phrases, made from Wallwork's "Useful Phrases" with the permission of Springer Nature and the author). They are not compiled into the page. `tools/make_phrases.py` rebuilds the file.
+- Notes that link to the Phrasebank and UEFAP also open the matching frames.
+- References rechecked: MICUSP is now cited as the corpus itself (University of Michigan 2009); added Cotos, Huffman & Link 2020 on the Research Writing Tutor, Wallwork 2016, and the academic-phrases package.
+- Guide: what the Research Writing Tutor and AcaWriter do, and what this page does and does not share with them.
+- `tests/phrases.test.js`.
+
 ## 0.15.0 (2026-11-26)
 
 - Notes that link to the Academic Phrasebank now also link to the matching rhetorical-function page of UEFAP.
