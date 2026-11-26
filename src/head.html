@@ -635,7 +635,8 @@ a.tool:hover{color:var(--ink);border-color:var(--ink3)}
 .para.blk pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:400 12px/1.5 var(--f-mono);color:var(--ink3);max-height:9.5em;overflow:auto}
 .para.blk.k-quote pre,.para.blk.k-refs pre{font-family:var(--f-text);font-size:.86em}
 .ktag{display:block;font:500 10px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px;cursor:help}
-.stages{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 2px}.stages .chip{font-size:12px;padding:3px 9px}.stages .hint{flex-basis:100%;margin:4px 0 0;font-size:12px;line-height:1.4}
+.stages{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 2px}.stages .chip b{font:500 11px var(--f-mono);margin-left:3px;color:var(--ink2)}.stages .chip.nx{outline:1.5px dashed var(--teal);outline-offset:1px}.stages .chip.done span{color:var(--teal);font-weight:700}
+.panel.stagebar{border-left:3px solid var(--teal)}.panel.stagebar p{margin:.3em 0 .5em;max-width:70ch}.panel.stagenudge{border-left:3px solid var(--amber);padding-top:8px;padding-bottom:8px}.panel.stagenudge p{margin:0;font-size:13px}.stages .chip{font-size:12px;padding:3px 9px}.stages .hint{flex-basis:100%;margin:4px 0 0;font-size:12px;line-height:1.4}
 body.dropping::after{content:"Drop the file to open it";position:fixed;inset:10px;z-index:80;display:grid;place-items:center;border:2px dashed var(--teal);border-radius:10px;background:color-mix(in srgb,var(--sheet) 88%,transparent);font:600 16px var(--f-ui);color:var(--ink);pointer-events:none}
 .tn-lin{background:color-mix(in srgb,var(--teal) 16%,transparent);border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
 .linkish{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}

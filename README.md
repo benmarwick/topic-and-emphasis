@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.10.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.11.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.10.0},
+  version = {0.11.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -158,7 +158,7 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 - **Open a file.** "Open a file", or drag a file onto the page: Word (.docx), Markdown, Quarto (.qmd), R Markdown, LaTeX and plain text. A .docx file is unpacked in the browser by about forty lines of code in the page, so there is no upload and no added library; headings are kept, and footnotes, comments and tracked deletions are left out.
 - **Parts that are not prose are set aside.** The settings block of a Quarto file, code blocks, displayed equations, layout markup, block quotations and the reference list stay in the text, greyed and labelled, and no lens reads them. Inline code, inline maths, web addresses and LaTeX references are not counted as words. Nothing is removed, so the text you copy back out is the text you put in.
 - **Reference list check** (Mechanical checks). The list under a References or Bibliography heading is compared with the author-and-year citations in the text: cited but not listed, a year that differs, and listed but never cited.
-- **Three stages of revising.** Buttons above the lens list narrow the page to Argument, Flow or Polish, hiding the other lenses and their notes.
+- **Four stages of revising** (0.11.0). Buttons above the lens list narrow the page to Argument, Flow, Polish or Calibration, hiding the other lenses and their notes. Each button shows its open notes. Pressing "I have reviewed this stage" ticks it, outlines the next one and records the order in the portfolio. Nothing is locked: one line appears if you start polishing while the argument stage is unreviewed and still has open notes, and you can carry on.
 - **Revision portfolio** (Before & after). The receipt, the research profile at the start and now, every rewritten sentence with its kind of change, the notes weighed and kept with the reasons given, and a written reflection, copied as Markdown or JSON.
 - **Stress position.** A short bracketed aside at the end of a sentence is now set aside like a citation, and a few more weak endings are recognised ("in part", "to some degree", "on the whole").
 - 0.9.2 and 0.9.3: better main-verb and passive rules with a probe test, and "this + noun" counted as pointing back.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.11.0 (2026-11-26)
+
+- Four stages of revising: Claim strength and Hedging move from stage 1 to a new stage 4, Calibration.
+- Each stage button shows its open notes; "I have reviewed this stage" ticks it and outlines the next; a "Next" button leads on. Nothing is locked.
+- One line of advice when a stage 3 or 4 lens is opened while stage 1 is unreviewed and has open notes. It can be dismissed.
+- The portfolio records which stages were reviewed and in what order.
+
 ## 0.10.0 (2026-11-26)
 
 - Open a file or drag one onto the page: .docx (unpacked in the browser, no library), .md, .qmd, .Rmd, .tex, .txt.
