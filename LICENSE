@@ -30,3 +30,11 @@ Word List (version 1.2) by Charles Browne, Brent Culligan and Joseph Phillips
 (https://www.newgeneralservicelist.com/). They are licensed under the Creative
 Commons Attribution-ShareAlike 4.0 International licence (CC BY-SA 4.0), not
 under the MIT licence above.
+
+The files in model/ are used only by the optional meaning model and keep their
+own licences: the all-MiniLM-L6-v2 sentence-embedding model (ONNX conversion
+published as Xenova/all-MiniLM-L6-v2, from sentence-transformers/all-MiniLM-L6-v2)
+is licensed under Apache-2.0; Transformers.js (model/lib/transformers.min.js) is
+licensed under Apache-2.0; and ONNX Runtime Web
+(model/lib/ort-wasm-simd-threaded.jsep.wasm, and the parts of it bundled in
+Transformers.js) is licensed under the MIT licence by Microsoft Corporation.

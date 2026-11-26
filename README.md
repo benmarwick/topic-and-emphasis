@@ -3,11 +3,11 @@
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Browsers](https://img.shields.io/badge/browsers-Chrome%20%7C%20Edge%20%7C%20Safari%20%7C%20Firefox-brightgreen)
-![No AI](https://img.shields.io/badge/feedback-rule--based%2C%20no%20AI-informational)
+![Rule-based](https://img.shields.io/badge/feedback-rule--based-informational)
 
 **Topic & Emphasis** is a browser workbench for revising **research writing**. Paste a draft and it marks where the structure of each sentence and paragraph meets, or misses, what readers expect, following Gopen and Swan's ["The Science of Scientific Writing"](https://www.americanscientist.org/node/924) (1990). You then rewrite each sentence in place and watch the notes clear. It is written for **students working on their own**, in the social sciences in particular.
 
-Every mark comes from a **fixed rule**. The same text always gets the same marks, **no AI model is involved**, and **nothing you paste leaves your browser**. The whole application is a **single HTML file** that works offline once it has loaded.
+Every mark and note comes from a **fixed rule**. The same text always gets the same marks, and **nothing you paste leaves your browser**. The application is a **single HTML file** that works offline once it has loaded. An **optional meaning model**, off by default, adds comparisons of sentences by meaning; it is a small language model that also runs entirely in the browser (see below).
 
 **Use it online:** <https://benmarwick.github.io/topic-and-emphasis/>
 
@@ -19,7 +19,7 @@ Every mark comes from a **fixed rule**. The same text always gets the same marks
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.1.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.2.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.1.0},
+  version = {0.2.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -43,7 +43,7 @@ Please also cite the article the workbench is built on:
 
 **Option A: use it online.** Open <https://benmarwick.github.io/topic-and-emphasis/>. Nothing to install.
 
-**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not.
+**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not. The optional meaning model is not available in a copy saved this way, because it needs the files in `model/`.
 
 **Option C: build from source.** The page is assembled from the pieces in `src/` by a short Python script with no dependencies.
 
@@ -131,6 +131,17 @@ You do not need to clear every note. A note is a question about the sentence, an
 
 The Overview carries a **Research profile**: 17 counts that writing researchers use to describe a text, each recomputed here by a fixed rule and each shown with the publication it comes from and a line on how to read it. They describe a draft. None is a score and none has a target. The same counts appear in a "Research measure" box inside the lens they belong to, with what the research found and how the rule-based count differs from the published one.
 
+### Meaning model (optional)
+
+Switched off unless the student turns it on. It loads a small sentence-embedding model, all-MiniLM-L6-v2 ([Reimers & Gurevych 2019](https://doi.org/10.18653/v1/D19-1410); [Wang et al. 2020](https://papers.nips.cc/paper/2020/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html)), from the `model/` folder and compares sentences by meaning, following the methods set out by [Kjell, Giorgi & Schwartz (2023)](https://doi.org/10.1037/met0000542). It is a trained language model and therefore a form of AI. It runs in the browser, generates no text, and gives the same result for the same text. The first use downloads about 45 MB.
+
+| Lens | What the model adds |
+|---|---|
+| Topic grid | Sentences that are close in meaning to the one before but repeat none of its words; how close each paragraph is to the one before, and the weakest join in the draft |
+| Reverse outline | The sentence closest in meaning to the rest of its paragraph, and whether it sits at an edge; the sentence that best carries the point you stated |
+
+The model does not see negation or logic, and its scores only rank things within one draft, so nothing it reports is a pass or a fail.
+
 ### Working on a draft
 
 | Feature | What it does |
@@ -149,7 +160,7 @@ Each citation above links to its DOI or to the full text. Four have neither: thr
 
 ## ⚠️ Limits
 
-The rules read structure and have no idea what your sentences mean. There is no parser, no part-of-speech tagger and no dictionary, so some sentences will be misjudged, synonyms are not recognised, and misspellings are not found. The working thresholds (for example, twelve words before the main verb, or five matching words in a row) are this tool's own values and are labelled as such in the application. They are not published norms.
+The rules read structure and have no idea what your sentences mean. There is no parser, no part-of-speech tagger and no dictionary, so some sentences will be misjudged, synonyms are not recognised (unless the meaning model is on), and misspellings are not found. The working thresholds (for example, twelve words before the main verb, or five matching words in a row) are this tool's own values and are labelled as such in the application. They are not published norms.
 
 ---
 
@@ -163,7 +174,7 @@ The rules read structure and have no idea what your sentences mean. There is no 
 
 ## 🤖 Generative AI Disclosure
 
-The code of this application was written with the assistance of an AI coding tool (Claude, by Anthropic), under the direction of the developer, who chose the sources, set the design and the constraints, and is responsible for the result. The application itself contains no AI: every annotation it makes comes from a fixed rule in `src/engine.js`.
+The code of this application was written with the assistance of an AI coding tool (Claude, by Anthropic), under the direction of the developer, who chose the sources, set the design and the constraints, and is responsible for the result. Every mark and note the application makes comes from a fixed rule in `src/engine.js`. The one exception is the optional meaning model described above, which is off by default and labelled as AI wherever its results appear.
 
 ---
 
@@ -172,3 +183,5 @@ The code of this application was written with the assistance of an AI coding too
 [MIT](LICENSE) © 2026 Ben Marwick.
 
 The application includes the **New General Service List** and the **New Academic Word List** (version 1.2 of each) by Charles Browne, Brent Culligan and Joseph Phillips, under a [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) licence. The typefaces (IBM Plex and Newsreader, SIL Open Font License) are loaded from Google Fonts when the page opens and are not included in this repository.
+
+The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT).

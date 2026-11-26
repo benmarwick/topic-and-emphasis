@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Marwick
     given-names: Ben
-version: 0.1.0
+version: 0.2.0
 date-released: 2026-11-25
 license: MIT
 repository-code: "https://github.com/benmarwick/topic-and-emphasis"
@@ -13,7 +13,8 @@ abstract: >-
   A single-page browser application that marks a pasted draft with rule-based
   annotations following Gopen and Swan's "The Science of Scientific Writing"
   (1990) and related guidance, so that students can revise their own writing.
-  Every mark comes from a fixed rule; no AI model is involved.
+  Every mark comes from a fixed rule. An optional sentence-embedding model,
+  off by default, adds comparisons by meaning and runs in the browser.
 keywords:
   - academic writing
   - revision

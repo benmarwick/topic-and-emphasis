@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 (2026-11-25)
+
+- Optional meaning model, off by default: a small sentence-embedding model (all-MiniLM-L6-v2) that runs in the browser from the files in `model/`.
+- Topic grid: sentences linked in meaning only, closeness between neighbouring paragraphs, and the weakest join.
+- Reverse outline: the central sentence of each paragraph, and the sentence that best carries a stated point.
+- The header says "no AI" only while the model is off.
+
 ## 0.1.0 (2026-11-25)
 
 First version in this repository.
