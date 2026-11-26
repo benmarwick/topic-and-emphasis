@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.19.0 (2026-11-26)
+
+- Signal phrases, order of moves: notes for a gap signalled before the context (introduction, paper) and, in an abstract, for a method before the aim, a result before the method, and an implication before the result. The existing note for an aim before the gap is unchanged.
+- Signal phrases, position of moves: notes for a paper whose aim is first signalled late or which signals no closing move near the end, an introduction that does not end on its aim, and an abstract that does not close on a finding.
+- Signal phrases: the moves as rows, one column a sentence; for an introduction the rows are Swales's three moves.
+- These apply only when the kind of text is chosen. `tests/moves.test.js`.
+
 ## 0.18.0 (2026-11-26)
 
 - `data/lists/awl.json` and `data/lists/afl.json`: the Academic Word List (570 headwords, ten sublists, families) and the Academic Formulas List (607 formulas with list, rank, frequency per million in speech and writing, and formula teaching worth), as word strings and numbers only. Loaded by one button in Vocabulary level and in Signal phrases; a pasted copy still works.
