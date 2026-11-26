@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.26.0 (2026-11-26)
+
+After Brath & Banissi (2016). Rule-based; no notes.
+
+- Action in verbs: "What your sentences do", a mosaic of main verbs in four groups, weight by count, italic when mostly passive.
+- Topic position: "Whose story the draft tells", a mosaic of grammatical subjects in five groups. Subjects are merged by stem; a head word that cannot be a subject is left out and counted.
+- Term tracker: "Term index, in type": repeated terms in alphabetical order, weight by use, small capitals for claim words, italics for terms confined to one paragraph.
+- Load map, typographic view: two more mappings (the parts of each sentence; load by sentence), a button to flip to plain text, and for weight mappings an option to hold every word in place by drawing weight as stroke.
+- `E.isNom` and `E.verbBase` are exported.
+
 ## 0.25.0 (2026-11-26)
 
 Five pictures made of the text itself, after Brath (2020) and Brath & Banissi (2016). Rule-based counts; no notes.

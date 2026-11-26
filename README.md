@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.25.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.26.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.25.0},
+  version = {0.26.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -155,6 +155,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Mosaics, a term index, and more typographic mappings** (0.26.0), after [Brath & Banissi (2016)](https://doi.org/10.1016/j.sheji.2016.05.003). *What your sentences do* (Action in verbs): every main verb as a word, grouped as be and have, reporting, light verbs and other actions, heavier the more sentences it leads and italic when mostly passive. *Whose story the draft tells* (Topic position): every grammatical subject as a word, grouped as I and we, pointing words, other pronouns, actions named as things, and people and things named. *Term index, in type* (Term tracker): the repeated terms in alphabetical order, heavier for more uses, small capitals for claim words, italics for a term that stays in one paragraph. *Typographic view* (Load map) gains *the parts of each sentence* (opening italic, subject in small capitals, verb heavy), which also prints in black and white, and *load, sentence by sentence*; for the weight mappings the words can be held in place by drawing weight as stroke, so that flipping to plain text moves nothing.
 
 - **Five pictures made of text** (0.25.0), after Brath (2020, *Visualizing with Text*) and [Brath & Banissi (2016)](https://doi.org/10.1016/j.sheji.2016.05.003). *How your sentences open* (Topic position): a stem-and-leaf plot of words, each stem a word that opens more than one sentence and each leaf the words that follow. *Repetition, drawn* (Term tracker): each paragraph as a line of words with an arc from each use of a content word to its next. *Cadence without the words* (Length & rhythm): one square a sentence, darker the longer it is, and the punctuation alone. *Outline with proportions* (Reverse outline): each paragraph's first sentence or stated point, with a quantity (share of words, open notes, wait for the verb, claim words) set into the line as a length of heavy type. All are rule-based counts and none makes a note.
 

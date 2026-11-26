@@ -1439,5 +1439,5 @@ function docx(blocks,comments,meta){meta=meta||{};comments=comments||[];
     {name:'_rels/.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="word/document.xml"/></Relationships>'},
     {name:'word/document.xml',data:doc},{name:'word/styles.xml',data:styles},{name:'word/comments.xml',data:cm},
     {name:'word/_rels/document.xml.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/styles" Target="styles.xml"/><Relationship Id="rId2" Type="'+R+'/comments" Target="comments.xml"/></Relationships>'}]);}
-return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,parsePos,pos,wordTier,syl,sylGuess,docx,crc32,parseWordList,parseFormulas,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
+return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,parsePos,pos,wordTier,isNom,verbBase:w=>{const f=FORMS.get(String(w||'').toLowerCase());return f?f.b:String(w||'').toLowerCase();},syl,sylGuess,docx,crc32,parseWordList,parseFormulas,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();
