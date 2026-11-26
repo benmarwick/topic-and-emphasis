@@ -366,7 +366,42 @@ table.cmp.pm{width:100%}table.cmp.pm td{vertical-align:middle}table.cmp.pm td.pm
 .pm-c{white-space:nowrap}.pm-c i{display:inline-block;width:8px;height:8px;margin-right:2px;border:1px solid var(--ink3);vertical-align:middle}.pm-c i.on{background:var(--ink2);border-color:var(--ink2)}
 .pm-p{font-family:var(--f-text);min-width:12em}
 .arc{position:relative;height:36px;margin-bottom:-1px}.arc svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.arc-p,.arc-t{fill:none;stroke:var(--ink3);stroke-width:1.2;vector-effect:non-scaling-stroke}.arc-p.far,.arc-p.far~.arc-t{stroke:var(--amber)}
+.arc-p,.arc-t{fill:none;stroke:var(--ink3);stroke-width:1.2;vector-effect:non-scaling-stroke}.arc svg.far .arc-p,.arc svg.far .arc-t{stroke:var(--amber)}
+/* glow: a soft light on what the page wants noticed. It is still, so it stays even when motion is off. */
+.arc svg.far{filter:drop-shadow(0 0 2.5px color-mix(in srgb,var(--amber) 60%,transparent))}
+.ld-l.in{filter:drop-shadow(0 0 1.5px color-mix(in srgb,var(--blue) 80%,transparent))}.ld-d.in{filter:drop-shadow(0 0 2px color-mix(in srgb,var(--blue) 85%,transparent))}
+.sl-l.dn{filter:drop-shadow(0 0 2px color-mix(in srgb,var(--teal) 65%,transparent))}
+.sk-halo{fill:color-mix(in srgb,var(--blue) 20%,transparent)}
+.sk-hit,.ld-hit,.lg-row{transition:fill .15s,background-color .15s}
+/* movement: each picture draws itself once on arrival; nothing loops except the arc of a sentence that is still far apart */
+@media (prefers-reduced-motion:no-preference){
+:root:not(.still) .vizin .sk-b{transform-box:fill-box;transform-origin:50% 100%;animation:vGrowY .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
+:root:not(.still) .vizin .sk-n{transform-box:fill-box;transform-origin:50% 0;animation:vGrowY .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d,0ms) + 320ms)}
+:root:not(.still) .vizin .sk-n.top{animation:vGrowY .45s cubic-bezier(.2,.8,.2,1) both,vPulse 1s ease-in-out 2;animation-delay:calc(var(--d,0ms) + 320ms),1.3s}
+:root:not(.still) .vizin .sk-halo{animation:vFade .6s ease-out both .5s}
+:root:not(.still) .vizin .lm-row .lm-strip{animation:vWipe .75s cubic-bezier(.3,.7,.2,1) both;animation-delay:var(--d,0ms)}
+:root:not(.still) .vizin .ld-l,:root:not(.still) .vizin .sl-l{stroke-dasharray:1;animation:vDraw .6s ease-out both;animation-delay:var(--d,0ms)}
+:root:not(.still) .vizin .ld-d,:root:not(.still) .vizin .ld-o{transform-box:fill-box;transform-origin:50% 50%;animation:vPop .32s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--d,0ms) + 420ms)}
+:root:not(.still) .vizin .ld-s,:root:not(.still) .vizin .ld-t,:root:not(.still) .vizin .ld-e{animation:vFade .4s ease-out both}
+:root:not(.still) .vizin .lg-row{animation:vRise .38s ease-out both;animation-delay:var(--d,0ms)}
+:root:not(.still) .vizin .lg-m i{transform-origin:50% 50%;animation:vGrowX .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d,0ms) + 120ms)}
+:root:not(.still) .vizin .pm-w i,:root:not(.still) .vizin td.cb i{transform-origin:0 50%;animation:vGrowX .6s cubic-bezier(.2,.8,.2,1) both}
+:root:not(.still) .vizin .pm-c i{animation:vPop .3s cubic-bezier(.3,1.5,.5,1) both;animation-delay:var(--d,0ms)}
+:root:not(.still) .vizin .sl-t{animation:vFade .45s ease-out both .5s}
+:root:not(.still) .vizin .spark{animation:vWipe .7s ease-out both .1s}
+:root:not(.still) .arc svg.strain{animation:vStrain 2.8s ease-in-out infinite}
+:root:not(.still) .anat.met .a-subj,:root:not(.still) .anat.met .a-verb{animation:vMet 1.1s ease-out}
+@keyframes vGrowY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes vGrowX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes vWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes vDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes vPop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+@keyframes vFade{from{opacity:0}to{opacity:1}}
+@keyframes vRise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes vPulse{50%{opacity:.35}}
+@keyframes vStrain{0%,100%{opacity:1;filter:drop-shadow(0 0 2px color-mix(in srgb,var(--amber) 55%,transparent))}50%{opacity:.62;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--amber) 85%,transparent))}}
+@keyframes vMet{0%{filter:brightness(1.9) saturate(1.5)}35%{filter:brightness(1.5) saturate(1.3)}100%{filter:none}}
+}
 .arc-n{position:absolute;transform:translateX(-50%);font:500 10px/1 var(--f-mono);color:var(--ink3);padding:0 3px}.arc-n.far{color:var(--amber)}
 #printArea{display:none}
 @media print{body.printing>*{display:none!important}body.printing>#printArea{display:block!important}body.printing{background:#fff!important;padding:0!important}}

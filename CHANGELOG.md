@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.1 (2026-11-26)
+
+- The pictures draw themselves in once on arriving at a lens or a new text: bars rise, links are drawn, rows settle. Nothing replays while you type.
+- The subject-to-verb arc moves from its old shape to its new one as you edit, glows amber from eight words apart and pulses slowly from twelve. When subject and verb meet, both flash once.
+- A soft glow marks links that land in the opening, falling lines in the slopegraph, and the selected sentence in the skyline.
+- "Still pictures (no animation)" under Reading comfort. The device's reduce-motion setting is also respected.
+
 ## 0.14.0 (2026-11-26)
 
 - Overview: "The draft at a glance", a strip with one column a sentence, length above the line and open notes below.
