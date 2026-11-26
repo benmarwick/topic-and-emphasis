@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.8.1) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.9.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.8.1},
+  version = {0.9.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -132,7 +132,7 @@ You do not need to clear every note. A note is a question about the sentence, an
 
 ### Research profile
 
-The Overview carries a **Research profile**: 22 counts that writing researchers use to describe a text, each recomputed here by a fixed rule and each shown with the publication it comes from and a line on how to read it. They describe a draft. None is a score and none has a target. The same counts appear in a "Research measure" box inside the lens they belong to, with what the research found and how the rule-based count differs from the published one.
+The Overview carries a **Research profile**: 23 counts, grouped under Structure, Vocabulary and density, Cohesion, and Stance and care. Beside eight of them is a sparkline, a line the size of a word that draws the measure for every sentence, so a figure also shows where it peaks. The profile holds that writing researchers use to describe a text, each recomputed here by a fixed rule and each shown with the publication it comes from and a line on how to read it. They describe a draft. None is a score and none has a target. The same counts appear in a "Research measure" box inside the lens they belong to, with what the research found and how the rule-based count differs from the published one.
 
 ### Added in 0.7.0: more measures, word lists and word norms
 
@@ -152,6 +152,15 @@ The Overview carries a **Research profile**: 22 counts that writing researchers 
 None of these raises a note except GRIM, which asks a question. The word norms keep their authors' non-commercial licences; see [`data/README.md`](data/README.md). The Academic Formulas List is not included, because it carries no open licence. References with no link above are books, or articles whose DOI could not be confirmed; their full details are in the page's reference list.
 
 `tests/readability/` holds five fixed passages, this page's figures for them, and two scripts (Python with textstat, R with quanteda.textstats; [Benoit et al. 2018](https://doi.org/10.21105/joss.00774)) that record what those calculators give for the same passages, because readability calculators are known to disagree.
+
+### Added in 0.9.0: the Load map, lexical density, and sparklines
+
+- **Load map** (a new lens beside the Overview). Three pictures of the whole draft, built on Tufte's small multiples, sparklines and range-frame (Tufte 1983, 2006):
+  - *Where the load falls*: one column per sentence and one strip per measure (length, wait for the verb, lexical density, long words, new words, nouns made from verbs), on a shared axis. The tallest fifth of each strip is coloured, and a last strip counts how many loads each sentence carries at once.
+  - *Structure and vocabulary*: every sentence as a dot, by its length and its density, with the middle of each scale marked, so the draft's long-but-plain sentences separate from its short-but-dense ones. The two-way view follows [Jenset (2026)](https://communities.springernature.com/posts/the-myth-of-the-unreadable-humanities-and-social-sciences).
+  - *Paragraph by paragraph*: one table row per paragraph, with a sparkline of its sentence lengths and of its waits for the verb.
+- **Lexical density** (Phrase load, Research profile, MCP): the share of words that carry content, for the draft, each paragraph and each sentence ([Johansson 2008](https://journals.lub.lu.se/LWPL/article/view/2273), after Ure 1971 and Halliday 1985). It is counted without a part-of-speech tagger, and on the CLEAR passages it had no relation to judged ease (−0.02), so the page presents it as packing and not as difficulty.
+- **Citation keys** (0.8.1): `@Marwick2026`, `[@a; @b, p. 4]` and LaTeX `\cite` commands are read as citations.
 
 ### Added in 0.8.0: cleaner readability figures, science jargon, and a check on the counts
 

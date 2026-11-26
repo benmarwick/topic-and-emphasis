@@ -13,6 +13,39 @@
    "sources": []
   },
   {
+   "key": "load",
+   "name": "Load map",
+   "group": "Overview",
+   "reads": "The whole draft on one screen, sentence by sentence. Six small strips show how long each sentence is, how long it makes the reader wait for the verb, how densely it packs content, how many long words it uses, how much of it is new, and how many of its actions sit in nouns. A second picture places every sentence by its length and its density. A table gives each paragraph a line of its own.",
+   "to_revise": "Read down the columns, not along the rows. One tall bar is ordinary. A sentence that is tall in three or four strips at once is carrying too much, and is the one to open first. Tap any column, dot or row to open the sentence behind it.",
+   "marks": [],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "Every strip is a count made by the rules of the other lenses, so it inherits their mistakes. The coloured bars are the tallest fifth of this draft, whatever its level: a draft of short, plain sentences still has a tallest fifth. Lexical density is counted without a part-of-speech tagger, so it is not comparable with published figures. The strips say where to look. They do not say the sentence is wrong.",
+   "sources": [
+    {
+     "citation": "Tufte, E. R. (1983). The Visual Display of Quantitative Information. Cheshire, CT: Graphics Press. [Small multiples, the range-frame and the dot-dash-plot.]",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Tufte, E. R. (2006). Beautiful Evidence. Cheshire, CT: Graphics Press. [Sparklines: intense, simple, word-sized graphics.]",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Johansson, V. (2008). Lexical diversity and lexical density in speech and writing: A developmental perspective. Lund University, Department of Linguistics and Phonetics, Working Papers, 53, 61–79.",
+     "doi": null,
+     "url": "https://journals.lub.lu.se/LWPL/article/view/2273"
+    },
+    {
+     "citation": "Jenset, G. (2026, March 27). The myth of the ‘unreadable’ humanities and social sciences. Research Communities by Springer Nature [post, with data on Figshare].",
+     "doi": "10.6084/m9.figshare.31860601",
+     "url": "https://doi.org/10.6084/m9.figshare.31860601"
+    }
+   ]
+  },
+  {
    "key": "sv",
    "name": "Subject → verb",
    "group": "Gopen & Swan’s principles",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0 (2026-11-26)
+
+- New lens, Load map: small-multiple strips of six measures by sentence, a structure-and-vocabulary scatter with range-frame axes, and a paragraph table with sparklines.
+- Lexical density for the draft, each paragraph and each sentence, in Phrase load, the Research profile and the MCP profile.
+- Research profile grouped under Structure, Vocabulary and density, Cohesion, and Stance and care, with a sparkline beside eight of its figures. Before-and-after figures are now matched by name.
+
 ## 0.8.1 (2026-11-26)
 
 - Citation keys in the style of pandoc, Quarto and R Markdown (`@Marwick2026`, `[@a; @b, p. 4]`, `-@a`) and LaTeX `\cite` commands are read as citations. A bracketed key is not counted as words, and a key is never taken for a term.

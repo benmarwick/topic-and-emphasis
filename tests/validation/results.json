@@ -141,11 +141,16 @@
    "measure": "Neighbouring sentences sharing a content word (%)",
    "r": -0.06,
    "norms": false
+  },
+  {
+   "measure": "Lexical density (%)",
+   "r": -0.02,
+   "norms": false
   }
  ],
  "combined": {
   "flesch_reading_ease_alone": 0.55,
-  "all_counts_without_word_norms": 0.68,
+  "all_counts_without_word_norms": 0.69,
   "all_counts_with_word_norms": 0.73
  }
 }

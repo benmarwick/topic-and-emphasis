@@ -34,11 +34,12 @@ The passages are reading texts for school pupils, not research writing, so read 
 | Negatives per 1,000 words | +0.10 |
 | Word variety, MATTR | −0.09 |
 | Neighbouring sentences sharing a content word (%) | −0.06 |
+| Lexical density (%) | −0.02 |
 
 Combined in a linear model and checked on passages held out five times over:
 
 | Counts used | Correlation of predicted with judged ease |
 |---|---|
 | Flesch reading ease alone | 0.55 |
-| Every count above except the word norms | 0.68 |
+| Every count above except the word norms | 0.69 |
 | Every count above | 0.73 |

@@ -27,7 +27,7 @@ const lists = 'const NGSL_RAW=' + JSON.stringify(read('src/ngsl.txt').split(/\s+
 const E = new Function(lists + read('src/engine.js') + ';return E;')();
 const GUIDE = JSON.parse(read('mcp/guide.json')).lenses;
 const LENS = Object.fromEntries(GUIDE.map(l => [l.key, l]));
-const NOTE_LENSES = GUIDE.filter(l => !['overview', 'compare', 'practice', 'skeleton', 'mviews'].includes(l.key)).map(l => l.key);
+const NOTE_LENSES = GUIDE.filter(l => !['overview', 'load', 'compare', 'practice', 'skeleton', 'mviews'].includes(l.key)).map(l => l.key);
 
 const r1 = v => v == null ? null : Math.round(v * 10) / 10;
 const pct = (a, b) => b ? Math.round(1000 * a / b) / 10 : null;
@@ -79,6 +79,7 @@ function profile(A) {
     word_variety: { mtld: R.lex.mtld == null ? null : r1(R.lex.mtld), mattr_50: R.lex.mattr == null ? null : Math.round(R.lex.mattr * 100) / 100, words_counted: R.lex.n },
     wait_for_the_verb: { median_words_before_main_verb: R.pre.median, longest: R.pre.max, longest_is_sentence: R.pre.maxI >= 0 ? R.pre.maxI + 1 : null },
     readability_formulas: X ? { flesch_reading_ease: r1(X.fre), flesch_kincaid_grade: r1(X.fk), ari_grade: r1(X.ari), smog_grade: r1(X.smog), coleman_liau_grade: r1(X.cl), gunning_fog_grade: r1(X.fog), lix: r1(X.lix), words_longer_than_six_letters_pct: r1(X.long), dale_chall_1948_score: X.dale ? r1(X.dale.score) : null, words_off_the_dale_chall_list_pct: X.dale ? r1(X.dale.pdw) : null, counted_on: 'the cleaned text: bracketed citations, numbers and abbreviations dropped, hyphenated words split', tokens_set_aside: X.cut == null ? null : X.cut, on_the_text_as_typed: X.raw ? { flesch_reading_ease: r1(X.raw.fre), flesch_kincaid_grade: r1(X.raw.fk), ari_grade: r1(X.raw.ari), smog_grade: r1(X.raw.smog), coleman_liau_grade: r1(X.raw.cl), gunning_fog_grade: r1(X.raw.fog), lix: r1(X.raw.lix) } : null } : null,
+    lexical_density: R.ld && R.ld.median != null ? { content_words_pct_of_all_words: r1(R.ld.all), lowest_sentence_pct: r1(R.ld.min), highest_sentence_pct: r1(R.ld.max), densest_sentence: R.ld.maxI >= 0 ? R.ld.maxI + 1 : null, note: 'counted without a part-of-speech tagger; not comparable with published figures' } : null,
     general_science_jargon: R.jargon ? { share_of_words_pct: r1(100 * R.jargon.share), uses: R.jargon.n, different_words: R.jargon.types } : null,
     word_list_coverage: R.cover ? { running_words: R.cover.n, on_ngsl_or_nawl_pct: pct(R.cover.ngsl + R.cover.nawl, R.cover.n), with_proper_nouns_counted_as_known_pct: pct(R.cover.ngsl + R.cover.nawl + R.cover.proper, R.cover.n), on_neither_list: R.cover.off, proper_nouns: R.cover.proper } : null,
     thematic_progression: R.prog ? { sentences_after_the_first_in_their_paragraph: R.prog.n, same_topic_as_sentence_before: R.prog.constant, opens_from_close_of_sentence_before: R.prog.linear, returns_to_an_earlier_sentence: R.prog.ret, opens_with_a_pronoun_alone: R.prog.ref, opens_on_words_new_to_the_paragraph: R.prog.fresh } : null,

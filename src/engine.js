@@ -1054,6 +1054,14 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
             tip:'Check the mean and the N against your data. If the scores are not whole numbers, or the scale averages several items, mark the note as checked.'});
           (st.marks.checks||(st.marks.checks=[])).push({a,b,cls:'hl hb-olive',f:id});}});
       R.grim={tested:gt,flagged:gf};}
+    /* sentence-by-sentence series for the load map, and lexical density: the share of words that carry content (Ure 1971) */
+    {const ser={len:[],pre:[],ld:[],long:[],fresh:[],nom:[],conn:[],pas:[]};let cwT=0;
+      sents.forEach(st=>{let lg=0,nm=0;st.T.forEach(tk=>{if(!tk.w||tk.cite)return;if((tk.t.match(/\p{L}/gu)||[]).length>6)lg++;if(isNom(tk.l))nm++;});
+        const nw=st.nW||1,fr=st.cw.filter(c=>!c.old).length;st.ld=st.cw.length/nw;cwT+=st.cw.length;
+        ser.len.push(st.nW);ser.pre.push(st.preV==null?null:st.preV);ser.ld.push(st.nW>=5?100*st.ld:null);ser.long.push(st.nW>=5?100*lg/nw:null);ser.fresh.push(st.cw.length?100*fr/st.cw.length:null);ser.nom.push(nm);ser.conn.push(st.conn.length);ser.pas.push((st.passives||[]).length);});
+      body.forEach(p=>{let c=0,w=0;p.sents.forEach(i=>{c+=sents[i].cw.length;w+=sents[i].nW;});p.ld=w?c/w:0;});
+      const v=ser.ld.filter(x=>x!=null).sort((a,b)=>a-b);let mi=-1,mx=-1;ser.ld.forEach((x,i)=>{if(x!=null&&x>mx){mx=x;mi=i;}});
+      R.ld={all:nWd?100*cwT/nWd:0,median:v.length?v[Math.floor(v.length/2)]:null,min:v.length?v[0]:null,max:mx<0?null:mx,maxI:mi};R.series=ser;}
     return R;})();
   findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title))f.nouns=pw;});
   /* lens moves: empty openers sit with clutter; typing slips and source matches have lenses of their own */

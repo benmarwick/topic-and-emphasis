@@ -35,7 +35,7 @@ rows.slice(1).forEach(r => { const text = r[iT], bt = parseFloat(r[iB]); if (!te
   push('ease', bt);
   push('Flesch reading ease', X.fre); push('Flesch-Kincaid grade', X.fk); push('ARI', X.ari); push('SMOG', X.smog); push('Coleman-Liau', X.cl); push('Gunning Fog', X.fog); push('LIX', X.lix);
   push('Dale-Chall score', X.dale.score); push('Words off the Dale-Chall list (%)', X.dale.pdw);
-  push('Words per sentence', A.stats.avg); push('Letters per word', R.simple.lpw);
+  push('Lexical density (%)', R.ld.all); push('Words per sentence', A.stats.avg); push('Letters per word', R.simple.lpw);
   push('Running words on NGSL or NAWL (%)', 100 * R.cover.share); push('General science jargon (%)', 100 * R.jargon.share);
   push('Word variety, MTLD', R.lex.mtld); push('Word variety, MATTR', R.lex.mattr);
   push('Connectives per 1,000 words', R.conn.per); push('Content words already given (%)', R.given.cw ? 100 * R.given.old / R.given.cw : NaN);
