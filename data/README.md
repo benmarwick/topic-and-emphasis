@@ -48,9 +48,25 @@ the `lexopsdata` package. If you plan any commercial use of this application, re
 [nashamri/academic-phrases](https://github.com/nashamri/academic-phrases) (GPL-3.0-or-later), which was made from
 Adrian Wallwork's "Useful Phrases" with the permission of Springer Nature and the author. See `phrases/README.md`.
 
-## Not included
+## Not included, and how to bring your own copy
 
-The **Academic Formulas List** (Simpson-Vlach & Ellis 2010, *Applied Linguistics*, 31(4),
-487–512) is published in a journal and carries no open licence, so it is not here. The
-Signal phrases lens counts a short inventory of common academic word sequences written for
-this application instead.
+Two lists are **not** in this repository because neither carries an open licence:
+
+- The **Academic Word List** (Coxhead 2000, *TESOL Quarterly*, 34(2), 213–238). The pages of
+  Victoria University of Wellington that describe it state no licence.
+- The **Academic Formulas List**, with its formula teaching worth (Simpson-Vlach & Ellis 2010,
+  *Applied Linguistics*, 31(4), 487–512). The article is marked Oxford University Press 2010 and
+  the full list is in the journal's supplementary material.
+
+The page reads a copy of either if you have one. Paste it into the box in the Vocabulary level
+lens (word list) or the Signal phrases lens (formulas). It is kept in that browser only. If you
+run your own copy of the page and have the right to distribute a list with it, save it as one of
+the files below and "Look beside this page" will read it.
+
+| File | Format |
+|---|---|
+| `data/lists/awl.txt` (or `.csv`) | One headword to a line. A family is `headword: member, member`. A line `Sublist 3`, or a number from 1 to 10 on a word's line, gives the sublist. |
+| `data/lists/afl.csv` (or `.tsv`, `.txt`) | One formula to a line, then its numbers, separated by commas, tabs or two or more spaces. The last number on the line is read as the formula teaching worth. A line `Core`, `Written` or `Spoken`, or that word in a column, gives the list. A word in brackets is optional. |
+
+Without a copy, the Vocabulary level lens uses the New Academic Word List, and the Signal phrases
+lens counts a short inventory of common academic word sequences written for this application.

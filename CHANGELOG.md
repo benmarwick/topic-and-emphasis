@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0 (2026-11-26)
+
+- Vocabulary level: a panel that reads your own copy of the Academic Word List and reports the draft's running words on it, by sublist, with the words marked in the text.
+- Signal phrases: a panel that reads your own copy of the Academic Formulas List and reports the formulas the draft uses, by list (core, written, spoken) and by formula teaching worth, with the mean worth of those used.
+- Neither list is shipped: neither has an open licence. A copy is pasted in, or read from `data/lists/` on a self-hosted page, and is kept in the browser only.
+- Engine: `E.parseWordList`, `E.parseFormulas`, `research.awl`, `research.afl`. These add marks and counts and never a note. `tests/ownlists.test.js`.
+- Reference added: Coxhead 2000.
+
 ## 0.16.0 (2026-11-26)
 
 - Phrases tab in the workbench: about 590 sentence frames in 57 groups, by paper section, by search, or by the paragraph's job and the move the sentence signals. Each blank is a choice; "Put in the box" adds the frame at the cursor.

@@ -175,6 +175,28 @@ const DALE=new Set((typeof DALE_RAW!=='undefined'?DALE_RAW:'').split(' ').filter
 const XTRA=S('one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand million billion zero first second third fourth fifth sixth seventh eighth ninth tenth monday tuesday wednesday thursday friday saturday sunday january february march april may june july august september october november december okay etc');
 const UKUS=[[/our(s?)$/,'or$1'],[/is(e|es|ed|ing|ation|ations)$/,'iz$1'],[/ys(e|es|ed|ing)$/,'yz$1'],[/tre(s?)$/,'ter$1'],[/ogue(s?)$/,'og$1'],[/ence$/,'ense'],[/^programme/,'program'],[/^grey/,'gray'],[/ll(ed|ing|er|ers)$/,'l$1']];
 const IRRF={};'was:be were:be been:be did:do done:do had:have went:go gone:go got:get gotten:get made:make said:say took:take taken:take came:come saw:see seen:see knew:know known:know gave:give given:give found:find thought:think told:tell became:become left:leave felt:feel brought:bring began:begin begun:begin kept:keep held:hold wrote:write written:write stood:stand heard:hear meant:mean met:meet ran:run paid:pay sat:sit spoke:speak spoken:speak laid:lay led:lead grew:grow grown:grow lost:lose fell:fall fallen:fall sent:send built:build understood:understand drew:draw drawn:draw broke:break broken:break spent:spend rose:rise risen:rise drove:drive driven:drive bought:buy wore:wear worn:wear chose:choose chosen:choose sought:seek threw:throw thrown:throw caught:catch dealt:deal won:win forgot:forget forgotten:forget shook:shake shaken:shake hung:hang struck:strike taught:teach sold:sell fought:fight slept:sleep ate:eat eaten:eat drank:drink drunk:drink sang:sing sung:sing swam:swim flew:fly flown:fly hid:hide hidden:hide bore:bear born:bear borne:bear beaten:beat shot:shoot bound:bind bred:breed fed:feed fled:flee froze:freeze frozen:freeze lent:lend rode:ride ridden:ride rang:ring rung:ring shone:shine shrank:shrink shrunk:shrink slid:slide spun:spin stole:steal stolen:steal stuck:stick swept:sweep swore:swear sworn:swear tore:tear torn:tear woke:wake woken:wake withdrew:withdraw withdrawn:withdraw arose:arise arisen:arise undertook:undertake undertaken:undertake underwent:undergo undergone:undergo overcame:overcome shown:show proven:prove women:woman men:man children:child feet:foot teeth:tooth mice:mouse lives:life phenomena:phenomenon hypotheses:hypothesis analyses:analysis crises:crisis'.split(' ').forEach(x=>{const q=x.split(':');IRRF[q[0]]=q[1];});
+/* ---------- lists the writer brings: the page ships neither, because neither has an open licence ----------
+   A word list such as the Academic Word List: one headword to a line; a family as "headword: member, member";
+   a line "Sublist 3", or a number from 1 to 10 on a word's line, gives the sublist. */
+const spellVars=w=>{const o=[w],sw=(a,b)=>{const m=w.match(new RegExp('^(.*)'+a+'(e|ed|es|ing|ation|ations|ational|er|ers)$'));if(m)o.push(m[1]+b+m[2]);};sw('is','iz');sw('iz','is');sw('ys','yz');sw('yz','ys');
+  if(/our(s|ed|ing)?$/.test(w))o.push(w.replace(/our(s|ed|ing)?$/,'or$1'));if(/[^aeiou]re(s)?$/.test(w)&&/(cent|met|theat|fib)res?$/.test(w))o.push(w.replace(/re(s?)$/,'er$1'));return o;};
+let WLC={s:null,M:null},FLC={s:null,P:null};
+function parseWordList(src){src=String(src||'');if(WLC.s===src)return WLC.M;const M=new Map();let sub=0;
+  src.split(/\n/).forEach(line=>{const hd=line.match(/^\s*sub-?list\s*(\d+)\b[^,:]*$/i);if(hd){sub=+hd[1];return;}
+    const num=(line.match(/(?:^|[\s,;:\t(])(10|[1-9])(?=$|[\s,;:\t).])/)||[])[1],fam=/[:\t]/.test(line),ws=line.toLowerCase().match(/[a-z][a-z’'-]*/g)||[];if(!ws.length)return;
+    ws.forEach((w,i)=>{const h=fam?ws[0]:w;spellVars(w.replace(/’/g,"'")).forEach(v=>{if(!M.has(v))M.set(v,{h,s:num?+num:sub,m:fam&&i>0});});});});
+  WLC={s:src,M};return M;}
+/* A list of formulas such as the Academic Formulas List: one to a line, then its numbers. The last number on the line is read as
+   the formula teaching worth. A line "Core", "Written" or "Spoken", or that word on a formula's line, gives the list. Words in
+   brackets are optional. */
+function parseFormulas(src){src=String(src||'');if(FLC.s===src)return FLC.P;const map=new Map();let list='',n=0,mx=0;
+  src.split(/\n/).forEach(line=>{const t=line.trim();if(!t)return;const hd=t.match(/^(core|written|spoken)\b[^0-9]*$/i);if(hd&&t.split(/\s+/).length<=5){list=hd[1].toLowerCase();return;}
+    const cells=t.split(/\t|\s{2,}|[;|]|,(?=\s*-?\d)|\s+(?=-?\d+(?:\.\d+)?(?:\s|$))/).map(x=>x.trim()).filter(Boolean),f=cells[0].toLowerCase().replace(/’/g,"'"),nums=cells.slice(1).filter(x=>/^-?\d+(?:\.\d+)?$/.test(x)).map(Number),lab=cells.slice(1).map(x=>x.toLowerCase()).find(x=>/^(core|written|spoken)$/.test(x));
+    const parts=f.match(/\([^)]*\)|[a-z][a-z'-]*/g)||[];if(parts.length<2)return;
+    let vs=[[]];parts.forEach(pt=>{if(pt[0]==='('){const inner=pt.slice(1,-1).match(/[a-z][a-z'-]*/g)||[];vs=vs.concat(vs.map(v=>v.concat(inner)));}else vs=vs.map(v=>v.concat(pt));});
+    const e={f:parts.join(' '),ftw:nums.length?nums[nums.length-1]:null,list:lab||list};let any=false;
+    vs.forEach(v=>{if(v.length<2||v.length>8)return;const k=v.join(' ');if(!map.has(k)){map.set(k,e);any=true;mx=Math.max(mx,v.length);}});if(any)n++;});
+  const P={map,n,mx};FLC={s:src,P};return P;}
 function lemmas(w){const c=[w],seen=new Set(c),add=x=>{if(x.length>1&&!seen.has(x)&&c.length<60){seen.add(x);c.push(x);}};
   UKUS.forEach(([re,r])=>{if(re.test(w))add(w.replace(re,r));});
   for(let q=0;q<c.length;q++){const b=c[q];
@@ -1132,6 +1154,20 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     /* general science jargon (Plaven-Sigray et al. 2017): word forms, matched as typed */
     {const cnt=new Map(),first=new Map();let jn=0,jw=0;if(JARGON.size)sents.forEach(st=>st.T.forEach(tk=>{if(!tk.w||!/^\p{L}/u.test(tk.t))return;jw++;if(!JARGON.has(tk.l))return;jn++;cnt.set(tk.l,(cnt.get(tk.l)||0)+1);if(!first.has(tk.l))first.set(tk.l,st.i);}));
       R.jargon=JARGON.size?{n:jn,of:jw,share:jw?jn/jw:0,types:cnt.size,list:JARGON.size,words:[...cnt.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,16).map(([w,c])=>({w,c,s:first.get(w)}))}:null;}
+    /* the writer's own copy of an academic word list and of a formulas list, when they have given one: counts and marks, never notes */
+    {const M=opts.awl?parseWordList(opts.awl):null;R.awl=null;
+      if(M&&M.size){const cnt=new Map(),by={};let hit=0,all=0,fam=false;M.forEach(v=>{if(v.m)fam=true;});
+        sents.forEach(st=>{const L=st.marks.vocab||(st.marks.vocab=[]);st.T.forEach(tk=>{if(!tk.w||tk.cite||!/^\p{L}/u.test(tk.t))return;all++;const l=tk.l.replace(/’/g,"'");let e=M.get(l);if(!e)for(const c of lemmas(l)){e=M.get(c);if(e)break;}if(!e)return;
+          hit++;cnt.set(e.h,(cnt.get(e.h)||0)+1);if(e.s)by[e.s]=(by[e.s]||0)+1;if(!L.some(m=>m.a<tk.e&&tk.s<m.b))L.push({a:tk.s,b:tk.e,cls:'dot hu-violet',tip:'On your copy of the academic word list'+(e.s?', sublist '+e.s:'')+(e.h!==l?', under “'+e.h+'”':'')+'.'});});});
+        R.awl={size:M.size,n:hit,of:all,share:all?hit/all:0,types:cnt.size,by,fam,words:[...cnt.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,18).map(([w,c])=>({w,c,s:(M.get(w)||{}).s||0}))};}}
+    {const P=opts.afl?parseFormulas(opts.afl):null;R.afl=null;
+      if(P&&P.n){const cnt=new Map(),first=new Map();let hit=0;const by={core:0,written:0,spoken:0,other:0};
+        sents.forEach(st=>{const W=st.T.filter(t=>t.w&&!t.cite),L=st.marks.signals||(st.marks.signals=[]);let i=0;
+          while(i<W.length){let got=null,len=0;for(let k=Math.min(P.mx,W.length-i);k>=2;k--){const e=P.map.get(W.slice(i,i+k).map(t=>t.l.replace(/’/g,"'")).join(' '));if(e){got=e;len=k;break;}}
+            if(!got){i++;continue;}hit++;cnt.set(got,(cnt.get(got)||0)+1);if(!first.has(got))first.set(got,st.i);by[got.list||'other']++;const a=W[i].s,b=W[i+len-1].e;
+            if(!L.some(m=>m.a<b&&a<m.b))L.push({a,b,cls:'dot hu-teal',tip:'On your copy of the formulas list'+(got.list?' ('+got.list+')':'')+(got.ftw!=null?', with a formula teaching worth of '+got.ftw:'')+'.'});i+=len;}});
+        const hits=[...cnt.entries()].map(([e,c])=>({f:e.f,c,ftw:e.ftw,list:e.list,s:first.get(e)})),wf=hits.filter(h=>h.ftw!=null),tw=wf.reduce((a,h)=>a+h.c,0);
+        R.afl={size:P.n,n:hit,per:per(hit),types:hits.length,by,hasFtw:wf.length>0,ftwMean:tw?wf.reduce((a,h)=>a+h.ftw*h.c,0)/tw:null,hits:hits.sort((x,y)=>(y.ftw==null?-1e9:y.ftw)-(x.ftw==null?-1e9:x.ftw)||y.c-x.c||x.f.localeCompare(y.f)).slice(0,40)};}}
     /* running-word coverage by the two word lists; proper nouns are counted apart (Nation 2006) */
     {let cn0=0,cg=0,ca=0,co=0,cp=0;
       sents.forEach(st=>{let fw=-1;st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;if(!/^\p{L}[\p{L}'’-]*$/u.test(tk.t))return;cn0++;
@@ -1291,5 +1327,5 @@ function docx(blocks,comments,meta){meta=meta||{};comments=comments||[];
     {name:'_rels/.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="word/document.xml"/></Relationships>'},
     {name:'word/document.xml',data:doc},{name:'word/styles.xml',data:styles},{name:'word/comments.xml',data:cm},
     {name:'word/_rels/document.xml.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/styles" Target="styles.xml"/><Relationship Id="rId2" Type="'+R+'/comments" Target="comments.xml"/></Relationships>'}]);}
-return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,syl,sylGuess,docx,crc32,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
+return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,syl,sylGuess,docx,crc32,parseWordList,parseFormulas,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();
