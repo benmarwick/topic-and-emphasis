@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.0 (2026-11-26)
+
+Nine checks after Pat Thomson's revision strategies (Kamler & Thomson 2014; Thomson 2023; the blog *patter*). Each reads a surface cue and asks a question; thresholds are working values.
+
+- Paragraph jobs: "Source after source" (three or more sentences, and six in ten, open with a cited author); "Your own work appears only in the last sentence"; "The paragraph ends on someone else's words". A panel counts sentences led by a cited author against sources in brackets (Swales 1990).
+- Mechanical checks: five or more sources in one bracket (author and year, numbered, or keyed).
+- Hedging: two hedges and a limit on the claim's reach in one sentence; the stacked-hedge advice mentions reach.
+- Term tracker: an abstract term (-isation, -ism, -ivity, -icity, -ality) used three times or more, off both word lists, and never explained (Flower & Hayes 1977); a panel of reporting verbs and repeated sentence openers.
+- Old → new: a paragraph that opens with a general additive and repeats no content word from the end of the paragraph before.
+- Signal phrases: the share of sentences that talk about the text itself, underlined, with no note (Hyland 2005; Haag 2021).
+- Voice: a paragraph of four or more sentences in which three in four are passive with no agent.
+- MCP `research_profile` gains `citations_by_form`, `signposting`, `reporting_words` and `repeated_sentence_openers`. `tests/patter.test.js`.
+
 ## 0.19.1 (2026-11-26)
 
 A review of the documentation against the code. No rule changed.

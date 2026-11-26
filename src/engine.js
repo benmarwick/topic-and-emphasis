@@ -736,7 +736,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     const adj=hs.some((h,q)=>q>0&&h-hs[q-1]<=2);
     if(hs.length+hp>=3||adj)add({lens:'hedge',s:st.i,a:null,sev:2,title:hs.length+hp>=3?'Stacked hedges':'Double hedge',
       detail:(hs.length+hp)+' hedges in this sentence: '+uniq(hs.map(i=>T[i].t.toLowerCase())).join(', ')+(hp?', and a hedging phrase':'')+'.',
-      tip:'Keep the one hedge that states your real confidence. Say what the evidence supports, then stop.'});
+      tip:'Keep the one hedge that states your real confidence. Say what the evidence supports, then stop. If one of the hedges is really about how far the claim reaches (which cases, which setting), give that a sentence of its own.'});
     /* dense phrases */
     const nounLike=i=>{const tk=T[i];if(!tk.w||!/\p{L}/u.test(tk.t))return false;const l=tk.l;
       if(isFunc(l)||(l.length<3&&!/^[A-Z]{2,}$/.test(tk.t))||isAdv(l)||adjLike(l)||VK[i]||/[^e]ed$/.test(l))return false;const f=FORMS.get(l);return!(f&&(f.k==='pp'||f.k==='pastx'));};
@@ -768,7 +768,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     /* voice */
     st.passives.forEach(p=>{if(p.by>=0){let e=p.by+1;if(T[e+1]&&T[e+1].w&&(isDet(T[e].l)||adjLike(T[e].l)))e++;
         const id=add({lens:'voice',s:st.i,a:T[p.a].s,b:T[e].e,sev:2,title:'Passive with its agent attached',detail:'The doer or means (“'+tx(p.by,e)+'”) is named, but it trails the verb.',
-          tip:'If this sentence is that agent’s story, make the agent the subject. If the passive keeps a familiar topic up front, leave it alone. That is what the passive is for.'});
+          tip:'If this sentence is that agent’s story, make the agent the subject. If the passive keeps a familiar topic up front, or the thing acted on matters more than who acted, leave it alone. That is what the passive is for.'});
         mk('voice',p.a,e,'hl hb-olive',{f:id});}
       else mk('voice',p.a,p.b,'dot hu-olive');});
     /* acronyms */
@@ -970,6 +970,66 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         if(skipped.length){const id=add({lens:'checks',s:loc.st.i,a:loc.a,b:loc.b,sev:2,title:type+' '+n+' is cited before '+type+' '+skipped.join(', '),q:'Should the '+lc+'s be renumbered, or the text reordered?',detail:'Readers expect '+lc+'s to be cited in the order they are numbered.',tip:'Renumber so the first one cited is 1, or move the earlier citation up.'});pm(loc.st,{a:loc.a,b:loc.b,cls:'hl hb-olive',f:id});}});
       const miss=[];for(let k=1;k<max;k++)if(!q.has(k))miss.push(k);
       if(miss.length&&max<40){const loc=q.get(max),id=add({lens:'checks',s:loc.st.i,a:loc.a,b:loc.b,sev:2,title:type+' '+miss.join(', ')+(miss.length>1?' are':' is')+' never cited',q:'Is it cited somewhere outside this excerpt?',detail:type+'s up to '+max+' are cited here, but not '+miss.join(', ')+'.',tip:'Cite every figure and table at the point where the reader needs it.'});pm(loc.st,{a:loc.a,b:loc.b,cls:'hl hb-olive',f:id});}});}
+  /* Nine checks after Thomson's revision strategies (Kamler & Thomson 2014; Thomson 2023). All read surface cues only. */
+  const patter=(()=>{const P={cite:{lead:0,brack:0,sents:0},clusters:0,sign:{n:0,of:sents.length,idx:[]},verbs:[],openers:[],code:[]};
+    const mark=(st,k,o)=>(st.marks[k]||(st.marks[k]=[])).push(o),body=paras.filter(p=>p.ord!=null);
+    const NAME="\\p{Lu}[\\p{L}'’-]+(?:\\s+(?:and|&)\\s+\\p{Lu}[\\p{L}'’-]+|\\s+et\\s+al\\.?)?(?:['’]s)?",YRP="\\((?:19|20)\\d\\d[a-z]?[^()]{0,24}\\)";
+    const LEAD=new RegExp("^\\s*(?:(?:According to|As|For|In|Following)\\s+)?"+NAME+"\\s*"+YRP,'u'),INT=new RegExp(NAME+"\\s*"+YRP,'gu'),
+      BR=/\(([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*)\)|\[([^\[\]]*(?:\d|@)[^\[\]]*)\]/g,SELF=/\b(?:I|we|my|our)\b|\b(?:this|the present|the current)\s+(?:study|paper|article|thesis|chapter|research|project|analysis)\b/i;
+    /* 1 and 4: who leads the sentence, the writer or the source; and brackets that hold many sources */
+    sents.forEach(st=>{const tx=st.text;st.lead=LEAD.test(tx);let m,br=0;BR.lastIndex=0;
+      while((m=BR.exec(tx))){const inner=m[1]||m[2],pre=tx.slice(Math.max(0,m.index-40),m.index);if(m[1]&&new RegExp(NAME+"\\s*$",'u').test(pre)&&/^\s*(?:19|20)\d\d/.test(inner))continue;
+        let n=0;if(m[1])n=inner.split(';').filter(x=>/(?:19|20)\d\d/.test(x)).length;else if(/@/.test(inner))n=(inner.match(/@[\p{L}_]/gu)||[]).length;
+        else if(/^[\d,\s–-]+$/.test(inner))inner.split(',').forEach(x=>{const r=x.trim().split(/[–-]/).map(Number);n+=r.length===2&&r[1]>r[0]?Math.min(20,r[1]-r[0]+1):1;});
+        if(!n)continue;br++;
+        if(n>=5){P.clusters++;const a=m.index,b=a+m[0].length,id=add({lens:'checks',s:st.i,a,b,sev:2,title:n+' sources in one bracket',q:'Do all '+n+' say the same thing? Would two or three, with “e.g.”, do?',
+          detail:'A long run of sources in one bracket is hard to read past, and it can suggest a list where the reader wants your reading of the work.',tip:'Keep the sources that matter most to your point and mark them as examples. If the sources say different things, split them and say what each adds.'});mark(st,'checks',{a,b,cls:'hl hb-olive',f:id});}}
+      let ni=0;INT.lastIndex=0;while(INT.exec(tx))ni++;st.citeN=ni+br;if(st.citeN)P.cite.sents++;if(st.lead)P.cite.lead++;else if(br)P.cite.brack++;});
+    body.forEach(p=>{const ss=p.sents.map(i=>sents[i]),n=ss.length;if(n<3)return;const last=ss[n-1];
+      const led=ss.filter(s=>s.lead),cited=ss.filter(s=>s.citeN).length;
+      if(n>=4&&led.length>=3&&led.length>=n*0.6)add({lens:'jobs',s:ss[0].i,a:null,sev:2,para:true,title:'Source after source: '+led.length+' of '+n+' sentences open with a cited author',q:'What do these sources add up to, in your own words?',
+        detail:'When each sentence begins with an author and reports what they said, the paragraph reads as a list and the reader cannot tell where you stand.',tip:'Open with a sentence of your own that says what the work shows or where it divides. Then bring the sources in as support, in brackets or mid-sentence.'});
+      else if(n>=5&&cited>=3&&SELF.test(last.text)&&!ss.slice(0,-1).some(s=>SELF.test(s.text))&&!ss.some(s=>s.sig&&(s.sig.gap||s.sig.aim))){const m=last.text.match(SELF),a=m.index,b=a+m[0].length;
+        const id=add({lens:'jobs',s:last.i,a,b,sev:2,para:true,title:'Your own work appears only in the last sentence',q:'What did you take from this work, and how did it shape yours? Could the paragraph begin there?',
+          detail:'The paragraph gives its length to other people’s work and turns to yours at the very end.',tip:'Try the paragraph the other way round: your study first, then the work it builds on and what you used from it.'});mark(last,'jobs',{a,b,cls:'hl hb-olive',f:id});}
+      /* 9: the last word goes to someone else */
+      const q=last.text.match(/[“"]([^”"]{25,})[”"]\s*(?:\([^()]*\)|\[[^\[\]]*\])?\s*[.!?]?\s*$/);
+      if(q&&q[1].trim().split(/\s+/).length>=5){const a=q.index,b=a+q[0].replace(/\s+$/,'').length,id=add({lens:'jobs',s:last.i,a,b,sev:2,para:true,title:'The paragraph ends on someone else’s words',q:'What do you make of this quotation? Can the last sentence be yours?',
+        detail:'A quotation in the last sentence leaves the reader to work out why it matters.',tip:'Follow the quotation with a sentence of your own that says what it shows, or move it earlier in the paragraph.'});mark(last,'jobs',{a,b,cls:'hl hb-olive',f:id});}});
+    /* 2: a hedge on the claim and a limit on its reach, in one sentence */
+    const SCOPE=/\b(?:in (?:some|certain|a few|many|most|these|this) (?:cases?|contexts?|settings?|samples?|stud(?:y|ies)|respects?|circumstances|instances|situations)|under (?:some|certain) (?:conditions|circumstances)|for (?:some|certain|a few) [a-z]+|among (?:some|certain|these|the) [a-z]+|at least (?:in|for|among)|only (?:in|for|among|when))\b/i;
+    sents.forEach(st=>{if((st.hedgeN||0)<2||findings.some(f=>f.lens==='hedge'&&f.s===st.i&&/hedge/i.test(f.title)))return;const m=st.text.match(SCOPE);if(!m)return;const a=m.index,b=a+m[0].length;
+      const id=add({lens:'hedge',s:st.i,a,b,sev:2,title:'Hedges on the claim and a limit on its reach, together',q:'Which words say how sure you are, and which say how far the claim reaches? Would two sentences be clearer?',
+        detail:'This sentence has '+st.hedgeN+' hedges and also limits where the claim applies (“'+m[0]+'”). Doing both at once can leave the reader unsure what you think.',tip:'State the claim plainly with the one hedge it needs. Then give its reach in a sentence of its own: which cases, which setting, which people, which period.'});mark(st,'hedge',{a,b,cls:'ul hu-olive',f:id});});
+    /* 3: a specialist term used often and never explained */
+    {const SUF=/(?:i[sz]ations?|isms?|ivit(?:y|ies)|icit(?:y|ies)|alit(?:y|ies))$/,OK=new Set('mechanism criticism organism tourism optimism pessimism racism sexism journalism terrorism activism capitalism socialism quality equality inequality reality morality mortality personality nationality totality locality legality mentality formality neutrality activity productivity sensitivity creativity objectivity subjectivity connectivity publicity electricity ethnicity authenticity simplicity organization realization generalization civilization utilization'.split(' ')),
+      norm=w=>w.replace(/isation/,'ization').replace(/ies$/,'y').replace(/s$/,''),uses=new Map();
+      sents.forEach(st=>st.T.forEach(tk=>{if(!tk.w||tk.cite||tk.l.length<9||!SUF.test(tk.l))return;const k=norm(tk.l);if(OK.has(k)||NGSL.has(k)||NAWL.has(k))return;if(!uses.has(k))uses.set(k,[]);uses.get(k).push({st,tk});}));
+      const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      [...uses.entries()].filter(([k,u])=>u.length>=3).sort((x,y)=>y[1].length-x[1].length).slice(0,3).forEach(([k,u])=>{const w=u[0].tk.t,forms=[...new Set(u.map(x=>esc(x.tk.l)))].join('|');
+        const DEF=new RegExp("\\b(?:"+forms+")\\b\\s*(?:\\(|,\\s*(?:or|that is|i\\.e\\.|the|a|an)\\b|(?:is|are|was|refers?|means?|describes?|denotes?|names?|can be)\\b)|\\b(?:defin\\w+|by which (?:I|we) mean|(?:I|we) (?:mean|use)|what [^.]{0,40} calls?|known as|termed|called|the term|understood (?:here )?as|in the sense of)\\b[^.]{0,60}\\b(?:"+forms+")\\b|\\b(?:"+forms+")\\b[^.]{0,30}\\b(?:is defined|is understood|refers to|defined as|by which)\\b",'i');
+        if(u.some(x=>DEF.test(x.st.text)))return;const {st,tk}=u[0];P.code.push({w:tk.l,n:u.length});
+        const id=add({lens:'terms',s:st.i,a:tk.s,b:tk.e,sev:2,title:'“'+w+'” is used '+u.length+' times and never explained',q:'What do you mean by “'+w.toLowerCase()+'”? Would a reader outside your subfield take it the same way?',
+          detail:'An abstract term can stand for a whole argument in the writer’s head and for very little in the reader’s. No sentence that uses this one says what it means here.',tip:'Where the term first appears, say what you mean by it in a clause or a sentence, and name whose sense of it you follow if it is contested.'});mark(st,'terms',{a:tk.s,b:tk.e,cls:'hl hb-olive',f:id});});}
+    /* 5: a paragraph joined to the last one by a general "and also" */
+    {const ADD=/^\s*(Furthermore|Moreover|In addition|Additionally|Also|Besides|Next|Another (?:point|issue|aspect|factor|example))\b[,:]?/;
+      for(let q=1;q<paras.length;q++){const p=paras[q],pv=paras[q-1];if(p.ord==null||pv.ord==null)continue;const st=sents[p.sents[0]],m=st.text.match(ADD);if(!m)continue;
+        const old=new Set();pv.sents.slice(-2).forEach(i=>sents[i].cw.forEach(c=>old.add(c.k)));if(st.cw.some(c=>old.has(c.k)))continue;const a=m.index+m[0].indexOf(m[1]),b=a+m[1].length;
+        const id=add({lens:'flow',s:st.i,a,b,sev:2,para:true,title:'A new paragraph joined only by “'+m[1]+'”',q:'How does this paragraph follow from the last: does it extend it, contrast with it, explain it or complicate it?',
+          detail:'“'+m[1]+'” says that more is coming and not what kind. The opening sentence repeats no word from the end of the paragraph before, so the reader has nothing else to go on.',tip:'Pick up a key word or idea from the close of the last paragraph, or use a link that names the relation, or end the last paragraph on a sentence that sets this one up.'});mark(st,'flow',{a,b,cls:'hl hb-olive',f:id});}}
+    /* 6: sentences that direct traffic */
+    {const SIGN=/\b(?:this|the (?:present|next|following|previous|preceding|last|final|first|second|third)) (?:section|chapter|paper|article|essay|thesis|part|subsection)\b[^.]{0,60}\b(?:will|shall|outlines?|describes?|discuss(?:es)?|presents?|reviews?|examines?|explores?|considers?|turns? to|begins?|concludes?|proceeds?|sets? out|is (?:organi[sz]ed|structured|divided))\b|\bas (?:noted|discussed|mentioned|shown|described|outlined|argued|stated|explained|seen|indicated) (?:above|earlier|below|previously|later|in (?:the )?(?:section|chapter|previous|next))\b|\b(?:I|we) (?:will |shall )?(?:now |first |then |next )?(?:turn|return|move) to\b|\bin (?:what follows|the (?:next|following|previous|remainder of (?:this|the)) (?:section|chapter|paper|article)?)\b|\b(?:to (?:summari[sz]e|recap|sum up|reiterate)|as (?:I|we) (?:have|will) (?:seen|shown|argued|discussed|noted|see|show|argue|discuss))\b|\b(?:before|after) (?:turning|moving|proceeding) to\b/i;
+      sents.forEach(st=>{const m=st.text.match(SIGN);if(!m)return;P.sign.n++;P.sign.idx.push(st.i);mark(st,'signals',{a:m.index,b:m.index+m[0].length,cls:'ul hu-teal',tip:'Signposting: this wording tells the reader about the text itself, where it is going or where it has been.'});});}
+    /* 7: reporting verbs and sentence openers the draft leans on */
+    {const RV={argue:/\bargu(?:e|es|ed|ing)\b/gi,suggest:/\bsuggest(?:s|ed|ing)?\b/gi,show:/\b(?:show(?:s|ed|ing)?|shown)\b/gi,find:/\b(?:find(?:s|ing)?|found)\b/gi,claim:/\bclaim(?:s|ed|ing)?\b/gi,state:/\bstat(?:es|ed|ing)\b/gi,note:/\bnot(?:es|ed|ing)\b/gi,report:/\breport(?:s|ed|ing)?\b/gi,demonstrate:/\bdemonstrat(?:e|es|ed|ing)\b/gi,indicate:/\bindicat(?:e|es|ed|ing)\b/gi,propose:/\bpropos(?:e|es|ed|ing)\b/gi,observe:/\bobserv(?:e|es|ed|ing)\b/gi,highlight:/\bhighlight(?:s|ed|ing)?\b/gi,examine:/\bexamin(?:e|es|ed|ing)\b/gi,investigate:/\binvestigat(?:e|es|ed|ing)\b/gi,explore:/\bexplor(?:e|es|ed|ing)\b/gi,conclude:/\bconclud(?:e|es|ed|ing)\b/gi,explain:/\bexplain(?:s|ed|ing)?\b/gi,describe:/\bdescrib(?:e|es|ed|ing)\b/gi,contend:/\bcontend(?:s|ed|ing)?\b/gi,maintain:/\bmaintain(?:s|ed|ing)?\b/gi,assert:/\bassert(?:s|ed|ing)?\b/gi,emphasise:/\bemphasi[sz](?:e|es|ed|ing)\b/gi,reveal:/\breveal(?:s|ed|ing)?\b/gi},cnt={},op={};
+      sents.forEach(st=>{for(const k in RV){const n=(st.text.match(RV[k])||[]).length;if(n)cnt[k]=(cnt[k]||0)+n;}
+        const m=st.text.match(/^\s*(However|Therefore|Thus|Moreover|Furthermore|In addition|Additionally|Nevertheless|Nonetheless|Consequently|Hence|Indeed|Also|So|But|And|Yet|Similarly|In contrast|On the other hand|For example|For instance|In particular|Importantly|Interestingly|Overall|Finally|First|Second|Third)\b/);if(m)op[m[1]]=(op[m[1]]||0)+1;});
+      P.verbs=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([w,n])=>({w,n}));P.verbN=P.verbs.reduce((a,v)=>a+v.n,0);P.openers=Object.entries(op).filter(e=>e[1]>=2).sort((a,b)=>b[1]-a[1]).map(([w,n])=>({w,n}));}
+    /* 8: a paragraph told almost wholly in the passive */
+    body.forEach(p=>{const ss=p.sents.map(i=>sents[i]),n=ss.length;if(n<4)return;const pa=ss.filter(s=>s.passives&&s.passives.some(x=>x.by<0)).length;if(pa<n*0.75)return;
+      add({lens:'voice',s:ss[0].i,a:null,sev:2,para:true,title:pa+' of the '+n+' sentences in this paragraph are passive with no agent',q:'Who did these things? Does the reader need to know, and do you mean to leave them out?',
+        detail:'A passive with no agent leaves out who acted. That suits a sentence about the thing acted on. Sentence after sentence, it can hide who did the work, or who holds a view.',tip:'For each one, ask whether the passive is the convention here, whether the object matters more than the actor, and whether the missing actor is information the reader needs. Where it is, start the sentence with the actor.'});});
+    return P;})();
   const jl=opts.jobs||[],JN=Object.fromEntries(JOBS);
   paras.forEach(p=>{if(p.ord==null)return;const ss=p.sents.map(i=>sents[i]),nw=ss.reduce((a,s)=>a+s.nW,0);
     const ts=ss.filter(s=>s.tense);let sw=0;for(let i=1;i<ts.length;i++)if(ts[i].tense!==ts[i-1].tense)sw++;const np=ts.filter(s=>s.tense==='past').length;
@@ -1258,7 +1318,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       const v=ser.ld.filter(x=>x!=null).sort((a,b)=>a-b);let mi=-1,mx=-1;ser.ld.forEach((x,i)=>{if(x!=null&&x>mx){mx=x;mi=i;}});
       R.ld={all:nWd?100*cwT/nWd:0,median:v.length?v[Math.floor(v.length/2)]:null,min:v.length?v[0]:null,max:mx<0?null:mx,maxI:mi};R.series=ser;}
     R.refs=refCheck;R.blocks={};paras.forEach(p=>{if(p.head&&p.kind&&p.kind!=='heading')R.blocks[p.kind]=(R.blocks[p.kind]||0)+1;});
-    R.point={named:sents.filter(s=>s.shell).length,bare:findings.filter(f=>/ what\?$/.test(f.title)).length};
+    R.patter=patter;R.point={named:sents.filter(s=>s.shell).length,bare:findings.filter(f=>/ what\?$/.test(f.title)).length};
     return R;})();
   findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title)){const dm=f.title.split(' ')[0],plural=/^(these|those)$/i.test(dm),ns=[];
       /* the action of the sentence before, as a noun: "trust declined" gives "this decline" */

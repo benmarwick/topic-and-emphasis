@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.19.1) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.20.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.19.1},
+  version = {0.20.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -51,10 +51,10 @@ Please also cite the article the workbench is built on:
 git clone https://github.com/benmarwick/topic-and-emphasis.git
 cd topic-and-emphasis
 python3 build.py        # writes index.html
-for t in tests/*.js; do node "$t" || break; done   # optional: the 14 test files
+for t in tests/*.js; do node "$t" || break; done   # optional: the 15 test files
 ```
 
-Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, and move order).
+Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, move order, and the nine reviser's checks).
 
 ---
 
@@ -156,6 +156,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **Nine questions a reviser asks** (0.20.0). Checks drawn from Pat Thomson's revision strategies (Kamler & Thomson 2014, *Helping Doctoral Students Write*; Thomson 2023, *Refining Your Academic Writing*; and her blog [patter](https://patthomson.net/category/academic-writing/)), each read from a surface cue and each asking a question. *Paragraph jobs*: a paragraph in which sentence after sentence opens with a cited author, one where the writer's own work appears only in the last sentence, and one that ends on a quotation; a panel counts sentences led by a source against sources kept in brackets (the integral and non-integral citations of Swales 1990). *Mechanical checks*: a bracket holding five or more sources. *Hedging*: a sentence that hedges its claim and limits its reach at once. *Term tracker*: an abstract term used three times or more and never explained (the "code words" of Flower & Hayes 1977, *College English* 39(4)), with counts of reporting verbs and repeated sentence openers. *Old → new*: a paragraph joined to the last only by "Furthermore" or "In addition". *Signal phrases*: the share of sentences that talk about the text itself (Hyland 2005; Haag 2021, *Revise*), counted with no note. *Voice*: a paragraph told almost wholly in passives with no agent. The thresholds are working values. `tests/patter.test.js`.
+
 - **Open a file.** "Open a file", or drag a file onto the page: Word (.docx), Markdown, Quarto (.qmd), R Markdown, LaTeX and plain text. A .docx file is unpacked in the browser by about forty lines of code in the page, so there is no upload and no added library; headings are kept, and footnotes, comments and tracked deletions are left out.
 - **Parts that are not prose are set aside.** The settings block of a Quarto file, code blocks, displayed equations, layout markup, block quotations and the reference list stay in the text, greyed and labelled, and no lens reads them. Inline code, inline maths, web addresses and LaTeX references are not counted as words. Nothing is removed, so the text you copy back out is the text you put in.
 - **Reference list check** (Mechanical checks). The list under a References or Bibliography heading is compared with the author-and-year citations in the text: cited but not listed, a year that differs, and listed but never cited.
@@ -236,7 +238,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 124 sources are listed at the foot of the application, 63 of them with a DOI and 36 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 129 sources are listed at the foot of the application, 63 of them with a DOI and 37 more with a link to the full text or the publisher's page.
 
 ---
 
