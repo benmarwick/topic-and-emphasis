@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.22.0 (2026-11-26)
+
+- Optional part-of-speech lexicon: `data/pos/brill-lexicon.txt`, 53,883 lower-case words from github.com/words/brill (MIT; the lexicon of the Brill tagger, Brill 1992), each with the classes it can take, most likely first. `tools/make_pos.js`.
+- Subject → verb: a panel listing sentences where the rules' main verb has no verb reading in the lexicon, and sentences where the rules found no main verb and the lexicon has a likely finite verb.
+- Dense phrases: lexical density by part of speech, the share of nouns, lexical verbs, adjectives and adverbs, and nouns per lexical verb.
+- Read after the analysis by `E.pos`; no note, mark or receipt changes. `tests/pos.test.js`.
+
 ## 0.21.0 (2026-11-26)
 
 - The Academic Keyword List (Paquot 2010; CC BY 4.0) is built in: `data/lists/akl.json`, `src/akl.txt`. Vocabulary level reports the share of running words that are AKL nouns, verbs, adjectives or adverbs, by class, the words used most, and the list's multi-word entries found. Single function words on the list are not counted. The source page states 930 words; its table holds 928, which is what is stored.

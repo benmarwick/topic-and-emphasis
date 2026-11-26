@@ -93,6 +93,11 @@
      "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
      "doi": "10.1017/CBO9780511894664",
      "url": "https://doi.org/10.1017/CBO9780511894664"
+    },
+    {
+     "citation": "Brill, E. (1992). A simple rule-based part of speech tagger. In Proceedings of the Third Conference on Applied Natural Language Processing (pp. 152–155). Association for Computational Linguistics. [Its lexicon, as packaged in github.com/words/brill under the MIT licence, is optional data in this page.]",
+     "doi": "10.3115/974499.974526",
+     "url": "https://doi.org/10.3115/974499.974526"
     }
    ]
   },
@@ -885,6 +890,11 @@
      "citation": "Johansson, V. (2008). Lexical diversity and lexical density in speech and writing: A developmental perspective. Lund University, Department of Linguistics and Phonetics, Working Papers, 53, 61–79.",
      "doi": null,
      "url": "https://journals.lub.lu.se/LWPL/article/view/2273"
+    },
+    {
+     "citation": "Brill, E. (1992). A simple rule-based part of speech tagger. In Proceedings of the Third Conference on Applied Natural Language Processing (pp. 152–155). Association for Computational Linguistics. [Its lexicon, as packaged in github.com/words/brill under the MIT licence, is optional data in this page.]",
+     "doi": "10.3115/974499.974526",
+     "url": "https://doi.org/10.3115/974499.974526"
     }
    ]
   },

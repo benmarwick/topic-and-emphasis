@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.21.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.22.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.21.0},
+  version = {0.22.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -43,7 +43,7 @@ Please also cite the article the workbench is built on:
 
 **Option A: use it online.** Open <https://benmarwick.github.io/topic-and-emphasis/>. Nothing to install.
 
-**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not. The rules and the built-in word lists all work in a copy saved this way. The optional extras do not, because they are separate files: the meaning model needs `model/`, and the word norms, the Academic Word List, the Academic Formulas List and the phrase bank need `data/`. For those, use the online copy or serve a clone of the repository from a local web server (`python3 -m http.server`). The two lists can also be pasted into a saved copy by hand.
+**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not. The rules and the built-in word lists all work in a copy saved this way. The optional extras do not, because they are separate files: the meaning model needs `model/`, and the word norms, the Academic Word List, the Academic Formulas List, the part-of-speech lexicon and the phrase bank need `data/`. For those, use the online copy or serve a clone of the repository from a local web server (`python3 -m http.server`). The two lists can also be pasted into a saved copy by hand.
 
 **Option C: build from source.** The page is assembled from the pieces in `src/` by a short Python script with no dependencies.
 
@@ -51,10 +51,10 @@ Please also cite the article the workbench is built on:
 git clone https://github.com/benmarwick/topic-and-emphasis.git
 cd topic-and-emphasis
 python3 build.py        # writes index.html
-for t in tests/*.js; do node "$t" || break; done   # optional: the 16 test files
+for t in tests/*.js; do node "$t" || break; done   # optional: the 17 test files
 ```
 
-Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, move order, the nine reviser's checks, and the built-in keyword and style lists).
+Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, move order, the nine reviser's checks, the built-in keyword and style lists, and the part-of-speech lexicon).
 
 ---
 
@@ -156,6 +156,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **A part-of-speech lexicon** (0.22.0, optional data). The lexicon of the Brill tagger ([Brill 1992](https://doi.org/10.3115/974499.974526)), as packaged in [words/brill](https://github.com/words/brill) (MIT): about 54,000 words with the parts of speech each can take, 670 KB, loaded on request. *Subject → verb* lists the sentences where the lexicon and the rules disagree about the main verb: a word the rules took as the verb that has no verb reading, and a likely finite verb in a sentence where the rules found none. *Dense phrases* counts lexical density the published way, by part of speech, with the ratio of nouns to lexical verbs. The page has the lexicon and none of the tagger's contextual rules, so each word takes its most likely class. It changes no note and no mark. `tests/pos.test.js`.
+
 - **The Academic Keyword List, and four open lists** (0.21.0). The AKL ([Paquot 2010](https://uclouvain.be/en/research-institutes/ilc/cecl/the-academic-keyword-list-akl), *Academic Vocabulary in Learner Writing*, Continuum, 56–58) is published under CC BY 4.0, so it is built into the page whole: 928 entries in five classes, multi-word entries included. *Vocabulary level* reports the share of running words that are AKL nouns, verbs, adjectives or adverbs, by class, with the words used most. Four MIT-licensed lists from [github.com/words](https://github.com/words) are also built in and only counted: a wider list of hedges (*Hedging*, showing the words this page's own rule does not mark), weasel words and buzzwords (*Vague & worn words*), and fillers (*Clutter*). None raises a note. `tests/akl.test.js`.
 
 - **Nine questions a reviser asks** (0.20.0). Checks drawn from Pat Thomson's revision strategies (Kamler & Thomson 2014, *Helping Doctoral Students Write*; Thomson 2023, *Refining Your Academic Writing*; and her blog [patter](https://patthomson.net/category/academic-writing/)), each read from a surface cue and each asking a question. *Paragraph jobs*: a paragraph in which sentence after sentence opens with a cited author, one where the writer's own work appears only in the last sentence, and one that ends on a quotation; a panel counts sentences led by a source against sources kept in brackets (the integral and non-integral citations of Swales 1990). *Mechanical checks*: a bracket holding five or more sources. *Hedging*: a sentence that hedges its claim and limits its reach at once. *Term tracker*: an abstract term used three times or more and never explained (the "code words" of Flower & Hayes 1977, *College English* 39(4)), with counts of reporting verbs and repeated sentence openers. *Old → new*: a paragraph joined to the last only by "Furthermore" or "In addition". *Signal phrases*: the share of sentences that talk about the text itself (Hyland 2005; Haag 2021, *Revise*), counted with no note. *Voice*: a paragraph told almost wholly in passives with no agent. The thresholds are working values. `tests/patter.test.js`.
@@ -240,7 +242,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 131 sources are listed at the foot of the application, 63 of them with a DOI and 39 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 132 sources are listed at the foot of the application, 64 of them with a DOI and 39 more with a link to the full text or the publisher's page.
 
 ---
 
@@ -278,7 +280,7 @@ The lens descriptions the server gives come from `mcp/guide.json`, which is expo
 
 ## ⚠️ Limits
 
-The rules read structure and have no idea what your sentences mean. There is no parser, no part-of-speech tagger and no spelling dictionary, so some sentences will be misjudged, synonyms are not recognised (unless the meaning model is on), and misspellings are not found. The word lists say how common a word is and nothing about what it means. Moves are read from cue phrases, so a move made without one is not seen. The working thresholds (for example, twelve words before the main verb, or five matching words in a row) are this tool's own values and are labelled as such in the application. They are not published norms.
+The rules read structure and have no idea what your sentences mean. There is no parser, no part-of-speech tagger (the optional lexicon lists what a word can be, and does not read it in context) and no spelling dictionary, so some sentences will be misjudged, synonyms are not recognised (unless the meaning model is on), and misspellings are not found. The word lists say how common a word is and nothing about what it means. Moves are read from cue phrases, so a move made without one is not seen. The working thresholds (for example, twelve words before the main verb, or five matching words in a row) are this tool's own values and are labelled as such in the application. They are not published norms.
 
 ---
 

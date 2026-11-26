@@ -77,6 +77,12 @@ data/lists/CMUdict-LICENSE.txt. src/jargon.txt and
 data/lists/science_common_words_Plaven-Sigray_et_al_2017.csv are from
 github.com/wiheto/readabilityinscience (MIT; Plaven-Sigray et al. 2017).
 
+data/pos/brill-lexicon.txt is a reduced copy of the word list in the package
+brill (github.com/words/brill), Copyright (c) 2014 Titus Wormer, MIT licence
+(text in data/pos/LICENSE-MIT.txt), which holds the lexicon of the Brill tagger
+(Brill 1992). It is fetched only on request and can be deleted without
+affecting the rest of the application.
+
 src/akl.txt, data/lists/akl.json and the copy in index.html are the Academic
 Keyword List: Paquot, M. (2010). Academic Vocabulary in Learner Writing: From
 Extraction to Analysis. London & New York: Continuum, 56-58. The list is

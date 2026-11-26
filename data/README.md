@@ -85,6 +85,17 @@ on the weasel and filler lists ("that", "so", "up") are skipped when counting, a
 
 `tools/make_wordlists.py` rebuilds all of these.
 
+## `pos/` — optional, fetched only when a reader presses “Load the part-of-speech lexicon”
+
+`brill-lexicon.txt`: 53,883 words, each with the parts of speech it can take, most likely first, as one letter
+each (N noun, v z d n g verb forms, M modal, J adjective, R adverb, F other). It is a reduced copy of the word
+list in [words/brill](https://github.com/words/brill) (MIT, Copyright (c) 2014 Titus Wormer; `LICENSE-MIT.txt`),
+which holds the lexicon of the Brill tagger: Brill, E. (1992). A simple rule-based part of speech tagger.
+*Proceedings of the Third Conference on Applied Natural Language Processing*, 152–155,
+<https://doi.org/10.3115/974499.974526>. Left out: the 35,656 entries that are capitalised or hold digits or
+symbols, and the distinctions among Penn Treebank tags within a class. `tools/make_pos.js` rebuilds it.
+The page uses the lexicon only. It has none of the tagger's rules for reading a word in context.
+
 ## Pasting a copy of your own
 
 The Vocabulary level lens and the Signal phrases lens also accept a pasted list, kept in that browser.

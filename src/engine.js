@@ -1365,6 +1365,20 @@ function revKind(a,b){const ks=t=>{const m=new Map();tokenize(t).forEach(tk=>{if
   B.forEach((w,k)=>{if(!has(A,k))added.push(w);});A.forEach((w,k)=>{if(!has(B,k))removed.push(w);});
   return{kind:!added.length&&!removed.length?'surface':added.length&&removed.length?'both':added.length?'add':'cut',added,removed};}
 /* optional word norms. The files are read as published; nothing in them is changed. */
+/* Optional part-of-speech lexicon (github.com/words/brill, MIT; the lexicon of the Brill tagger). A lookup of the classes a word can take, most likely first.
+   It is read after the analysis and changes none of it: counts and a second opinion on the main verb, never a note. */
+function parsePos(src){const M=new Map();String(src||'').split(/\r?\n/).forEach(l=>{if(!l||l[0]==='%')return;const i=l.indexOf(' ');if(i>0)M.set(l.slice(0,i),l.slice(i+1).trim());});return M;}
+function pos(A,M){const AUX=new Set("be is am are was were been being have has had having do does did 's 're 'm 've 'd".split(' ')),VB='vzdngM',cls=c=>c==='N'?'N':VB.includes(c)?(c==='M'?'M':'V'):c==='J'?'J':c==='R'?'R':'F';
+  const look=tk=>{const l=tk.l.replace(/’/g,"'");let e=M.get(l);if(e)return e;if(/-/.test(l)){e=M.get(l.split('-').pop());if(e)return e;}for(const c of lemmas(l)){e=M.get(c);if(e)return e;}return null;};
+  const by={N:0,V:0,J:0,R:0,M:0,F:0},off=[],none=[];let all=0,known=0,unk=0,amb=0,lex=0,aux=0,vs=0;const ld=[];
+  A.sents.forEach(st=>{let sw=0,sl=0;st.T.forEach(tk=>{if(!tk.w||tk.cite||!/^\p{L}/u.test(tk.t))return;all++;sw++;const e=look(tk);tk.pos=e;
+      if(!e){unk++;by.N++;lex++;sl++;return;}known++;if(new Set([...e].map(cls)).size>1)amb++;const c=cls(e[0]);
+      if(AUX.has(tk.l)){by.F++;aux++;return;}by[c]++;if(c==='N'||c==='V'||c==='J'||c==='R'){lex++;sl++;}});
+    ld.push(sw>=5?100*sl/sw:null);
+    if(st.vTok!=null&&st.vTok>=0){const tk=st.T[st.vTok],e=tk&&tk.pos;if(tk&&tk.w){vs++;if(e&&![...e].some(c=>VB.includes(c)))off.push({s:st.i,w:tk.t,e});}}
+    else if(sw>=4){const c=st.T.find(tk=>tk.w&&tk.pos&&'zdM'.includes(tk.pos[0])&&!AUX.has(tk.l));if(c)none.push({s:st.i,w:c.t,e:c.pos});}});
+  const v=ld.filter(x=>x!=null).sort((a,b)=>a-b);
+  return{size:M.size,all,known,unk,amb,by,aux,lex,ld:all?100*lex/all:0,ldMedian:v.length?v[Math.floor(v.length/2)]:null,series:ld,nPerV:by.V?by.N/by.V:null,verbs:vs,off,none};}
 function parseNorms(src){const N={conc:new Map(),aoa:new Map(),zipf:new Map(),prev:new Map()},lines=t=>(t||'').replace(/^﻿/,'').split(/\r?\n/).slice(1);
   const phi=z=>{const t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>=0?1-p:p;};
   lines(src.conc).forEach(l=>{const c=l.split('\t');if(c.length>2&&c[1]==='0'){const v=+c[2];if(v)N.conc.set(c[0].toLowerCase(),v);}});
@@ -1423,5 +1437,5 @@ function docx(blocks,comments,meta){meta=meta||{};comments=comments||[];
     {name:'_rels/.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="word/document.xml"/></Relationships>'},
     {name:'word/document.xml',data:doc},{name:'word/styles.xml',data:styles},{name:'word/comments.xml',data:cm},
     {name:'word/_rels/document.xml.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/styles" Target="styles.xml"/><Relationship Id="rId2" Type="'+R+'/comments" Target="comments.xml"/></Relationships>'}]);}
-return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,syl,sylGuess,docx,crc32,parseWordList,parseFormulas,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
+return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,parsePos,pos,syl,sylGuess,docx,crc32,parseWordList,parseFormulas,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();
