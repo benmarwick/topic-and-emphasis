@@ -66,7 +66,7 @@
     "how_this_count_differs": "The main verb is found by rules, not by a parser, so an unusual sentence can be misread. Open the sentence and check which verb is marked."
    },
    "with_meaning_model": null,
-   "limits": "The subject and the main verb are found by rules, not by a parser. A long or unusual sentence can be misread, so check which words are marked before acting on a note.",
+   "limits": "The subject and the main verb are found by rules, not by a parser. A long or unusual sentence can be misread, so check which words are marked before acting on a note. The hardest case is a word that can be a noun or a verb (“results”, “support”, “report”). The rules settle it by what stands on either side, and they know about 600 verbs, so a verb outside that list with no ending to give it away (“ignore”, “force”) can be missed.",
    "sources": [
     {
      "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
@@ -790,10 +790,10 @@
    ],
    "research_measure": {
     "what_the_research_found": "Coh-Metrix counts agentless passives as a measure of their own (McNamara et al. 2014). Gopen and Swan do not object to the passive, which is often the way to put old information first. The question for each one is whether the reader needs to know who acted. Where the actor is you, the first person names it in one word: “we measured”.",
-    "how_this_count_differs": "A passive is found from a form of “be” followed by a participle, and an agent from a “by” phrase after it. A passive whose participle the rules do not know is missed."
+    "how_this_count_differs": "A passive is found from a form of “be” followed by a participle, and an agent from a “by” phrase after it. A passive whose participle the rules do not know is missed. An adjective that only looks like a participle is set aside: a state of mind (“were interested in”), a standing relation (“is related to”, “is based on”), a word with a degree before it (“is very limited”) or one beginning with un-. The list is short, so some states are still counted as passives, and “was restricted to” is treated as a state even where someone did the restricting."
    },
    "with_meaning_model": null,
-   "limits": "A passive is found from a form of “be” and a participle. A participle the rules do not know is missed.",
+   "limits": "A passive is found from a form of “be” and a participle. A participle the rules do not know is missed. Adjectives that look like participles (“interested”, “related to”, “based on”) are set aside from a short list, so some are still counted as passives.",
    "sources": [
     {
      "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",

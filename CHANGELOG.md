@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.2 (2026-11-26)
+
+- Subject → verb: about 170 more verbs for writing about people and institutions; rules for words that can be a noun or a verb ("results show", "levels support", "changes in policy design influence"); a base-form verb is matched to a plural subject across "of" and "in" phrases; a sentence left with no verb gets a second look; a relative clause with no "that" ("the sensation he felt was ...") and a what-clause subject no longer take the main verb.
+- Passive voice: adjectives that look like participles are set aside ("were interested in", "is related to", "is based on", "is very limited", "was unaffected").
+- `tests/probe.test.js`: 82 hard sentences for these rules, with a floor the scores may not fall below.
+- No tagger was added. On the probe, two JavaScript taggers did no better on the main verb than the rules now do.
+
 ## 0.9.1 (2026-11-26)
 
 - Load map: pointing at a bar shows its whole sentence with the words behind that bar marked (the words before the verb, the content words, the long words, the new words, the nouns made from verbs). Tapping a bar pins the same view under the map.

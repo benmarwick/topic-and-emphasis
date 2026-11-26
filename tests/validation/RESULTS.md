@@ -24,10 +24,10 @@ The passages are reading texts for school pupils, not research writing, so read 
 | Mean concreteness (word norms) | +0.36 |
 | General science jargon (%) | −0.35 |
 | Passives per sentence | −0.35 |
-| Nominalisations per 100 words | −0.35 |
+| Nominalisations per 100 words | −0.34 |
 | Mean prevalence (word norms) | +0.33 |
 | Content words already given (%) | +0.29 |
-| Median words before the main verb | −0.22 |
+| Median words before the main verb | −0.24 |
 | Running words on NGSL or NAWL (%) | +0.21 |
 | Connectives per 1,000 words | +0.16 |
 | Word variety, MTLD | −0.12 |

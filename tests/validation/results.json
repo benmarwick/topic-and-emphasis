@@ -94,7 +94,7 @@
   },
   {
    "measure": "Nominalisations per 100 words",
-   "r": -0.35,
+   "r": -0.34,
    "norms": false
   },
   {
@@ -109,7 +109,7 @@
   },
   {
    "measure": "Median words before the main verb",
-   "r": -0.22,
+   "r": -0.24,
    "norms": false
   },
   {
