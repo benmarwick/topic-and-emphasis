@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0 (2026-11-25)
+
+- New lens, Meaning views, drawn from the optional meaning model: Thread, Quilt, Topics, Map, Reorder, Ask, Abstract & ending, and Drills.
+- Two live gauges under the rewrite box: closeness to the sentence before, and to the claim.
+
 ## 0.3.0 (2026-11-25)
 
 The optional meaning model now also works in four more lenses.

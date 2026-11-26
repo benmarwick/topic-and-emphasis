@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.3.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.4.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.3.0},
+  version = {0.4.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -143,6 +143,20 @@ Switched off unless the student turns it on. It loads a small sentence-embedding
 | Source overlap | Your sentences closest in meaning to a source sentence, including restatements that share no run of words; the parts of the source the draft says least about |
 | Term tracker | The closest pairs in meaning among your terms, as candidates for two names for one thing |
 | Before & after | How far each rewritten sentence has moved in meaning from the one it replaced |
+| Rewrite box | Two live gauges: how close the sentence you are rewriting is to the one before it, and to your claim |
+
+With the model on, the **Meaning views** lens draws the whole draft in eight ways:
+
+| View | What it shows |
+|---|---|
+| Thread | Each sentence's closeness to the one before, across the draft, with a second line for closeness to the claim; jumps inside paragraphs, paragraph breaks with no jump, and distant sentences that say nearly the same thing |
+| Quilt | Every sentence against every other, shaded by closeness; tap a square to read the two sentences |
+| Topics | The model's grouping of sentences into topics, as a band of colour, with how often the topic changes |
+| Map | Sentences as dots on a flat map joined in reading order, with the claim and the earlier positions of rewritten sentences. A two-dimensional map distorts, and the view says how much |
+| Reorder | Move paragraphs and watch the joins between them; compare with the model's smoothest order; apply an order to the draft |
+| Ask | Type a question or a reader's comment and jump to the sentences closest to it. Nothing is generated |
+| Abstract & ending | Whether the last paragraph returns to the first, and which paragraphs a pasted abstract says least about |
+| Drills | "Which sentence belongs least?" and "Put the paragraph back in order", built from the draft |
 
 The model does not see negation or logic, and its scores only rank things within one draft, so nothing it reports is a pass or a fail. Its results appear as labelled lines, lists and tables. They never become notes, and they do not change the counts of open notes or the revision receipt, which stay rule-based.
 

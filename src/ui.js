@@ -47,11 +47,12 @@ LENSES.push(
 {const C=LENSES.find(l=>l.k==='clutter');C.why='Words that carry nothing. Stock phrases spend the reader’s attention and push your real subject or your news further from where the reader looks for it. Empty openers (“There is”, “It is … that”, a bare “This”) fill the topic position without naming a topic.';C.fix='Replace the phrase with the short word, or delete it. Start the sentence with its real subject, and give a bare “this” its noun.';C.legend=[['hl hb-olive','phrase to shorten, or opener that names nothing']];
  const K=LENSES.find(l=>l.k==='checks');K.why='Figures and tables cited out of order or not at all, earlier work mentioned with no citation, “significant” with no statistic, a sentence that opens with a numeral, and tense that switches back and forth within a paragraph.';
  const T=LENSES.find(l=>l.k==='terms');T.fix='Tap a term to see it in the text. Select names that mean the same thing, mark them, then keep one. Add your own list of words to keep in view or to avoid.';}
-const LORD=['overview','sv','topic','stress','flow','action','outline','jobs','tracer','claims','hedge','grid','signals','skeleton','rhythm','dense','voice','clutter','worn','vocab','terms','acr','people','stats','checks','slips','source','compare','practice'];
+LENSES.push({k:'mviews',n:'Meaning views',hue:'violet',g:3,src:'',ba:false,why:'Pictures of the whole draft, drawn by the optional meaning model: a thread showing where the subject jumps, a quilt of every sentence against every other, the draft’s topics as a band of colour, a map, a place to try a new order of paragraphs, a search of your own text, and two drills.',fix:'Each view is a way of seeing where the draft holds together and where it does not. Tap any dot, square or bar to open the sentence behind it.',legend:[]});
+const LORD=['overview','sv','topic','stress','flow','action','outline','jobs','tracer','claims','hedge','grid','signals','skeleton','mviews','rhythm','dense','voice','clutter','worn','vocab','terms','acr','people','stats','checks','slips','source','compare','practice'];
 LENSES.sort((a,b)=>LORD.indexOf(a.k)-LORD.indexOf(b.k));
 const LBY=Object.fromEntries(LENSES.map(l=>[l.k,l])),LIDX=Object.fromEntries(LENSES.map((l,i)=>[l.k,i]));
 /* the rail: Gopen & Swan first, then four plain questions, then progress */
-const GRP={overview:0,sv:1,topic:1,stress:1,flow:1,action:1,outline:2,jobs:2,tracer:2,claims:2,hedge:2,grid:3,signals:3,skeleton:3,rhythm:4,dense:4,voice:4,clutter:4,worn:5,vocab:5,terms:5,acr:5,people:5,stats:6,checks:6,slips:6,source:6,compare:7,practice:7};
+const GRP={overview:0,sv:1,topic:1,stress:1,flow:1,action:1,outline:2,jobs:2,tracer:2,claims:2,hedge:2,grid:3,signals:3,skeleton:3,mviews:3,rhythm:4,dense:4,voice:4,clutter:4,worn:5,vocab:5,terms:5,acr:5,people:5,stats:6,checks:6,slips:6,source:6,compare:7,practice:7};
 LENSES.forEach(l=>{l.g=GRP[l.k]!=null?GRP[l.k]:l.g;});
 const FOLD=new Set(['clutter','hedge','dense','voice','acr','worn','people','claims','stats','checks','slips','source']);
 const SRC={
@@ -203,7 +204,7 @@ const RGUIDE='<details class="rguide"><summary>How to read this lens, and what t
 const TILETIP={opening:'Opening: the words before the subject.',subject:'Subject: who or what the sentence is grammatically about.',interruption:'Words that stand between the subject and its verb.',verb:'The main verb.',middle:'The middle: between the verb and the close.',close:'Close: the stress position, which readers weight most.'};
 const tipA=s=>s?' data-tip="'+esc(s)+'"':'';
 const markTip=(lens,cls)=>{const ts=cls.split(' '),r=(MTIP[lens]||[]).find(x=>x[0].split(' ').every(t=>ts.includes(t)));return r?r[1]:'';};
-const lensTip=l=>l.why.split(/(?<=\.)\s/)[0]+(l.k==='compare'||l.k==='skeleton'||l.k==='practice'?'':l.ba===false?' The number counts open notes.':' The number counts open notes; “5→3” means 5 in your starting text and 3 now.');
+const lensTip=l=>l.why.split(/(?<=\.)\s/)[0]+(l.k==='compare'||l.k==='skeleton'||l.k==='practice'||l.k==='mviews'?'':l.ba===false?' The number counts open notes.':' The number counts open notes; “5→3” means 5 in your starting text and 3 now.');
 const srcHTML=k=>(SRC[k]||[]).map(p=>Array.isArray(p)?'<a href="#ref-'+p[0]+'" data-ref="'+p[0]+'" data-tip="Jump to the full reference.">'+esc(p[1])+'</a>':esc(p)).join(' · ');
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -450,7 +451,7 @@ REFS.push(
  ['kjell','Kjell, O., Giorgi, S., & Schwartz, H. A. (2023). The text-package: An R-package for analyzing and visualizing human language using natural language processing and transformers. <i>Psychological Methods</i>, 28(6), 1478–1498.','10.1037/met0000542',''],
  ['sbert','Reimers, N., & Gurevych, I. (2019). Sentence-BERT: Sentence embeddings using Siamese BERT-networks. In <i>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing</i> (pp. 3982–3992). Association for Computational Linguistics.','10.18653/v1/D19-1410',''],
  ['minilm','Wang, W., Wei, F., Dong, L., Bao, H., Yang, N., & Zhou, M. (2020). MiniLM: Deep self-attention distillation for task-agnostic compression of pre-trained transformers. In <i>Advances in Neural Information Processing Systems 33</i>.','','https://papers.nips.cc/paper/2020/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html']);
-const MPARA=0.7,MPAIR=0.45,MGEN=new Set(['people','person','somebody','someone','thing','things','way','ways','time','times','part','parts','use','work','year','years','number','case','cases','kind','type','lot','place','point','fact','group']),MLENS=['grid','outline','tracer','source','compare','terms'];
+const MPARA=0.7,MPAIR=0.45,MGEN=new Set(['people','person','somebody','someone','thing','things','way','ways','time','times','part','parts','use','work','year','years','number','case','cases','kind','type','lot','place','point','fact','group']),MLENS=['grid','outline','tracer','source','compare','terms','mviews'];
 const cosv=(a,b)=>{let s=0;for(let i=0;i<a.length;i++)s+=a[i]*b[i];return s;};
 function vmean(vs){const n=vs[0].length,o=new Float32Array(n);vs.forEach(v=>{for(let i=0;i<n;i++)o[i]+=v[i];});let q=0;for(let i=0;i<n;i++)q+=o[i]*o[i];q=Math.sqrt(q)||1;for(let i=0;i<n;i++)o[i]/=q;return o;}
 const mkey=s=>s.replace(/\s+/g,' ').trim();
@@ -459,7 +460,7 @@ const meanTerms=A=>(A.terms||[]).filter(t=>t.w&&t.w.length>2&&!MGEN.has(t.w.toLo
 function meanTexts(A){const t=A.sents.map(s=>mkey(s.text));A.paras.forEach(p=>{if(p.point&&p.point.text)t.push(mkey(p.point.text));});
   if(state.claim&&state.claim.trim())t.push(mkey(state.claim));srcSents().forEach(x=>t.push(x));
   if(state.base!==state.raw){baseline();if(state.A0)state.A0.sents.forEach(s=>t.push(mkey(s.text)));}
-  meanTerms(A).forEach(x=>t.push(mkey(x.w)));return t;}
+  meanTerms(A).forEach(x=>t.push(mkey(x.w)));absSents().forEach(x=>t.push(x));return t;}
 async function meanLoad(){if(MEAN.pipe){MEAN.st='ready';meanUI();meanRun();return;}if(MEAN.st==='loading')return;MEAN.st='loading';MEAN.err='';meanUI();
   try{const base=new URL('model/',location.href).href,T=await import(base+'lib/transformers.min.js');
     T.env.allowRemoteModels=false;T.env.allowLocalModels=true;T.env.localModelPath=base;T.env.backends.onnx.wasm.wasmPaths=base+'lib/';T.env.backends.onnx.wasm.numThreads=1;
@@ -486,7 +487,7 @@ function meanMeasure(A){const S=A.sents,n=S.length;if(n<2)return null;if(meanTex
   if(Object.values(para).some(o=>o.point===false))return null;
   if(body.length>=3&&wk>=0)para[wk].weakest=true;
   /* the claim: which sentence states it most directly, and how close each paragraph is to it */
-  let claim=null;if(state.claim&&state.claim.trim()&&body.length){const c=G(state.claim);let bi=0,bv=-2;S.forEach((s,i)=>{const x=cosv(c,V[i]);if(x>bv){bv=x;bi=i;}});
+  let claim=null,cs=null;if(state.claim&&state.claim.trim()&&body.length){const c=G(state.claim);cs=S.map((s,i)=>cosv(c,V[i]));let bi=0,bv=-2;S.forEach((s,i)=>{const x=cosv(c,V[i]);if(x>bv){bv=x;bi=i;}});
     const ps=body.map((p,k)=>cosv(c,pv[k]));let far=0,near=0;ps.forEach((x,k)=>{if(x<ps[far])far=k;if(x>ps[near])near=k;});const bp=Math.max(0,body.findIndex(p=>p.sents.includes(bi)));
     claim={best:bi,where:bp===0?'first':bp===body.length-1?'last':'middle',ord:body[bp].ord,far:body.length>=3?body[far].ord:null,near:body.length>=3?body[near].ord:null};body.forEach((p,k)=>{para[p.ord].claim=ps[k];});}
   /* a pasted source: close paraphrases, and the parts of the source the draft says least about */
@@ -499,7 +500,7 @@ function meanMeasure(A){const S=A.sents,n=S.length;if(n<2)return null;if(meanTex
   /* terms: pairs of names that are close in meaning, and so may be two names for one thing */
   const TT=meanTerms(A),tv=TT.map(t=>G(t.w)),pairs=[];for(let i=0;i<TT.length;i++)for(let j=i+1;j<TT.length;j++){if(!tv[i]||!tv[j]||TT[i].k.slice(0,4)===TT[j].k.slice(0,4)||state.merges.some(g=>g.includes(TT[i].k)&&g.includes(TT[j].k)))continue;const x=cosv(tv[i],tv[j]);if(x>=MPAIR)pairs.push({a:TT[i],b:TT[j],v:x});}
   pairs.sort((x,y)=>y.v-x.v);
-  return{sent,para,q75,med,nClose:sent.filter(x=>x.close).length,only:sent.map((x,i)=>x.only?i:-1).filter(i=>i>=0),joins:body.length-1,claim,src,rev,pairs:pairs.slice(0,8)};}
+  return{sent,para,q75,med,nClose:sent.filter(x=>x.close).length,only:sent.map((x,i)=>x.only?i:-1).filter(i=>i>=0),joins:body.length-1,claim,src,rev,pairs:pairs.slice(0,8),V,pv,cs};}
 function meanToggle(){if(MEAN.on){MEAN.on=false;MEAN.M=null;MEAN.gen++;if(MEAN.st!=='unavail')MEAN.st='off';store.set('ts.mean','');meanUI();return;}
   MEAN.on=true;store.set('ts.mean','1');meanLoad();}
 function meanUI(){const b=$('#btnMean'),f=$('#factAI'),on=MEAN.on&&MEAN.st==='ready';
@@ -510,7 +511,7 @@ const MEANNOTE='<p><b>What this is.</b> A small language model (all-MiniLM-L6-v2
 function meanBox(l){if(!MLENS.includes(l))return'';const A=state.A;if(!A.sents.length)return'';
   const head='<div class="panel res mean"><span class="cap"'+tipA('An optional layer on top of the rules: a small language model that compares sentences by meaning. Off unless you switch it on.')+'>Meaning model <span class="rtools"><span class="tool">optional · AI</span></span></span>';
   const sw=t=>'<div class="tilebar"><button type="button" class="btn sm" data-mean="1" id="meanSw-'+l+'">'+t+'</button></div>';
-  const OFF={grid:'The rules above only see repeated words. Switch the model on to also see which sentences and paragraphs are close in meaning, including the ones that share no word.',outline:'Switch the model on to see which sentence in each paragraph is closest in meaning to the rest, and where the point you stated is carried.',tracer:'The tracer above follows the words of your claim. Switch the model on to see where the draft states the claim in other words, and which paragraphs are furthest from it.',source:'The rule above finds copied strings of words. Switch the model on to also find sentences that restate a source sentence in different words, and the parts of the source your draft says least about.',compare:'Switch the model on to see how far each rewritten sentence has moved in meaning from the one it replaced.',terms:'Switch the model on to see pairs of terms that are close in meaning and may be two names for one thing.'};
+  const OFF={grid:'The rules above only see repeated words. Switch the model on to also see which sentences and paragraphs are close in meaning, including the ones that share no word.',outline:'Switch the model on to see which sentence in each paragraph is closest in meaning to the rest, and where the point you stated is carried.',tracer:'The tracer above follows the words of your claim. Switch the model on to see where the draft states the claim in other words, and which paragraphs are furthest from it.',source:'The rule above finds copied strings of words. Switch the model on to also find sentences that restate a source sentence in different words, and the parts of the source your draft says least about.',compare:'Switch the model on to see how far each rewritten sentence has moved in meaning from the one it replaced.',terms:'Switch the model on to see pairs of terms that are close in meaning and may be two names for one thing.',mviews:'These views are drawn from the meaning model, so they need it switched on.'};
   if(MEAN.st==='loading')return head+'<p>Loading the model. The first time, this is a download of about 45 MB; after that the browser keeps it.</p></div>';
   if(MEAN.st==='unavail')return head+'<p>The meaning model is not available in this copy of the page, because the model files are not beside it. It runs in the copy at <a href="https://benmarwick.github.io/topic-and-emphasis/" target="_blank" rel="noopener">benmarwick.github.io/topic-and-emphasis</a>.</p>'+sw('Try again')+'</div>';
   if(MEAN.st==='error')return head+'<p>The model stopped with an error: '+esc(MEAN.err)+'</p>'+sw('Switch it off')+'</div>';
@@ -535,6 +536,7 @@ function meanBox(l){if(!MLENS.includes(l))return'';const A=state.A;if(!A.sents.l
       '<p>“Close” here means a score of '+MPARA.toFixed(2)+' or more, where 1 is identical in meaning. That figure is this page’s working value. It is not a published threshold, and this is not a plagiarism check.</p>';}
   else if(l==='compare'){const R=M.rev;
     h+=!R||!R.rows.length?'<p>No rewritten sentences to compare yet. Rewrite a sentence, then come back.</p>':'<p class="rfig">How close each rewritten sentence is in meaning to the one it replaced, lowest first.</p><div class="tblwrap"><table class="cmp"><thead><tr><th>Now</th><th'+tipA('1 would be identical in meaning to the original sentence, 0 unrelated.')+'>Closeness</th><th>It replaced</th></tr></thead><tbody>'+R.rows.slice(0,6).map(r=>'<tr><td><button type="button" class="btn sm" data-mgo="'+r.i+'" id="mgo-'+r.i+'"'+tipA('Opens this sentence in the Overview.')+'>Sentence '+(r.i+1)+'</button>'+(r.n>1?' <span class="hint">and '+(r.n-1)+' more</span>':'')+'</td><td class="n">'+f2(r.v)+'</td><td>'+esc(cut(r.was,110))+'</td></tr>').join('')+'</tbody></table></div><p>A low figure means the rewrite moved furthest from what the sentence said before. That may be the correction you intended, or a drift to check. A high figure does not prove the meaning was kept: “cut their grants” and “doubled their grants” score as close, because both are about the same things. The revision receipt above is still counted by the rules alone.</p>';}
+  else if(l==='mviews'){h+=mviewsHTML(A,M);}
   else if(l==='terms'){
     h+=!M.pairs.length?'<p>No two of your terms are close enough in meaning to suggest as a pair.</p>':'<p class="rfig">The closest pairs in meaning among your terms. Is any pair two names for one thing?</p><div class="chips">'+M.pairs.map((p,q)=>'<button type="button" class="chip" id="mpair-'+q+'" data-mpair="'+esc(p.a.k)+'|'+esc(p.b.k)+'"'+tipA('Closeness '+f2(p.v)+'. Tap to select both terms above. Then choose “These name the same thing” if they do.')+'>'+esc(p.a.w)+' · '+esc(p.b.w)+'</button>').join('')+'</div><p>Readers take a new word to mean a new thing. If a pair names one thing, pick one name and keep to it. If the two differ, the difference may be worth a sentence. Most pairs here will be related things, not the same thing: the model is better at judging whole sentences than single words, so treat the list as a prompt to check.</p>';}
   return h+MEANNOTE+sw('Switch off the meaning model')+'</div>';}
@@ -545,6 +547,107 @@ function meanAdorn(p,l){const M=MEAN.M;if(!M||p.ord==null||!M.para[p.ord])return
     if(o.cen)h+='<div class="padorn mcen"><span class="'+(o.cen.pos==='middle'?'miss':'hit')+'"'+tipA('From the meaning model: the sentence in this paragraph that is closest in meaning to all the others taken together.')+'>'+(o.cen.pos==='middle'?'By meaning, '+nm(o.cen.best)+', in the middle, is closest to the rest of this paragraph':'✓ By meaning, '+where(o.cen.pos)+' is closest to the rest of this paragraph')+'</span>'+(o.cen.pos==='middle'?'<button type="button" class="btn sm" data-bar="'+o.cen.best+'" id="mc-'+p.ord+'">Open it</button>':'')+(o.cen.worst!=null&&o.cen.worst!==o.cen.best?'<span'+tipA('From the meaning model: the sentence furthest in meaning from the others in this paragraph. Ask whether it belongs here. It may be a deliberate turn.')+'>furthest from the rest: '+nm(o.cen.worst)+'</span>':'')+'</div>';
     if(o.point)h+='<div class="padorn mcen"><span class="'+(o.point.pos==='middle'?'miss':'hit')+'"'+tipA('From the meaning model: the sentence closest in meaning to the point you wrote, whether or not it uses your words.')+'>'+(o.point.pos==='middle'?'By meaning, your point is carried best by '+nm(o.point.best)+', in the middle':'✓ By meaning, your point is carried best by '+where(o.point.pos))+'</span>'+(o.point.pos==='middle'?'<button type="button" class="btn sm" data-bar="'+o.point.best+'" id="mp-'+p.ord+'">Open it</button>':'')+'</div>';}
   return h;}
+
+/* ---------- meaning views: pictures of the draft drawn from the model's sentence vectors ---------- */
+const mvS=()=>state.mv||(state.mv={tab:'thread',cell:null,order:null,q:'',abs:store.get('ts.abs')||'',odd:null,seq:[],dp:0});
+const MVTABS=[['thread','Thread'],['quilt','Quilt'],['stripe','Topics'],['map','Map'],['order','Reorder'],['ask','Ask'],['checks','Abstract & ending'],['drill','Drills']];
+const MVHUE=['blue','amber','teal','rose'];
+const splitS=s=>(s||'').split(/(?<=[.!?]["”’)\]]?)\s+(?=["“‘(\[]?[A-Z0-9])|\n+/).map(mkey).filter(t=>t.length>=25).slice(0,150);
+function absSents(){const s=mvS().abs||'';if(MEAN.absOf===s)return MEAN.abs;MEAN.absOf=s;MEAN.abs=splitS(s);return MEAN.abs;}
+const mvCut=(t,n)=>t.length>n?t.slice(0,n-2).trimEnd()+'…':t;
+const mvOpen=(i,id)=>'<button type="button" class="btn sm" data-bar="'+i+'" id="'+id+'-'+i+'">Sentence '+(i+1)+'</button>';
+function mvKmeans(V){const n=V.length,k=n<6?2:n<14?3:4,cen=[V[0]];
+  while(cen.length<k){let b=0,bv=2;V.forEach((v,i)=>{const m=Math.max(...cen.map(c=>cosv(c,v)));if(m<bv){bv=m;b=i;}});cen.push(V[b]);}
+  let as=new Array(n).fill(0);for(let it=0;it<12;it++){as=V.map(v=>{let b=0,bv=-2;cen.forEach((c,q)=>{const x=cosv(c,v);if(x>bv){bv=x;b=q;}});return b;});for(let q=0;q<k;q++){const m=V.filter((v,i)=>as[i]===q);if(m.length)cen[q]=vmean(m);}}
+  const seen=[],lab=as.map(a=>{let q=seen.indexOf(a);if(q<0){seen.push(a);q=seen.length-1;}return q;}),typ=seen.map((a,q)=>{let b=-1,bv=-2;V.forEach((v,i)=>{if(lab[i]!==q)return;const x=cosv(cen[a],v);if(x>bv){bv=x;b=i;}});return b;});
+  return{k:seen.length,lab,typ};}
+function mvPCA(V){const n=V.length,d=V[0].length,mu=new Float32Array(d);V.forEach(v=>{for(let i=0;i<d;i++)mu[i]+=v[i]/n;});const X=V.map(v=>{const o=new Float32Array(d);for(let i=0;i<d;i++)o[i]=v[i]-mu[i];return o;});
+  let tot=0;X.forEach(x=>{for(let i=0;i<d;i++)tot+=x[i]*x[i];});const pcs=[],lam=[];
+  for(let c=0;c<2;c++){let v=new Float32Array(d);for(let i=0;i<d;i++)v[i]=((i*37+c*11)%17)/17-0.5;
+    for(let it=0;it<40;it++){const w=new Float32Array(d);X.forEach(x=>{let s=0;for(let i=0;i<d;i++)s+=x[i]*v[i];for(let i=0;i<d;i++)w[i]+=s*x[i];});pcs.forEach(p=>{let s=0;for(let i=0;i<d;i++)s+=w[i]*p[i];for(let i=0;i<d;i++)w[i]-=s*p[i];});let q=0;for(let i=0;i<d;i++)q+=w[i]*w[i];q=Math.sqrt(q)||1;for(let i=0;i<d;i++)v[i]=w[i]/q;}
+    pcs.push(v);let l=0;X.forEach(x=>{let s=0;for(let i=0;i<d;i++)s+=x[i]*v[i];l+=s*s;});lam.push(l);}
+  const proj=v=>pcs.map(p=>{let s=0;for(let i=0;i<d;i++)s+=(v[i]-mu[i])*p[i];return s;});
+  return{proj,share:tot?(lam[0]+lam[1])/tot:0};}
+function mvOrderInfo(A,M){const body=A.paras.filter(p=>p.ord!=null&&p.sents.length),V=M.V,st=mvS();let ord=st.order&&st.order.length===body.length&&st.order.every(o=>body.some(p=>p.ord===o))?st.order:body.map(p=>p.ord);
+  const by=o=>body.find(p=>p.ord===o),join=(a,b)=>{const pa=by(a),pb=by(b);return cosv(V[pa.sents[pa.sents.length-1]],V[pb.sents[0]]);},sm=o=>o.length<2?0:o.slice(1).reduce((s,x,i)=>s+join(o[i],x),0)/(o.length-1);
+  return{body,ord,by,join,sm,draft:body.map(p=>p.ord)};}
+function mviewsHTML(A,M){const st=mvS(),S=A.sents,n=S.length,V=M.V,f2=v=>v.toFixed(2),sim=(i,j)=>cosv(V[i],V[j]);
+  let h='<div class="mvtabs" role="tablist">'+MVTABS.map(([k,t])=>'<button type="button" role="tab" class="btn sm'+(st.tab===k?' on':'')+'" id="mvt-'+k+'" data-mvt="'+k+'" aria-selected="'+(st.tab===k)+'">'+t+'</button>').join('')+'</div>';
+  if(n<4)return h+'<p>These views need at least four sentences.</p>';
+  if(st.tab==='thread'){const W=600,H=190,L=30,R=12,T=44,B=22,adj=M.sent.map(x=>x.adj),vals=adj.slice(1),mx=Math.max(0.8,...vals,...(M.cs||[])),X=i=>L+(n>1?i/(n-1):0.5)*(W-L-R),Y=v=>H-B-Math.max(0,v)/mx*(H-T-B);
+    const srt=vals.slice().sort((a,b)=>a-b),q25=srt[Math.floor(0.25*srt.length)],q75=srt[Math.min(srt.length-1,Math.floor(0.75*srt.length))];
+    const shifts=[],fused=[];for(let i=1;i<n;i++){const inside=S[i].p===S[i-1].p;if(inside&&n>=6&&adj[i]<=q25&&(i===1||adj[i]<=adj[i-1])&&(i===n-1||adj[i]<=adj[i+1]))shifts.push(i);if(!inside&&n>=6&&adj[i]>=q75)fused.push(i);}
+    shifts.sort((a,b)=>adj[a]-adj[b]);const reps=[];for(let i=0;i<n;i++)for(let j=i+3;j<n;j++){const x=sim(i,j);if(x>=0.75)reps.push({i,j,v:x});}reps.sort((a,b)=>b.v-a.v);const rp=reps.slice(0,5);
+    let g='';[0,0.25,0.5,0.75].forEach(t=>{if(t<=mx)g+='<line class="mvgrid" x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text class="mvax" x="'+(L-5)+'" y="'+(Y(t)+3)+'" text-anchor="end">'+t+'</text>';});
+    for(let i=1;i<n;i++)if(S[i].p!==S[i-1].p)g+='<line class="mvpb" x1="'+((X(i)+X(i-1))/2)+'" x2="'+((X(i)+X(i-1))/2)+'" y1="'+T+'" y2="'+(H-B)+'"/>';
+    rp.forEach(r=>{const a=X(r.i),b=X(r.j);g+='<path class="mvarc" d="M'+a+' '+(T-4)+' Q'+((a+b)/2)+' '+(T-4-Math.min(34,8+(r.j-r.i)*2.2))+' '+b+' '+(T-4)+'"/>';});
+    if(M.cs)g+='<polyline class="mvline claim" points="'+M.cs.map((v,i)=>X(i)+','+Y(v)).join(' ')+'"/>';
+    g+='<polyline class="mvline" points="'+vals.map((v,q)=>X(q+1)+','+Y(v)).join(' ')+'"/>';
+    for(let i=1;i<n;i++)g+='<circle class="mvdot'+(shifts.includes(i)?' low':'')+'" cx="'+X(i)+'" cy="'+Y(adj[i])+'" r="'+(n>60?2.5:4)+'" data-bar="'+i+'"'+tipA('Sentence '+(i+1)+' · closeness to the sentence before: '+f2(adj[i])+(M.cs?' · to your claim: '+f2(M.cs[i]):'')+'. Tap to open it.')+'/>';
+    h+='<div class="mvfig"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Closeness of each sentence to the one before it, across the draft">'+g+'</svg></div>'+
+      '<p class="mvkey"><span class="k1">━</span> closeness to the sentence before'+(M.cs?' · <span class="k2">┅</span> closeness to your claim':'')+' · dashed uprights are paragraph breaks'+(rp.length?' · arcs join distant sentences that say nearly the same thing':'')+'</p>'+
+      '<p>Read it left to right. A dip is a jump in subject. '+(M.cs?'The dashed line shows where the draft is on its claim and where it wanders. ':'Write a claim in Claim tracer to add a second line showing where the draft is on its point. ')+'</p>'+
+      (shifts.length?'<div class="tilebar"><span class="hint"'+tipA('Sentences in the lowest quarter for closeness to the one before, inside a paragraph. A paragraph break may belong here, or a linking phrase.')+'>A jump inside a paragraph:</span>'+shifts.slice(0,3).map(i=>mvOpen(i,'mvsh')).join('')+'</div>':'')+
+      (fused.length?'<div class="tilebar"><span class="hint"'+tipA('Paragraphs whose first sentence is in the top quarter for closeness to the sentence before it. The break may not mark a real change of subject.')+'>A paragraph break with no jump:</span>'+fused.slice(0,3).map(i=>mvOpen(i,'mvfu')).join('')+'</div>':'')+
+      (rp.length?'<div class="tilebar"><span class="hint"'+tipA('Sentences at least three apart that score 0.75 or more for closeness, which is this page’s working value. One of each pair may be a repeat you can cut, or a deliberate return.')+'>Said twice?</span>'+rp.map(r=>'<span class="mvpair">'+mvOpen(r.i,'mvra')+' and '+mvOpen(r.j,'mvrb')+'</span>').join('')+'</div>':'');}
+  else if(st.tab==='quilt'){const c=st.cell&&st.cell[0]<n&&st.cell[1]<n?st.cell:null;
+    h+='<div class="mvfig"><canvas id="mvQuilt" role="img" aria-label="A grid of every sentence against every other, shaded by closeness in meaning" tabindex="0"></canvas></div>'+
+      '<p>Each square compares two sentences: the darker it is, the closer they are in meaning. The diagonal runs from the first sentence at top left to the last at bottom right, and the lines mark paragraphs. A paragraph that holds together shows as a dark block on the diagonal. A dark patch far from the diagonal is an idea that comes back. Tap a square to read the two sentences.</p>'+
+      (c?'<div class="mvcmp"><p><b>Sentence '+(c[0]+1)+'</b> and <b>sentence '+(c[1]+1)+'</b> · closeness '+f2(sim(c[0],c[1]))+'</p><p>'+esc(mvCut(S[c[0]].text,220))+'</p><p>'+esc(mvCut(S[c[1]].text,220))+'</p><div class="tilebar">'+mvOpen(c[0],'mvqa')+(c[1]!==c[0]?mvOpen(c[1],'mvqb'):'')+'</div></div>':'');}
+  else if(st.tab==='stripe'){const K=mvKmeans(V);let sw=0;for(let i=1;i<n;i++)if(K.lab[i]!==K.lab[i-1])sw++;
+    h+='<div class="mvstripe" role="img" aria-label="Each sentence coloured by its topic">'+S.map((s,i)=>'<button type="button" class="mvs hb-'+MVHUE[K.lab[i]]+(i&&S[i].p!==S[i-1].p?' pb':'')+'" data-bar="'+i+'" id="mvs-'+i+'"'+tipA('Sentence '+(i+1)+' · topic '+'ABCD'[K.lab[i]]+'. Tap to open it.')+' aria-label="Sentence '+(i+1)+', topic '+'ABCD'[K.lab[i]]+'"></button>').join('')+'</div>'+
+      '<p class="rfig">The model sorts your sentences into <b>'+K.k+'</b> topics, and the topic changes <b>'+sw+'</b> '+(sw===1?'time':'times')+' along the draft. The fewest possible is '+(K.k-1)+'.</p>'+
+      '<ul class="mvtop">'+K.typ.map((i,q)=>'<li><span class="mvsw hb-'+MVHUE[q]+'"></span><span><b>Topic '+'ABCD'[q]+'</b> · '+K.lab.filter(x=>x===q).length+' sentences · most typical: “'+esc(mvCut(S[i].text,120))+'” '+mvOpen(i,'mvty')+'</span></li>').join('')+'</ul>'+
+      '<p>Long runs of one colour mean a topic is dealt with in one place. Colours that alternate mean topics are interleaved, which makes a reader switch back and forth. The topics are the model’s grouping, not yours: if a group makes no sense to you, ignore it.</p>';}
+  else if(st.tab==='map'){const P=mvPCA(V),pts=V.map(P.proj),W=600,H=380,pad=26,all=pts.slice(),ex=[];
+    if(state.claim&&state.claim.trim()&&MEAN.vec.get(mkey(state.claim))){ex.push({t:'claim',p:P.proj(MEAN.vec.get(mkey(state.claim)))});}
+    const trail=(M.rev?M.rev.rows:[]).map(r=>({i:r.i,p:MEAN.vec.get(mkey(r.was))?P.proj(MEAN.vec.get(mkey(r.was))):null})).filter(r=>r.p);
+    ex.forEach(e=>all.push(e.p));trail.forEach(t=>all.push(t.p));
+    const xs=all.map(p=>p[0]),ys=all.map(p=>p[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys),X=v=>pad+(x1>x0?(v-x0)/(x1-x0):0.5)*(W-2*pad),Y=v=>pad+(y1>y0?(v-y0)/(y1-y0):0.5)*(H-2*pad),r=n>120?4:n>50?7:10;
+    const ords=[...new Set(S.map(s=>s.p))];let g='<polyline class="mvwalk" points="'+pts.map(p=>X(p[0])+','+Y(p[1])).join(' ')+'"/>';
+    trail.forEach(t=>{g+='<line class="mvtrail" x1="'+X(t.p[0])+'" y1="'+Y(t.p[1])+'" x2="'+X(pts[t.i][0])+'" y2="'+Y(pts[t.i][1])+'"/><circle class="mvwas" cx="'+X(t.p[0])+'" cy="'+Y(t.p[1])+'" r="'+(r*0.6)+'"'+tipA('Where sentence '+(t.i+1)+' was before you rewrote it.')+'/>';});
+    pts.forEach((p,i)=>{g+='<g class="mvpt hb-'+MVHUE[ords.indexOf(S[i].p)%4]+'" data-bar="'+i+'"'+tipA('Sentence '+(i+1)+', paragraph '+(ords.indexOf(S[i].p)+1)+': '+mvCut(S[i].text,110)+' Tap to open it.')+'><circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="'+r+'"/>'+(r>=7?'<text x="'+X(p[0])+'" y="'+(Y(p[1])+3.5)+'" text-anchor="middle">'+(i+1)+'</text>':'')+'</g>';});
+    ex.forEach(e=>{g+='<text class="mvstar" x="'+X(e.p[0])+'" y="'+(Y(e.p[1])+6)+'" text-anchor="middle"'+tipA('Your claim, placed on the same map.')+'>★</text>';});
+    h+='<div class="mvfig"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="A map of the sentences, with sentences close in meaning drawn close together">'+g+'</svg></div>'+
+      '<p class="mvkey">Each dot is a sentence, numbered and coloured by paragraph · the line joins them in reading order'+(ex.length?' · ★ is your claim':'')+(trail.length?' · hollow dots show where rewritten sentences were':'')+'</p>'+
+      '<p>Sentences close in meaning sit close together. A tight cluster is a topic. A dot off on its own is a sentence unlike the rest. A line that doubles back means the draft returns to a subject it had left.</p>'+
+      '<p><b>Read this one with care.</b> The model places sentences in 384 dimensions and this map shows two. Here the two carry '+Math.round(100*P.share)+'% of the spread, so most of the detail is flattened away, and two dots can look close when they are not. The Thread and the Quilt use the full measure.</p>';}
+  else if(st.tab==='order'){const O=mvOrderInfo(A,M),body=O.body;
+    if(body.length<3)h+='<p>Reordering needs at least three paragraphs.</p>';
+    else{const ord=O.ord,changed=ord.join()!==O.draft.join(),heads=A.paras.some(p=>p.head);
+      h+='<p class="rfig">Smoothness of this order: <b>'+f2(O.sm(ord))+'</b>'+(changed?' · your draft: <b>'+f2(O.sm(O.draft))+'</b>':'')+'</p><ol class="mvord">'+ord.map((o,q)=>{const p=O.by(o);return (q?'<li class="mvjoin"'+tipA('Closeness between the last sentence of the paragraph above and the first sentence of the paragraph below.')+'>join '+f2(O.join(ord[q-1],o))+'</li>':'')+'<li class="mvrow"><span class="mvmv"><button type="button" class="btn sm" data-mvup="'+q+'" id="mvup-'+q+'" aria-label="Move paragraph '+(o+1)+' up"'+(q?'':' disabled')+'>▲</button><button type="button" class="btn sm" data-mvdn="'+q+'" id="mvdn-'+q+'" aria-label="Move paragraph '+(o+1)+' down"'+(q<ord.length-1?'':' disabled')+'>▼</button></span><span><b>¶'+(o+1)+'</b> '+esc(mvCut(S[p.sents[0]].text,90))+'</span></li>';}).join('')+'</ol>'+
+        '<div class="tilebar"><button type="button" class="btn sm" id="mvGreedy"'+tipA('Keeps your first paragraph first, then at each step picks the remaining paragraph whose opening is closest to the close of the one before. It is a comparison, not a recommendation: the model knows nothing of logic or chronology.')+'>Show the model’s smoothest order</button><button type="button" class="btn sm" id="mvReset"'+(changed?'':' disabled')+'>Back to the draft’s order</button><button type="button" class="btn sm" id="mvApply"'+(changed&&!heads?'':' disabled')+tipA(heads?'Not available while the draft has headings, because a heading would be separated from its paragraphs.':'Rearranges the paragraphs in your text. Undo brings the old order back.')+'>Use this order in the draft</button></div>'+
+        '<p>Move paragraphs with the arrows and watch the joins. Smoothness is the average of the joins: the closeness between the end of one paragraph and the start of the next. A smoother order is easier to follow from one paragraph to the next. It is not always the better argument.</p>';}}
+  else if(st.tab==='ask'){const q=mkey(st.q||''),qv=q&&MEAN.vec.get(q),res=qv?S.map((s,i)=>({i,v:cosv(qv,V[i])})).sort((a,b)=>b.v-a.v).slice(0,5):[];
+    h+='<label class="cap sub" for="mvQ">Ask your draft a question, or paste a reader’s comment</label><div class="mvask"><input type="text" class="pointin" id="mvQ" value="'+esc(st.q||'')+'" placeholder="Where do I define loneliness?" autocomplete="off"><button type="button" class="btn sm" id="mvAskBtn">Find</button></div>'+
+      (q&&!qv?'<p>Looking…</p>':res.length?'<ol class="mvres">'+res.map(r=>'<li>'+mvOpen(r.i,'mvas')+' <span class="hint">'+f2(r.v)+'</span> '+esc(mvCut(S[r.i].text,150))+'</li>').join('')+'</ol><p>These are the five sentences closest in meaning to what you typed, closest first. If none of them answers the question, the draft may not answer it yet.</p>':'<p>The model finds the sentences of your draft closest in meaning to what you type. It does not write an answer.</p>');}
+  else if(st.tab==='checks'){const body=A.paras.filter(p=>p.ord!=null&&p.sents.length),pv=M.pv,AB=absSents(),av=AB.map(t=>MEAN.vec.get(t));
+    if(body.length>=3){const last=body.length-1,sims=body.slice(0,last).map((p,k)=>({k,v:cosv(pv[k],pv[last])})).sort((a,b)=>b.v-a.v),rank=sims.findIndex(x=>x.k===0)+1;
+      h+='<span class="cap sub">Does the ending return to the opening?</span><p class="rfig">'+(rank===1?'✓ Your last paragraph is closer in meaning to your first than to any other paragraph.':'Your last paragraph is closest in meaning to <b>¶'+(body[sims[0].k].ord+1)+'</b>. Your first paragraph ranks <b>'+rank+' of '+sims.length+'</b>.')+'</p><p>Readers expect an ending to answer the opening. If yours is closer to a middle paragraph, check that it returns to the question you began with.</p>';}
+    else h+='<p>The ending check needs at least three paragraphs.</p>';
+    h+='<label class="cap sub" for="mvAbs">Does the abstract cover the draft?</label><p>Paste your abstract. It is read when you leave the box.</p><textarea id="mvAbs" class="listin" rows="4" spellcheck="false" placeholder="Paste the abstract here">'+esc(st.abs||'')+'</textarea>';
+    if(AB.length&&av.every(Boolean)&&body.length){const cov=body.map((p,k)=>Math.max(...av.map(a=>cosv(a,pv[k]))));let lo=0;cov.forEach((v,k)=>{if(v<cov[lo])lo=k;});
+      h+='<div class="mvbars">'+body.map((p,k)=>'<div class="mvbar"><span>¶'+(p.ord+1)+'</span><span class="mbar"><i style="width:'+Math.round(100*Math.max(0,Math.min(1,cov[k])))+'%"></i></span><b>'+f2(cov[k])+'</b>'+(k===lo&&body.length>=3?'<span class="miss">least covered</span>':'')+'</div>').join('')+'</div><p>Each bar is how close a paragraph is to the nearest sentence of your abstract. The paragraph with the shortest bar is the part of the draft the abstract says least about. That may be right: an abstract does not cover everything.</p>';}}
+  else if(st.tab==='drill'){const cands=A.paras.filter(p=>p.ord!=null&&p.sents.length>=4&&p.sents.length<=9&&M.para[p.ord]&&M.para[p.ord].cen);
+    if(!cands.length)h+='<p>The drills need a paragraph of four to nine sentences.</p>';
+    else{const p=cands[st.dp%cands.length],ids=p.sents,worst=M.para[p.ord].cen.worst,L=ids.length,shuf=ids.slice().sort((a,b)=>((a-ids[0])*7+3)%L-((b-ids[0])*7+3)%L),seq=(st.seq||[]).filter(i=>ids.includes(i));
+      h+='<div class="tilebar"><span class="hint">Working on paragraph '+(p.ord+1)+'</span>'+(cands.length>1?'<button type="button" class="btn sm" id="mvNextP">Another paragraph</button>':'')+'</div>'+
+        '<span class="cap sub">Drill 1 · Which sentence belongs least?</span><div class="mvlist">'+ids.map(i=>'<button type="button" class="mvsent'+(st.odd===i?' on':'')+'" data-mvodd="'+i+'" id="mvodd-'+i+'">'+(i+1)+' · '+esc(mvCut(S[i].text,140))+'</button>').join('')+'</div>'+
+        (st.odd!=null&&ids.includes(st.odd)?'<p class="rfig">'+(st.odd===worst?'The model agrees: sentence '+(worst+1)+' is the furthest in meaning from the rest of this paragraph.':'You chose sentence '+(st.odd+1)+'. The model places sentence '+(worst+1)+' furthest from the rest.')+'</p><p>Neither answer is the right one. If you and the model differ, say to yourself why your sentence belongs less. That reason is what a reader would need.</p>':'')+
+        '<span class="cap sub">Drill 2 · Put the paragraph back in order</span><p>Tap the sentences in the order you think reads best.</p><div class="mvlist">'+shuf.filter(i=>!seq.includes(i)).map(i=>'<button type="button" class="mvsent" data-mvseq="'+i+'" id="mvseq-'+i+'">'+esc(mvCut(S[i].text,140))+'</button>').join('')+'</div>'+
+        (seq.length?'<ol class="mvres">'+seq.map(i=>'<li>'+esc(mvCut(S[i].text,140))+'</li>').join('')+'</ol><div class="tilebar"><button type="button" class="btn sm" id="mvSeqReset">Start again</button></div>':'')+
+        (seq.length===L?(()=>{const sm=o=>o.slice(1).reduce((s,x,q)=>s+sim(o[q],x),0)/(o.length-1),same=seq.filter((x,q)=>x===ids[q]).length;return '<p class="rfig"><b>'+same+' of '+L+'</b> sentences are where the draft has them. Smoothness of your order: <b>'+f2(sm(seq))+'</b> · of the draft’s order: <b>'+f2(sm(ids))+'</b>.</p><p>If your order differs from the draft and reads better to you, that is worth trying in the text. Smoothness is the average closeness between neighbours, by the model’s measure.</p>';})():'');}}
+  return h;}
+function mvDraw(){const cv=document.getElementById('mvQuilt');if(!cv||!MEAN.M)return;const M=MEAN.M,V=M.V,n=V.length,S=state.A.sents,box=cv.parentElement.clientWidth||320,size=Math.min(box,560),dpr=window.devicePixelRatio||1,cs=getComputedStyle(document.documentElement),col=cs.getPropertyValue('--violet').trim()||'#6A3FD0',ink=cs.getPropertyValue('--ink').trim()||'#000',sheet=cs.getPropertyValue('--sheet').trim()||'#fff';
+  cv.style.width=size+'px';cv.style.height=size+'px';cv.width=Math.round(size*dpr);cv.height=Math.round(size*dpr);const g=cv.getContext('2d');g.scale(dpr,dpr);g.fillStyle=sheet;g.fillRect(0,0,size,size);const c=size/n,lo=Math.max(0,M.med-0.1),hi=0.85;g.fillStyle=col;
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const v=i===j?1:cosv(V[i],V[j]),t=Math.max(0,Math.min(1,(v-lo)/(hi-lo)));if(t<=0.02)continue;g.globalAlpha=Math.pow(t,1.3);g.fillRect(j*c,i*c,Math.ceil(c)+0.5,Math.ceil(c)+0.5);}
+  g.globalAlpha=0.55;g.strokeStyle=ink;g.lineWidth=1;for(let i=1;i<n;i++)if(S[i].p!==S[i-1].p){const p=Math.round(i*c)+0.5;g.beginPath();g.moveTo(p,0);g.lineTo(p,size);g.moveTo(0,p);g.lineTo(size,p);g.stroke();}
+  const sel=mvS().cell;if(sel&&sel[0]<n&&sel[1]<n){g.globalAlpha=1;g.lineWidth=2;g.strokeStyle=ink;g.strokeRect(sel[1]*c,sel[0]*c,Math.max(c,3),Math.max(c,3));}g.globalAlpha=1;cv._n=n;cv._size=size;}
+function mvAskGo(q){const st=mvS();st.q=q||'';const k=mkey(st.q);if(!k||!MEAN.pipe){renderDynamic();return;}renderDynamic();meanEmbed([k]).then(renderDynamic,()=>{});}
+function wbMeter(){const el=$('#wbMeter');if(!el)return;const M=MEAN.M,ss=state.sel?spanSents():[];if(!M||!ss.length){if(!(MEAN.on&&MEAN.st==='ready'&&state.sel))el.hidden=true;return;}
+  const i=ss[0].i,x=M.sent[i],bar=v=>'<span class="mbar"><i style="width:'+Math.round(100*Math.max(0,Math.min(1,v)))+'%"></i></span>';el.hidden=false;
+  el.innerHTML='<span class="tool"'+tipA('From the optional meaning model. These two gauges update as you rewrite the sentence.')+'>meaning model</span>'+(x.adj!=null?'<span'+tipA('How close this sentence is in meaning to the one before it: 1 would be identical, 0 unrelated. Repeating a word or an idea from the sentence before raises it.')+'>to the sentence before '+bar(x.adj)+'<b>'+x.adj.toFixed(2)+'</b></span>':'<span>the first sentence of the draft</span>')+(M.cs?'<span'+tipA('How close this sentence is in meaning to the claim you wrote in Claim tracer.')+'>to your claim '+bar(M.cs[i])+'<b>'+M.cs[i].toFixed(2)+'</b></span>':'')+'<span class="hint"'+tipA('The middle value for all pairs of sentences in this draft, for comparison.')+'>typical pair in this draft '+M.med.toFixed(2)+'</span>';}
+SRC.mviews=[['kjell','Kjell, Giorgi & Schwartz'],['sbert','Reimers & Gurevych']];
 function resBox(k){const A=state.A,fn=RESB[k];if(!fn||!A.research||!A.sents.length)return'';const b=fn(A,A.research);
   return '<div class="panel res"><span class="cap"'+tipA('A count that writing researchers use to describe a text, reproduced here by fixed rules. It describes the draft. It has no target and it is not a score.')+'>Research measure <span class="rtools">'+b.t.map(toolA).join(' ')+'</span></span>'+(b.fig?'<p class="rfig">'+b.fig+'</p>':'')+(b.extra||'')+'<p><b>What the research found.</b> '+b.found+'</p><p><b>How this count differs.</b> '+b.here+'</p></div>';}
 function resRows(A){const R=A.research,O=R.over,b=R.conn.by,rows=[],gap=O.pp-O.ph,zero=Object.keys(CNAME).filter(k=>!b[k]).map(k=>CNAME[k][0].toLowerCase());
@@ -596,7 +699,7 @@ function renderRail(){
   const A=state.A,bc=baseline(),now={};A.findings.filter(active).forEach(f=>{now[f.lens]=(now[f.lens]||0)+1;});
   const tot=o=>Object.values(o).reduce((a,b)=>a+b,0);
   const btn=l=>{let n=l.k==='overview'?tot(now):(now[l.k]||0),b=l.k==='overview'?null:bc[l.k]||0,c='';
-    if(l.k==='compare'||l.k==='skeleton'||l.k==='practice')c='';else if(l.ba!==false&&b!=null&&b!==n&&state.base!==state.raw)c='<s>'+b+'→</s>'+n+(n===0?' ✓':'');else c=String(n);
+    if(l.k==='compare'||l.k==='skeleton'||l.k==='practice'||l.k==='mviews')c='';else if(l.ba!==false&&b!=null&&b!==n&&state.base!==state.raw)c='<s>'+b+'→</s>'+n+(n===0?' ✓':'');else c=String(n);
     return '<button class="lens hb-'+l.hue+(RESB[l.k]||l.k==='source'?' res':'')+'" type="button" id="lens-'+l.k+'" data-k="'+l.k+'" aria-pressed="'+(state.lens===l.k)+'"'+tipA(lensTip(l)+(RESB[l.k]||l.k==='source'?' The small ring means this lens also carries a research measure.':''))+'><i></i><span>'+esc(l.n)+'</span><b>'+c+'</b></button>';};
   const RA=state.railAll||(state.railAll={});
   [0,1,2,3,4,5,6,7].forEach(g=>{const ls=LENSES.filter(l=>l.g===g),quiet=ls.filter(l=>FOLD.has(l.k)&&l.k!==state.lens&&!(now[l.k]>0)),show=RA[g]?ls:ls.filter(l=>!quiet.includes(l));
@@ -678,7 +781,7 @@ function renderExtra(){
       (same?'':'<div class="tilebar"><button type="button" class="btn sm" id="setBase"'+tipA('Later comparisons will start from the text as it is now.')+'>Make the current text the new starting point</button></div>')+'</div>'+
       (same?'':'<div class="diff">'+diffHTML(state.base,state.raw)+'</div>');}
   if(l==='overview')h=profileHTML()+h;else h=resBox(l)+meanBox(l)+h;
-  x.innerHTML=h;$('#startBox').innerHTML=l==='overview'?state.startH||'':'';
+  x.innerHTML=h;$('#startBox').innerHTML=l==='overview'?state.startH||'':'';if(l==='mviews')mvDraw();
 }
 
 function tracerMore(){const A=state.A,T=A.tracer.title,K=A.tracer.key;let h='';
@@ -948,7 +1051,7 @@ function renderBack(){const t=$('#wbText'),bk=$('#wbBack'),kz=$('#wbKeys');if(!s
   const acc=state.wbOnly||state.lens,quiet=m=>m.lens===acc?m:Object.assign({},m,{cls:m.cls.replace(/\bh([bu])-\w+/g,'h$1-ink')});
   bk.innerHTML=backHTML(t.value,ms.map(quiet).concat(gh));
   kz.innerHTML=ks.length?'<span class="cap"'+tipA('Each colour in the rewrite box belongs to one lens. Tap a name to show only that lens’s marks, and tap it again to show them all.')+'>Marked in the box</span>'+ks.map(k=>'<button type="button" class="wk hb-'+(k===acc?LBY[k].hue:'ink')+'" id="wk-'+k+'" data-wk="'+k+'" aria-pressed="'+(state.wbOnly===k)+'"'+tipA((k==='sv'?'The subject and the main verb are always underlined. ':'')+'Show only the words marked by the “'+LBY[k].n+'” lens. Tap again to show every mark.')+'><i></i>'+esc(LBY[k].n)+'</button>').join(''):'';
-  wbHint();}
+  wbHint();wbMeter();}
 function wbHint(){const hEl=$('#wbHint'),t=$('#wbText'),ms=state.wbM||[];if(!hEl)return;let at=[];
   if(document.activeElement===t){const a=t.selectionStart,b=t.selectionEnd;at=ms.filter(m=>a===b?m.a<=a&&a<=m.b:m.a<b&&m.b>a);}
   const seen=new Set();at=at.slice().sort((x,y)=>(x.b-x.a)-(y.b-y.a)).filter(m=>!seen.has(m.tip)&&seen.add(m.tip));
@@ -1189,6 +1292,17 @@ document.addEventListener('click',e=>{
     if(f&&f.join!=null){const a=state.A.sents[f.join],b=state.A.sents[f.join+1],k=a?a.text.search(/[.!?]\s*$/):-1;
       if(a&&b&&k>0)pvSet('join:'+id+':'+i,id,{s:a.s+k,e:b.e,text:JOINS[i][1]+decap(b.text),open:a.i});}return;}
   if(c('#btnMean')||c('[data-mean]')){meanToggle();return;}
+  if((el=c('[data-mvt]'))){mvS().tab=el.dataset.mvt;renderDynamic();return;}
+  if((el=c('#mvQuilt'))){const r=el.getBoundingClientRect(),n=el._n||1,cc=r.width/n,j=Math.min(n-1,Math.max(0,Math.floor((e.clientX-r.left)/cc))),i=Math.min(n-1,Math.max(0,Math.floor((e.clientY-r.top)/cc)));mvS().cell=[i,j];renderDynamic();return;}
+  if(MEAN.M&&((el=c('[data-mvup]'))||(el=c('[data-mvdn]')))){const O=mvOrderInfo(state.A,MEAN.M),o=O.ord.slice(),up=el.dataset.mvup!=null,q=+(up?el.dataset.mvup:el.dataset.mvdn),d=up?-1:1;if(o[q+d]!=null){const t=o[q];o[q]=o[q+d];o[q+d]=t;mvS().order=o;}renderDynamic();return;}
+  if(MEAN.M&&c('#mvGreedy')){const O=mvOrderInfo(state.A,MEAN.M),rest=O.draft.slice(1),o=[O.draft[0]];while(rest.length){let b=0;rest.forEach((x,k)=>{if(O.join(o[o.length-1],x)>O.join(o[o.length-1],rest[b]))b=k;});o.push(rest.splice(b,1)[0]);}mvS().order=o;renderDynamic();return;}
+  if(c('#mvReset')){mvS().order=null;renderDynamic();return;}
+  if(MEAN.M&&c('#mvApply')){const O=mvOrderInfo(state.A,MEAN.M),txt=O.ord.map(o=>{const p=O.by(o);return state.raw.slice(p.s,p.e).trim();}).join('\n\n');state.sel=null;replaceRaw(0,state.raw.length,txt);mvS().order=null;run();return;}
+  if(c('#mvAskBtn')){mvAskGo($('#mvQ').value);return;}
+  if((el=c('[data-mvodd]'))){mvS().odd=+el.dataset.mvodd;renderDynamic();return;}
+  if((el=c('[data-mvseq]'))){const st=mvS();(st.seq||(st.seq=[])).push(+el.dataset.mvseq);renderDynamic();return;}
+  if(c('#mvSeqReset')){mvS().seq=[];renderDynamic();return;}
+  if(c('#mvNextP')){const st=mvS();st.dp=(st.dp||0)+1;st.odd=null;st.seq=[];renderDynamic();return;}
   if((el=c('[data-mgo]'))){const i=+el.dataset.mgo;setLens('overview');openWb(i,{scroll:true});return;}
   if((el=c('[data-mpair]'))){state.termSel=new Set(el.dataset.mpair.split('|'));renderDynamic();const tb=$('#termMerge');if(tb)tb.scrollIntoView({block:'center',behavior:reduced()?'auto':'smooth'});return;}
   if((el=c('[data-conn]'))){state.connSel=state.connSel===el.dataset.conn?null:el.dataset.conn;renderDynamic();return;}
@@ -1273,6 +1387,8 @@ document.addEventListener('change',e=>{
   if(t.id==='rsSpace'||t.id==='rsColour'){state.read.sp=$('#rsSpace').checked;state.read.rc=$('#rsColour').checked;applyRead();return;}
   if(t.id==='kindSel'){state.kind=t.value;save();run();return;}
   if(t.matches('.emphsel')){state.emph[+t.dataset.ord]=+t.value;save();run();return;}
+  if(t.matches('#mvQ')){mvAskGo(t.value);return;}
+  if(t.matches('#mvAbs')){mvS().abs=t.value;store.set('ts.abs',t.value);run();return;}
   if(t.matches('#myList')){state.mylist=t.value;store.set('ts.list',t.value);save();run();return;}
   if(t.matches('#srcText')){state.source=t.value;save();run();return;}
   if(t.matches('.pointin')){(state.points||(state.points=[]))[+t.dataset.ord]=t.value.trim();save();run();return;}
