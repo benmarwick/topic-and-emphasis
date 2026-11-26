@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.10.0 (2026-11-26)
+
+- Open a file or drag one onto the page: .docx (unpacked in the browser, no library), .md, .qmd, .Rmd, .tex, .txt.
+- Blocks that are not prose are set aside and labelled: YAML settings, code, displayed equations, layout markup, block quotations and the reference list. Inline code, inline maths, web addresses and LaTeX references are not words. Markdown and LaTeX headings are section boundaries. Quarto cross-references (@fig-x) are not citations.
+- Mechanical checks: the reference list against the author-and-year citations in the text.
+- Three stages of revising (Argument, Flow, Polish) above the lens list.
+- Before & after: a revision portfolio, copied as Markdown or JSON, with a reflection box.
+- Stress position: a short bracketed aside at the end is set aside; more weak endings.
+- `tests/blocks.test.js`.
+
 ## 0.9.3 (2026-11-26)
 
 - Old → new: a noun that points back after "this", "these" or "such" ("this decline", "these findings") now counts as old, and a new research box counts sentences that point back with a noun and those that use a bare "this" (Wulff, Römer & Swales 2012; Crossley et al. 2017).

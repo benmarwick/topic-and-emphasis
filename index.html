@@ -637,6 +637,12 @@ a.tool:hover{color:var(--ink);border-color:var(--ink3)}
 .sc-p{fill:var(--ink2);fill-opacity:.55;cursor:pointer}.sc-p.hot{fill:var(--rose);fill-opacity:.9}.sc-p:hover,.sc-p:focus{fill-opacity:1;stroke:var(--ink);stroke-width:.8;outline:none}
 .lm-pick{margin:4px 0}.lm-tab td{vertical-align:middle;white-space:nowrap}.lm-tab .lm-op{font-family:var(--f-text);white-space:normal;min-width:9em;color:var(--ink2)}.lm-tab .n{font:400 12px var(--f-mono)}
 @media (max-width:720px){.lm-row{grid-template-columns:6.4em minmax(0,1fr)}.lm-v{display:none}.lm-l{font-size:11.5px}}
+.para.blk{position:relative;margin:.35em 0;padding:8px 10px;border-left:2px solid var(--line);background:color-mix(in srgb,var(--chip) 55%,transparent);border-radius:0 4px 4px 0}
+.para.blk pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:400 12px/1.5 var(--f-mono);color:var(--ink3);max-height:9.5em;overflow:auto}
+.para.blk.k-quote pre,.para.blk.k-refs pre{font-family:var(--f-text);font-size:.86em}
+.ktag{display:block;font:500 10px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px;cursor:help}
+.stages{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 2px}.stages .chip{font-size:12px;padding:3px 9px}.stages .hint{flex-basis:100%;margin:4px 0 0;font-size:12px;line-height:1.4}
+body.dropping::after{content:"Drop the file to open it";position:fixed;inset:10px;z-index:80;display:grid;place-items:center;border:2px dashed var(--teal);border-radius:10px;background:color-mix(in srgb,var(--sheet) 88%,transparent);font:600 16px var(--f-ui);color:var(--ink);pointer-events:none}
 .tn-lin{background:color-mix(in srgb,var(--teal) 16%,transparent);border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
 .linkish{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
 .panel.res details{margin-top:8px}.panel.res .chips{margin:4px 0 10px}
@@ -719,7 +725,7 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
 #lensQ{width:100%;box-sizing:border-box;font:400 13.5px var(--f-ui);color:var(--ink);background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:7px 10px}
 #lensQ:focus,#guideQ:focus{outline:2px solid var(--blue);outline-offset:1px}
 #railNone{margin:0 0 8px}
-@media (max-width:720px){.rail .railq{flex:none;margin:0;width:8.5em}.rail #lensQ{padding:6px 10px;border-radius:999px}.rail #railNone{flex:none;align-self:center;margin:0}}
+@media (max-width:720px){.rail .stages{flex:none;flex-wrap:nowrap;margin:0;align-items:center}.rail .stages .hint{display:none}.rail .stages .chip{white-space:nowrap}.rail .railq{flex:none;margin:0;width:8.5em}.rail #lensQ{padding:6px 10px;border-radius:999px}.rail #railNone{flex:none;align-self:center;margin:0}}
 .panel.gdoc{gap:14px}
 .gdoc h2{font:500 1.35rem/1.2 var(--f-text);margin:14px 0 2px;color:var(--ink)}
 .gdoc .ggrp{border-top:2px solid var(--ink);padding-top:10px}
@@ -760,10 +766,12 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
     </details>
     <div class="actions">
       <button class="btn primary" id="btnEdit" type="button" data-tip="Open the whole draft in one box, to paste a new text or make large edits.">Paste your text</button>
+      <button class="btn" id="btnFile" type="button" data-tip="Open a Word, Markdown, Quarto, R Markdown, LaTeX or plain-text file from this device. You can also drag a file onto the page. The file is read here in your browser and goes nowhere.">Open a file</button><input type="file" id="fileIn" accept=".docx,.md,.markdown,.qmd,.rmd,.Rmd,.tex,.txt,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
       <button class="btn" id="btnSample" type="button" data-tip="Load the built-in example: six invented sentences with four quick things to fix. A harder example is offered once it is loaded.">Try the example</button>
       <button class="btn" id="btnGuideDoc" type="button" data-k="guide" data-tip="Every lens explained on one page, with its marks, its limits and its sources. Searchable.">Guide</button>
       <button class="btn" id="btnPractice" type="button" data-tip="Six short sentences with fixed answers, and two drills built from whatever draft is loaded.">Practise</button>
       <button class="btn" id="btnClear" type="button" hidden data-tip="Empty the box.">Clear</button>
+      <span class="hint" id="fileMsg" aria-live="polite"></span>
     </div>
     <ul class="facts">
         <li id="factAI" data-tip="Every mark comes from a fixed rule written into this page. The same text always gets the same marks. No AI model is involved.">Deterministic · no AI</li>
@@ -774,6 +782,7 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
 
   <main class="desk" id="desk">
     <nav class="rail" aria-label="Lenses">
+      <div class="stages" id="stages" role="group" aria-label="Revision stage"></div>
       <div class="railq"><input type="search" id="lensQ" placeholder="Find a lens" aria-label="Find a lens by typing part of its name" autocomplete="off"></div>
       <p class="hint" id="railNone" hidden>No lens matches.</p>
       <div class="lensgroup" id="rail0"></div>
@@ -989,7 +998,7 @@ const HEDGEP=/\bto (some|a certain) extent\b|\bmore or less\b|\bin some cases\b/
 const CHAINP=S('of in for on with by at from between among through during under over within into across against toward towards to');
 const ABBR=S('e.g i.e al fig figs eq eqs ref refs vs cf approx ca dr prof mr mrs ms st viz resp sp spp var no');
 const ACR_OK=S('DNA RNA USA UK EU UN OK TV AM PM AD BC ID');
-const WEAK_END=/\b(as well|too|also|however|though|respectively|etc|and so on|and so forth|in this (study|work|paper|report|article)|in the (literature|field)|previously|recently|to (some|a certain|a large|a great) extent|in (general|particular|nature|practice)|at all|so far|to date|in (many|some|most|these|such|both) cases|of (interest|importance|note)|(has|have|had) (also )?been (reported|observed|described|shown|found|noted|documented|demonstrated|investigated|studied|proposed|suggested|performed|used)|(is|are|was|were) (also )?(observed|seen|found|noted|obtained|reported|shown|performed|carried out|used|employed|measured|determined|investigated|studied|examined|detected|conducted|made|done)|it|them|this|that|these|those|here|there|elsewhere|(by|to|for|with|of) (us|them|it))$/;
+const WEAK_END=/\b(to (?:some|a certain|a) degree|in part|more or less|among (?:others|other things)|on the whole|for the most part|in some (?:respects|ways)|overall|as well|too|also|however|though|respectively|etc|and so on|and so forth|in this (study|work|paper|report|article)|in the (literature|field)|previously|recently|to (some|a certain|a large|a great) extent|in (general|particular|nature|practice)|at all|so far|to date|in (many|some|most|these|such|both) cases|of (interest|importance|note)|(has|have|had) (also )?been (reported|observed|described|shown|found|noted|documented|demonstrated|investigated|studied|proposed|suggested|performed|used)|(is|are|was|were) (also )?(observed|seen|found|noted|obtained|reported|shown|performed|carried out|used|employed|measured|determined|investigated|studied|examined|detected|conducted|made|done)|it|them|this|that|these|those|here|there|elsewhere|(by|to|for|with|of) (us|them|it))$/;
 const TRANS=/^(in contrast|by contrast|in addition|as a result|for example|for instance|on the other hand|in turn|in particular|taken together|to this end|in other words|at the same time)\b/i;
 
 
@@ -1005,7 +1014,7 @@ const EVID={
  novel:[['search','I searched, and I cite the closest earlier work',true,'A novelty claim holds up when the closest earlier work is cited beside it.'],['afaik','As far as I know',false,'Write “to our knowledge” and cite the closest earlier work, or drop the claim and let the result speak.']]};
 const CATWHY={causal:'This wording says one thing produces another.',certain:'This wording says the matter is settled.',absolute:'This wording allows no exceptions.',novel:'This wording claims priority or exceptional importance.'};
 const CATQ={causal:'What kind of evidence shows that one produces the other?',certain:'How direct is the evidence, and has it been repeated?',absolute:'How many of the cases did you check?',novel:'What is the closest earlier work, and do you cite it?'};
-const CITE=/\[\d[\d,\s–-]*\]|\([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*\)|\bet al\b|(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]|\\[a-zA-Z]*cite[a-zA-Z]*(?![a-zA-Z])/u;
+const CITE=/\[\d[\d,\s–-]*\]|\([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*\)|\bet al\b|(?<![\p{L}\p{N}._%+-])-?@(?!(?:fig|tbl|sec|eq|lst|thm|exm)-)[\p{L}_][\p{L}\p{N}_]|\\[a-zA-Z]*cite[a-zA-Z]*(?![a-zA-Z])/u;
 const UNCITED=/\b(?:previous(?:ly)?|earlier|prior|recent|several|many|numerous|other) (?:stud(?:y|ies)|work|workers|research|reports?|authors|investigations|experiments)\b|\b(?:studies|research|reports|workers|authors) (?:have|has) (?:shown|found|reported|suggested|demonstrated|indicated)\b|\b(?:has|have) (?:long |previously |already )?been (?:shown|reported|demonstrated|suggested|established|documented|proposed)\b|\bit is (?:well |widely |generally )?known that\b|\b(?:is|are) (?:well |widely )?known to\b|\bin the literature\b|\bwidely (?:accepted|believed|recognized)\b/i;
 const STAT=/\bp\s*[<>=≤]\s*0?\.\d|[<>=≤]\s*0?\.0\d|\b(?:t|F|r|z|d|U|H|W|R2|R²|χ2|χ²)\s*(?:\([^)]*\))?\s*=\s*-?\d|\bCI\b|confidence interval|±|\bn\s*=\s*\d|\b(?:ANOVA|t-test|regression|Mann|Wilcoxon|Tukey|Bonferroni|chi-square|Kruskal)\b/i;
 const JOBS=[['context','Context'],['gap','Gap or problem'],['aim','Aim or approach'],['method','Method'],['result','Result'],['interp','Interpretation'],['implication','Implication'],['limit','Limitation']];
@@ -1206,19 +1215,39 @@ function Q(f){const t=f.title;switch(f.lens){
 /* A citation key in the style of pandoc, Quarto and R Markdown (@Marwick2026, [@a; @b, p. 3], -@a) is one token.
    Inside square brackets the key and its page reference are citation apparatus, so they do not count as words.
    Outside brackets the key stands for the author's name, so it counts as one word but never as a term. */
-function tokenize(text){const T=[];const re=/(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]*(?:[:.#$%&+?<>~\/-][\p{L}\p{N}_]+)*|[\p{L}\p{N}]+(?:[-'’.\/][\p{L}\p{N}]+)*%?|[^\s\p{L}\p{N}]/gu;let m,any=false;
-  while((m=re.exec(text))){const t=m[0],ck=/^-?@./.test(t);if(ck)any=true;T.push({t,l:t.toLowerCase().replace(/’/g,"'"),s:m.index,e:m.index+t.length,w:/[\p{L}\p{N}]/u.test(t),cite:ck||undefined});}
+function tokenize(text){const T=[];const re=/`[^`\n]+`|\$(?=\S)[^$\n]{0,160}?(?<=\S)\$(?!\d)|\\\([^\n]*?\\\)|\\(?:[a-zA-Z]*cite[a-zA-Z]*|ref|eqref|autoref|cref|Cref|pageref|label|url)\*?(?:\[[^\]\n]*\])*\{[^{}\n]*\}|https?:\/\/[^\s)>\]]+|\]\([^)\s]+\)|(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]*(?:[:.#$%&+?<>~\/-][\p{L}\p{N}_]+)*|[\p{L}\p{N}]+(?:[-'’.\/][\p{L}\p{N}]+)*%?|[^\s\p{L}\p{N}]/gu;let m,any=false;
+  while((m=re.exec(text))){const t=m[0],ck=/^-?@./.test(t),mask=t.length>1&&/^(?:`|\$|\\[(a-zA-Z]|https?:|\]\()/.test(t);if(ck)any=true;T.push({t,l:t.toLowerCase().replace(/’/g,"'"),s:m.index,e:m.index+t.length,w:!mask&&/[\p{L}\p{N}]/u.test(t),cite:ck||(mask&&/^\\[a-zA-Z]*cite/.test(t))||undefined,mask:mask||undefined});}
   if(any)for(let i=0;i<T.length;i++){if(T[i].t!=='[')continue;let j=i+1,has=false;while(j<T.length&&T[j].t!==']'&&T[j].t!=='['){if(T[j].cite)has=true;j++;}
     if(has&&j<T.length&&T[j].t===']'){for(let q=i+1;q<j;q++){T[q].w=false;T[q].cite=true;}i=j;}}
   return T;}
-function splitParas(raw){const out=[];let cur=null,pos=0;
-  for(const line of raw.split('\n')){const s=pos;pos+=line.length+1;const tr=line.trim();
-    if(!tr){if(cur){out.push(cur);cur=null;}continue;}
-    const ls=s+line.search(/\S/),le=s+line.replace(/\s+$/,'').length;
-    if(cur&&/[.!?]["'”’)\]]*$/.test(raw.slice(cur.s,cur.e))){out.push(cur);cur=null;}
-    if(!cur&&tr.length<70&&tr.split(/\s+/).length<=8&&!/[.!?:;,]["'”’)\]]*$/.test(tr)){out.push({s:ls,e:le,head:true});continue;}
+/* Split the text into blocks. A block with head:true is shown but not analysed: a heading, or a stretch that is not the
+   writer's prose (kind: yaml, code, math, markup, quote, refs). Offsets are kept, so nothing in the text is moved or removed. */
+const REFHEAD=/^(?:#{1,6}\s*)?(?:\d+(?:\.\d+)*\.?\s+)?(?:references|reference list|bibliography|works cited|literature cited|sources cited)\s*:?\s*(?:\{[^}]*\})?\s*#*$/i;
+const ENDREFS=/^(?:#{1,6}\s*)?(?:\d+(?:\.\d+)*\.?\s+)?(?:appendix|appendices|acknowledge?ments|notes|footnotes|endnotes|tables|figures|supplementary|supporting information|author|funding|data availability)\b/i;
+function splitParas(raw){const out=[],lines=raw.split('\n');let cur=null,pos=0,mode=null,blk=null,refs=false,first=true;
+  const flush=()=>{if(!cur)return;if(!cur.head){const t=raw.slice(cur.s,cur.e);
+      const q=(t.match(/[“”"]/g)||[]).length;
+      if(q===2&&/^[“"]/.test(t)&&/[”"]\s*(?:\([^()]*\)|\[[^\]]*\])?[.,;]?$/.test(t)&&t.split(/\s+/).length>=25){cur.head=true;cur.kind='quote';}}
+    out.push(cur);cur=null;};
+  for(let li=0;li<lines.length;li++){const line=lines[li],s=pos;pos+=line.length+1;const tr=line.trim(),ls=s+Math.max(0,line.search(/\S/)),le=s+line.replace(/\s+$/,'').length;let m;
+    if(mode){if(tr)blk.e=le;if(mode.test(tr)){out.push(blk);mode=null;blk=null;}continue;}
+    if(!tr){flush();continue;}
+    const open=(kind,end,oneLine)=>{flush();blk={s:ls,e:le,head:true,kind};if(oneLine){out.push(blk);blk=null;}else mode=end;};
+    if(first){first=false;if(tr==='---'){let close=false;for(let q=li+1;q<Math.min(lines.length,li+120);q++)if(/^(?:---|\.\.\.)\s*$/.test(lines[q])){close=true;break;}if(close){open('yaml',/^(?:---|\.\.\.)$/);continue;}}}
+    if((m=tr.match(/^(`{3,}|~{3,})/))){open('code',new RegExp('^'+(m[1][0]==='`'?'`':'~')+'{'+m[1].length+',}\\s*$'));continue;}
+    if(/^\$\$/.test(tr)){open('math',/\$\$\s*$/,tr.length>4&&/\$\$\s*$/.test(tr.slice(2)));continue;}
+    if(/^\\\[/.test(tr)){open('math',/\\\]\s*$/,/\\\]\s*$/.test(tr));continue;}
+    if((m=tr.match(/^\\begin\{(equation|align|gather|multline|eqnarray|displaymath|math|table|figure|tabular|verbatim|lstlisting|tikzpicture)\*?\}/))){
+      open(/table|figure|tabular|tikz/.test(m[1])?'markup':/verbatim|lstlisting/.test(m[1])?'code':'math',new RegExp('\\\\end\\{'+m[1]+'\\*?\\}'),new RegExp('\\\\end\\{'+m[1]+'\\*?\\}').test(tr));continue;}
+    if(/^:{3,}/.test(tr)||/^<!--.*-->$/.test(tr)||/^!\[[^\]]*\]\([^)]*\)(?:\{[^}]*\})?$/.test(tr)||/^\|.*\|$/.test(tr)||/^(?:-{3,}|\*{3,}|_{3,})$/.test(tr)||/^\\(?:label|includegraphics|caption|bibliography|bibliographystyle|printbibliography|maketitle|tableofcontents|newpage|clearpage|usepackage|documentclass|begin|end|input|include)\b/.test(tr)){open('markup',null,true);continue;}
+    const mdH=/^#{1,6}\s+\S/.test(tr)||/^\\(?:(?:sub)*section|chapter|paragraph)\*?\{/.test(tr),rh=REFHEAD.test(tr);
+    if(mdH||rh||(refs&&ENDREFS.test(tr))||(!refs&&!cur&&tr.length<70&&tr.split(/\s+/).length<=8&&!/[.!?:;,]["'”’)\]]*$/.test(tr))){flush();refs=rh;out.push({s:ls,e:le,head:true,kind:'heading',refhead:rh||undefined});continue;}
+    if(refs){if(cur)cur.e=le;else cur={s:ls,e:le,head:true,kind:'refs'};continue;}
+    if(/^>/.test(tr)){if(cur&&cur.kind==='quote')cur.e=le;else{flush();cur={s:ls,e:le,head:true,kind:'quote'};}continue;}
+    if(cur&&cur.kind==='quote')flush();
+    if(cur&&/[.!?]["'”’)\]]*$/.test(raw.slice(cur.s,cur.e)))flush();
     if(cur)cur.e=le;else cur={s:ls,e:le};}
-  if(cur)out.push(cur);return out;}
+  if(blk)out.push(blk);flush();return out;}
 function splitSents(text){const out=[];let start=0;const re=/[.!?]+["'”’)\]]*\s+(?=["'“‘(\[]?(?:[A-Z0-9]|-?@[A-Za-z_]))/g;let m;
   while((m=re.exec(text))){const lastWord=(text.slice(start,m.index).match(/([A-Za-z.]+)$/)||[])[1]||'';
     if(text[m.index]==='.'&&(ABBR.has(lastWord.toLowerCase())||/(?:^|[\s(])(?:[A-Z]\.)*[A-Z]$/.test(text.slice(start,m.index))))continue;
@@ -1369,12 +1398,13 @@ function parse(text){
   while(tb>first&&tb>=0&&!T[tb].w)tb--;
   st.topic=first>=0?[first,Math.max(first,tb)]:null;
   /* stress span */
-  st.stress=null;st.cite=false;
+  st.stress=null;st.cite=false;st.aside=false;
   (function(){let end=N-1;
     while(end>=0){const t=T[end];if(t.w)break;
       if(t.t===')'||t.t===']'){const open=t.t===')'?'(':'[';let o=end-1;while(o>=0&&T[o].t!==open)o--;if(o<0){end--;continue;}
         const inner=text.slice(T[o].e,t.s);
         if((open==='['&&/^[\d,\s–-]+$/.test(inner))||/(19|20)\d\d|et al|(?:^|[\s;\[-])@[\p{L}_]/u.test(inner)||/^\s*(figs?|figure|tables?|eqs?|refs?|see|supplementary|data not shown)\b/i.test(inner)){st.cite=true;end=o-1;continue;}
+        if(inner.trim().split(/\s+/).length<=8||/[=<>±%]|\d/.test(inner)){st.aside=true;end=o-1;continue;}
         end--;continue;}
       end--;}
     if(end<0)return;const lastW=end,nW=wpos[lastW]+1;let start=-1,dp=0;
@@ -1470,7 +1500,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         if(wk)why.push('It closes on “'+wk[0]+'”, which carries little weight.');
         if(!inS.length&&!/\d/.test(tx(sa,sb)))why.push('The closing words hold no content word.');
         else if(st.i>0&&inS.length&&inS.every(c=>c.old)&&news.filter(c=>c.i<sa).length>=2)why.push('Everything in the closing words is already familiar, while the new terms ('+wl(news.filter(c=>c.i<sa))+') sit earlier in the sentence.');
-        if(why.length){if(st.cite)why.push('A citation follows, so readers take the words before it as the close.');
+        if(why.length){if(st.cite)why.push('A citation follows, so readers take the words before it as the close.');else if(st.aside)why.push('A bracketed aside follows, so readers take the words before it as the close.');
           sId=add({lens:'stress',s:st.i,a:T[sa].s,b:T[sb].e,sev:2,title:'The stress position holds little',detail:why.join(' '),
             tip:'Decide what you most want remembered from this sentence and end on it. Trim or move whatever trails after.'});}}
       mk('stress',sa,sb,'hl hb-rose',sId!=null?{f:sId}:null);
@@ -1713,7 +1743,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
   }
   const tracer={terms:claimTerms.map(t=>({w:t.w,k:t.k,count:t.count,stress:t.stress}))};
   /* title words, traced the way SWAN tests a title against its abstract and headings */
-  {const heads=paras.filter(p=>p.head);
+  {const heads=paras.filter(p=>p.head&&(!p.kind||p.kind==='heading'));
     heads.forEach(p=>tokenize(raw.slice(p.s,p.e)).forEach(tk=>{if(!isContent(tk))return;const k=stem(tk.l);titleTerms.forEach(t=>{if(near(t.k,k))t.heads++;});}));
     tracer.title={terms:titleTerms.map(t=>({w:t.w,count:t.count,first:t.first,heads:t.heads})),heads:heads.length};
     if(sents.length&&titleTerms.length){
@@ -1796,6 +1826,33 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         if(n<last)add({lens:'jobs',s:p.sents[n],a:null,sev:2,title:'Moves out of their usual order in paragraph '+(i+1),q:'Would the paragraph read more easily with these two the other way round?',detail:'“'+name+'” (sentence '+(p.sents[n]+1)+') comes before “'+lastName+'”.',tip:'The usual order is the order of the checklist. Depart from it only on purpose.',pb:[JOBPB[p.job]]});
         else{last=n;lastName=name;}}});});
   /* ---------- research measures, all by fixed rules ---------- */
+  /* reference list against the citations in the text: first author's surname and year, author-date style only */
+  let refCheck=null;
+  {const rb=paras.filter(p=>p.kind==='refs');
+    if(rb.length){const lines=[];rb.forEach(p=>raw.slice(p.s,p.e).split('\n').forEach(l=>{if(l.trim())lines.push(l.trim());}));
+      const START=/^(?:\[\d+\]\s*|\d+\.\s+|[-*•]\s+)?(\p{Lu}[\p{L}'’-]+(?:\s\p{Lu}[\p{L}'’-]+)?)(?=,|\s+\p{Lu}\.|\s+(?:et al|and|&)\b|\s+\()/u,YR=/\b((?:19|20)\d\d)[a-z]?\b/,ents=[];
+      lines.forEach(l=>{const m=l.match(START),last=ents[ents.length-1];if(m&&(!last||last.text.match(YR)))ents.push({name:m[1],text:l});else if(last)last.text+=' '+l;else ents.push({name:'',text:l});});
+      ents.forEach(e=>{const y=e.text.match(/\(((?:19|20)\d\d)[a-z]?\)/)||e.text.match(YR);e.year=y?y[1]:null;e.key=e.name.toLowerCase();e.cited=false;});
+      const SKIP=S('see cf also for in table tables figure figures fig appendix study wave model panel section chapter eq equation january february march april may june july august september october november december and the as but if when while since although though because however thus'),
+        cites=new Map(),same=(a,b)=>a===b||a.split(' ').pop()===b||b.split(' ').pop()===a;
+      const note=(name,year,st,a,b)=>{const k=name.toLowerCase()+'|'+year;if(!cites.has(k))cites.set(k,{name,year,key:name.toLowerCase(),s:st.i,a,b});};
+      sents.forEach(st=>{const text=st.text;let m;
+        const P=/\(([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*)\)/g;
+        while((m=P.exec(text))){let off=m.index+1;m[1].split(';').forEach(part=>{const nm=[...part.matchAll(/\p{Lu}[\p{L}'’-]+/gu)].map(x=>x[0]).find(w=>!SKIP.has(w.toLowerCase())),ys=part.match(/\b(?:19|20)\d\d\b/g);
+          if(nm&&ys)ys.forEach(y=>note(nm,y,st,off+part.search(/\S/),off+part.replace(/\s+$/,'').length));off+=part.length+1;});}
+        const Nr=/(\p{Lu}[\p{L}'’-]+)(?:\s+(?:and|&)\s+\p{Lu}[\p{L}'’-]+|,?\s+et al\.?)?(?:[’']s)?\s+\(((?:19|20)\d\d)[a-z]?((?:[,;]\s*(?:19|20)\d\d[a-z]?)*)(?:,[^()]*)?\)/gu;
+        while((m=Nr.exec(text))){if(SKIP.has(m[1].toLowerCase()))continue;[m[2]].concat((m[3].match(/(?:19|20)\d\d/g)||[])).forEach(y=>note(m[1],y,st,m.index,m.index+m[0].length));}});
+      let missing=0;
+      cites.forEach(c=>{const hit=ents.filter(e=>e.key&&same(e.key,c.key));const ok=hit.find(e=>e.year===c.year);if(ok){hit.forEach(e=>{if(e.year===c.year)e.cited=true;});return;}
+        missing++;hit.forEach(e=>{e.near=true;});if(missing>15)return;const st=sents[c.s],others=hit.map(e=>e.year).filter(Boolean);
+        const id=add({lens:'checks',s:c.s,a:c.a,b:c.b,sev:2,title:(others.length?'The year differs from the reference list: ':'Not in the reference list: ')+c.name+' '+c.year,q:others.length?'Which year is right?':'Is this source in your reference list?',
+          detail:'The text cites “'+c.name+' '+c.year+'”. '+(others.length?'The reference list has '+c.name+' with '+[...new Set(others)].join(' and ')+'.':'No entry in the reference list begins with that name and carries that year.')+' Only the first author’s surname and the year are compared.',
+          tip:others.length?'Correct the year in the text or in the list so that the two agree.':'Add the entry to the list, or correct the name or the year so that the two agree.'});
+        (st.marks.checks||(st.marks.checks=[])).push({a:c.a,b:c.b,cls:'hl hb-olive',f:id});});
+      const un=cites.size?ents.filter(e=>e.key&&!e.cited&&!e.near):[];
+      if(un.length&&sents.length){const last=sents[sents.length-1];add({lens:'checks',para:true,s:last.i,a:null,sev:2,title:un.length+(un.length===1?' entry':' entries')+' in the reference list '+(un.length===1?'is':'are')+' never cited',q:'Should each of these be cited in the text, or removed from the list?',
+        detail:'No citation in the text matches: '+un.slice(0,10).map(e=>e.name+(e.year?' '+e.year:'')).join('; ')+(un.length>10?'; and '+(un.length-10)+' more':'')+'. Only author-and-year citations are read, so a source cited another way will show here.',tip:'Cite the source where you use it, or take the entry out of the list.'});}
+      refCheck={entries:ents.filter(e=>e.key).length,cited:cites.size,missing,uncited:un.length,checked:cites.size>0};}}
   const research=(()=>{
     const body=paras.filter(p=>p.ord!=null),R={},n=sents.length,r1=v=>Math.round(v*10)/10;
     const sset=sents.map(st=>new Set(st.cw.map(c=>c.k))),wOf=new Map(),freq=new Map();
@@ -2011,6 +2068,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       body.forEach(p=>{let c=0,w=0;p.sents.forEach(i=>{c+=sents[i].cw.length;w+=sents[i].nW;});p.ld=w?c/w:0;});
       const v=ser.ld.filter(x=>x!=null).sort((a,b)=>a-b);let mi=-1,mx=-1;ser.ld.forEach((x,i)=>{if(x!=null&&x>mx){mx=x;mi=i;}});
       R.ld={all:nWd?100*cwT/nWd:0,median:v.length?v[Math.floor(v.length/2)]:null,min:v.length?v[0]:null,max:mx<0?null:mx,maxI:mi};R.series=ser;}
+    R.refs=refCheck;R.blocks={};paras.forEach(p=>{if(p.head&&p.kind&&p.kind!=='heading')R.blocks[p.kind]=(R.blocks[p.kind]||0)+1;});
     R.point={named:sents.filter(s=>s.shell).length,bare:findings.filter(f=>/ what\?$/.test(f.title)).length};
     return R;})();
   findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title)){const dm=f.title.split(' ')[0],plural=/^(these|those)$/i.test(dm),ns=[];
@@ -2060,7 +2118,7 @@ function norms(A,N){const look=(M,l)=>{let v=M.get(l);if(v!=null)return v;for(co
 return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,syl,sylGuess,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();
 /*ENGINE-END*/
-const VALID={"corpus":"CLEAR (Crossley et al. 2023)","passages":4724,"single":[{"measure":"Mean age of acquisition (word norms)","r":-0.63,"norms":true},{"measure":"SMOG","r":-0.57,"norms":false},{"measure":"Dale-Chall score","r":-0.56,"norms":false},{"measure":"Flesch reading ease","r":0.55,"norms":false},{"measure":"LIX","r":-0.55,"norms":false},{"measure":"Gunning Fog","r":-0.54,"norms":false},{"measure":"Flesch-Kincaid grade","r":-0.53,"norms":false},{"measure":"Words off the Dale-Chall list (%)","r":-0.5,"norms":false},{"measure":"ARI","r":-0.49,"norms":false},{"measure":"Coleman-Liau","r":-0.48,"norms":false},{"measure":"Rare words, Zipf under 3 (%) (word norms)","r":-0.47,"norms":true},{"measure":"Letters per word","r":-0.4,"norms":false},{"measure":"Mean Zipf frequency (word norms)","r":0.4,"norms":true},{"measure":"Personal pronouns per 100 words","r":0.39,"norms":false},{"measure":"Words per sentence","r":-0.38,"norms":false},{"measure":"Mean concreteness (word norms)","r":0.36,"norms":true},{"measure":"General science jargon (%)","r":-0.35,"norms":false},{"measure":"Passives per sentence","r":-0.35,"norms":false},{"measure":"Nominalisations per 100 words","r":-0.34,"norms":false},{"measure":"Mean prevalence (word norms)","r":0.33,"norms":true},{"measure":"Content words already given (%)","r":0.29,"norms":false},{"measure":"Median words before the main verb","r":-0.24,"norms":false},{"measure":"Running words on NGSL or NAWL (%)","r":0.21,"norms":false},{"measure":"Connectives per 1,000 words","r":0.16,"norms":false},{"measure":"Word variety, MTLD","r":-0.12,"norms":false},{"measure":"Negatives per 1,000 words","r":0.1,"norms":false},{"measure":"Word variety, MATTR","r":-0.09,"norms":false},{"measure":"Neighbouring sentences sharing a content word (%)","r":-0.06,"norms":false},{"measure":"Lexical density (%)","r":-0.02,"norms":false}],"combined":{"flesch_reading_ease_alone":0.55,"all_counts_without_word_norms":0.69,"all_counts_with_word_norms":0.73}};
+const VALID={"corpus":"CLEAR (Crossley et al. 2023)","passages":4721,"single":[{"measure":"Mean age of acquisition (word norms)","r":-0.63,"norms":true},{"measure":"SMOG","r":-0.57,"norms":false},{"measure":"Dale-Chall score","r":-0.56,"norms":false},{"measure":"Flesch reading ease","r":0.55,"norms":false},{"measure":"LIX","r":-0.55,"norms":false},{"measure":"Gunning Fog","r":-0.54,"norms":false},{"measure":"Flesch-Kincaid grade","r":-0.53,"norms":false},{"measure":"Words off the Dale-Chall list (%)","r":-0.5,"norms":false},{"measure":"ARI","r":-0.49,"norms":false},{"measure":"Coleman-Liau","r":-0.48,"norms":false},{"measure":"Rare words, Zipf under 3 (%) (word norms)","r":-0.47,"norms":true},{"measure":"Letters per word","r":-0.4,"norms":false},{"measure":"Mean Zipf frequency (word norms)","r":0.4,"norms":true},{"measure":"Personal pronouns per 100 words","r":0.39,"norms":false},{"measure":"Words per sentence","r":-0.38,"norms":false},{"measure":"Mean concreteness (word norms)","r":0.36,"norms":true},{"measure":"General science jargon (%)","r":-0.35,"norms":false},{"measure":"Passives per sentence","r":-0.35,"norms":false},{"measure":"Nominalisations per 100 words","r":-0.34,"norms":false},{"measure":"Mean prevalence (word norms)","r":0.33,"norms":true},{"measure":"Content words already given (%)","r":0.29,"norms":false},{"measure":"Median words before the main verb","r":-0.24,"norms":false},{"measure":"Running words on NGSL or NAWL (%)","r":0.21,"norms":false},{"measure":"Connectives per 1,000 words","r":0.16,"norms":false},{"measure":"Word variety, MTLD","r":-0.12,"norms":false},{"measure":"Negatives per 1,000 words","r":0.1,"norms":false},{"measure":"Word variety, MATTR","r":-0.09,"norms":false},{"measure":"Neighbouring sentences sharing a content word (%)","r":-0.06,"norms":false},{"measure":"Lexical density (%)","r":-0.02,"norms":false}],"combined":{"flesch_reading_ease_alone":0.55,"all_counts_without_word_norms":0.69,"all_counts_with_word_norms":0.73}};
 
 /* ---------- interface ---------- */
 /* the first text a new user meets: six sentences with four easy things to fix */
@@ -2282,7 +2340,12 @@ let saveT=0;
 function save(){clearTimeout(saveT);saveT=setTimeout(()=>store.set('ts.v2',JSON.stringify({raw:state.isSample?'':state.raw,base:state.isSample?'':state.base,lens:state.lens,claim:state.isSample?'':state.claim,tags:state.tags,dismissed:state.dismissed,jobs:state.jobs,merges:state.merges,moves:state.moves,emph:state.emph,points:state.points,mylist:state.mylist||'',source:(state.source||'').slice(0,30000),vers:state.vers,miles:state.miles,kind:state.kind,title:state.isSample?'':state.title})),250);}
 
 const active=f=>!f.dis&&!f.ok;
-const inView=f=>state.lens==='overview'||f.lens===state.lens;
+/* three stages of revising: each shows only its own lenses, so the larger questions are settled before the smaller ones */
+const STAGES=[['All lenses','Every lens is shown.'],['1 · Argument','Argument and structure. Is the claim clear, and does each paragraph have a job? Settle this before polishing sentences you may cut.'],['2 · Flow','Flow and cohesion. Does each sentence start from what the reader has and end on what is new?'],['3 · Polish','Clarity and polish. Is each sentence easy to read, are the words well chosen, and is the text clean?']];
+const STAGEOF={outline:1,jobs:1,tracer:1,claims:1,hedge:1,skeleton:1,grid:2,flow:2,topic:2,stress:2,signals:2,terms:2,mviews:2,sv:3,action:3,dense:3,clutter:3,voice:3,checks:3,rhythm:3,worn:3,vocab:3,acr:3,people:3,stats:3,slips:3,source:3};
+const inStage=k=>!state.stage||!STAGEOF[k]||STAGEOF[k]===state.stage;
+const BLOCKS={yaml:['Document settings','The settings block at the top of a Quarto or R Markdown file.'],code:['Code','A block of code.'],math:['Equation','A displayed equation.'],markup:['Markup','A line of layout markup, such as a figure, a table row or a division marker.'],quote:['Quotation','A block quotation. It is someone else’s prose, so the lenses leave it alone.'],refs:['Reference list','The reference list. It is checked against the citations in the text, in Mechanical checks, and is otherwise left alone.']};
+const inView=f=>state.lens==='overview'?inStage(f.lens):f.lens===state.lens;
 const opts=()=>({claim:state.claim,tags:state.tags,jobs:state.jobs,merges:state.merges,moves:state.moves,emph:state.emph,kind:state.kind,title:state.title,points:state.points,list:state.mylist,source:state.source});
 function baseline(){const key=state.base+'\u0001'+state.claim+'\u0001'+JSON.stringify([state.jobs,state.merges,state.moves,state.emph,state.kind,state.title,state.points,state.mylist,state.source]);if(state.baseOf!==key){state.baseOf=key;state.A0=E.analyze(state.base,{claim:state.claim,jobs:state.jobs,merges:state.merges,moves:state.moves,emph:state.emph,kind:state.kind,title:state.title,points:state.points,list:state.mylist,source:state.source});state.bc={};state.A0.findings.forEach(f=>{state.bc[f.lens]=(state.bc[f.lens]||0)+1;});}return state.bc;}
 function run(){const t0=performance.now();const A=state.A=E.analyze(state.raw,opts());meanSync(A);state.cost=performance.now()-t0;A.byId={};A.findings.forEach(f=>{A.byId[f.id]=f;f.dis=state.dismissed[f.key]||'';});state.pv=null;state.fxNew=false;settle();detectFx();state.typing=false;miles();renderDynamic();}
@@ -2780,7 +2843,7 @@ SRC.mviews=[['kjell','Kjell, Giorgi & Schwartz'],['sbert','Reimers & Gurevych']]
 const MOFF={grid:'The rules above only see repeated words. Switch the model on to also see which sentences and paragraphs are close in meaning, including the ones that share no word.',outline:'Switch the model on to see which sentence in each paragraph is closest in meaning to the rest, and where the point you stated is carried.',tracer:'The tracer above follows the words of your claim. Switch the model on to see where the draft states the claim in other words, and which paragraphs are furthest from it.',source:'The rule above finds copied strings of words. Switch the model on to also find sentences that restate a source sentence in different words, and the parts of the source your draft says least about.',compare:'Switch the model on to see how far each rewritten sentence has moved in meaning from the one it replaced.',terms:'Switch the model on to see pairs of terms that are close in meaning and may be two names for one thing.',mviews:'These views are drawn from the meaning model, so they need it switched on.'};
 const MDOC={grid:'Sentences the rules label “no link” are relabelled “meaning only” when they are close in meaning to the sentence before. The line above each paragraph adds how close it is to the paragraph before, and marks the weakest join in the draft.',outline:'Each paragraph shows which sentence is closest in meaning to the rest, whether that sentence sits at an edge, and which sentence is furthest from the rest. If you typed the paragraph’s point, it shows which sentence carries that point best.',tracer:'It names the sentence that states your claim most directly, in your words or in others, and shows how close each paragraph is to the claim.',source:'A table of your sentences closest in meaning to a source sentence, including restatements that share no run of words, and the parts of the source your draft says least about.',compare:'A table of rewritten sentences with how close each is to the one it replaced, lowest first. It can show drift. It cannot confirm that a meaning was kept.',terms:'The closest pairs in meaning among your terms, as candidates for two names for one thing. The model judges single words less well than sentences, so treat the list as a prompt.',mviews:'Eight views. Thread: closeness of each sentence to the one before, and to your claim. Quilt: every sentence against every other. Topics: the model’s grouping of sentences, as a band of colour. Map: sentences as dots on a flat map. Reorder: move paragraphs and watch the joins. Ask: find the sentences closest to a question. Abstract & ending: what the abstract covers, and whether the ending returns to the opening. Drills: two exercises built from your draft.'};
 /* other names a writer might search for */
-const KW={flow:'shell nouns, anaphora, pointing back, demonstratives, attended this, old and new, given and new',grid:'thematic progression, cohesion, anaphora, links between sentences',load:'sparklines, small multiples, heat map, picture, chart, scatter, lexical density, hot spots, overview, Tufte',dense:'lexical density, information packing, noun stacks',worn:'weasel words, intensifiers, vague quantities, vague degree, comment words, filler, cliches',hedge:'weasel words, qualifiers, boosters, stance',checks:'weasel words, vague attribution, who says, citation needed, unattributed, GRIM',clutter:'weasel words, filler, wordiness, padding, throat-clearing, bare this, unattended this, empty openers',claims:'weasel words, hype, overclaiming, promotional'};
+const KW={compare:'portfolio, export, reflection, revision log, receipt, download',flow:'shell nouns, anaphora, pointing back, demonstratives, attended this, old and new, given and new',grid:'thematic progression, cohesion, anaphora, links between sentences',load:'sparklines, small multiples, heat map, picture, chart, scatter, lexical density, hot spots, overview, Tufte',dense:'lexical density, information packing, noun stacks',worn:'weasel words, intensifiers, vague quantities, vague degree, comment words, filler, cliches',hedge:'weasel words, qualifiers, boosters, stance',checks:'weasel words, vague attribution, who says, citation needed, unattributed, GRIM, reference list, bibliography, citations match references',clutter:'weasel words, filler, wordiness, padding, throat-clearing, bare this, unattended this, empty openers',claims:'weasel words, hype, overclaiming, promotional'};
 const LIMITS={load:'Every strip is a count made by the rules of the other lenses, so it inherits their mistakes. The coloured bars are the tallest fifth of this draft, whatever its level: a draft of short, plain sentences still has a tallest fifth. Lexical density is counted without a part-of-speech tagger, so it is not comparable with published figures. The strips say where to look. They do not say the sentence is wrong.',sv:'The subject and the main verb are found by rules, not by a parser. A long or unusual sentence can be misread, so check which words are marked before acting on a note. The hardest case is a word that can be a noun or a verb (“results”, “support”, “report”). The rules settle it by what stands on either side, and they know about 600 verbs, so a verb outside that list with no ending to give it away (“ignore”, “force”) can be missed.',topic:'The lens sees what opens a sentence. It cannot tell whether that opening is the right topic for your argument.',stress:'It judges the close by familiar words, filler and citations. It cannot tell whether what you ended on is the point you meant to stress.',flow:'“Old” means a word used in an earlier sentence, matched by its stem. A synonym or a pronoun counts as new.',action:'Nominalisations are found by their endings and a fixed list. Some are missed, and some nouns that end like one are legitimate terms.',outline:'It shows first and last sentences and checks the words of the point you type. It does not judge whether the point is a good one.',jobs:'You supply the labels. The lens checks what you tell it against the usual order of moves, which a good paragraph may depart from.',tracer:'Claim words are matched by their stems, so a claim restated in other words is not seen unless the meaning model is on.',claims:'Strong wording is found from fixed lists. The lens cannot read your evidence. It compares the wording with the kind of evidence you name.',hedge:'Hedges are found from a fixed list. One hedge may be exactly right. The lens notices when several pile up.',grid:'Links are judged by repeated words, matched by stem. Two sentences can be tightly connected and share no word.',signals:'Moves are tagged from fixed cue phrases, so a move made in other words is not seen.',skeleton:'A way of reading, with no notes of its own.',rhythm:'The length bands are fixed. The rules for runs and for contrast between neighbours are this tool’s working values, not published norms.',dense:'Noun stacks and chains of prepositions are found by rules. A settled technical term can look like a stack.',voice:'A passive is found from a form of “be” and a participle. A participle the rules do not know is missed. Adjectives that look like participles (“interested”, “related to”, “based on”) are set aside from a short list, so some are still counted as passives.',clutter:'Stock phrases come from a fixed list. A phrase on the list is sometimes the right one.',worn:'The lists are fixed and general. A word flagged as vague may be precise in your field.',vocab:'The two word lists cover general English. Every field has ordinary terms outside them, so an unlisted word is not an error.',terms:'Terms are nouns found by rule and matched by stem. The lens cannot know that two different words name one thing until you tell it.',acr:'It recognises abbreviations by their capitals and looks for a definition nearby. An abbreviation defined in an unusual way may be reported as undefined.',people:'It applies general advice from a fixed list. Preferred terms differ between communities and change over time.',stats:'Only results reported in the usual form, such as t(28) = 2.20, p = .036, are rechecked. A result written another way is not checked.',checks:'Fixed patterns only. No mark does not mean no problem.',slips:'About two dozen patterns, chosen to be nearly always right. There is no dictionary, so misspellings are not found.',source:'It compares exact words. A close paraphrase is not seen unless the meaning model is on, and this is not a plagiarism check.',mviews:'Everything in this lens comes from the model, which does not see negation or logic, and whose scores only rank things inside one draft.',compare:'The receipt counts notes by rule. A rewrite counts only when it keeps at least four in ten of the sentence’s content words.',practice:'The drills have fixed answers for the built-in sentences. Drills built from your own draft use the lenses’ rules, with their limits.'};
 const GNAME={1:['Gopen & Swan’s principles','The lenses built on the principles in Gopen and Swan’s article. Start here.'],2:['Is the argument clear?','The argument as a whole: what each paragraph is for, and how strongly each claim is worded.'],3:['Does it flow?','How sentences and paragraphs connect.'],4:['Is each sentence easy to read?','Single sentences: their length, their density, their voice, and the words to cut.'],5:['Are the words well chosen?','Single words: vague ones, rare ones, the names you give things, and the words you use for people.'],6:['Is it polished?','Proofreading: statistics, citations and figures, typing slips, and overlap with a source.'],7:['Your progress','What you have changed so far, and drills to practise on.']};
 function guideHTML(){const A=state.A,R=A.research;
@@ -2800,6 +2863,11 @@ function guideHTML(){const A=state.A,R=A.research;
     '<p><b>The rewrite box.</b> Tap a sentence to open it under its paragraph. Marks from every open note show inside the box and update as you type. Undo and Redo work on the whole text.</p>'+
     '<p><b>Research measures.</b> Most lenses carry a box headed “Research measure”: a count that writing researchers use, recomputed here by a fixed rule, with what the research found and how this count differs from the published one. The Research profile on the Overview gathers them. None is a score and none has a target.</p>'+
     '<p><b>The meaning model.</b> Off unless you switch it on. It is a small language model that compares sentences by meaning, in your browser. It is the only part of the page that is AI, and its results are always labelled. It never creates notes and never changes the revision receipt.</p>'+
+    '<p><b>Opening a file.</b> Paste your text, or use “Open a file”, or drag a file onto the page. The page reads Word (.docx), Markdown, Quarto, R Markdown, LaTeX and plain text. A Word file is unpacked here in the browser, with no upload. Its headings are kept, and its footnotes, comments and tracked deletions are left out.</p>'+
+    '<p><b>What is set aside.</b> Some parts of a document are not your prose, and the lenses leave them alone: the settings block at the top of a Quarto file, code blocks, displayed equations, lines of layout markup, block quotations and the reference list. They stay in the text, greyed and labelled “not analysed”. Inside a sentence, inline code, inline maths, web addresses and LaTeX references are not counted as words. Headings stay as boundaries between sections.</p>'+
+    '<p><b>The reference list.</b> Everything under a heading such as References or Bibliography is treated as the reference list. Mechanical checks compares it with the citations in the text and raises a note for a source cited but not listed, a year that differs, and an entry never cited. Only author-and-year citations can be compared.</p>'+
+    '<p><b>Three stages.</b> The row of buttons above the list of lenses narrows the page to one stage of revising. Stage 1 is argument and structure, stage 2 is flow and cohesion, and stage 3 is clarity and polish. A stage hides the other lenses and their notes. It does not switch them off, and “All lenses” brings them back. The order matters because a sentence polished in stage 3 may be one that stage 1 would have cut.</p>'+
+    '<p><b>The revision portfolio.</b> Before &amp; after builds a record of your revising to keep or hand in: the receipt, the research profile at the start and now, every rewritten sentence with the kind of change it made, the notes you weighed and kept with your reasons, and a reflection in your own words. It copies as Markdown or as JSON.</p>'+
     '<p><b>Weasel words.</b> Guides to writing use this name for wording that sounds as if it says something and commits to nothing. This page sorts it by kind. Intensifiers, vague quantities, vague degree words and comment words have notes in <button type="button" class="link" data-k="worn">Vague &amp; worn words</button>. A view given to nobody (“some argue”, “it is widely believed”) and earlier work with no citation have notes in <button type="button" class="link" data-k="checks">Mechanical checks</button>. Hedges and boosters are marked in <button type="button" class="link" data-k="hedge">Hedging</button>, empty openers such as “it is well known that” in <button type="button" class="link" data-k="clutter">Clutter</button>, and promotional adjectives in <button type="button" class="link" data-k="claims">Claim strength</button>.</p>'+
     '<p><b>What the page cannot do.</b> The rules read structure and have no idea what your sentences mean. There is no parser and no dictionary. When a rule is wrong about a sentence, say so with “I checked this” and move on.</p></section>';
   if(typeof VALID!=='undefined'&&VALID&&VALID.single){const V=VALID,sg=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(2),C=V.combined;
@@ -2863,7 +2931,7 @@ const RESB2={
   extra:(B.found.length?'<p><b>Sequences found.</b> '+B.found.map(([w,c])=>'“'+esc(w)+'”'+(c>1?' ×'+c:'')).join(' · ')+'</p>':'')+'<p><b>Four-word runs this draft repeats.</b> '+(B.grams.length?B.grams.map(([w,c])=>'“'+esc(w)+'” ×'+c).join(' · ')+(B.rep>B.grams.length?' · and '+(B.rep-B.grams.length)+' more':''):'None.')+'</p>',
   found:rf('biber04','Biber, Conrad & Cortes (2004)')+' call the most frequent word sequences in a register lexical bundles. Most are neither complete structures nor idioms, yet they work as building blocks of discourse, and they sort into three functions: stance, discourse organising and referential. '+rf('afl10','Simpson-Vlach & Ellis (2010)')+' built an Academic Formulas List from academic speech and writing. They ranked each sequence by a score that combines how frequent it is with how strongly its words belong together, and sorted the list by the same three functions.',
   here:'The Academic Formulas List is published in a journal with no open licence, so it is not included. The sequences counted here are a short inventory written for this page, about 70 common ones, sorted by the same three functions. A bundle in the research sense is frequent across a whole corpus. A run repeated within one draft is only a repeat, shown so you can decide whether it is a term you mean to repeat or a habit. Where a connective sits is read against the main verb found by rule.'};}],
- checks:[(A,R)=>{const G=R.grim;if(!G)return null;return{t:['grim'],
+ checks:[(A,R)=>{const F=R.refs;if(!F)return'';return '<div class="panel res"><span class="cap"'+tipA('The reference list is set aside from every other lens and compared with the citations in the text.')+'>Reference list</span><p class="rfig">'+(F.checked?'<b>'+F.entries+'</b> '+(F.entries===1?'entry':'entries')+' in the list and <b>'+F.cited+'</b> different author-and-year citations in the text. <b>'+F.missing+'</b> cited but not in the list, or with another year. <b>'+F.uncited+'</b> in the list and never cited.':'<b>'+F.entries+'</b> '+(F.entries===1?'entry':'entries')+' in the list. No author-and-year citations were found in the text, so the two could not be compared.')+'</p><p><b>How it is done.</b> A citation is read as a surname and a year, as in “Smith (2019)” or “(Jones & Lee, 2018; Brown et al., 2020)”. It matches an entry that begins with that surname and carries that year. Only the first author is compared. Citation keys such as @Smith2019 and numbered citations such as [12] cannot be checked against a pasted list, and a source cited only by them will show as never cited. Each mismatch has a note.</p></div>';},(A,R)=>{const G=R.grim;if(!G)return null;return{t:['grim'],
   fig:G.tested?'<b>'+G.flagged+'</b> of '+G.tested+' reported '+(G.tested===1?'mean':'means')+' that could be tested cannot come from whole-number scores.':'No mean here is reported in the same sentence as a single sample size under 100, so none could be tested.',
   found:rf('grim17','Brown & Heathers (2017)')+' pointed out that a mean of whole-number scores from N people must equal a whole number divided by N. When a mean is reported to two decimals, that can be checked for any N under 100. They call the check GRIM. Of 260 psychology articles they sampled, 71 reported means that could be tested, and 36 of those had at least one mean that failed.',
   here:'A mean that fails is a question, not a finding of error. The rule takes the only sample size in the sentence as the N behind the mean, which is wrong if some people did not answer or if the mean belongs to a subgroup. Means of scales that average several items, and means of quantities measured in decimals, need not pass.'};}],
@@ -2889,7 +2957,7 @@ const RESB2={
   fig:'<b>'+P.named+'</b> '+(P.named===1?'sentence opens':'sentences open')+' with “this”, “these” or “such” and a noun that names what came before. <b>'+P.bare+'</b> '+(P.bare===1?'opens':'open')+' with the word standing alone before the verb.',
   found:'A demonstrative can point back with a noun (“this decline was sharpest…”) or stand alone (“this was sharpest…”). In 810 papers by upper-level students, 57% of the sentences opening with “this” had a noun and 43% did not, and the choice depended most on the verb that followed: “is” and “means” went with the bare form ('+rf('wulff12','Wulff, Römer & Swales 2012')+'). In a reading experiment, a demonstrative standing alone slowed readers and made it harder for them to say what it referred to. Yet in 173 school essays the same bare forms went with higher ratings, which the authors put down to raters reading them as a sign of more complex writing ('+rf('crossley17','Crossley, Rose, Danekes, Rose & McNamara 2017')+').',
   here:'The noun must be one of about 150 abstract nouns on a list written for this page (“finding”, “pattern”, “decline”, “approach”), and may have one word between it and “this”. The rules see the pattern. They do not check that the noun fits what the sentence before said, so “this approach” after a sentence that reports a result still counts. Such a noun is shown as old in the text, because it names something the reader already has. A bare “this” before a verb has a note in Clutter that offers nouns drawn from the sentence before.'};}],
- compare:[(A,R)=>{if(state.base===state.raw||!state.A0)return null;const L=ledger(),rw=(L.pairs||[]).filter(p=>p.kind);if(!rw.length)return null;const K=L.kinds,LAB={surface:'wording only',add:'content added',cut:'content removed',both:'content added and removed'};
+ compare:[(A,R)=>portfolioPanel(),(A,R)=>{if(state.base===state.raw||!state.A0)return null;const L=ledger(),rw=(L.pairs||[]).filter(p=>p.kind);if(!rw.length)return null;const K=L.kinds,LAB={surface:'wording only',add:'content added',cut:'content removed',both:'content added and removed'};
   return{t:['faigley'],
   fig:'Of <b>'+rw.length+'</b> rewritten '+(rw.length===1?'sentence':'sentences')+': <b>'+K.surface+'</b> changed the wording only, <b>'+K.add+'</b> added content, <b>'+K.cut+'</b> removed content and <b>'+K.both+'</b> did both.',
   extra:'<div class="tblwrap"><table class="cmp"><thead><tr><th>Sentence</th><th>Change</th><th>Content words added</th><th>Removed</th></tr></thead><tbody>'+rw.slice(0,40).map(p=>'<tr><td><button type="button" class="linkish" data-mgo="'+p.ids[0]+'"'+tipA('Open the sentence as it is now.')+'>'+(p.ids[0]+1)+'</button></td><td>'+LAB[p.kind.kind]+'</td><td>'+(p.kind.added.slice(0,6).map(esc).join(', ')||'–')+'</td><td>'+(p.kind.removed.slice(0,6).map(esc).join(', ')||'–')+'</td></tr>').join('')+'</tbody></table></div>',
@@ -2985,6 +3053,53 @@ function loadBind(){const box=$('#loadMap'),L=state.loadL;if(!box||!L)return;con
   box.addEventListener('pointerleave',()=>{tip.hidden=true;if(state.loadPin==null)cur.hidden=true;});
   box.addEventListener('click',e=>{const i=at(e),k=rowOf(e);if(i==null||!k)return;if(state.loadPin===i&&state.loadRow===k){state.loadPin=null;cur.hidden=true;rd.textContent=idle;return;}state.loadPin=i;state.loadRow=k;place(i);rd.innerHTML=loadRead(L,i,k)+open(i);});
   if(state.loadPin!=null&&state.loadPin<L.n)rd.innerHTML=loadRead(L,state.loadPin,state.loadRow)+open(state.loadPin);}
+/* opening a file: plain text, Markdown, Quarto, R Markdown, LaTeX, or Word (.docx, unpacked in the browser with no library) */
+async function docxText(buf){const u=new Uint8Array(buf),dv=new DataView(buf);let eocd=-1;for(let i=u.length-22;i>=Math.max(0,u.length-66000);i--)if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;}if(eocd<0)throw new Error('This does not look like a Word file.');
+  const n=dv.getUint16(eocd+10,true),td=new TextDecoder();let p=dv.getUint32(eocd+16,true);
+  for(let k=0;k<n&&p+46<=u.length;k++){if(dv.getUint32(p,true)!==0x02014b50)break;const method=dv.getUint16(p+10,true),csize=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),lho=dv.getUint32(p+42,true),name=td.decode(u.subarray(p+46,p+46+nl));
+    if(name==='word/document.xml'){const start=lho+30+dv.getUint16(lho+26,true)+dv.getUint16(lho+28,true),data=u.subarray(start,start+csize);let xml;
+      if(method===0)xml=td.decode(data);else if(method===8){if(typeof DecompressionStream==='undefined')throw new Error('This browser cannot unpack Word files. Paste the text instead.');xml=await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text();}else throw new Error('The file is packed in a way this page cannot read.');
+      return docxParas(xml);}
+    p+=46+nl+el+cl;}
+  throw new Error('No document was found inside the file.');}
+function docxParas(xml){const out=[],ent=t=>t.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&#(\d+);/g,(m,d)=>String.fromCodePoint(+d)).replace(/&amp;/g,'&');
+  xml.replace(/<w:(?:del|moveFrom)\b[\s\S]*?<\/w:(?:del|moveFrom)>/g,'').replace(/<w:p[ >][\s\S]*?<\/w:p>/g,p=>{const style=(p.match(/<w:pStyle w:val="([^"]+)"/)||[])[1]||'';let t='';
+    p.replace(/<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>|<w:tab\/>|<w:br\/>|<w:noBreakHyphen\/>/g,(m,x)=>{t+=x!=null?x:m==='<w:tab/>'?' ':m==='<w:br/>'?' ':'-';return'';});
+    t=ent(t).replace(/\s+/g,' ').trim();if(!t)return'';const h=style.match(/^(?:Heading|berschrift|Titre|Ttulo|Titolo)\s*(\d)$/i);
+    out.push(h?'#'.repeat(Math.min(6,+h[1]))+' '+t:/^Title$/i.test(style)?'# '+t:/quote/i.test(style)?'> '+t:t);return'';});
+  return out.join('\n\n');}
+async function openFile(file){const msg=$('#fileMsg'),say=t=>{if(msg)msg.textContent=t;},name=file.name||'file',ext=(name.match(/\.([a-z0-9]+)$/i)||[])[1]||'';
+  try{let text;if(/^docx$/i.test(ext))text=await docxText(await file.arrayBuffer());
+    else if(/^(txt|md|markdown|qmd|rmd|tex|text)$/i.test(ext)||/^text\//.test(file.type||''))text=await file.text();
+    else if(/^(doc|pdf|odt|rtf|pages)$/i.test(ext))throw new Error('This page reads .docx, .md, .qmd, .Rmd, .tex and .txt files. Save the document as .docx, or paste the text.');
+    else text=await file.text();
+    text=text.replace(/\r\n?/g,'\n').replace(/\u00a0/g,' ').trim();if(!text)throw new Error('The file holds no text.');if(text.length>400000)throw new Error('The file is too long for this page. Open one section at a time.');
+    newDoc(text,false);setEditing(false);state.lens='overview';renderLensCard();run();save();
+    const B=state.A.research?state.A.research.blocks:{},set=Object.keys(B).map(k=>B[k]+' '+BLOCKS[k][0].toLowerCase()+(B[k]>1&&k!=='markup'&&k!=='refs'?'s':'')).join(', ');
+    say('Opened '+name+': '+state.A.sents.length+' sentences.'+(set?' Set aside and not analysed: '+set+'.':'')+(/^docx$/i.test(ext)?' Footnotes, comments and tracked deletions were left out.':''));}
+  catch(e){say(String(e&&e.message||e));}}
+document.addEventListener('dragover',e=>{if(e.dataTransfer&&[...e.dataTransfer.types].includes('Files')){e.preventDefault();document.body.classList.add('dropping');}});
+document.addEventListener('dragleave',e=>{if(!e.relatedTarget)document.body.classList.remove('dropping');});
+document.addEventListener('drop',e=>{document.body.classList.remove('dropping');const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f){e.preventDefault();openFile(f);}});
+/* the revision portfolio: the starting and current profile, each rewritten sentence with its kind of change, and the notes weighed and kept */
+function portfolio(){const A=state.A,A0=state.A0||state.A,L=ledger(),now=resRows(A),was=resRows(A0),date=new Date().toISOString().slice(0,10),LAB={surface:'wording only',add:'content added',cut:'content removed',both:'content added and removed'};
+  const prof=PGRP.map(([g,,names])=>({group:g,rows:names.map(nm=>{const n=now.find(r=>r.n===nm),w=was.find(r=>r.n===nm);return n||w?{measure:nm,start:w?w.v:'–',now:n?n.v:'–',detail:n?n.r:''}:null;}).filter(Boolean)})).filter(g=>g.rows.length);
+  const rew=(L.pairs||[]).filter(p=>p.kind).map(p=>({sentence:p.ids[0]+1,change:LAB[p.kind.kind],before:A0.sents[p.b].text.trim(),after:p.ids.map(i=>A.sents[i].text.trim()).join(' '),added:p.kind.added,removed:p.kind.removed}));
+  const kept=A.findings.filter(f=>f.dis).map(f=>({lens:LBY[f.lens].n,note:f.title,sentence:f.s+1,text:A.sents[f.s]?A.sents[f.s].text.trim():'',reason:f.dis}));
+  const rc=receipt().split('\n').filter(Boolean).slice(1),cell=t=>String(t).replace(/\|/g,'\\|').replace(/\n/g,' ');
+  const md=['# Revision portfolio','',date+' · Topic & Emphasis','','## Receipt',''].concat(rc.map(l=>'- '+l.trim()),['','## Research profile, at the start and now','','These counts describe the draft. None is a score and none has a target.',''],
+    prof.reduce((a,g)=>a.concat(['### '+g.group,'','| Measure | Start | Now |','|---|---|---|'],g.rows.map(r=>'| '+cell(r.measure)+' | '+cell(r.start)+' | '+cell(r.now)+' |'),['']),[]),
+    ['## Rewritten sentences','',rew.length?'Each rewrite is labelled by what it changed: the wording only, or the content (after Faigley & Witte 1981). A synonym counts as content removed and content added.':'No sentence has been rewritten yet.',''],
+    rew.reduce((a,r)=>a.concat(['**Sentence '+r.sentence+' · '+r.change+'**'+(r.added.length?' · added: '+r.added.join(', '):'')+(r.removed.length?' · removed: '+r.removed.join(', '):''),'','- Before: '+r.before,'- After: '+r.after,'']),[]),
+    ['## Notes weighed and kept','',kept.length?'| Lens | Note | Sentence | My reason |':'No note has been marked as checked.',kept.length?'|---|---|---|---|':''],kept.map(k=>'| '+cell(k.lens)+' | '+cell(k.note)+' | '+k.sentence+' | '+cell(k.reason)+' |'),
+    ['','## Reflection','',(state.reflect||'').trim()||'(nothing written yet)','']).join('\n');
+  return{md,json:JSON.stringify({tool:'Topic & Emphasis',date,receipt:rc.map(l=>l.trim()),profile:prof,rewritten:rew,notes_weighed_and_kept:kept,reflection:(state.reflect||'').trim()},null,1)};}
+function portfolioPanel(){const any=state.base!==state.raw||Object.keys(state.dismissed).length>0;
+  return '<div class="panel res"><span class="cap"'+tipA('A record of your revising to keep or hand in: the receipt, the research profile at the start and now, every rewritten sentence with the kind of change it made, the notes you weighed and kept with your reasons, and your own reflection.')+'>Revision portfolio</span>'+
+    '<p>'+(any?'The portfolio gathers the receipt, the research profile at the start and now, each rewritten sentence labelled by the kind of change, and the notes you marked as checked with the reason you gave.':'Nothing to put in a portfolio yet. Rewrite a sentence or mark a note as checked.')+' Add a reflection in your own words below. It is saved in this browser and goes into the portfolio.</p>'+
+    '<label class="cap" for="pfReflect">Reflection: what did you change, and why?</label><textarea class="listin" id="pfReflect" rows="4" placeholder="For example: which notes changed how you saw the draft, which you decided against, and what you would do differently next time.">'+esc(state.reflect||'')+'</textarea>'+
+    '<div class="tilebar"><button type="button" class="btn sm" data-pf="md"'+tipA('Copy the portfolio as Markdown. It pastes into a document, a learning platform or a notes app.')+'>Copy as Markdown</button><button type="button" class="btn sm" data-pf="json"'+tipA('Copy the portfolio as JSON, for a spreadsheet or a script.')+'>Copy as JSON</button><span class="hint" id="pfMsg" aria-live="polite"></span></div>'+
+    '<textarea readonly class="rcpt" id="pfText" rows="10" hidden aria-label="Revision portfolio"></textarea></div>';}
 function resRows2(A){const R=A.research,rows=[],P=R.prog,C=R.cover,X=R.stance,H=R.hype,Z=R.excess,D=R.ld;
   if(D&&D.median!=null)rows.push({k:'dense',n:'Lexical density',v:Math.round(D.all)+'%',r:'of words carry content · sentences run from '+Math.round(D.min)+'% to '+Math.round(D.max)+'%'+(D.maxI>=0?' · densest: sentence '+(D.maxI+1):''),
    h:'How tightly the draft packs content words together. It is not a measure of difficulty: on school reading passages it had no relation to how easy teachers judged a text to be. Use it to find the sentences that pack the most, and ask whether each could be two.',t:['johansson']});
@@ -3052,12 +3167,14 @@ function profileHTML(){const A=state.A;if(!A.research||!A.sents.length)return'';
 function renderRail(){
   const A=state.A,bc=baseline(),now={};A.findings.filter(active).forEach(f=>{now[f.lens]=(now[f.lens]||0)+1;});
   const tot=o=>Object.values(o).reduce((a,b)=>a+b,0);
-  const btn=l=>{let n=l.k==='overview'?tot(now):(now[l.k]||0),b=l.k==='overview'?null:bc[l.k]||0,c='';
+  const nowSt={};Object.keys(now).forEach(k=>{if(inStage(k))nowSt[k]=now[k];});
+  {const sg=$('#stages');if(sg)sg.innerHTML=STAGES.map((s,i)=>'<button type="button" class="chip'+((state.stage||0)===i?' on':'')+'" data-stage="'+i+'" aria-pressed="'+((state.stage||0)===i)+'"'+tipA(s[1])+'>'+s[0]+'</button>').join('')+(state.stage?'<p class="hint">'+STAGES[state.stage][1]+' The other lenses are hidden, not switched off.</p>':'');}
+  const btn=l=>{let n=l.k==='overview'?tot(nowSt):(now[l.k]||0),b=l.k==='overview'?null:bc[l.k]||0,c='';
     if(l.k==='compare'||l.k==='skeleton'||l.k==='practice'||l.k==='mviews'||l.k==='load'||l.k==='guide')c='';else if(l.ba!==false&&b!=null&&b!==n&&state.base!==state.raw)c='<s>'+b+'→</s>'+n+(n===0?' ✓':'');else c=String(n);
     return '<button class="lens hb-'+l.hue+(RESB[l.k]||l.k==='source'?' res':'')+'" type="button" id="lens-'+l.k+'" data-k="'+l.k+'" aria-pressed="'+(state.lens===l.k)+'"'+tipA(lensTip(l)+(RESB[l.k]||l.k==='source'?' The small ring means this lens also carries a research measure.':''))+'><i></i><span>'+esc(l.n)+'</span><b>'+c+'</b></button>';};
   const RA=state.railAll||(state.railAll={});
-  const q=(state.lensQ||'').trim().toLowerCase(),qre=q?new RegExp('(?:^|[^a-z])'+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')):null,hit=l=>!q||l.n.toLowerCase().includes(q)||qre.test(l.why.toLowerCase())||(KW[l.k]&&qre.test(KW[l.k]));let any=0;
-  [0,1,2,3,4,5,6,7].forEach(g=>{const ls=LENSES.filter(l=>l.g===g&&hit(l)),quiet=q?[]:ls.filter(l=>FOLD.has(l.k)&&l.k!==state.lens&&!(now[l.k]>0)),show=RA[g]?ls:ls.filter(l=>!quiet.includes(l));any+=ls.length;const sec=g>=2?$('#g'+g):g===1?$('#railH1'):null;if(sec)sec.hidden=!ls.length;
+  const q=(state.lensQ||'').trim().toLowerCase(),qre=q?new RegExp('(?:^|[^a-z])'+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')):null,hit=l=>inStage(l.k)&&(!q||l.n.toLowerCase().includes(q)||qre.test(l.why.toLowerCase())||(KW[l.k]&&qre.test(KW[l.k])));let any=0;
+  [0,1,2,3,4,5,6,7].forEach(g=>{const ls=LENSES.filter(l=>l.g===g&&hit(l)),quiet=q||state.stage?[]:ls.filter(l=>FOLD.has(l.k)&&l.k!==state.lens&&!(now[l.k]>0)),show=RA[g]?ls:ls.filter(l=>!quiet.includes(l));any+=ls.length;const sec=g>=2?$('#g'+g):g===1?$('#railH1'):null;if(sec)sec.hidden=!ls.length;
     $('#rail'+g).innerHTML=show.map(btn).join('')+(quiet.length?'<button type="button" class="railmore" id="rm-'+g+'" data-rmore="'+g+'"'+tipA('Lenses with no open notes on this draft are folded away to keep the list short. Their marks are still there if you want to look.')+'>'+(RA[g]?'Fold away the '+quiet.length+' with nothing open':'+ '+quiet.length+' with nothing open')+'</button>':'');});
   const nn=$('#railNone');if(nn)nn.hidden=!!any;
 }
@@ -3311,7 +3428,7 @@ function skelHTML(st){const T=st.T,tp=st.topic,sp=st.stress;if(!tp||!sp||T[sp[0]
   return '<span class="mk hl hb-blue"'+tipA(markTip('skeleton','hb-blue'))+'>'+esc(st.text.slice(0,a))+'</span>'+(n?' <span class="skmid"'+tipA(n+(n===1?' word is':' words are')+' hidden here, between the opening and the close. Tap the sentence to see all of it.')+'>···</span> ':esc(mid))+'<span class="mk hl hb-rose"'+tipA(markTip('skeleton','hb-rose'))+'>'+esc(st.text.slice(b))+'</span>';}
 function pblockHTML(p,pi,fs,hue){
   const A=state.A,l=state.lens;
-  if(p.head)return '<p class="para head">'+esc(state.raw.slice(p.s,p.e))+'</p>';
+  if(p.head){const K=p.kind&&p.kind!=='heading'?BLOCKS[p.kind]:null;return K?'<div class="para blk k-'+p.kind+'"><span class="ktag"'+tipA(K[1])+'>'+K[0]+' · not analysed</span><pre>'+esc(state.raw.slice(p.s,p.e))+'</pre></div>':'<p class="para head">'+esc(state.raw.slice(p.s,p.e))+'</p>';}
   let h='';
   if(l==='topic'&&p.topics&&p.topics.length>1)h+='<span class="tstring"'+tipA('The grammatical subject of each sentence in this paragraph, in order. A steady string of subjects reads as one story.')+'>topics: '+p.topics.map(esc).join(' → ')+'</span>';
   if(l==='jobs'&&p.ord!=null){h+='<div class="padorn"><span class="pn">¶'+(p.ord+1)+'</span><select class="jobsel" id="job-'+p.ord+'" data-ord="'+p.ord+'" aria-label="Job of paragraph '+(p.ord+1)+'"><option value="">What is this paragraph’s job?</option>'+E.JOBS.map(([k,n])=>'<option value="'+k+'"'+(p.job===k?' selected':'')+'>'+n+'</option>').join('')+'</select>'+(p.job?'<a class="pbl" href="'+PBURL+E.PB[E.JOBPB[p.job]][1]+'/" target="_blank" rel="noopener"'+tipA('Common phrases for this kind of paragraph, in the Academic Phrasebank. Opens in a new tab.')+'>Phrasebank: '+E.PB[E.JOBPB[p.job]][0]+'</a>':'')+'</div>'+movesHTML(p);}
@@ -3664,6 +3781,9 @@ document.addEventListener('click',e=>{
   if(c('#mvSeqReset')){mvS().seq=[];renderDynamic();return;}
   if(c('#mvNextP')){const st=mvS();st.dp=(st.dp||0)+1;st.odd=null;st.seq=[];renderDynamic();return;}
   if((el=c('[data-norms]'))){normsLoad();return;}
+  if((el=c('[data-stage]'))){state.stage=+el.dataset.stage;store.set('ts.stage',String(state.stage));if(!inStage(state.lens))setLens('overview');else renderDynamic();return;}
+  if(c('#btnFile')){$('#fileIn').click();return;}
+  if((el=c('[data-pf]'))){const P=portfolio(),t=el.dataset.pf==='json'?P.json:P.md,msg=$('#pfMsg'),box=$('#pfText');box.hidden=false;box.value=t;const fb=()=>{box.focus();box.select();msg.textContent='Selected. Now use Copy from your keyboard or menu.';};try{navigator.clipboard.writeText(t).then(()=>{msg.textContent='Copied as '+(el.dataset.pf==='json'?'JSON':'Markdown')+'.';},fb);}catch(x){fb();}return;}
   if((el=c('[data-loady]'))){state.loadY=el.dataset.loady;state.loadPin=null;renderDynamic();return;}
   if((el=c('[data-mgo]'))){const i=+el.dataset.mgo;setLens('overview');openWb(i,{scroll:true});return;}
   if((el=c('[data-mpair]'))){state.termSel=new Set(el.dataset.mpair.split('|'));renderDynamic();const tb=$('#termMerge');if(tb)tb.scrollIntoView({block:'center',behavior:reduced()?'auto':'smooth'});return;}
@@ -3751,6 +3871,8 @@ document.addEventListener('change',e=>{
   if(t.matches('.emphsel')){state.emph[+t.dataset.ord]=+t.value;save();run();return;}
   if(t.matches('#mvQ')){mvAskGo(t.value);return;}
   if(t.matches('#mvAbs')){mvS().abs=t.value;store.set('ts.abs',t.value);run();return;}
+  if(t.id==='pfReflect'){state.reflect=t.value;store.set('ts.reflect',t.value);return;}
+  if(t.id==='fileIn'){if(t.files&&t.files[0])openFile(t.files[0]);t.value='';return;}
   if(t.matches('#myList')){state.mylist=t.value;store.set('ts.list',t.value);save();run();return;}
   if(t.matches('#srcText')){state.source=t.value;save();run();return;}
   if(t.matches('.pointin[data-ord]')){(state.points||(state.points=[]))[+t.dataset.ord]=t.value.trim();save();run();return;}
@@ -3843,7 +3965,7 @@ function renderRefs(){$('#refs').innerHTML=REFS.map(r=>'<li id="ref-'+r[0]+'">'+
   if(s&&s.lens&&LBY[s.lens])state.lens=s.lens;
   if(window.matchMedia('(max-width:720px)').matches)[2,3,4,5,6,7].forEach(g=>{$('#g'+g).classList.remove('shut');});
   {const ab=store.get('ts.about');$('#about').open=ab==null?!store.get('ts.seen'):ab==='1';store.set('ts.seen','1');}
-  state.mylist=store.get('ts.list')||'';
+  state.mylist=store.get('ts.list')||'';state.reflect=store.get('ts.reflect')||'';state.stage=+(store.get('ts.stage')||0)||0;if(!inStage(state.lens))state.lens='overview';
   if(store.get('ts.mean')==='1'){MEAN.on=true;setTimeout(meanLoad,400);}
   if(store.get('ts.norms')==='1')setTimeout(normsLoad,600);
   try{state.read=JSON.parse(store.get('ts.read')||'null')||{fs:0,sp:false,rc:false};}catch(e){state.read={fs:0,sp:false,rc:false};}

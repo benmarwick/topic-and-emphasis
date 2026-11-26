@@ -97,7 +97,7 @@ const HEDGEP=/\bto (some|a certain) extent\b|\bmore or less\b|\bin some cases\b/
 const CHAINP=S('of in for on with by at from between among through during under over within into across against toward towards to');
 const ABBR=S('e.g i.e al fig figs eq eqs ref refs vs cf approx ca dr prof mr mrs ms st viz resp sp spp var no');
 const ACR_OK=S('DNA RNA USA UK EU UN OK TV AM PM AD BC ID');
-const WEAK_END=/\b(as well|too|also|however|though|respectively|etc|and so on|and so forth|in this (study|work|paper|report|article)|in the (literature|field)|previously|recently|to (some|a certain|a large|a great) extent|in (general|particular|nature|practice)|at all|so far|to date|in (many|some|most|these|such|both) cases|of (interest|importance|note)|(has|have|had) (also )?been (reported|observed|described|shown|found|noted|documented|demonstrated|investigated|studied|proposed|suggested|performed|used)|(is|are|was|were) (also )?(observed|seen|found|noted|obtained|reported|shown|performed|carried out|used|employed|measured|determined|investigated|studied|examined|detected|conducted|made|done)|it|them|this|that|these|those|here|there|elsewhere|(by|to|for|with|of) (us|them|it))$/;
+const WEAK_END=/\b(to (?:some|a certain|a) degree|in part|more or less|among (?:others|other things)|on the whole|for the most part|in some (?:respects|ways)|overall|as well|too|also|however|though|respectively|etc|and so on|and so forth|in this (study|work|paper|report|article)|in the (literature|field)|previously|recently|to (some|a certain|a large|a great) extent|in (general|particular|nature|practice)|at all|so far|to date|in (many|some|most|these|such|both) cases|of (interest|importance|note)|(has|have|had) (also )?been (reported|observed|described|shown|found|noted|documented|demonstrated|investigated|studied|proposed|suggested|performed|used)|(is|are|was|were) (also )?(observed|seen|found|noted|obtained|reported|shown|performed|carried out|used|employed|measured|determined|investigated|studied|examined|detected|conducted|made|done)|it|them|this|that|these|those|here|there|elsewhere|(by|to|for|with|of) (us|them|it))$/;
 const TRANS=/^(in contrast|by contrast|in addition|as a result|for example|for instance|on the other hand|in turn|in particular|taken together|to this end|in other words|at the same time)\b/i;
 
 
@@ -113,7 +113,7 @@ const EVID={
  novel:[['search','I searched, and I cite the closest earlier work',true,'A novelty claim holds up when the closest earlier work is cited beside it.'],['afaik','As far as I know',false,'Write “to our knowledge” and cite the closest earlier work, or drop the claim and let the result speak.']]};
 const CATWHY={causal:'This wording says one thing produces another.',certain:'This wording says the matter is settled.',absolute:'This wording allows no exceptions.',novel:'This wording claims priority or exceptional importance.'};
 const CATQ={causal:'What kind of evidence shows that one produces the other?',certain:'How direct is the evidence, and has it been repeated?',absolute:'How many of the cases did you check?',novel:'What is the closest earlier work, and do you cite it?'};
-const CITE=/\[\d[\d,\s–-]*\]|\([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*\)|\bet al\b|(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]|\\[a-zA-Z]*cite[a-zA-Z]*(?![a-zA-Z])/u;
+const CITE=/\[\d[\d,\s–-]*\]|\([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*\)|\bet al\b|(?<![\p{L}\p{N}._%+-])-?@(?!(?:fig|tbl|sec|eq|lst|thm|exm)-)[\p{L}_][\p{L}\p{N}_]|\\[a-zA-Z]*cite[a-zA-Z]*(?![a-zA-Z])/u;
 const UNCITED=/\b(?:previous(?:ly)?|earlier|prior|recent|several|many|numerous|other) (?:stud(?:y|ies)|work|workers|research|reports?|authors|investigations|experiments)\b|\b(?:studies|research|reports|workers|authors) (?:have|has) (?:shown|found|reported|suggested|demonstrated|indicated)\b|\b(?:has|have) (?:long |previously |already )?been (?:shown|reported|demonstrated|suggested|established|documented|proposed)\b|\bit is (?:well |widely |generally )?known that\b|\b(?:is|are) (?:well |widely )?known to\b|\bin the literature\b|\bwidely (?:accepted|believed|recognized)\b/i;
 const STAT=/\bp\s*[<>=≤]\s*0?\.\d|[<>=≤]\s*0?\.0\d|\b(?:t|F|r|z|d|U|H|W|R2|R²|χ2|χ²)\s*(?:\([^)]*\))?\s*=\s*-?\d|\bCI\b|confidence interval|±|\bn\s*=\s*\d|\b(?:ANOVA|t-test|regression|Mann|Wilcoxon|Tukey|Bonferroni|chi-square|Kruskal)\b/i;
 const JOBS=[['context','Context'],['gap','Gap or problem'],['aim','Aim or approach'],['method','Method'],['result','Result'],['interp','Interpretation'],['implication','Implication'],['limit','Limitation']];
@@ -314,19 +314,39 @@ function Q(f){const t=f.title;switch(f.lens){
 /* A citation key in the style of pandoc, Quarto and R Markdown (@Marwick2026, [@a; @b, p. 3], -@a) is one token.
    Inside square brackets the key and its page reference are citation apparatus, so they do not count as words.
    Outside brackets the key stands for the author's name, so it counts as one word but never as a term. */
-function tokenize(text){const T=[];const re=/(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]*(?:[:.#$%&+?<>~\/-][\p{L}\p{N}_]+)*|[\p{L}\p{N}]+(?:[-'’.\/][\p{L}\p{N}]+)*%?|[^\s\p{L}\p{N}]/gu;let m,any=false;
-  while((m=re.exec(text))){const t=m[0],ck=/^-?@./.test(t);if(ck)any=true;T.push({t,l:t.toLowerCase().replace(/’/g,"'"),s:m.index,e:m.index+t.length,w:/[\p{L}\p{N}]/u.test(t),cite:ck||undefined});}
+function tokenize(text){const T=[];const re=/`[^`\n]+`|\$(?=\S)[^$\n]{0,160}?(?<=\S)\$(?!\d)|\\\([^\n]*?\\\)|\\(?:[a-zA-Z]*cite[a-zA-Z]*|ref|eqref|autoref|cref|Cref|pageref|label|url)\*?(?:\[[^\]\n]*\])*\{[^{}\n]*\}|https?:\/\/[^\s)>\]]+|\]\([^)\s]+\)|(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]*(?:[:.#$%&+?<>~\/-][\p{L}\p{N}_]+)*|[\p{L}\p{N}]+(?:[-'’.\/][\p{L}\p{N}]+)*%?|[^\s\p{L}\p{N}]/gu;let m,any=false;
+  while((m=re.exec(text))){const t=m[0],ck=/^-?@./.test(t),mask=t.length>1&&/^(?:`|\$|\\[(a-zA-Z]|https?:|\]\()/.test(t);if(ck)any=true;T.push({t,l:t.toLowerCase().replace(/’/g,"'"),s:m.index,e:m.index+t.length,w:!mask&&/[\p{L}\p{N}]/u.test(t),cite:ck||(mask&&/^\\[a-zA-Z]*cite/.test(t))||undefined,mask:mask||undefined});}
   if(any)for(let i=0;i<T.length;i++){if(T[i].t!=='[')continue;let j=i+1,has=false;while(j<T.length&&T[j].t!==']'&&T[j].t!=='['){if(T[j].cite)has=true;j++;}
     if(has&&j<T.length&&T[j].t===']'){for(let q=i+1;q<j;q++){T[q].w=false;T[q].cite=true;}i=j;}}
   return T;}
-function splitParas(raw){const out=[];let cur=null,pos=0;
-  for(const line of raw.split('\n')){const s=pos;pos+=line.length+1;const tr=line.trim();
-    if(!tr){if(cur){out.push(cur);cur=null;}continue;}
-    const ls=s+line.search(/\S/),le=s+line.replace(/\s+$/,'').length;
-    if(cur&&/[.!?]["'”’)\]]*$/.test(raw.slice(cur.s,cur.e))){out.push(cur);cur=null;}
-    if(!cur&&tr.length<70&&tr.split(/\s+/).length<=8&&!/[.!?:;,]["'”’)\]]*$/.test(tr)){out.push({s:ls,e:le,head:true});continue;}
+/* Split the text into blocks. A block with head:true is shown but not analysed: a heading, or a stretch that is not the
+   writer's prose (kind: yaml, code, math, markup, quote, refs). Offsets are kept, so nothing in the text is moved or removed. */
+const REFHEAD=/^(?:#{1,6}\s*)?(?:\d+(?:\.\d+)*\.?\s+)?(?:references|reference list|bibliography|works cited|literature cited|sources cited)\s*:?\s*(?:\{[^}]*\})?\s*#*$/i;
+const ENDREFS=/^(?:#{1,6}\s*)?(?:\d+(?:\.\d+)*\.?\s+)?(?:appendix|appendices|acknowledge?ments|notes|footnotes|endnotes|tables|figures|supplementary|supporting information|author|funding|data availability)\b/i;
+function splitParas(raw){const out=[],lines=raw.split('\n');let cur=null,pos=0,mode=null,blk=null,refs=false,first=true;
+  const flush=()=>{if(!cur)return;if(!cur.head){const t=raw.slice(cur.s,cur.e);
+      const q=(t.match(/[“”"]/g)||[]).length;
+      if(q===2&&/^[“"]/.test(t)&&/[”"]\s*(?:\([^()]*\)|\[[^\]]*\])?[.,;]?$/.test(t)&&t.split(/\s+/).length>=25){cur.head=true;cur.kind='quote';}}
+    out.push(cur);cur=null;};
+  for(let li=0;li<lines.length;li++){const line=lines[li],s=pos;pos+=line.length+1;const tr=line.trim(),ls=s+Math.max(0,line.search(/\S/)),le=s+line.replace(/\s+$/,'').length;let m;
+    if(mode){if(tr)blk.e=le;if(mode.test(tr)){out.push(blk);mode=null;blk=null;}continue;}
+    if(!tr){flush();continue;}
+    const open=(kind,end,oneLine)=>{flush();blk={s:ls,e:le,head:true,kind};if(oneLine){out.push(blk);blk=null;}else mode=end;};
+    if(first){first=false;if(tr==='---'){let close=false;for(let q=li+1;q<Math.min(lines.length,li+120);q++)if(/^(?:---|\.\.\.)\s*$/.test(lines[q])){close=true;break;}if(close){open('yaml',/^(?:---|\.\.\.)$/);continue;}}}
+    if((m=tr.match(/^(`{3,}|~{3,})/))){open('code',new RegExp('^'+(m[1][0]==='`'?'`':'~')+'{'+m[1].length+',}\\s*$'));continue;}
+    if(/^\$\$/.test(tr)){open('math',/\$\$\s*$/,tr.length>4&&/\$\$\s*$/.test(tr.slice(2)));continue;}
+    if(/^\\\[/.test(tr)){open('math',/\\\]\s*$/,/\\\]\s*$/.test(tr));continue;}
+    if((m=tr.match(/^\\begin\{(equation|align|gather|multline|eqnarray|displaymath|math|table|figure|tabular|verbatim|lstlisting|tikzpicture)\*?\}/))){
+      open(/table|figure|tabular|tikz/.test(m[1])?'markup':/verbatim|lstlisting/.test(m[1])?'code':'math',new RegExp('\\\\end\\{'+m[1]+'\\*?\\}'),new RegExp('\\\\end\\{'+m[1]+'\\*?\\}').test(tr));continue;}
+    if(/^:{3,}/.test(tr)||/^<!--.*-->$/.test(tr)||/^!\[[^\]]*\]\([^)]*\)(?:\{[^}]*\})?$/.test(tr)||/^\|.*\|$/.test(tr)||/^(?:-{3,}|\*{3,}|_{3,})$/.test(tr)||/^\\(?:label|includegraphics|caption|bibliography|bibliographystyle|printbibliography|maketitle|tableofcontents|newpage|clearpage|usepackage|documentclass|begin|end|input|include)\b/.test(tr)){open('markup',null,true);continue;}
+    const mdH=/^#{1,6}\s+\S/.test(tr)||/^\\(?:(?:sub)*section|chapter|paragraph)\*?\{/.test(tr),rh=REFHEAD.test(tr);
+    if(mdH||rh||(refs&&ENDREFS.test(tr))||(!refs&&!cur&&tr.length<70&&tr.split(/\s+/).length<=8&&!/[.!?:;,]["'”’)\]]*$/.test(tr))){flush();refs=rh;out.push({s:ls,e:le,head:true,kind:'heading',refhead:rh||undefined});continue;}
+    if(refs){if(cur)cur.e=le;else cur={s:ls,e:le,head:true,kind:'refs'};continue;}
+    if(/^>/.test(tr)){if(cur&&cur.kind==='quote')cur.e=le;else{flush();cur={s:ls,e:le,head:true,kind:'quote'};}continue;}
+    if(cur&&cur.kind==='quote')flush();
+    if(cur&&/[.!?]["'”’)\]]*$/.test(raw.slice(cur.s,cur.e)))flush();
     if(cur)cur.e=le;else cur={s:ls,e:le};}
-  if(cur)out.push(cur);return out;}
+  if(blk)out.push(blk);flush();return out;}
 function splitSents(text){const out=[];let start=0;const re=/[.!?]+["'”’)\]]*\s+(?=["'“‘(\[]?(?:[A-Z0-9]|-?@[A-Za-z_]))/g;let m;
   while((m=re.exec(text))){const lastWord=(text.slice(start,m.index).match(/([A-Za-z.]+)$/)||[])[1]||'';
     if(text[m.index]==='.'&&(ABBR.has(lastWord.toLowerCase())||/(?:^|[\s(])(?:[A-Z]\.)*[A-Z]$/.test(text.slice(start,m.index))))continue;
@@ -477,12 +497,13 @@ function parse(text){
   while(tb>first&&tb>=0&&!T[tb].w)tb--;
   st.topic=first>=0?[first,Math.max(first,tb)]:null;
   /* stress span */
-  st.stress=null;st.cite=false;
+  st.stress=null;st.cite=false;st.aside=false;
   (function(){let end=N-1;
     while(end>=0){const t=T[end];if(t.w)break;
       if(t.t===')'||t.t===']'){const open=t.t===')'?'(':'[';let o=end-1;while(o>=0&&T[o].t!==open)o--;if(o<0){end--;continue;}
         const inner=text.slice(T[o].e,t.s);
         if((open==='['&&/^[\d,\s–-]+$/.test(inner))||/(19|20)\d\d|et al|(?:^|[\s;\[-])@[\p{L}_]/u.test(inner)||/^\s*(figs?|figure|tables?|eqs?|refs?|see|supplementary|data not shown)\b/i.test(inner)){st.cite=true;end=o-1;continue;}
+        if(inner.trim().split(/\s+/).length<=8||/[=<>±%]|\d/.test(inner)){st.aside=true;end=o-1;continue;}
         end--;continue;}
       end--;}
     if(end<0)return;const lastW=end,nW=wpos[lastW]+1;let start=-1,dp=0;
@@ -578,7 +599,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         if(wk)why.push('It closes on “'+wk[0]+'”, which carries little weight.');
         if(!inS.length&&!/\d/.test(tx(sa,sb)))why.push('The closing words hold no content word.');
         else if(st.i>0&&inS.length&&inS.every(c=>c.old)&&news.filter(c=>c.i<sa).length>=2)why.push('Everything in the closing words is already familiar, while the new terms ('+wl(news.filter(c=>c.i<sa))+') sit earlier in the sentence.');
-        if(why.length){if(st.cite)why.push('A citation follows, so readers take the words before it as the close.');
+        if(why.length){if(st.cite)why.push('A citation follows, so readers take the words before it as the close.');else if(st.aside)why.push('A bracketed aside follows, so readers take the words before it as the close.');
           sId=add({lens:'stress',s:st.i,a:T[sa].s,b:T[sb].e,sev:2,title:'The stress position holds little',detail:why.join(' '),
             tip:'Decide what you most want remembered from this sentence and end on it. Trim or move whatever trails after.'});}}
       mk('stress',sa,sb,'hl hb-rose',sId!=null?{f:sId}:null);
@@ -821,7 +842,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
   }
   const tracer={terms:claimTerms.map(t=>({w:t.w,k:t.k,count:t.count,stress:t.stress}))};
   /* title words, traced the way SWAN tests a title against its abstract and headings */
-  {const heads=paras.filter(p=>p.head);
+  {const heads=paras.filter(p=>p.head&&(!p.kind||p.kind==='heading'));
     heads.forEach(p=>tokenize(raw.slice(p.s,p.e)).forEach(tk=>{if(!isContent(tk))return;const k=stem(tk.l);titleTerms.forEach(t=>{if(near(t.k,k))t.heads++;});}));
     tracer.title={terms:titleTerms.map(t=>({w:t.w,count:t.count,first:t.first,heads:t.heads})),heads:heads.length};
     if(sents.length&&titleTerms.length){
@@ -904,6 +925,33 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         if(n<last)add({lens:'jobs',s:p.sents[n],a:null,sev:2,title:'Moves out of their usual order in paragraph '+(i+1),q:'Would the paragraph read more easily with these two the other way round?',detail:'“'+name+'” (sentence '+(p.sents[n]+1)+') comes before “'+lastName+'”.',tip:'The usual order is the order of the checklist. Depart from it only on purpose.',pb:[JOBPB[p.job]]});
         else{last=n;lastName=name;}}});});
   /* ---------- research measures, all by fixed rules ---------- */
+  /* reference list against the citations in the text: first author's surname and year, author-date style only */
+  let refCheck=null;
+  {const rb=paras.filter(p=>p.kind==='refs');
+    if(rb.length){const lines=[];rb.forEach(p=>raw.slice(p.s,p.e).split('\n').forEach(l=>{if(l.trim())lines.push(l.trim());}));
+      const START=/^(?:\[\d+\]\s*|\d+\.\s+|[-*•]\s+)?(\p{Lu}[\p{L}'’-]+(?:\s\p{Lu}[\p{L}'’-]+)?)(?=,|\s+\p{Lu}\.|\s+(?:et al|and|&)\b|\s+\()/u,YR=/\b((?:19|20)\d\d)[a-z]?\b/,ents=[];
+      lines.forEach(l=>{const m=l.match(START),last=ents[ents.length-1];if(m&&(!last||last.text.match(YR)))ents.push({name:m[1],text:l});else if(last)last.text+=' '+l;else ents.push({name:'',text:l});});
+      ents.forEach(e=>{const y=e.text.match(/\(((?:19|20)\d\d)[a-z]?\)/)||e.text.match(YR);e.year=y?y[1]:null;e.key=e.name.toLowerCase();e.cited=false;});
+      const SKIP=S('see cf also for in table tables figure figures fig appendix study wave model panel section chapter eq equation january february march april may june july august september october november december and the as but if when while since although though because however thus'),
+        cites=new Map(),same=(a,b)=>a===b||a.split(' ').pop()===b||b.split(' ').pop()===a;
+      const note=(name,year,st,a,b)=>{const k=name.toLowerCase()+'|'+year;if(!cites.has(k))cites.set(k,{name,year,key:name.toLowerCase(),s:st.i,a,b});};
+      sents.forEach(st=>{const text=st.text;let m;
+        const P=/\(([^()]*\b(?:19|20)\d\d[a-z]?\b[^()]*)\)/g;
+        while((m=P.exec(text))){let off=m.index+1;m[1].split(';').forEach(part=>{const nm=[...part.matchAll(/\p{Lu}[\p{L}'’-]+/gu)].map(x=>x[0]).find(w=>!SKIP.has(w.toLowerCase())),ys=part.match(/\b(?:19|20)\d\d\b/g);
+          if(nm&&ys)ys.forEach(y=>note(nm,y,st,off+part.search(/\S/),off+part.replace(/\s+$/,'').length));off+=part.length+1;});}
+        const Nr=/(\p{Lu}[\p{L}'’-]+)(?:\s+(?:and|&)\s+\p{Lu}[\p{L}'’-]+|,?\s+et al\.?)?(?:[’']s)?\s+\(((?:19|20)\d\d)[a-z]?((?:[,;]\s*(?:19|20)\d\d[a-z]?)*)(?:,[^()]*)?\)/gu;
+        while((m=Nr.exec(text))){if(SKIP.has(m[1].toLowerCase()))continue;[m[2]].concat((m[3].match(/(?:19|20)\d\d/g)||[])).forEach(y=>note(m[1],y,st,m.index,m.index+m[0].length));}});
+      let missing=0;
+      cites.forEach(c=>{const hit=ents.filter(e=>e.key&&same(e.key,c.key));const ok=hit.find(e=>e.year===c.year);if(ok){hit.forEach(e=>{if(e.year===c.year)e.cited=true;});return;}
+        missing++;hit.forEach(e=>{e.near=true;});if(missing>15)return;const st=sents[c.s],others=hit.map(e=>e.year).filter(Boolean);
+        const id=add({lens:'checks',s:c.s,a:c.a,b:c.b,sev:2,title:(others.length?'The year differs from the reference list: ':'Not in the reference list: ')+c.name+' '+c.year,q:others.length?'Which year is right?':'Is this source in your reference list?',
+          detail:'The text cites “'+c.name+' '+c.year+'”. '+(others.length?'The reference list has '+c.name+' with '+[...new Set(others)].join(' and ')+'.':'No entry in the reference list begins with that name and carries that year.')+' Only the first author’s surname and the year are compared.',
+          tip:others.length?'Correct the year in the text or in the list so that the two agree.':'Add the entry to the list, or correct the name or the year so that the two agree.'});
+        (st.marks.checks||(st.marks.checks=[])).push({a:c.a,b:c.b,cls:'hl hb-olive',f:id});});
+      const un=cites.size?ents.filter(e=>e.key&&!e.cited&&!e.near):[];
+      if(un.length&&sents.length){const last=sents[sents.length-1];add({lens:'checks',para:true,s:last.i,a:null,sev:2,title:un.length+(un.length===1?' entry':' entries')+' in the reference list '+(un.length===1?'is':'are')+' never cited',q:'Should each of these be cited in the text, or removed from the list?',
+        detail:'No citation in the text matches: '+un.slice(0,10).map(e=>e.name+(e.year?' '+e.year:'')).join('; ')+(un.length>10?'; and '+(un.length-10)+' more':'')+'. Only author-and-year citations are read, so a source cited another way will show here.',tip:'Cite the source where you use it, or take the entry out of the list.'});}
+      refCheck={entries:ents.filter(e=>e.key).length,cited:cites.size,missing,uncited:un.length,checked:cites.size>0};}}
   const research=(()=>{
     const body=paras.filter(p=>p.ord!=null),R={},n=sents.length,r1=v=>Math.round(v*10)/10;
     const sset=sents.map(st=>new Set(st.cw.map(c=>c.k))),wOf=new Map(),freq=new Map();
@@ -1119,6 +1167,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       body.forEach(p=>{let c=0,w=0;p.sents.forEach(i=>{c+=sents[i].cw.length;w+=sents[i].nW;});p.ld=w?c/w:0;});
       const v=ser.ld.filter(x=>x!=null).sort((a,b)=>a-b);let mi=-1,mx=-1;ser.ld.forEach((x,i)=>{if(x!=null&&x>mx){mx=x;mi=i;}});
       R.ld={all:nWd?100*cwT/nWd:0,median:v.length?v[Math.floor(v.length/2)]:null,min:v.length?v[0]:null,max:mx<0?null:mx,maxI:mi};R.series=ser;}
+    R.refs=refCheck;R.blocks={};paras.forEach(p=>{if(p.head&&p.kind&&p.kind!=='heading')R.blocks[p.kind]=(R.blocks[p.kind]||0)+1;});
     R.point={named:sents.filter(s=>s.shell).length,bare:findings.filter(f=>/ what\?$/.test(f.title)).length};
     return R;})();
   findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title)){const dm=f.title.split(' ')[0],plural=/^(these|those)$/i.test(dm),ns=[];

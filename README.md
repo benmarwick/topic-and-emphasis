@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.9.3) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.10.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.9.3},
+  version = {0.10.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -152,6 +152,16 @@ The Overview carries a **Research profile**: 23 counts, grouped under Structure,
 None of these raises a note except GRIM, which asks a question. The word norms keep their authors' non-commercial licences; see [`data/README.md`](data/README.md). The Academic Formulas List is not included, because it carries no open licence. References with no link above are books, or articles whose DOI could not be confirmed; their full details are in the page's reference list.
 
 `tests/readability/` holds five fixed passages, this page's figures for them, and two scripts (Python with textstat, R with quanteda.textstats; [Benoit et al. 2018](https://doi.org/10.21105/joss.00774)) that record what those calculators give for the same passages, because readability calculators are known to disagree.
+
+### Added in 0.10.0: files, document structure, stages and a portfolio
+
+- **Open a file.** "Open a file", or drag a file onto the page: Word (.docx), Markdown, Quarto (.qmd), R Markdown, LaTeX and plain text. A .docx file is unpacked in the browser by about forty lines of code in the page, so there is no upload and no added library; headings are kept, and footnotes, comments and tracked deletions are left out.
+- **Parts that are not prose are set aside.** The settings block of a Quarto file, code blocks, displayed equations, layout markup, block quotations and the reference list stay in the text, greyed and labelled, and no lens reads them. Inline code, inline maths, web addresses and LaTeX references are not counted as words. Nothing is removed, so the text you copy back out is the text you put in.
+- **Reference list check** (Mechanical checks). The list under a References or Bibliography heading is compared with the author-and-year citations in the text: cited but not listed, a year that differs, and listed but never cited.
+- **Three stages of revising.** Buttons above the lens list narrow the page to Argument, Flow or Polish, hiding the other lenses and their notes.
+- **Revision portfolio** (Before & after). The receipt, the research profile at the start and now, every rewritten sentence with its kind of change, the notes weighed and kept with the reasons given, and a written reflection, copied as Markdown or JSON.
+- **Stress position.** A short bracketed aside at the end of a sentence is now set aside like a citation, and a few more weak endings are recognised ("in part", "to some degree", "on the whole").
+- 0.9.2 and 0.9.3: better main-verb and passive rules with a probe test, and "this + noun" counted as pointing back.
 
 ### Added in 0.9.0: the Load map, lexical density, and sparklines
 

@@ -1,6 +1,6 @@
 # How the counts track judged reading ease
 
-Produced by `node tests/validation/clear.js` on the 4724 passages of the CLEAR corpus (Crossley et al. 2023, <https://doi.org/10.3758/s13428-022-01802-x>). Each passage has an ease score built from teachers' judgements. The figure is the Pearson correlation between a count and that score: a negative value means the count rises as texts get harder.
+Produced by `node tests/validation/clear.js` on the 4721 passages of the CLEAR corpus (Crossley et al. 2023, <https://doi.org/10.3758/s13428-022-01802-x>). Each passage has an ease score built from teachers' judgements. The figure is the Pearson correlation between a count and that score: a negative value means the count rises as texts get harder.
 
 The passages are reading texts for school pupils, not research writing, so read the table as a rough guide to which counts track difficulty at all.
 
