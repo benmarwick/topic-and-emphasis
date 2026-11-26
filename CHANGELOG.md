@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.35.0 (2026-11-26)
+
+- Topic grid: "Paragraph ladder". One line for each paragraph on one scale, the first sentence marked, a gap at each sentence break, a dot for each content word shared with the paragraph before (blue when it is in the first sentence), a ring where nothing carries over, and lists of the paragraphs whose join comes late or not at all. A cold start under a new heading is counted apart.
+- Old → new: the Link ladder is in a card, like the boxes above and below it.
+- Simple view: the Guide and Practise buttons are shown, and both open without leaving simple view. The Guide lists the Overview and the eight lenses. The heading reads "Three steps to improve your writing, take one at a time".
+- Simple view: when a rewrite clears a note, the words that were cut fly off the page (canvas-confetti 1.9.4, carried in the page; a tick when no word was cut). One burst at most every three and a half seconds, none under reduced motion, and a switch in the steps box turns it off. Marking a note as checked does not set it off.
+- Workbench: "The one note on this sentence is resolved" where it said "All 1 note ... are".
+
 ## 0.34.0 (2026-11-26)
 
 - Simple view: a switch in the top row, kept in the browser, and opened by a link ending in `#simple`. Eight lenses (Claim tracer, Reverse outline, Topic position, Stress position, Subject → verb, Action in verbs, Clutter, Length & rhythm) in three steps. Every other lens, the research panels, the pictures, the fingerprints, the optional data and the Guide and Practise buttons are hidden. Notes are listed three at a time, in step order, with the chosen goal's step first. A note carries an invented before-and-after example where one fits its kind of problem. "Try the example" loads a paragraph from a school essay. The tutorial sets simple view aside while it runs. Opening a lens that simple view hides turns simple view off. The rule engine is unchanged and does not know about the view.

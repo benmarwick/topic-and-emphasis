@@ -46,7 +46,10 @@ def fragment():
             valid = json.dumps(json.load(f), ensure_ascii=False, separators=(',', ':'))
     vendor = ('\n<script>\n/*! Rough Notation 0.5.1 with the parts of Rough.js 4.6.6 it uses, (c) Preet Shihn, MIT licence, '
               'github.com/rough-stuff/rough-notation. Bundled and minified; see lib/README.md. */\n' +
-              read(os.path.join('vendor', 'rough-notation.min.js')).strip() + '\n</script>')
+              read(os.path.join('vendor', 'rough-notation.min.js')).strip() +
+              '\n/*! canvas-confetti 1.9.4, (c) Kiril Vatev, ISC licence, github.com/catdad/canvas-confetti. '
+              'Bundled and minified; see lib/README.md. */\n' +
+              read(os.path.join('vendor', 'confetti.min.js')).strip() + '\n</script>')
     return (head + body + vendor + '\n<script>\n/*ENGINE-START*/' + lists + engine +
             '/*ENGINE-END*/\nconst VALID=' + valid + ';\nconst APP=' + app_meta() + ';\nconst GSHOTS=' + guide_shots() + ';\n' + ui + '</script>\n')
 

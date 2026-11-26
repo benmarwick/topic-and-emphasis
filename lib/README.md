@@ -10,4 +10,5 @@ One more library is carried inside `index.html` itself, from `src/vendor/`:
 
 | File | What it is | Version | Licence |
 |---|---|---|---|
+| `src/vendor/confetti.min.js` | [canvas-confetti](https://github.com/catdad/canvas-confetti) by Kiril Vatev (esbuild, minified from `src/confetti.js`). In simple view, sends the words a rewrite cut flying when it clears a note. | 1.9.4 | ISC |
 | `src/vendor/rough-notation.min.js` | [Rough Notation](https://github.com/rough-stuff/rough-notation) by Preet Shihn, bundled with the parts of [Rough.js](https://github.com/rough-stuff/rough) it uses (esbuild, minified). Draws the hand-drawn marks on the card beside the introduction. | 0.5.1, with Rough.js 4.6.6 | MIT |

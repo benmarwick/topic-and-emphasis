@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.34.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.35.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.34.0},
+  version = {0.35.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -157,6 +157,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Paragraph ladder, and flying words in simple view** (0.35.0). *Paragraph ladder* (Topic grid) draws what each paragraph carries over from the one before: one line a paragraph, to length on one scale, with its first sentence marked, a dot for each content word the paragraph before also used, and a ring where nothing carries over. It pictures the paragraph-overlap count, the one overlap measure that went with better-rated essays ([Crossley, Kyle & McNamara 2016](https://doi.org/10.3758/s13428-015-0651-7)). The Link ladder in Old → new now sits in a card like the boxes round it. In *Simple view*, the Guide and Practise buttons are back (the Guide covers the eight lenses), and when a rewrite clears a note the words that were cut fly off the page ([canvas-confetti](https://github.com/catdad/canvas-confetti)); this can be switched off and is skipped under reduced motion.
 
 - **Simple view, citations that are not words, a second reading, and more of Toulmin** (0.34.0). *Simple view* is for writers who are new to revising: eight lenses in three steps (is my point clear, does each sentence lead to the next, is each sentence easy to read), three notes at a time, an invented before-and-after example on the notes it fits, a goal for the sitting, and a school-essay example. It hides and changes no rule: the same text gets the same notes (Sommers 1980; [Kellogg 2008](https://doi.org/10.17239/jowr-2008.01.01.1); [Shute 2008](https://doi.org/10.3102/0034654307313795)). *Citations*: an author-and-year citation in parentheses, a year after a name, and a numbered citation in square brackets are now each one token that is not a word, so names and years no longer count towards sentence length or stand between a subject and its verb. *A second reading* (Subject → verb) lists the sentences where a second rule-based parser, [compromise](https://github.com/spencermountain/compromise), disagrees with the page's rules about the main verb, or finds a verb where the rules found none. *Toulmin layout*: with the meaning model on, candidates are ordered by closeness to the claim and a part written in your own words shows the nearest sentence of the draft; each rebuttal can be tied to the sentence that answers it; the layout is drawn as a diagram and can be copied as text. The card beside the introduction is marked by hand-drawn strokes ([Rough Notation](https://github.com/rough-stuff/rough-notation)).
 
@@ -335,4 +337,4 @@ The application includes the **New General Service List** and the **New Academic
 
 The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The **Academic Keyword List** (Paquot 2010) is included under **CC BY 4.0**. The Dale-Chall list, the excess-vocabulary list, the science-jargon list and the four lists from github.com/words (hedges, weasels, fillers, buzzwords) are MIT-licensed, and the syllable counts come from the CMU Pronouncing Dictionary (BSD 2-clause). The phrase bank in `data/phrases/` is under the **GNU GPL 3 or later**; it is kept apart from the application and loaded only on request. `data/lists/awl.json` and `data/lists/afl.json` hold the words and figures of the Academic Word List (Coxhead 2000) and the Academic Formulas List (Simpson-Vlach & Ellis 2010) and nothing else from those publications; no permission was sought for either, and `data/README.md` sets out the position taken and how to remove them. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
 
-The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT). The `lib/` folder holds **compromise** (MIT), and `src/vendor/` holds **Rough Notation** bundled with the parts of **Rough.js** it uses (MIT); [`lib/README.md`](lib/README.md) gives the versions.
+The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT). The `lib/` folder holds **compromise** (MIT), and `src/vendor/` holds **Rough Notation** bundled with the parts of **Rough.js** it uses (MIT) and **canvas-confetti** (ISC); [`lib/README.md`](lib/README.md) gives the versions.
