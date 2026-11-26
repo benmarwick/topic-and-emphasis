@@ -845,24 +845,36 @@ function loadData(A){const R=A.research,S=A.sents,n=S.length,ser=Object.assign({
     const med=qtl(ok,.5),p80=qtl(ok,.8);stat[k]={med,max:ok[ok.length-1],min:ok[0],p75:qtl(ok,.75)};hot[k]=v.map((q,i)=>q!=null&&q>0&&q>=p80&&q>med&&!(k==='fresh'&&i===0));});
   const tog=S.map((st,i)=>rows.reduce((a,[k])=>a+(hot[k][i]?1:0),0));
   return{rows,ser,x,U:u||1,hot,stat,tog,n};}
-function loadRead(L,i){const A=state.A,st=A.sents[i],f=(k,v)=>v==null?null:(k==='len'||k==='pre'||k==='nom'?Math.round(v):k==='aoa'?v.toFixed(1):Math.round(v)+'%');
-  const tx=st.text.length>96?st.text.slice(0,94).replace(/\s+\S*$/,'')+'…':st.text;
-  return '<b>Sentence '+(i+1)+'</b> <i>'+esc(tx)+'</i><br>'+L.rows.map(([k,nm,,unit])=>{const v=f(k,L.ser[k][i]);return v==null?'':'<span class="'+(L.hot[k][i]?'lm-hot':'')+'">'+v+' '+unit+'</span>';}).filter(Boolean).join(' · ')+
-    ' <button type="button" class="btn sm" data-mgo="'+i+'"'+tipA('Open this sentence in the rewrite box.')+'>Open sentence '+(i+1)+'</button>';}
+/* the sentence behind a bar, with the words that make the bar marked */
+function loadMarks(st,k){const T=st.T,one=i=>[T[i].s,T[i].e];
+  if(k==='pre'){if(st.vTok==null||st.vTok<0)return[];let a=-1,b=-1;for(let i=0;i<st.vTok;i++)if(T[i].w){if(a<0)a=i;b=i;}return a<0?[]:[[T[a].s,T[b].e]];}
+  if(k==='ld')return st.cw.map(c=>one(c.i));
+  if(k==='fresh')return st.cw.filter(c=>!c.old).map(c=>one(c.i));
+  if(k==='long')return(st.longI||[]).map(one);
+  if(k==='nom')return(st.nomI||[]).map(one);
+  if(k==='aoa'&&NORMS.st==='ready'){const M=NORMS.N.aoa,age=l=>{l=l.replace(/[’']s$/,'').replace(/[’']/g,'');let v=M.get(l);if(v==null)for(const c of E.lemmas(l)){v=M.get(c);if(v!=null)break;}return v;};
+    return st.cw.filter(c=>{const v=age(T[c.i].l);return v!=null&&v>=10;}).map(c=>one(c.i));}
+  return[];}
+function loadSent(st,k){const R=loadMarks(st,k).sort((x,y)=>x[0]-y[0]),t=st.text;let h='',at=0;R.forEach(([a,b])=>{if(a<at)return;h+=esc(t.slice(at,a))+'<mark class="lm-m">'+esc(t.slice(a,b))+'</mark>';at=b;});return h+esc(t.slice(at));}
+const LOADSAY={len:'the whole sentence',pre:'the words the reader holds before reaching the main verb',ld:'the words that carry content',long:'the words longer than six letters',fresh:'the content words used here for the first time',nom:'the nouns made from verbs',aoa:'the words learned at age ten or later',tog:''};
+function loadRead(L,i,k){const A=state.A,st=A.sents[i],f=(q,v)=>v==null?null:(q==='len'||q==='pre'||q==='nom'?Math.round(v):q==='aoa'?v.toFixed(1):Math.round(v)+'%');k=k&&(k==='tog'||L.ser[k])?k:'len';
+  const hotIn=L.rows.filter(([q])=>L.hot[q][i]).map(r=>r[1].toLowerCase());
+  return '<b>Sentence '+(i+1)+'</b>'+(k==='tog'?' · in the tallest fifth for '+(hotIn.length?hotIn.join(', '):'no row'):k==='len'?'':' · marked: '+LOADSAY[k])+'<span class="lm-sent">'+loadSent(st,k)+'</span>'+
+    L.rows.map(([q,nm,,unit])=>{const v=f(q,L.ser[q][i]);return v==null?'':'<span class="'+(L.hot[q][i]?'lm-hot':'')+(q===k?' lm-on':'')+'">'+v+' '+unit+'</span>';}).filter(Boolean).join(' · ');}
 function loadHTML(A){if(!A.research||A.sents.length<3)return '<div class="panel"><span class="cap">Load map</span><p>The load map needs at least three sentences.</p></div>';
   const L=state.loadL=loadData(A),S=A.sents,r1=v=>Math.round(v*10)/10,H=20;
   const strip=(k)=>{const v=L.ser[k],st=L.stat[k];if(!st)return'';const mx=st.max||1;
     return '<svg class="lm-strip" viewBox="0 0 '+L.U.toFixed(2)+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'+v.map((q,i)=>q==null?'<rect class="lm-na" x="'+L.x[i].toFixed(2)+'" y="'+(H-1)+'" width=".82" height="1"/>':'<rect class="'+(L.hot[k][i]?'lm-b hot':'lm-b')+'" x="'+L.x[i].toFixed(2)+'" y="'+(H-Math.max(.8,(H-1)*q/mx)).toFixed(2)+'" width=".82" height="'+Math.max(.8,(H-1)*q/mx).toFixed(2)+'"/>').join('')+'</svg>';};
   const fmt=(k,v)=>k==='aoa'?v.toFixed(1):k==='len'||k==='pre'||k==='nom'?String(Math.round(v)):Math.round(v)+'%';
-  const rowsH=L.rows.map(([k,nm,what])=>L.stat[k]?'<div class="lm-row"><span class="lm-l"'+tipA(nm+': '+what+'. The tallest fifth of the sentences in this row is coloured.')+'>'+nm+'</span><span class="lm-s">'+strip(k)+'</span><span class="lm-v"'+tipA('The middle sentence, and the highest.')+'>'+fmt(k,L.stat[k].med)+' · <b>'+fmt(k,L.stat[k].max)+'</b></span></div>':'').join('');
+  const rowsH=L.rows.map(([k,nm,what])=>L.stat[k]?'<div class="lm-row" data-row="'+k+'"><span class="lm-l"'+tipA(nm+': '+what+'. The tallest fifth of the sentences in this row is coloured.')+'>'+nm+'</span><span class="lm-s">'+strip(k)+'</span><span class="lm-v"'+tipA('The middle sentence, and the highest.')+'>'+fmt(k,L.stat[k].med)+' · <b>'+fmt(k,L.stat[k].max)+'</b></span></div>':'').join('');
   const mt=Math.max(1,...L.tog),tog='<svg class="lm-strip" viewBox="0 0 '+L.U.toFixed(2)+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'+L.tog.map((q,i)=>q?'<rect class="'+(q>=3?'lm-b hot':'lm-b')+'" x="'+L.x[i].toFixed(2)+'" y="'+(H-(H-1)*q/mt).toFixed(2)+'" width=".82" height="'+((H-1)*q/mt).toFixed(2)+'"/>':'').join('')+'</svg>';
   const heavy=L.tog.map((q,i)=>({i,q})).filter(o=>o.q>=3).sort((a,b)=>b.q-a.q||a.i-b.i);
   let h='<div class="panel load"><span class="cap"'+tipA('Small multiples: the same picture repeated for each measure, on one shared axis, so the eye can compare down as well as along (Tufte 1983).')+'>Where the load falls <span class="rtools">'+['tufte83','tufte06'].map(k=>'<a class="tool" href="#ref-'+k+'" data-ref="'+k+'">'+(k==='tufte83'?'Tufte 1983':'Tufte 2006')+'</a>').join(' ')+'</span></span>'+
     '<p class="lm-key">Each column is one sentence, in order, with a gap between paragraphs. Each row is one kind of load, and a bar is taller the more of it the sentence carries. The tallest fifth in each row is coloured. Read down a column: a sentence that is coloured in several rows is carrying several loads at once. Density and long words are left blank for sentences under five words, where a percentage means little.</p>'+
     '<div class="lm" id="loadMap" role="group" aria-label="Load map: '+L.n+' sentences by '+L.rows.length+' measures">'+
     '<div class="lm-row lm-head"><span class="lm-l"></span><span class="lm-s lm-ax"><span>sentence 1</span><span>'+L.n+'</span></span><span class="lm-v">middle · <b>highest</b></span></div>'+rowsH+
-    '<div class="lm-row lm-sum"><span class="lm-l"'+tipA('How many of the rows above have this sentence in their tallest fifth. Three or more is coloured.')+'>Together</span><span class="lm-s">'+tog+'</span><span class="lm-v">'+heavy.length+' at 3+</span></div><i class="lm-cur" id="loadCur" hidden></i></div>'+
-    '<p class="lm-read" id="loadRead" aria-live="polite">'+(state.loadPin!=null&&state.loadPin<L.n?loadRead(L,state.loadPin):'Point at a column, or tap one, to read that sentence.')+'</p>'+
+    '<div class="lm-row lm-sum" data-row="tog"><span class="lm-l"'+tipA('How many of the rows above have this sentence in their tallest fifth. Three or more is coloured.')+'>Together</span><span class="lm-s">'+tog+'</span><span class="lm-v">'+heavy.length+' at 3+</span></div><i class="lm-cur" id="loadCur" hidden></i><div class="lm-tip" id="loadTip" hidden></div></div>'+
+    '<p class="lm-read" id="loadRead" aria-live="polite">'+(state.loadPin!=null&&state.loadPin<L.n?loadRead(L,state.loadPin,state.loadRow):'Point at a bar, or tap one, to read its sentence with the words behind the bar marked.')+'</p>'+
     (heavy.length?'<p><b>Carrying three or more loads at once.</b></p><div class="chips">'+heavy.slice(0,12).map(o=>'<button type="button" class="chip" data-mgo="'+o.i+'"'+tipA('Sentence '+(o.i+1)+' is in the tallest fifth for: '+L.rows.filter(([k])=>L.hot[k][o.i]).map(r=>r[1].toLowerCase()).join(', ')+'. Tap to open it.')+'>sentence '+(o.i+1)+' <span class="hint">'+o.q+'</span></button>').join('')+'</div>':'<p>No sentence is in the tallest fifth of three rows at once.</p>')+'</div>';
   /* structure against vocabulary: a scatter with a range-frame, and a rug on each axis */
   const yk=state.loadY&&L.ser[state.loadY]?state.loadY:'ld',YN={ld:['Lexical density','% of words that carry content'],long:['Long words','% of words longer than six letters'],aoa:['Word age','mean age at which the content words are learned']};
@@ -882,7 +894,7 @@ function loadHTML(A){if(!A.research||A.sents.length<3)return '<div class="panel"
       [[x0,'start'],[xm,'middle'],[x1,'end']].map(([v,a])=>'<text class="sc-t" x="'+X(v).toFixed(1)+'" y="'+(Hh-mb+18)+'" text-anchor="'+a+'">'+Math.round(v)+'</text>').join('')+
       [y0,ym,y1].map(v=>'<text class="sc-t" x="'+(ml-10)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end">'+fy(v)+'</text>').join('')+
       '<text class="sc-n" x="'+X(x1).toFixed(1)+'" y="'+(Hh-2)+'" text-anchor="end">words in the sentence</text><text class="sc-n" x="'+(ml-7)+'" y="10">'+YN[yk][1]+'</text>'+
-      pts.map(p=>'<circle class="sc-p'+(farS.has(p.i)?' hot':'')+'" cx="'+X(p.x).toFixed(1)+'" cy="'+Y(p.y).toFixed(1)+'" r="'+(farS.has(p.i)?3.1:2.5)+'" data-mgo="'+p.i+'" tabindex="0" role="button" aria-label="Sentence '+(p.i+1)+'"'+tipA('Sentence '+(p.i+1)+': '+Math.round(p.x)+' words, '+YN[yk][0].toLowerCase()+' '+fy(p.y)+(yk==='aoa'?'':'%')+'. Tap to open it.')+'/>').join('')+
+      pts.map(p=>'<circle class="sc-p'+(farS.has(p.i)?' hot':'')+'" cx="'+X(p.x).toFixed(1)+'" cy="'+Y(p.y).toFixed(1)+'" r="'+(farS.has(p.i)?3.1:2.5)+'" data-mgo="'+p.i+'" tabindex="0" role="button" aria-label="Sentence '+(p.i+1)+'"'+tipA('Sentence '+(p.i+1)+' · '+Math.round(p.x)+' words · '+YN[yk][0].toLowerCase()+' '+fy(p.y)+(yk==='aoa'?'':'%')+'\n“'+S[p.i].text.trim()+'”\nTap to open it.')+'/>').join('')+
       pts.filter(p=>lab.has(p.i)).map(p=>'<text class="sc-l" x="'+(X(p.x)+5).toFixed(1)+'" y="'+(Y(p.y)-4).toFixed(1)+'">'+(p.i+1)+'</text>').join('')+'</svg>'+
       '<p>'+(far.length?'<b>'+far.length+'</b> '+(far.length===1?'sentence is':'sentences are')+' in the top quarter on both scales, and '+(far.length===1?'is':'are')+' numbered in the picture.':'No sentence is in the top quarter on both scales.')+' The two-way view follows the argument that a text can be complex in its structure or in its vocabulary, and that the two need not go together ('+rf('jenset26','Jenset 2026')+'). On 4,724 school passages, sentence length and word length were close to unrelated.</p></div>';}
   /* each paragraph on one line */
@@ -892,13 +904,16 @@ function loadHTML(A){if(!A.research||A.sents.length<3)return '<div class="panel"
       return '<tr><td><button type="button" class="linkish" data-mgo="'+ss[0]+'"'+tipA('Open the first sentence of paragraph '+(p.ord+1)+'.')+'>'+(p.ord+1)+'</button></td><td class="lm-op">'+esc(op)+'…</td><td class="n">'+ss.length+'</td><td>'+(spark(ln,{w:64,what:'words in each sentence of this paragraph'})||'')+' <span class="n">'+Math.round(qtl(so,.5))+'</span></td><td>'+(spark(pr,{w:64,what:'words before the main verb, in each sentence of this paragraph'})||'')+' <span class="n">'+(po.length?Math.max(...po):'–')+'</span></td><td class="n">'+Math.round(100*p.ld)+'%</td></tr>';}).join('')+
     '</tbody></table></div><p class="hint">Length shows the middle sentence of the paragraph, in words. Wait for the verb shows the longest wait.</p></div>';
   return h;}
-function loadBind(){const box=$('#loadMap'),L=state.loadL;if(!box||!L)return;const cur=$('#loadCur'),rd=$('#loadRead'),idle='Point at a column, or tap one, to read that sentence.';
+function loadBind(){const box=$('#loadMap'),L=state.loadL;if(!box||!L)return;const cur=$('#loadCur'),rd=$('#loadRead'),tip=$('#loadTip'),idle='Point at a bar, or tap one, to read its sentence with the words behind the bar marked.';
+  const rowOf=e=>{const r=e.target.closest?e.target.closest('.lm-row[data-row]'):null;return r?r.dataset.row:null;},open=i=>' <button type="button" class="btn sm" data-mgo="'+i+'"'+tipA('Open this sentence in the rewrite box.')+'>Open sentence '+(i+1)+'</button>';
+  const float=(e,i,k)=>{tip.innerHTML=loadRead(L,i,k);tip.hidden=false;const b=box.getBoundingClientRect(),w=Math.min(420,b.width-8);tip.style.width=w+'px';let x=e.clientX-b.left+14;if(x+w>b.width)x=Math.max(0,e.clientX-b.left-w-14);tip.style.left=x+'px';tip.style.top=(b.height+6)+'px';};
   const at=e=>{const s=box.querySelector('.lm-row:not(.lm-head) .lm-s');if(!s)return null;const r=s.getBoundingClientRect(),u=(e.clientX-r.left)/r.width*L.U;if(u<-0.5||u>L.U+0.5)return null;let best=0,bd=1e9;for(let i=0;i<L.x.length;i++){const d=Math.abs(u-(L.x[i]+0.41));if(d<bd){bd=d;best=i;}}return best;};
   const place=i=>{const s=box.querySelector('.lm-row:not(.lm-head) .lm-s'),r=s.getBoundingClientRect(),b=box.getBoundingClientRect();cur.style.left=(r.left-b.left+(L.x[i]+0.41)/L.U*r.width)+'px';cur.hidden=false;};
   if(state.loadPin!=null&&state.loadPin<L.n)place(state.loadPin);
-  box.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||state.loadPin!=null)return;const i=at(e);if(i==null)return;place(i);rd.innerHTML=loadRead(L,i);});
-  box.addEventListener('pointerleave',()=>{if(state.loadPin==null){cur.hidden=true;rd.textContent=idle;}});
-  box.addEventListener('click',e=>{const i=at(e);if(i==null)return;if(state.loadPin===i){state.loadPin=null;cur.hidden=true;rd.textContent=idle;return;}state.loadPin=i;place(i);rd.innerHTML=loadRead(L,i);});}
+  box.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const i=at(e),k=rowOf(e);if(i==null||!k){tip.hidden=true;return;}float(e,i,k);if(state.loadPin==null)place(i);});
+  box.addEventListener('pointerleave',()=>{tip.hidden=true;if(state.loadPin==null)cur.hidden=true;});
+  box.addEventListener('click',e=>{const i=at(e),k=rowOf(e);if(i==null||!k)return;if(state.loadPin===i&&state.loadRow===k){state.loadPin=null;cur.hidden=true;rd.textContent=idle;return;}state.loadPin=i;state.loadRow=k;place(i);rd.innerHTML=loadRead(L,i,k)+open(i);});
+  if(state.loadPin!=null&&state.loadPin<L.n)rd.innerHTML=loadRead(L,state.loadPin,state.loadRow)+open(state.loadPin);}
 function resRows2(A){const R=A.research,rows=[],P=R.prog,C=R.cover,X=R.stance,H=R.hype,Z=R.excess,D=R.ld;
   if(D&&D.median!=null)rows.push({k:'dense',n:'Lexical density',v:Math.round(D.all)+'%',r:'of words carry content · sentences run from '+Math.round(D.min)+'% to '+Math.round(D.max)+'%'+(D.maxI>=0?' · densest: sentence '+(D.maxI+1):''),
    h:'How tightly the draft packs content words together. It is not a measure of difficulty: on school reading passages it had no relation to how easy teachers judged a text to be. Use it to find the sentences that pack the most, and ask whether each could be two.',t:['johansson']});

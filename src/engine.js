@@ -1056,7 +1056,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       R.grim={tested:gt,flagged:gf};}
     /* sentence-by-sentence series for the load map, and lexical density: the share of words that carry content (Ure 1971) */
     {const ser={len:[],pre:[],ld:[],long:[],fresh:[],nom:[],conn:[],pas:[]};let cwT=0;
-      sents.forEach(st=>{let lg=0,nm=0;st.T.forEach(tk=>{if(!tk.w||tk.cite)return;if((tk.t.match(/\p{L}/gu)||[]).length>6)lg++;if(isNom(tk.l))nm++;});
+      sents.forEach(st=>{let lg=0,nm=0;st.longI=[];st.nomI=[];st.T.forEach((tk,ti)=>{if(!tk.w||tk.cite)return;if((tk.t.match(/\p{L}/gu)||[]).length>6){lg++;st.longI.push(ti);}if(isNom(tk.l)){nm++;st.nomI.push(ti);}});
         const nw=st.nW||1,fr=st.cw.filter(c=>!c.old).length;st.ld=st.cw.length/nw;cwT+=st.cw.length;
         ser.len.push(st.nW);ser.pre.push(st.preV==null?null:st.preV);ser.ld.push(st.nW>=5?100*st.ld:null);ser.long.push(st.nW>=5?100*lg/nw:null);ser.fresh.push(st.cw.length?100*fr/st.cw.length:null);ser.nom.push(nm);ser.conn.push(st.conn.length);ser.pas.push((st.passives||[]).length);});
       body.forEach(p=>{let c=0,w=0;p.sents.forEach(i=>{c+=sents[i].cw.length;w+=sents[i].nW;});p.ld=w?c/w:0;});

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.1 (2026-11-26)
+
+- Load map: pointing at a bar shows its whole sentence with the words behind that bar marked (the words before the verb, the content words, the long words, the new words, the nouns made from verbs). Tapping a bar pins the same view under the map.
+- Load map: the tooltip on each dot of the scatter gives the whole sentence.
+
 ## 0.9.0 (2026-11-26)
 
 - New lens, Load map: small-multiple strips of six measures by sentence, a structure-and-vocabulary scatter with range-frame axes, and a paragraph table with sparklines.
