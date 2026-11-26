@@ -684,6 +684,26 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
 .mvpair{display:inline-flex;gap:5px;align-items:center;font-size:12.5px;color:var(--ink2)}
 .wbmeter{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;margin:6px 0 0;font:400 12px/1.5 var(--f-mono);color:var(--ink2)}
 .wbmeter b{font-weight:500;color:var(--ink)}
+.top{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.top>*{grid-column:1/-1}
+.top>.brand{grid-column:1}
+.top>.facts{grid-column:2;grid-row:1;margin:6px 0 0;justify-content:flex-end;max-width:27rem}
+@media (max-width:720px){.top{grid-template-columns:minmax(0,1fr)}.top>.facts{grid-column:1;grid-row:1;justify-content:flex-end;max-width:none;margin:0}.top>.brand{grid-row:2}}
+.railq{margin:0 0 10px}
+#lensQ{width:100%;box-sizing:border-box;font:400 13.5px var(--f-ui);color:var(--ink);background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:7px 10px}
+#lensQ:focus,#guideQ:focus{outline:2px solid var(--blue);outline-offset:1px}
+#railNone{margin:0 0 8px}
+@media (max-width:720px){.rail .railq{flex:none;margin:0;width:8.5em}.rail #lensQ{padding:6px 10px;border-radius:999px}.rail #railNone{flex:none;align-self:center;margin:0}}
+.panel.gdoc{gap:14px}
+.gdoc h2{font:500 1.35rem/1.2 var(--f-text);margin:14px 0 2px;color:var(--ink)}
+.gdoc .ggrp{border-top:2px solid var(--ink);padding-top:10px}
+.gdoc .gsec{display:grid;gap:7px;padding:12px 0;border-top:1px solid var(--line)}
+.gdoc .gsec h3{font:600 1.05rem/1.3 var(--f-ui);margin:0;color:var(--ink);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.gdoc .gsec h3 .link{font:400 12.5px var(--f-ui)}
+.gdoc .gsec p{max-width:70ch;font-size:14px}
+.gdoc ul{margin:0;padding-left:1.2em;display:grid;gap:4px;font-size:13px;color:var(--ink2);max-width:74ch}
+.gdoc ul.gmarks{list-style:none;padding-left:0}
+.gdoc ul.grefs a{color:var(--blue);overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -715,6 +735,7 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
     <div class="actions">
       <button class="btn primary" id="btnEdit" type="button" data-tip="Open the whole draft in one box, to paste a new text or make large edits.">Paste your text</button>
       <button class="btn" id="btnSample" type="button" data-tip="Load the built-in example: six invented sentences with four quick things to fix. A harder example is offered once it is loaded.">Try the example</button>
+      <button class="btn" id="btnGuideDoc" type="button" data-k="guide" data-tip="Every lens explained on one page, with its marks, its limits and its sources. Searchable.">Guide</button>
       <button class="btn" id="btnPractice" type="button" data-tip="Six short sentences with fixed answers, and two drills built from whatever draft is loaded.">Practise</button>
       <button class="btn" id="btnClear" type="button" hidden data-tip="Empty the box.">Clear</button>
     </div>
@@ -727,8 +748,10 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
 
   <main class="desk" id="desk">
     <nav class="rail" aria-label="Lenses">
+      <div class="railq"><input type="search" id="lensQ" placeholder="Find a lens" aria-label="Find a lens by typing part of its name" autocomplete="off"></div>
+      <p class="hint" id="railNone" hidden>No lens matches.</p>
       <div class="lensgroup" id="rail0"></div>
-      <h2 data-tip="The lenses built on the principles in Gopen and Swan’s article. Start here. Pick one to see the structure it reads.">Gopen &amp; Swan&rsquo;s principles</h2>
+      <h2 id="railH1" data-tip="The lenses built on the principles in Gopen and Swan’s article. Start here. Pick one to see the structure it reads.">Gopen &amp; Swan&rsquo;s principles</h2>
       <div class="lensgroup" id="rail1"></div>
       <section class="rg" id="g2"><h2 data-tip="Lenses on the argument as a whole: what each paragraph is for, and how strongly each claim is worded. Some ask you for something first: your claim, your evidence, or a label."><button type="button" class="rgh" id="rgh-2" data-rg="2" aria-expanded="true">Is the argument clear?</button></h2><div class="lensgroup" id="rail2"></div></section>
       <section class="rg" id="g3"><h2 data-tip="Lenses on how sentences and paragraphs connect."><button type="button" class="rgh" id="rgh-3" data-rg="3" aria-expanded="true">Does it flow?</button></h2><div class="lensgroup" id="rail3"></div></section>
@@ -1815,11 +1838,12 @@ LENSES.push(
  const K=LENSES.find(l=>l.k==='checks');K.why='Figures and tables cited out of order or not at all, earlier work mentioned with no citation, “significant” with no statistic, a sentence that opens with a numeral, and tense that switches back and forth within a paragraph.';
  const T=LENSES.find(l=>l.k==='terms');T.fix='Tap a term to see it in the text. Select names that mean the same thing, mark them, then keep one. Add your own list of words to keep in view or to avoid.';}
 LENSES.push({k:'mviews',n:'Meaning views',hue:'violet',g:3,src:'',ba:false,why:'Pictures of the whole draft, drawn by the optional meaning model: a thread showing where the subject jumps, a quilt of every sentence against every other, the draft’s topics as a band of colour, a map, a place to try a new order of paragraphs, a search of your own text, and two drills.',fix:'Each view is a way of seeing where the draft holds together and where it does not. Tap any dot, square or bar to open the sentence behind it.',legend:[]});
-const LORD=['overview','sv','topic','stress','flow','action','outline','jobs','tracer','claims','hedge','grid','signals','skeleton','mviews','rhythm','dense','voice','clutter','worn','vocab','terms','acr','people','stats','checks','slips','source','compare','practice'];
+LENSES.push({k:'guide',n:'Guide',hue:'ink',g:0,src:'',ba:false,why:'Every lens on one page: what it reads, what its marks mean, how to revise, what the research says, what the meaning model adds, where its limits are, and its sources in full. Search it, browse it, or open any lens from it.',fix:'',legend:[]});
+const LORD=['overview','guide','sv','topic','stress','flow','action','outline','jobs','tracer','claims','hedge','grid','signals','skeleton','mviews','rhythm','dense','voice','clutter','worn','vocab','terms','acr','people','stats','checks','slips','source','compare','practice'];
 LENSES.sort((a,b)=>LORD.indexOf(a.k)-LORD.indexOf(b.k));
 const LBY=Object.fromEntries(LENSES.map(l=>[l.k,l])),LIDX=Object.fromEntries(LENSES.map((l,i)=>[l.k,i]));
 /* the rail: Gopen & Swan first, then four plain questions, then progress */
-const GRP={overview:0,sv:1,topic:1,stress:1,flow:1,action:1,outline:2,jobs:2,tracer:2,claims:2,hedge:2,grid:3,signals:3,skeleton:3,mviews:3,rhythm:4,dense:4,voice:4,clutter:4,worn:5,vocab:5,terms:5,acr:5,people:5,stats:6,checks:6,slips:6,source:6,compare:7,practice:7};
+const GRP={overview:0,guide:0,sv:1,topic:1,stress:1,flow:1,action:1,outline:2,jobs:2,tracer:2,claims:2,hedge:2,grid:3,signals:3,skeleton:3,mviews:3,rhythm:4,dense:4,voice:4,clutter:4,worn:5,vocab:5,terms:5,acr:5,people:5,stats:6,checks:6,slips:6,source:6,compare:7,practice:7};
 LENSES.forEach(l=>{l.g=GRP[l.k]!=null?GRP[l.k]:l.g;});
 const FOLD=new Set(['clutter','hedge','dense','voice','acr','worn','people','claims','stats','checks','slips','source']);
 const SRC={
@@ -1940,7 +1964,7 @@ const LINK={start:['start','The first sentence of the draft, so there is nothing
  disconnected:['no link','No link: it shares no content word with any of the six sentences before it, and has no pointing word or transition. SWAN calls this disconnected.']};
 const MOVEN={context:'context',gap:'gap',aim:'aim',method:'method',result:'result',interp:'meaning',implication:'implication',limit:'limit'};
 const KINDS=[['','Not sure, or another kind of text'],['abstract','An abstract'],['intro','An introduction'],['paper','A whole paper']];
-const noText=l=>l==='compare'||l==='practice';
+const noText=l=>l==='compare'||l==='practice'||l==='guide';
 function chipLab(st){const l=state.lens,mm=MEAN.M&&MEAN.M.sent[st.i];return l==='grid'&&mm&&mm.only?(st.i+1)+' · meaning only':l==='grid'&&st.link?(st.i+1)+' · '+LINK[st.link.type][0]:l==='signals'&&st.move?(st.i+1)+' · '+MOVEN[st.move]:l==='tracer'&&st.key?(st.i+1)+' · key':st.i+1;}
 function chipTip(st){const l=state.lens;
   if(l==='grid'&&MEAN.M&&MEAN.M.sent[st.i]&&MEAN.M.sent[st.i].only)return 'It repeats no word from what came before, but the meaning model places it close to the sentence before it. The link is in the meaning and not yet on the page. ';
@@ -1971,7 +1995,7 @@ const RGUIDE='<details class="rguide"><summary>How to read this lens, and what t
 const TILETIP={opening:'Opening: the words before the subject.',subject:'Subject: who or what the sentence is grammatically about.',interruption:'Words that stand between the subject and its verb.',verb:'The main verb.',middle:'The middle: between the verb and the close.',close:'Close: the stress position, which readers weight most.'};
 const tipA=s=>s?' data-tip="'+esc(s)+'"':'';
 const markTip=(lens,cls)=>{const ts=cls.split(' '),r=(MTIP[lens]||[]).find(x=>x[0].split(' ').every(t=>ts.includes(t)));return r?r[1]:'';};
-const lensTip=l=>l.why.split(/(?<=\.)\s/)[0]+(l.k==='compare'||l.k==='skeleton'||l.k==='practice'||l.k==='mviews'?'':l.ba===false?' The number counts open notes.':' The number counts open notes; “5→3” means 5 in your starting text and 3 now.');
+const lensTip=l=>l.why.split(/(?<=\.)\s/)[0]+(l.k==='compare'||l.k==='skeleton'||l.k==='practice'||l.k==='mviews'||l.k==='guide'?'':l.ba===false?' The number counts open notes.':' The number counts open notes; “5→3” means 5 in your starting text and 3 now.');
 const srcHTML=k=>(SRC[k]||[]).map(p=>Array.isArray(p)?'<a href="#ref-'+p[0]+'" data-ref="'+p[0]+'" data-tip="Jump to the full reference.">'+esc(p[1])+'</a>':esc(p)).join(' · ');
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -2278,7 +2302,7 @@ const MEANNOTE='<p><b>What this is.</b> A small language model (all-MiniLM-L6-v2
 function meanBox(l){if(!MLENS.includes(l))return'';const A=state.A;if(!A.sents.length)return'';
   const head='<div class="panel res mean"><span class="cap"'+tipA('An optional layer on top of the rules: a small language model that compares sentences by meaning. Off unless you switch it on.')+'>Meaning model <span class="rtools"><span class="tool">optional · AI</span></span></span>';
   const sw=t=>'<div class="tilebar"><button type="button" class="btn sm" data-mean="1" id="meanSw-'+l+'">'+t+'</button></div>';
-  const OFF={grid:'The rules above only see repeated words. Switch the model on to also see which sentences and paragraphs are close in meaning, including the ones that share no word.',outline:'Switch the model on to see which sentence in each paragraph is closest in meaning to the rest, and where the point you stated is carried.',tracer:'The tracer above follows the words of your claim. Switch the model on to see where the draft states the claim in other words, and which paragraphs are furthest from it.',source:'The rule above finds copied strings of words. Switch the model on to also find sentences that restate a source sentence in different words, and the parts of the source your draft says least about.',compare:'Switch the model on to see how far each rewritten sentence has moved in meaning from the one it replaced.',terms:'Switch the model on to see pairs of terms that are close in meaning and may be two names for one thing.',mviews:'These views are drawn from the meaning model, so they need it switched on.'};
+  const OFF=MOFF;const OFF0={grid:'The rules above only see repeated words. Switch the model on to also see which sentences and paragraphs are close in meaning, including the ones that share no word.',outline:'Switch the model on to see which sentence in each paragraph is closest in meaning to the rest, and where the point you stated is carried.',tracer:'The tracer above follows the words of your claim. Switch the model on to see where the draft states the claim in other words, and which paragraphs are furthest from it.',source:'The rule above finds copied strings of words. Switch the model on to also find sentences that restate a source sentence in different words, and the parts of the source your draft says least about.',compare:'Switch the model on to see how far each rewritten sentence has moved in meaning from the one it replaced.',terms:'Switch the model on to see pairs of terms that are close in meaning and may be two names for one thing.',mviews:'These views are drawn from the meaning model, so they need it switched on.'};
   if(MEAN.st==='loading')return head+'<p>Loading the model. The first time, this is a download of about 45 MB; after that the browser keeps it.</p></div>';
   if(MEAN.st==='unavail')return head+'<p>The meaning model is not available in this copy of the page, because the model files are not beside it. It runs in the copy at <a href="https://benmarwick.github.io/topic-and-emphasis/" target="_blank" rel="noopener">benmarwick.github.io/topic-and-emphasis</a>.</p>'+sw('Try again')+'</div>';
   if(MEAN.st==='error')return head+'<p>The model stopped with an error: '+esc(MEAN.err)+'</p>'+sw('Switch it off')+'</div>';
@@ -2415,6 +2439,35 @@ function wbMeter(){const el=$('#wbMeter');if(!el)return;const M=MEAN.M,ss=state.
   const i=ss[0].i,x=M.sent[i],bar=v=>'<span class="mbar"><i style="width:'+Math.round(100*Math.max(0,Math.min(1,v)))+'%"></i></span>';el.hidden=false;
   el.innerHTML='<span class="tool"'+tipA('From the optional meaning model. These two gauges update as you rewrite the sentence.')+'>meaning model</span>'+(x.adj!=null?'<span'+tipA('How close this sentence is in meaning to the one before it: 1 would be identical, 0 unrelated. Repeating a word or an idea from the sentence before raises it.')+'>to the sentence before '+bar(x.adj)+'<b>'+x.adj.toFixed(2)+'</b></span>':'<span>the first sentence of the draft</span>')+(M.cs?'<span'+tipA('How close this sentence is in meaning to the claim you wrote in Claim tracer.')+'>to your claim '+bar(M.cs[i])+'<b>'+M.cs[i].toFixed(2)+'</b></span>':'')+'<span class="hint"'+tipA('The middle value for all pairs of sentences in this draft, for comparison.')+'>typical pair in this draft '+M.med.toFixed(2)+'</span>';}
 SRC.mviews=[['kjell','Kjell, Giorgi & Schwartz'],['sbert','Reimers & Gurevych']];
+
+/* ---------- the guide: every lens on one page, built from the same definitions the lenses use ---------- */
+const MOFF={grid:'The rules above only see repeated words. Switch the model on to also see which sentences and paragraphs are close in meaning, including the ones that share no word.',outline:'Switch the model on to see which sentence in each paragraph is closest in meaning to the rest, and where the point you stated is carried.',tracer:'The tracer above follows the words of your claim. Switch the model on to see where the draft states the claim in other words, and which paragraphs are furthest from it.',source:'The rule above finds copied strings of words. Switch the model on to also find sentences that restate a source sentence in different words, and the parts of the source your draft says least about.',compare:'Switch the model on to see how far each rewritten sentence has moved in meaning from the one it replaced.',terms:'Switch the model on to see pairs of terms that are close in meaning and may be two names for one thing.',mviews:'These views are drawn from the meaning model, so they need it switched on.'};
+const MDOC={grid:'Sentences the rules label “no link” are relabelled “meaning only” when they are close in meaning to the sentence before. The line above each paragraph adds how close it is to the paragraph before, and marks the weakest join in the draft.',outline:'Each paragraph shows which sentence is closest in meaning to the rest, whether that sentence sits at an edge, and which sentence is furthest from the rest. If you typed the paragraph’s point, it shows which sentence carries that point best.',tracer:'It names the sentence that states your claim most directly, in your words or in others, and shows how close each paragraph is to the claim.',source:'A table of your sentences closest in meaning to a source sentence, including restatements that share no run of words, and the parts of the source your draft says least about.',compare:'A table of rewritten sentences with how close each is to the one it replaced, lowest first. It can show drift. It cannot confirm that a meaning was kept.',terms:'The closest pairs in meaning among your terms, as candidates for two names for one thing. The model judges single words less well than sentences, so treat the list as a prompt.',mviews:'Eight views. Thread: closeness of each sentence to the one before, and to your claim. Quilt: every sentence against every other. Topics: the model’s grouping of sentences, as a band of colour. Map: sentences as dots on a flat map. Reorder: move paragraphs and watch the joins. Ask: find the sentences closest to a question. Abstract & ending: what the abstract covers, and whether the ending returns to the opening. Drills: two exercises built from your draft.'};
+const LIMITS={sv:'The subject and the main verb are found by rules, not by a parser. A long or unusual sentence can be misread, so check which words are marked before acting on a note.',topic:'The lens sees what opens a sentence. It cannot tell whether that opening is the right topic for your argument.',stress:'It judges the close by familiar words, filler and citations. It cannot tell whether what you ended on is the point you meant to stress.',flow:'“Old” means a word used in an earlier sentence, matched by its stem. A synonym or a pronoun counts as new.',action:'Nominalisations are found by their endings and a fixed list. Some are missed, and some nouns that end like one are legitimate terms.',outline:'It shows first and last sentences and checks the words of the point you type. It does not judge whether the point is a good one.',jobs:'You supply the labels. The lens checks what you tell it against the usual order of moves, which a good paragraph may depart from.',tracer:'Claim words are matched by their stems, so a claim restated in other words is not seen unless the meaning model is on.',claims:'Strong wording is found from fixed lists. The lens cannot read your evidence. It compares the wording with the kind of evidence you name.',hedge:'Hedges are found from a fixed list. One hedge may be exactly right. The lens notices when several pile up.',grid:'Links are judged by repeated words, matched by stem. Two sentences can be tightly connected and share no word.',signals:'Moves are tagged from fixed cue phrases, so a move made in other words is not seen.',skeleton:'A way of reading, with no notes of its own.',rhythm:'The length bands are fixed. The rules for runs and for contrast between neighbours are this tool’s working values, not published norms.',dense:'Noun stacks and chains of prepositions are found by rules. A settled technical term can look like a stack.',voice:'A passive is found from a form of “be” and a participle. A participle the rules do not know is missed.',clutter:'Stock phrases come from a fixed list. A phrase on the list is sometimes the right one.',worn:'The lists are fixed and general. A word flagged as vague may be precise in your field.',vocab:'The two word lists cover general English. Every field has ordinary terms outside them, so an unlisted word is not an error.',terms:'Terms are nouns found by rule and matched by stem. The lens cannot know that two different words name one thing until you tell it.',acr:'It recognises abbreviations by their capitals and looks for a definition nearby. An abbreviation defined in an unusual way may be reported as undefined.',people:'It applies general advice from a fixed list. Preferred terms differ between communities and change over time.',stats:'Only results reported in the usual form, such as t(28) = 2.20, p = .036, are rechecked. A result written another way is not checked.',checks:'Fixed patterns only. No mark does not mean no problem.',slips:'About two dozen patterns, chosen to be nearly always right. There is no dictionary, so misspellings are not found.',source:'It compares exact words. A close paraphrase is not seen unless the meaning model is on, and this is not a plagiarism check.',mviews:'Everything in this lens comes from the model, which does not see negation or logic, and whose scores only rank things inside one draft.',compare:'The receipt counts notes by rule. A rewrite counts only when it keeps at least four in ten of the sentence’s content words.',practice:'The drills have fixed answers for the built-in sentences. Drills built from your own draft use the lenses’ rules, with their limits.'};
+const GNAME={1:['Gopen & Swan’s principles','The lenses built on the principles in Gopen and Swan’s article. Start here.'],2:['Is the argument clear?','The argument as a whole: what each paragraph is for, and how strongly each claim is worded.'],3:['Does it flow?','How sentences and paragraphs connect.'],4:['Is each sentence easy to read?','Single sentences: their length, their density, their voice, and the words to cut.'],5:['Are the words well chosen?','Single words: vague ones, rare ones, the names you give things, and the words you use for people.'],6:['Is it polished?','Proofreading: statistics, citations and figures, typing slips, and overlap with a source.'],7:['Your progress','What you have changed so far, and drills to practise on.']};
+function guideHTML(){const A=state.A,R=A.research;
+  const refFull=k=>{const r=REFS.find(x=>x[0]===k);return r?'<li>'+r[1]+(r[2]?' <a href="https://doi.org/'+r[2]+'" target="_blank" rel="noopener">https://doi.org/'+r[2]+'</a>':r[3]?' <a href="'+r[3]+'" target="_blank" rel="noopener">'+esc(r[3].replace(/^https?:\/\//,''))+'</a>':'')+'</li>':'';};
+  const sec=l=>{const keys=[...new Set((SRC[l.k]||[]).filter(Array.isArray).map(p=>p[0]))];let rb=null;try{rb=RESB[l.k]&&R&&A.sents.length?RESB[l.k](A,R):null;}catch(e){}
+    return '<section class="gsec" id="guide-'+l.k+'"><h3>'+esc(l.n)+' <button type="button" class="link" data-k="'+l.k+'" id="gopen-'+l.k+'">Open this lens</button></h3><p>'+esc(l.why)+'</p>'+(l.fix?'<p><b>To revise.</b> '+esc(l.fix)+'</p>':'')+
+      (l.legend.length?'<p><b>Marks in the text.</b></p><ul class="gmarks">'+l.legend.map(([c,t])=>'<li><span class="mk '+c+'">Aa</span> <b>'+esc(t)+'.</b> '+esc(markTip(l.k,c)||'')+'</li>').join('')+'</ul>':'')+
+      (rb?'<p><b>Research measure.</b> '+rb.found+'</p><p><b>How the count differs from the published one.</b> '+rb.here+'</p>':'')+
+      (MDOC[l.k]?'<p><b>With the meaning model on.</b> '+esc(MDOC[l.k])+'</p>':'')+
+      (LIMITS[l.k]?'<p><b>Limits.</b> '+esc(LIMITS[l.k])+'</p>':'')+
+      (keys.length?'<p><b>Sources.</b></p><ul class="grefs">'+keys.map(refFull).join('')+'</ul>':'')+'</section>';};
+  let h='<div class="panel gdoc"><label class="cap" for="guideQ">Search the guide</label><div class="mvask"><input type="search" class="pointin" id="guideQ" value="'+esc(state.guideQ||'')+'" placeholder="passive, citation, paragraph, hedge…" autocomplete="off"><span class="hint" id="guideN" aria-live="polite"></span></div>'+
+    '<section class="gsec" id="guide-how"><h3>How the page works</h3>'+
+    '<p><b>Lenses.</b> A lens reads the draft for one thing and marks it in the text. Pick a lens from the list, or type in the box above the list to find one. The Overview shows every open note at once.</p>'+
+    '<p><b>Notes.</b> A note starts with a question about the sentence. The advice and any suggested change come after it. Where a note offers a change, preview it first: the preview shows which notes it would clear and any it would bring in. A note is not an order. “I checked this” is a valid answer, and it counts as work done.</p>'+
+    '<p><b>The rewrite box.</b> Tap a sentence to open it under its paragraph. Marks from every open note show inside the box and update as you type. Undo and Redo work on the whole text.</p>'+
+    '<p><b>Research measures.</b> Thirteen lenses carry a box headed “Research measure”: a count that writing researchers use, recomputed here by a fixed rule, with what the research found and how this count differs from the published one. The Research profile on the Overview gathers them. None is a score and none has a target.</p>'+
+    '<p><b>The meaning model.</b> Off unless you switch it on. It is a small language model that compares sentences by meaning, in your browser. It is the only part of the page that is AI, and its results are always labelled. It never creates notes and never changes the revision receipt.</p>'+
+    '<p><b>What the page cannot do.</b> The rules read structure and have no idea what your sentences mean. There is no parser and no dictionary. When a rule is wrong about a sentence, say so with “I checked this” and move on.</p></section>';
+  [1,2,3,4,5,6,7].forEach(g=>{const ls=LENSES.filter(l=>l.g===g);h+='<div class="ggrp" id="guide-g'+g+'"><h2>'+esc(GNAME[g][0])+'</h2><p>'+esc(GNAME[g][1])+'</p></div>'+ls.map(sec).join('');});
+  return h+'<p class="hint" id="guideNone" hidden>Nothing in the guide matches. Try a shorter word.</p></div>';}
+function guideFilter(){const q=(state.guideQ||'').trim().toLowerCase(),secs=[...document.querySelectorAll('.gdoc .gsec')];if(!secs.length)return;let n=0;
+  secs.forEach(s=>{const ok=!q||s.textContent.toLowerCase().includes(q);s.hidden=!ok;if(ok)n++;});
+  document.querySelectorAll('.gdoc .ggrp').forEach(g=>{let e=g.nextElementSibling,any=false;while(e&&e.classList.contains('gsec')){if(!e.hidden)any=true;e=e.nextElementSibling;}g.hidden=!any;});
+  const N=$('#guideN'),Z=$('#guideNone');if(N)N.textContent=q?n+' of '+secs.length+' sections':'';if(Z)Z.hidden=n>0;}
 function resBox(k){const A=state.A,fn=RESB[k];if(!fn||!A.research||!A.sents.length)return'';const b=fn(A,A.research);
   return '<div class="panel res"><span class="cap"'+tipA('A count that writing researchers use to describe a text, reproduced here by fixed rules. It describes the draft. It has no target and it is not a score.')+'>Research measure <span class="rtools">'+b.t.map(toolA).join(' ')+'</span></span>'+(b.fig?'<p class="rfig">'+b.fig+'</p>':'')+(b.extra||'')+'<p><b>What the research found.</b> '+b.found+'</p><p><b>How this count differs.</b> '+b.here+'</p></div>';}
 function resRows(A){const R=A.research,O=R.over,b=R.conn.by,rows=[],gap=O.pp-O.ph,zero=Object.keys(CNAME).filter(k=>!b[k]).map(k=>CNAME[k][0].toLowerCase());
@@ -2466,11 +2519,13 @@ function renderRail(){
   const A=state.A,bc=baseline(),now={};A.findings.filter(active).forEach(f=>{now[f.lens]=(now[f.lens]||0)+1;});
   const tot=o=>Object.values(o).reduce((a,b)=>a+b,0);
   const btn=l=>{let n=l.k==='overview'?tot(now):(now[l.k]||0),b=l.k==='overview'?null:bc[l.k]||0,c='';
-    if(l.k==='compare'||l.k==='skeleton'||l.k==='practice'||l.k==='mviews')c='';else if(l.ba!==false&&b!=null&&b!==n&&state.base!==state.raw)c='<s>'+b+'→</s>'+n+(n===0?' ✓':'');else c=String(n);
+    if(l.k==='compare'||l.k==='skeleton'||l.k==='practice'||l.k==='mviews'||l.k==='guide')c='';else if(l.ba!==false&&b!=null&&b!==n&&state.base!==state.raw)c='<s>'+b+'→</s>'+n+(n===0?' ✓':'');else c=String(n);
     return '<button class="lens hb-'+l.hue+(RESB[l.k]||l.k==='source'?' res':'')+'" type="button" id="lens-'+l.k+'" data-k="'+l.k+'" aria-pressed="'+(state.lens===l.k)+'"'+tipA(lensTip(l)+(RESB[l.k]||l.k==='source'?' The small ring means this lens also carries a research measure.':''))+'><i></i><span>'+esc(l.n)+'</span><b>'+c+'</b></button>';};
   const RA=state.railAll||(state.railAll={});
-  [0,1,2,3,4,5,6,7].forEach(g=>{const ls=LENSES.filter(l=>l.g===g),quiet=ls.filter(l=>FOLD.has(l.k)&&l.k!==state.lens&&!(now[l.k]>0)),show=RA[g]?ls:ls.filter(l=>!quiet.includes(l));
+  const q=(state.lensQ||'').trim().toLowerCase(),qre=q?new RegExp('(?:^|[^a-z])'+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')):null,hit=l=>!q||l.n.toLowerCase().includes(q)||qre.test(l.why.toLowerCase());let any=0;
+  [0,1,2,3,4,5,6,7].forEach(g=>{const ls=LENSES.filter(l=>l.g===g&&hit(l)),quiet=q?[]:ls.filter(l=>FOLD.has(l.k)&&l.k!==state.lens&&!(now[l.k]>0)),show=RA[g]?ls:ls.filter(l=>!quiet.includes(l));any+=ls.length;const sec=g>=2?$('#g'+g):g===1?$('#railH1'):null;if(sec)sec.hidden=!ls.length;
     $('#rail'+g).innerHTML=show.map(btn).join('')+(quiet.length?'<button type="button" class="railmore" id="rm-'+g+'" data-rmore="'+g+'"'+tipA('Lenses with no open notes on this draft are folded away to keep the list short. Their marks are still there if you want to look.')+'>'+(RA[g]?'Fold away the '+quiet.length+' with nothing open':'+ '+quiet.length+' with nothing open')+'</button>':'');});
+  const nn=$('#railNone');if(nn)nn.hidden=!!any;
 }
 function renderLensCard(){
   const l=LBY[state.lens];
@@ -2511,6 +2566,7 @@ function renderExtra(){
     h+=tracerMore();}
   else if(l==='grid')h=gridHTML();
   else if(l==='signals')h=movesPanel();
+  else if(l==='guide')h=guideHTML();
   else if(l==='source')h=sourcePanel();
   else if(l==='practice')h=practiceHTML();
   else if(l==='jobs'){const J=Object.fromEntries(E.JOBS),q=A.jobs;
@@ -2547,8 +2603,8 @@ function renderExtra(){
       '<p>'+(same?'You have not changed the text yet. Tap a sentence in any lens and rewrite it, then come back.':'Notes you marked as checked are not counted under Now. In the text below, struck-through red was removed and green was added.')+'</p>'+
       (same?'':'<div class="tilebar"><button type="button" class="btn sm" id="setBase"'+tipA('Later comparisons will start from the text as it is now.')+'>Make the current text the new starting point</button></div>')+'</div>'+
       (same?'':'<div class="diff">'+diffHTML(state.base,state.raw)+'</div>');}
-  if(l==='overview')h=profileHTML()+h;else h=resBox(l)+meanBox(l)+h;
-  x.innerHTML=h;$('#startBox').innerHTML=l==='overview'?state.startH||'':'';if(l==='mviews')mvDraw();
+  if(l==='overview')h=profileHTML()+h;else if(l!=='guide')h=resBox(l)+meanBox(l)+h;
+  x.innerHTML=h;$('#startBox').innerHTML=l==='overview'?state.startH||'':'';if(l==='mviews')mvDraw();if(l==='guide')guideFilter();
 }
 
 function tracerMore(){const A=state.A,T=A.tracer.title,K=A.tracer.key;let h='';
@@ -3028,7 +3084,7 @@ function renderDynamic(){
     $('#fab').hidden=!n||state.editing||!!state.tour;$('#fab').textContent=state.sel?'Next note':'First note';}
   tourSync();
 }
-function setLens(k){setTimeout(()=>{const b=document.getElementById('lens-'+k);if(b&&window.matchMedia('(max-width:720px)').matches)b.scrollIntoView({inline:'center',block:'nearest'});},0);state.lens=k;(state.seen||(state.seen=new Set())).add(k);state.pv=null;save();renderLensCard();renderDynamic();const ms=$('#ms');ms.classList.remove('lensin');void ms.offsetWidth;ms.classList.add('lensin');clearTimeout(lensT);lensT=setTimeout(()=>ms.classList.remove('lensin'),2200);}
+function setLens(k){setTimeout(()=>{const ph=window.matchMedia('(max-width:720px)').matches,b=document.getElementById('lens-'+k),c=document.querySelector('.center');if(b&&ph)b.scrollIntoView({inline:'center',block:'nearest'});if(c){const off=ph?document.querySelector('.rail').offsetHeight+10:14,y=c.getBoundingClientRect().top+window.scrollY-off;if(Math.abs(window.scrollY-y)>4)window.scrollTo({top:Math.max(0,y),behavior:reduced()?'auto':'smooth'});}},0);state.lens=k;(state.seen||(state.seen=new Set())).add(k);state.pv=null;save();renderLensCard();renderDynamic();const ms=$('#ms');ms.classList.remove('lensin');void ms.offsetWidth;ms.classList.add('lensin');clearTimeout(lensT);lensT=setTimeout(()=>ms.classList.remove('lensin'),2200);}
 function setEditing(on){
   state.editing=on;$('#desk').classList.toggle('editing',on);$('#btnClear').hidden=!on;
   $('#btnEdit').textContent=on?'Analyze':state.isSample?'Paste your text':'Edit whole text';
@@ -3166,6 +3222,8 @@ let typeT=0,wbT=0,claimT=0;
 function flushEdit(){if(wbT){clearTimeout(wbT);wbT=0;if(state.sel)commitEdit($('#wbText').value);}}
 document.addEventListener('input',e=>{
   const t=e.target;
+  if(t.id==='lensQ'){state.lensQ=t.value;renderRail();return;}
+  if(t.id==='guideQ'){state.guideQ=t.value;guideFilter();return;}
   if(t.id==='histRange'){const H=state.hist&&state.hist[state.scrubKey||(state.scrubKey=vKey())];if(H&&state.sel&&H[+t.value]!=null){state.scrubbing=true;replaceRaw(state.sel.s,state.sel.e,H[+t.value]);run();syncWbText();}return;}
   if(t.id==='wbText'){autosize();hideTip();if(state.cost<45)commitEdit(t.value);else{renderBack();clearTimeout(wbT);wbT=setTimeout(()=>{wbT=0;commitEdit(t.value);},220);}}
   else if(t.id==='titleIn'){clearTimeout(claimT);claimT=setTimeout(()=>{state.title=t.value;if(state.isSample&&t.value)state.isSample=false;save();run();},250);}
@@ -3273,6 +3331,8 @@ function dgShow(next){const el=id=>document.getElementById(id);if(!el('dgPrev'))
   store.set('ts.dg',String(i));const d=DGS[i],f=s=>esc(s).replace(/\{([^}]+)\}/g,'<span class="dg-old">$1</span>').replace(/\[([^\]]+)\]/g,'<u>$1</u>');
   el('dgPrev').innerHTML=f(d[0]);el('dgOpen').innerHTML=f(d[1]);el('dgVerb').innerHTML='<u>'+esc(d[2])+'</u>';el('dgClose').innerHTML=f(d[3]);}
 dgShow(false);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#dgNext')){e.preventDefault();dgShow(true);}});
+
+document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='lensQ'&&e.key==='Enter'){const b=document.querySelector('.rail .lens');if(b){e.preventDefault();b.click();}}});
 </script>
 </body>
 </html>

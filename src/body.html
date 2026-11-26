@@ -27,6 +27,7 @@
     <div class="actions">
       <button class="btn primary" id="btnEdit" type="button" data-tip="Open the whole draft in one box, to paste a new text or make large edits.">Paste your text</button>
       <button class="btn" id="btnSample" type="button" data-tip="Load the built-in example: six invented sentences with four quick things to fix. A harder example is offered once it is loaded.">Try the example</button>
+      <button class="btn" id="btnGuideDoc" type="button" data-k="guide" data-tip="Every lens explained on one page, with its marks, its limits and its sources. Searchable.">Guide</button>
       <button class="btn" id="btnPractice" type="button" data-tip="Six short sentences with fixed answers, and two drills built from whatever draft is loaded.">Practise</button>
       <button class="btn" id="btnClear" type="button" hidden data-tip="Empty the box.">Clear</button>
     </div>
@@ -39,8 +40,10 @@
 
   <main class="desk" id="desk">
     <nav class="rail" aria-label="Lenses">
+      <div class="railq"><input type="search" id="lensQ" placeholder="Find a lens" aria-label="Find a lens by typing part of its name" autocomplete="off"></div>
+      <p class="hint" id="railNone" hidden>No lens matches.</p>
       <div class="lensgroup" id="rail0"></div>
-      <h2 data-tip="The lenses built on the principles in Gopen and Swan’s article. Start here. Pick one to see the structure it reads.">Gopen &amp; Swan&rsquo;s principles</h2>
+      <h2 id="railH1" data-tip="The lenses built on the principles in Gopen and Swan’s article. Start here. Pick one to see the structure it reads.">Gopen &amp; Swan&rsquo;s principles</h2>
       <div class="lensgroup" id="rail1"></div>
       <section class="rg" id="g2"><h2 data-tip="Lenses on the argument as a whole: what each paragraph is for, and how strongly each claim is worded. Some ask you for something first: your claim, your evidence, or a label."><button type="button" class="rgh" id="rgh-2" data-rg="2" aria-expanded="true">Is the argument clear?</button></h2><div class="lensgroup" id="rail2"></div></section>
       <section class="rg" id="g3"><h2 data-tip="Lenses on how sentences and paragraphs connect."><button type="button" class="rgh" id="rgh-3" data-rg="3" aria-expanded="true">Does it flow?</button></h2><div class="lensgroup" id="rail3"></div></section>

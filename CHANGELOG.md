@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0 (2026-11-25)
+
+- Guide: every lens on one searchable page, with its marks, research measure, meaning-model additions, limits and sources in full.
+- A search box above the list of lenses.
+- Choosing a lens moves the page to the top of the working space.
+- The three badges (rules or model, offline, nothing uploaded) sit at the top right of the page.
+
 ## 0.4.0 (2026-11-25)
 
 - New lens, Meaning views, drawn from the optional meaning model: Thread, Quilt, Topics, Map, Reorder, Ask, Abstract & ending, and Drills.
