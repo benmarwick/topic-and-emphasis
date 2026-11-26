@@ -38,3 +38,16 @@ is licensed under Apache-2.0; Transformers.js (model/lib/transformers.min.js) is
 licensed under Apache-2.0; and ONNX Runtime Web
 (model/lib/ort-wasm-simd-threaded.jsep.wasm, and the parts of it bundled in
 Transformers.js) is licensed under the MIT licence by Microsoft Corporation.
+
+The files in data/ are third-party word lists and word norms and keep their own
+licences, which are set out in data/README.md. In brief: data/lists/dale-chall.txt
+(from github.com/words/dale-chall) and data/lists/excess_words.csv (from
+github.com/berenslab/llm-excess-vocab; Kobak et al. 2025) are MIT-licensed, as are
+the copies of them in src/dalechall.txt and src/excess.txt and in index.html. The
+four files in data/norms/ are NOT under the MIT licence: the concreteness norms
+(Brysbaert, Warriner & Kuperman 2014), the age-of-acquisition norms (Kuperman,
+Stadthagen-Gonzalez & Brysbaert 2012) and SUBTLEX-US (Brysbaert & New 2009) are
+licensed CC BY-NC-ND 3.0, and the word prevalence norms (Brysbaert, Mandera,
+McCormick & Keuleers 2019) are licensed CC BY-NC-SA 4.0. They are for
+non-commercial use, are loaded only on request, and can be deleted without
+affecting the rest of the application.

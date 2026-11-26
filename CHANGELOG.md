@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.0 (2026-11-26)
+
+- Length & rhythm: Coleman-Liau, Gunning Fog, LIX and Dale-Chall beside the existing formulas.
+- Vocabulary level: running-word coverage by the two word lists, and optional word norms (concreteness, age of acquisition, prevalence, frequency) loaded on request from `data/norms/`.
+- Topic grid: thematic progression above each paragraph, and referential distance and persistence for each term.
+- Signal phrases: transition profile, common academic word sequences by function, repeated four-word runs.
+- Hedging: boosters and reader-engagement markers. Claims & evidence: promotional adjectives. Worn & vague: excess-vocabulary words.
+- Numbers & tense: the GRIM test, as a question.
+- Before & after: each rewrite labelled as wording only, content added, content removed or both; the receipt counts each kind.
+- All of the above in the MCP `research_profile`.
+- `tests/readability/`: fixed passages, a regression test, and scripts to record reference values from textstat and quanteda.textstats.
+- `data/`: third-party lists and norms with their sources and licences.
+
 ## 0.6.0 (2026-11-25)
 
 - MCP server (`mcp/server.js`) with six tools, so an agent can use the rule engine as a tutor, a grader's aid, or for batch analysis. No dependencies.

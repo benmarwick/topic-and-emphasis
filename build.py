@@ -22,7 +22,12 @@ def fragment():
     lists = ('\n/* Word lists: New General Service List 1.2 and New Academic Word List 1.2, '
              'by C. Browne, B. Culligan and J. Phillips, newgeneralservicelist.com. '
              'Licensed CC BY-SA 4.0. */\n'
-             'const NGSL_RAW="' + ngsl + '";\nconst NAWL_RAW="' + nawl + '";')
+             'const NGSL_RAW="' + ngsl + '";\nconst NAWL_RAW="' + nawl + '";'
+             '\n/* Familiar words of the New Dale-Chall formula (Chall & Dale 1995), as listed in '
+             'github.com/words/dale-chall (MIT). Style words from the excess-vocabulary list of '
+             'Kobak et al. (2025), github.com/berenslab/llm-excess-vocab (MIT). */\n'
+             'const DALE_RAW="' + ' '.join(read('dalechall.txt').split()) + '";\n'
+             'const EXCESS_RAW="' + ' '.join(read('excess.txt').split()) + '";')
     return (head + body + '\n<script>\n/*ENGINE-START*/' + lists + engine +
             '/*ENGINE-END*/\n' + ui + '</script>\n')
 

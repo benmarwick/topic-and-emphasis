@@ -358,6 +358,11 @@
      "url": "https://github.com/Rimagination/good-story"
     },
     {
+     "citation": "Millar, N., Batalo, B., & Budgell, B. (2022). Trends in the use of promotional language (hype) in abstracts of successful National Institutes of Health grant applications, 1985–2020. JAMA Network Open, 5(8), e2228676.",
+     "doi": "10.1001/jamanetworkopen.2022.28676",
+     "url": "https://doi.org/10.1001/jamanetworkopen.2022.28676"
+    },
+    {
      "citation": "Morley, J. Academic Phrasebank. University of Manchester.",
      "doi": null,
      "url": "https://www.phrasebank.manchester.ac.uk/"
@@ -389,6 +394,11 @@
      "citation": "Pinker, S. (2014). The sense of style: The thinking person’s guide to writing in the 21st century. Viking.",
      "doi": null,
      "url": null
+    },
+    {
+     "citation": "Hyland, K. (2005). Stance and engagement: A model of interaction in academic discourse. Discourse Studies, 7(2), 173–192.",
+     "doi": "10.1177/1461445605050365",
+     "url": "https://doi.org/10.1177/1461445605050365"
     },
     {
      "citation": "Morley, J. Academic Phrasebank. University of Manchester.",
@@ -438,6 +448,16 @@
      "citation": "Kaufer, D., & Ishizaki, S. OnTopic and DocuScope [revision tools that show topics across a text and on either side of the main verb]. Carnegie Mellon University, Department of English.",
      "doi": null,
      "url": "https://www.cmu.edu/dietrich/english/research-and-publications/docuscope.html"
+    },
+    {
+     "citation": "Daneš, F. (1974). Functional sentence perspective and the organization of the text. In F. Daneš (Ed.), Papers on Functional Sentence Perspective (pp. 106–128). Prague: Academia.",
+     "doi": null,
+     "url": "https://www.coli.uni-saarland.de/~korbay/Courses/esslli04/Scans/danes74.pdf"
+    },
+    {
+     "citation": "Givón, T. (Ed.). (1983). Topic Continuity in Discourse: A Quantitative Cross-Language Study. Amsterdam: John Benjamins.",
+     "doi": "10.1075/tsl.3",
+     "url": "https://doi.org/10.1075/tsl.3"
     },
     {
      "citation": "Crossley, S. A., Kyle, K., & McNamara, D. S. (2016). The tool for the automatic analysis of text cohesion (TAACO): Automatic assessment of local, global, and text cohesion. Behavior Research Methods, 48(4), 1227–1237.",
@@ -493,6 +513,11 @@
      "citation": "Kinnunen, T., Leisma, H., Machunik, M., Kakkonen, T., & Lebrun, J.-L. (2012). SWAN – Scientific Writing AssistaNt: A tool for helping scholars to write reader-friendly manuscripts. In Proceedings of the Demonstrations at the 13th Conference of the European Chapter of the Association for Computational Linguistics (pp. 20–24). Association for Computational Linguistics.",
      "doi": null,
      "url": "https://aclanthology.org/E12-2005/"
+    },
+    {
+     "citation": "Biber, D., Conrad, S., & Cortes, V. (2004). If you look at …: Lexical bundles in university teaching and textbooks. Applied Linguistics, 25(3), 371–405.",
+     "doi": "10.1093/applin/25.3.371",
+     "url": "https://doi.org/10.1093/applin/25.3.371"
     },
     {
      "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
@@ -601,8 +626,8 @@
     }
    ],
    "research_measure": {
-    "what_the_research_found": "Choi & Crossley (2021) built a tool that runs eight readability formulas side by side. The formulas rarely agree, which is why this is a range. Each is built from sentence length and word length alone (Flesch 1948; Kincaid et al. 1975; Smith & Senter 1967; McLaughlin 1969). They were fitted to school reading passages and military training material, not to research articles, and they are blind to order, cohesion and meaning. Grade 13 and above means college level. Plain counts are not to be looked down on: a handful of them predicted essay scores about as well as a far larger set of measures (Crossley, Allen, Kyle & McNamara 2014).",
-    "how_this_count_differs": "Syllables are estimated from spelling, so each figure can be off by about a grade. SMOG was designed for samples of 30 sentences, and this draft has 12. Newer readability measures rely on trained models and are not reproduced here."
+    "what_the_research_found": "Choi & Crossley (2021) built a tool that runs eight readability formulas side by side. The formulas rarely agree, which is why this is a range. Each is built from sentence length and word length alone (Flesch 1948; Kincaid et al. 1975; Smith & Senter 1967; McLaughlin 1969). Coleman-Liau (Coleman & Liau 1975) and LIX (Björnsson 1968; Anderson 1983) count letters where the others count syllables, and Gunning’s Fog index (Gunning 1952) counts words of three syllables or more. LIX is not a school grade: it is the average sentence length plus the percentage of words longer than six letters, and higher means harder. The Dale-Chall formula (Dale & Chall 1948) uses the share of words missing from a list of about 3,000 familiar words; the list here is the 1995 revision (Chall & Dale 1995). On its authors’ table a score of 8.0 to 8.9 is grades 11 and 12, and 9.0 to 9.9 is college. When Mac et al. (2022) ran the same health texts through different calculators, one formula gave results up to 12.9 grades apart, and 2.1 grades apart once every text was prepared in the same way. The formulas were fitted to school reading passages and military training material, not to research articles, and they are blind to order, cohesion and meaning. Grade 13 and above means college level. Plain counts are not to be looked down on: a handful of them predicted essay scores about as well as a far larger set of measures (Crossley, Allen, Kyle & McNamara 2014).",
+    "how_this_count_differs": "Syllables are estimated from spelling, so Flesch-Kincaid, SMOG and Fog can each be off by about a grade. Coleman-Liau, ARI and LIX need no syllables, so they are exact for this text. The Dale-Chall figure applies the 1948 equation to the 1995 list, as most calculators do, and matches inflected forms to the list by rule. The repository holds a fixed set of test passages and a script that records what two other calculators give for them (tests/readability). SMOG was designed for samples of 30 sentences, and this draft has 12. Newer readability measures rely on trained models and are not reproduced here."
    },
    "with_meaning_model": null,
    "limits": "The length bands are fixed. The rules for runs and for contrast between neighbours are this tool’s working values, not published norms.",
@@ -636,6 +661,16 @@
      "citation": "Provost, G. (1985). 100 ways to improve your writing. New American Library.",
      "doi": null,
      "url": null
+    },
+    {
+     "citation": "Coleman, M., & Liau, T. L. (1975). A computer readability formula designed for machine scoring. Journal of Applied Psychology, 60(2), 283–284.",
+     "doi": "10.1037/h0076540",
+     "url": "https://doi.org/10.1037/h0076540"
+    },
+    {
+     "citation": "Mac, O., Ayre, J., Bell, K., McCaffery, K., & Muscat, D. M. (2022). Comparison of readability scores for written health information across formulas using automated vs manual measures. JAMA Network Open, 5(12), e2246051.",
+     "doi": null,
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9856555/"
     },
     {
      "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
@@ -830,6 +865,11 @@
      "citation": "Amperser Labs. proselint [open-source prose linter]. GitHub. BSD-3-Clause licence.",
      "doi": null,
      "url": "https://github.com/amperser/proselint"
+    },
+    {
+     "citation": "Kobak, D., González-Márquez, R., Horvát, E.-Á., & Lause, J. (2025). Delving into LLM-assisted writing in biomedical publications through excess vocabulary. Science Advances, 11(27), eadt3813. [Word list: github.com/berenslab/llm-excess-vocab, MIT licence.]",
+     "doi": "10.1126/sciadv.adt3813",
+     "url": "https://doi.org/10.1126/sciadv.adt3813"
     }
    ]
   },
@@ -865,6 +905,11 @@
      "citation": "Rakedzon, T., Segev, E., Chapnik, N., Yosef, R., & Baram-Tsabari, A. (2017). Automatic jargon identifier for scientists engaging with the public and science communication educators. PLoS ONE, 12(8), e0181742.",
      "doi": "10.1371/journal.pone.0181742",
      "url": "https://doi.org/10.1371/journal.pone.0181742"
+    },
+    {
+     "citation": "Nation, I. S. P. (2006). How large a vocabulary is needed for reading and listening? The Canadian Modern Language Review, 63(1), 59–82.",
+     "doi": null,
+     "url": "https://www.wgtn.ac.nz/__data/assets/pdf_file/0018/1626120/2006-How-large-a-vocab.pdf"
     },
     {
      "citation": "McCarthy, P. M., & Jarvis, S. (2010). MTLD, vocd-D, and HD-D: A validation study of sophisticated approaches to lexical diversity assessment. Behavior Research Methods, 42(2), 381–392.",
@@ -1060,6 +1105,11 @@
      "url": "https://doi.org/10.1080/00031305.2016.1154108"
     },
     {
+     "citation": "Brown, N. J. L., & Heathers, J. A. J. (2017). The GRIM test: A simple technique detects numerous anomalies in the reporting of results in psychology. Social Psychological and Personality Science, 8(4), 363–369.",
+     "doi": "10.1177/1948550616673876",
+     "url": "https://doi.org/10.1177/1948550616673876"
+    },
+    {
      "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
      "doi": "10.1017/CBO9780511894664",
      "url": "https://doi.org/10.1017/CBO9780511894664"
@@ -1129,7 +1179,13 @@
    "research_measure": null,
    "with_meaning_model": "A table of rewritten sentences with how close each is to the one it replaced, lowest first. It can show drift. It cannot confirm that a meaning was kept.",
    "limits": "The receipt counts notes by rule. A rewrite counts only when it keeps at least four in ten of the sentence’s content words.",
-   "sources": []
+   "sources": [
+    {
+     "citation": "Faigley, L., & Witte, S. (1981). Analyzing revision. College Composition and Communication, 32(4), 400–414.",
+     "doi": null,
+     "url": null
+    }
+   ]
   },
   {
    "key": "practice",

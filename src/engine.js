@@ -72,6 +72,26 @@ const CLUTTER=[
 ['has an effect on','affects'],['have an effect on','affect'],['had an effect on','affected'],['has an impact on','affects'],['have an impact on','affect'],['had an impact on','affected'],['is dependent on','depends on'],['are dependent on','depend on'],['is indicative of','indicates'],['are indicative of','indicate'],['is in agreement with','agrees with'],['are in agreement with','agree with'],['make use of','use'],['makes use of','uses'],['made use of','used'],['take into consideration','consider'],['gives rise to','causes'],['give rise to','cause'],['gave rise to','caused'],['in the near future','soon'],['at a rapid rate','rapidly'],['whether or not','whether'],['in a manner similar to','like'],['as a consequence of','because of'],['on a daily basis','daily'],['time period','period'],['end result','result'],['completely eliminate','eliminate'],['absolutely essential','essential'],['first of all','first'],['each and every','every'],
 ['are of the same opinion','agree'],['in light of the fact that','because'],['for the reason that','because'],['in the majority of cases','usually'],['with the exception of','except'],['in excess of','more than'],['in order that','so that'],['a sufficient number of','enough'],['as it is well known','','If it is well known, say it. If it needs support, cite it.'],['it should be emphasized that',''],['it can be regarded that',''],['as it has been shown','','Give the finding and cite who showed it.'],['it is noteworthy that',''],['successful solutions','solutions'],['unexpected surprise','surprise'],['currently underway','underway'],['future plans','plans'],['past history','history'],['past experience','experience'],['final outcome','outcome'],['final conclusion','conclusion'],['new innovation','innovation'],['advance planning','planning'],['added bonus','bonus'],['basic fundamentals','fundamentals'],['exact same','same'],['general consensus','consensus'],['consensus of opinion','consensus'],['brief summary','summary'],['still remains','remains'],['reason why','reason'],['true facts','facts'],['period of time','period'],['small in size','small'],['large in size','large'],['few in number','few'],['join together','join'],['combine together','combine'],['repeat again','repeat'],['revert back','revert'],['plays a role in',null,'Name the role. Does it regulate, trigger, limit, enable?'],['play a role in',null,'Name the role. Do they regulate, trigger, limit, enable?'],['in terms of',null,'Usually a vague connector. Say how the two things relate.'],['in the case of',null,'Often just "for" or "in", or nothing at all.']
 ].map(([p,r,n])=>({re:new RegExp('\\b'+p.replace(/ /g,'\\s+')+'\\b','gi'),r,n}));
+/* promotional adjectives reported by Millar, Batalo & Budgell (2022), in their eight groups */
+const HYPE={importance:'compelling critical crucial essential foundational fundamental imperative important indispensable invaluable key major paramount pivotal significant strategic timely ultimate urgent vital',
+ novelty:'creative emerging first groundbreaking innovative latest novel revolutionary unique unparalleled unprecedented',
+ rigor:'accurate advanced careful cohesive detailed nuanced powerful quality reproducible rigorous robust scientific sophisticated strong systematic',
+ scale:'ample biggest broad comprehensive considerable deeper diverse enormous expansive extensive fastest greatest huge immediate immense interdisciplinary international interprofessional largest massive multidisciplinary myriad overwhelming substantial top transdisciplinary tremendous vast',
+ utility:'accessible actionable deployable durable easy effective efficacious efficient generalizable ideal impactful intuitive meaningful productive ready relevant rich safer scalable seamless sustainable synergistic tailored tangible transformative user-friendly',
+ quality:'ambitious collegial dedicated exceptional experienced intellectual longstanding motivated premier prestigious promising qualified renowned senior skilled stellar successful talented vibrant',
+ attitude:'attractive confident exciting incredible interesting intriguing notable outstanding remarkable surprising excellent',
+ problem:'alarming daunting desperate devastating dire dismal elusive stark unanswered unmet'};
+const HYPEOF=new Map();Object.keys(HYPE).forEach(k=>HYPE[k].split(' ').forEach(w=>HYPEOF.set(w,k)));
+/* boosters and engagement markers: this page's own short lists, sorted by the categories of Hyland (2005) */
+const BOOSTW=new Set('actually always certainly clearly conclusively decidedly definitely doubtless evidently indeed indisputably never obviously surely truly undeniably undoubtedly unquestionably incontrovertible undeniable indisputable unquestionable'.split(' '));
+const BOOSTP=/\b(?:in fact|no doubt|without (?:a )?doubt|beyond (?:any |all )?doubt|it is (?:clear|certain|evident|obvious|well established) that|we (?:know|are certain|are confident) that|(?:prov|demonstrat|establish)(?:e|es|ed|en) that)\b/gi;
+const DIRW=new Set('consider note see suppose assume recall compare imagine observe notice let remember'.split(' '));
+const DIRP=/\((?:see|cf\.?|compare)\b|\bit is (?:important|necessary|essential|crucial|vital) to\b|\b(?:we|one|you|readers?|researchers) (?:must|should|need to|ought to)\b|\b(?:must|should) be (?:noted|remembered|stressed|emphasi[sz]ed|borne in mind)\b/gi;
+const SHAREP=/\b(?:of course|naturally(?=,)|as (?:we|is) (?:all )?known?|it is (?:well|widely|generally|commonly) (?:known|accepted|agreed|recogni[sz]ed|understood)|as is well known)\b/gi;
+/* common academic word sequences, this page's own short inventory, sorted by the three functions of Biber, Conrad & Cortes (2004) */
+const FORMULA={ref:'in terms of|in the context of|in the case of|on the basis of|the extent to which|the nature of the|the role of the|as part of the|with respect to|with regard to|in relation to|as a function of|the degree to which|the way in which|the ways in which|a wide range of|a number of|the majority of|in the form of|at the level of|as well as the|at the same time|the fact that the|one of the most|in the absence of|in the presence of|the total number of|the relationship between the'.split('|'),
+ stance:'it is possible that|it is likely that|it is important to|it is necessary to|it is clear that|it should be noted|it is difficult to|it is not clear|appears to be|is likely to be|are likely to|can be seen|it may be|we argue that|it is possible to|it can be argued|to the extent that|it has been suggested|there is no evidence'.split('|'),
+ org:'on the other hand|as a result of|in addition to the|in this paper we|in the present study|as shown in|as can be seen|in other words|in contrast to|as a consequence|in order to|due to the fact|the purpose of this|the aim of this|in the next section|as discussed above|as noted above|in conclusion|with the exception of|first of all|as opposed to'.split('|')};
 const HEDGE=S('may might could possibly perhaps probably likely apparently seemingly presumably potentially potential arguably somewhat relatively fairly rather roughly appear appears appeared seem seems seemed suggest suggests suggested tend tends tended possible plausible conceivably putative putatively');
 const HEDGEP=/\bto (some|a certain) extent\b|\bmore or less\b|\bin some cases\b/gi;
 const CHAINP=S('of in for on with by at from between among through during under over within into across against toward towards to');
@@ -134,6 +154,8 @@ const NEGSIG=/\b(?:not|no|never|without|fail(?:ed|s)? to|did not|does not|do not
 const PCT=[[/(\d[\d,]*)\s+(?:of|out of)\s+(?:the\s+)?(\d[\d,]*)\b[^.;()%]{0,40}\((\d+(?:\.\d+)?)\s?%\)/g,1,2,3],[/(\d+(?:\.\d+)?)\s?%\s*\(\s*(?:n\s*=\s*)?(\d[\d,]*)\s*\/\s*(\d[\d,]*)\s*\)/g,2,3,1],[/(\d[\d,]*)\s*\/\s*(\d[\d,]*)\s*[,(]\s*(\d+(?:\.\d+)?)\s?%/g,1,2,3]];
 /* ---- vocabulary level: New General Service List 1.2 and New Academic Word List 1.2 (Browne, Culligan & Phillips), CC BY-SA 4.0 ---- */
 const NGSL=new Set(NGSL_RAW.split(' ')),NAWL=new Set(NAWL_RAW.split(' '));
+/* optional lists: the New Dale-Chall familiar words, and the style words of Kobak et al. (2025) */
+const DALE=new Set((typeof DALE_RAW!=='undefined'?DALE_RAW:'').split(' ').filter(Boolean)),EXCESS=new Set((typeof EXCESS_RAW!=='undefined'?EXCESS_RAW:'').split(' ').filter(Boolean));
 const XTRA=S('one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand million billion zero first second third fourth fifth sixth seventh eighth ninth tenth monday tuesday wednesday thursday friday saturday sunday january february march april may june july august september october november december okay etc');
 const UKUS=[[/our(s?)$/,'or$1'],[/is(e|es|ed|ing|ation|ations)$/,'iz$1'],[/ys(e|es|ed|ing)$/,'yz$1'],[/tre(s?)$/,'ter$1'],[/ogue(s?)$/,'og$1'],[/ence$/,'ense'],[/^programme/,'program'],[/^grey/,'gray'],[/ll(ed|ing|er|ers)$/,'l$1']];
 const IRRF={};'was:be were:be been:be did:do done:do had:have went:go gone:go got:get gotten:get made:make said:say took:take taken:take came:come saw:see seen:see knew:know known:know gave:give given:give found:find thought:think told:tell became:become left:leave felt:feel brought:bring began:begin begun:begin kept:keep held:hold wrote:write written:write stood:stand heard:hear meant:mean met:meet ran:run paid:pay sat:sit spoke:speak spoken:speak laid:lay led:lead grew:grow grown:grow lost:lose fell:fall fallen:fall sent:send built:build understood:understand drew:draw drawn:draw broke:break broken:break spent:spend rose:rise risen:rise drove:drive driven:drive bought:buy wore:wear worn:wear chose:choose chosen:choose sought:seek threw:throw thrown:throw caught:catch dealt:deal won:win forgot:forget forgotten:forget shook:shake shaken:shake hung:hang struck:strike taught:teach sold:sell fought:fight slept:sleep ate:eat eaten:eat drank:drink drunk:drink sang:sing sung:sing swam:swim flew:fly flown:fly hid:hide hidden:hide bore:bear born:bear borne:bear beaten:beat shot:shoot bound:bind bred:breed fed:feed fled:flee froze:freeze frozen:freeze lent:lend rode:ride ridden:ride rang:ring rung:ring shone:shine shrank:shrink shrunk:shrink slid:slide spun:spin stole:steal stolen:steal stuck:stick swept:sweep swore:swear sworn:swear tore:tear torn:tear woke:wake woken:wake withdrew:withdraw withdrawn:withdraw arose:arise arisen:arise undertook:undertake undertaken:undertake underwent:undergo undergone:undergo overcame:overcome shown:show proven:prove women:woman men:man children:child feet:foot teeth:tooth mice:mouse lives:life phenomena:phenomenon hypotheses:hypothesis analyses:analysis crises:crisis'.split(' ').forEach(x=>{const q=x.split(':');IRRF[q[0]]=q[1];});
@@ -500,7 +522,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       else if(!zero&&!sm)mk('action',i,i,'dot hu-violet');}
     /* rhythm */
     let rv=v;if(v>=0)for(let j=first;j<v;j++){if(!VK[j])continue;let inSub=false;for(let q=j-1;q>=0;q--){if(!T[q].w){if(/^[,;:]$/.test(T[q].t))break;continue;}if(REL.has(T[q].l)||SUB.has(T[q].l)){inSub=true;break;}}if(!inSub){rv=j;break;}}
-    st.preV=rv>=0?wpos[rv]:null;st.joints=[];
+    st.preV=rv>=0?wpos[rv]:null;st.vTok=rv;st.joints=[];
     if(st.nW>=23){let dp=0,lastC=-1;
       const hasV=(a,b)=>{for(let j=Math.max(0,a);j<Math.min(N,b);j++)if(VK[j])return true;return false;};
       const J=(i,k,text,capN,label)=>{if(k>=N||pre[i]<5||st.nW-pre[k-1]<5)return;st.joints.push({s:st.s+T[i].s,e:st.s+T[k].s,text,cap:capN,label,w1:pre[i],w2:st.nW-pre[k-1]});
@@ -729,6 +751,10 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
   const wordOf=t=>{let w='',c=0;t.forms.forEach((n,f)=>{if(n>c||(n===c&&f.length<w.length)){w=f;c=n;}});return w;};
   const gT=[...termMap.values()].filter(t=>t.sents.length>=2).sort((a,b)=>b.sents.length-a.sents.length||b.count-a.count).slice(0,14);
   const grid={terms:gT.map(t=>{const cells={};let nL=0;(t.occ||[]).forEach(([s,side])=>{if(side==='L'||!cells[s])cells[s]=side;});Object.values(cells).forEach(v=>{if(v==='L')nL++;});return{k:t.k,w:wordOf(t),count:t.count,n:t.sents.length,first:t.sents[0],cells,nL};}),links:{}};
+  /* referential distance and persistence of each term, counted in sentences (after Givon 1983, who counted clauses) */
+  grid.terms.forEach(g=>{const ss=Object.keys(g.cells).map(Number).sort((a,b)=>a-b);let sum=0,mx=0,at=-1,ps=0;
+    for(let i=0;i<ss.length;i++){if(i){const d=ss[i]-ss[i-1];sum+=Math.min(d,20);if(d>mx){mx=d;at=ss[i];}}let r=0;while(i+r+1<ss.length&&ss[i+r+1]===ss[i]+r+1)r++;ps+=r;}
+    g.rd=ss.length>1?sum/(ss.length-1):null;g.rdMax=mx;g.rdAt=at;g.pers=ss.length?ps/ss.length:0;});
   sents.forEach(s=>{const k=s.link?s.link.type:'start';grid.links[k]=(grid.links[k]||0)+1;});
   grid.terms.slice(0,3).forEach(g=>{if(g.nL===0&&g.n>=3)add({lens:'grid',para:true,s:g.first,a:null,sev:2,title:'“'+g.w+'” is in '+g.n+' sentences and never before the verb',q:'Is this what the draft is about? Then should some sentences start from it?',detail:'It is one of the terms the draft uses most, yet each time it comes after the main verb. Readers take what comes before the verb as what a sentence is about, and what comes after as the news about it (Gopen & Swan 1990).',tip:'If the draft is about “'+g.w+'”, make it the subject of some of its sentences.'});});
   grid.terms.sort((a,b)=>a.first-b.first);
@@ -825,9 +851,17 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       R.pre={n:pv.length,median:pv.length?(pv.length%2?pv[(pv.length-1)/2]:(pv[pv.length/2-1]+pv[pv.length/2])/2):null,max:mx<0?null:mx,maxI:mi};}
     /* readability formulas, with syllables estimated from spelling */
     {const syl=x=>{x=x.toLowerCase().replace(/[^a-z]/g,'');if(!x)return 1;if(x.length<=3)return 1;x=x.replace(/(?:[^laeiouy]es|[^aeiouytd]ed|[^laeiouy]e)$/,'').replace(/^y/,'');const m=x.match(/[aeiouy]{1,2}/g);return m?m.length:1;};
-      let sy=0,poly=0,ch=0;sents.forEach(st=>st.T.forEach(tk=>{if(!tk.w)return;const k=syl(tk.t);sy+=k;if(k>=3)poly++;ch+=(tk.t.match(/[\p{L}\p{N}]/gu)||[]).length;}));
+      let sy=0,poly=0,ch=0,lett=0,long=0,dn=0,dhard=0;const hardW=new Map();
+      const famil=l=>{l=l.replace(/[’'.]/g,'');if(DALE.has(l))return true;for(const c of lemmas(l))if(DALE.has(c))return true;return false;};
+      sents.forEach(st=>{let fw=-1;st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;const k=syl(tk.t);sy+=k;if(k>=3)poly++;ch+=(tk.t.match(/[\p{L}\p{N}]/gu)||[]).length;
+        const L=(tk.t.match(/\p{L}/gu)||[]).length;lett+=L;if(L>6)long++;
+        if(DALE.size){dn++;const proper=tk.l!=='i'&&(/[A-Z]/.test(tk.t.slice(1))||(i!==fw&&/^[A-Z]/.test(tk.t)));
+          if(!(/\d/.test(tk.t)||proper||famil(tk.l)||(tk.l.indexOf('-')>0&&tk.l.split('-').every(famil)))){dhard++;hardW.set(tk.l,(hardW.get(tk.l)||0)+1);}}});});
       if(n&&nWd){const asl=nWd/n,asw=sy/nWd,fk=0.39*asl+11.8*asw-15.59,ari=4.71*(ch/nWd)+0.5*asl-21.43,smog=1.043*Math.sqrt(poly*30/n)+3.1291;
-        R.read={fre:206.835-1.015*asl-84.6*asw,fk,ari,smog,lo:Math.min(fk,ari,smog),hi:Math.max(fk,ari,smog),n};}else R.read=null;}
+        const cl=0.0588*(100*lett/nWd)-0.296*(100*n/nWd)-15.8,fog=0.4*(asl+100*poly/nWd),lix=asl+100*long/nWd,pdw=dn?100*dhard/dn:0;
+        R.read={fre:206.835-1.015*asl-84.6*asw,fk,ari,smog,cl,fog,lix,long:100*long/nWd,
+          dale:DALE.size?{pdw,score:0.1579*pdw+0.0496*asl+(pdw>5?3.6365:0),n:dn,hard:[...hardW.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,12)}:null,
+          lo:Math.min(fk,ari,smog,cl,fog),hi:Math.max(fk,ari,smog,cl,fog),n};}else R.read=null;}
     /* negation: density, litotes with a plain form, and two negatives in one clause */
     const LIT={uncommon:'common',unlikely:'likely',unusual:'usual',unreasonable:'reasonable',unimportant:'important',unrelated:'related',unlike:'like',infrequent:'frequent',infrequently:'often',inconsiderable:'considerable',inconsistent:'consistent',impossible:'possible',implausible:'plausible',improbable:'probable',dissimilar:'similar',unaware:'aware',unwilling:'willing',unexpected:'expected',unfamiliar:'familiar',unjustified:'justified',irrelevant:'relevant',unhelpful:'helpful',unwelcome:'welcome',without:'with'};
     const LITRE=new RegExp('\\bnot ('+Object.keys(LIT).join('|')+')\\b','gi');let stack=0;
@@ -911,6 +945,70 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         const sf=new Map(),s0=new Map();sT.forEach(tk=>{if(!isContent(tk))return;const k=stem(tk.l);sf.set(k,(sf.get(k)||0)+1);if(!s0.has(k))s0.set(k,tk.l);});
         const dk=[...freq.keys()],key=[...sf.entries()].filter(x=>x[1]>=2).sort((x,y)=>y[1]-x[1]).slice(0,12).map(([k,c])=>({w:s0.get(k),c,used:freq.has(k)||dk.some(d=>near(d,k))}));
         R.source={n:sw.length,N:SN,shared,share:nWd?shared/nWd:0,runs,quoted,key};}}
+
+    /* running-word coverage by the two word lists; proper nouns are counted apart (Nation 2006) */
+    {let cn0=0,cg=0,ca=0,co=0,cp=0;
+      sents.forEach(st=>{let fw=-1;st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;if(!/^\p{L}[\p{L}'’-]*$/u.test(tk.t))return;cn0++;
+        if(tk.l!=='i'&&(/[A-Z]/.test(tk.t.slice(1))||(i!==fw&&/^[A-Z]/.test(tk.t)))){cp++;return;}
+        const lv=wordLevel(tk.l);if(lv<=0)cg++;else if(lv===1)ca++;else co++;});});
+      R.cover={n:cn0,ngsl:cg,nawl:ca,off:co,proper:cp,share:cn0?(cg+ca)/cn0:0,shareP:cn0?(cg+ca+cp)/cn0:0};}
+    /* thematic progression: where the opening of each sentence comes from (Danes 1974) */
+    {const BACK=S('it they this these those he she such both each'),tot={constant:0,linear:0,ret:0,ref:0,fresh:0};let tn=0;
+      const split=st=>{const th=new Set(),rh=new Set(),v=st.vTok!=null&&st.vTok>=0?st.vTok:(st.topic?st.topic[1]+1:0);st.cw.forEach(c=>{(c.i<v?th:rh).add(c.k);});let fw=null;for(const tk of st.T){if(tk.w){fw=tk.l;break;}}
+        return{th,rh,back:fw!=null&&BACK.has(fw),we:fw==='we'||fw==='i'||fw==='our'||fw==='my'};};
+      const hit=(a,b)=>{for(const k of a)if(b.has(k))return k;return null;};
+      body.forEach(p=>{p.prog=null;if(p.sents.length<2)return;const parts=p.sents.map(i=>split(sents[i])),seq=[],cnt={constant:0,linear:0,ret:0,ref:0,fresh:0};
+        for(let q=1;q<parts.length;q++){const c=parts[q],pv=parts[q-1];let kind='fresh',k=null;
+          if((k=hit(c.th,pv.th))||(c.we&&pv.we&&!c.th.size))kind='constant';else if((k=hit(c.th,pv.rh)))kind='linear';
+          else{for(let z=q-2;z>=0&&!k;z--)k=hit(c.th,parts[z].th)||hit(c.th,parts[z].rh);if(k)kind='ret';else if(c.back)kind='ref';}
+          seq.push({i:p.sents[q],kind,w:k?wOf.get(k)||k:null});cnt[kind]++;tot[kind]++;tn++;sents[p.sents[q]].prog=kind;}
+        const m=seq.length;p.prog={seq,cnt,label:cnt.constant>=m/2&&cnt.constant>cnt.linear?'constant':cnt.linear>=m/2&&cnt.linear>cnt.constant?'linear':cnt.fresh>m/2?'fresh':'mixed'};});
+      R.prog=Object.assign({n:tn},tot);}
+    /* where the connective sits: before the main verb, after it, or absent */
+    {let b=0,a=0,z=0;sents.forEach(st=>{if(!st.conn.length){z++;st.trans='none';return;}const v=st.vTok!=null&&st.vTok>=0?st.T[st.vTok].s:Infinity;if(st.conn.some(c=>c.a<v)){b++;st.trans='before';}else{a++;st.trans='after';}});R.trans={before:b,after:a,none:z,n};}
+    /* words on the excess-vocabulary list of Kobak et al. (2025): style words only, function words set aside */
+    {const cnt=new Map();let xn=0;const XS=[...EXCESS].filter(w=>!isFunc(w)&&w.length>3);const XSet=new Set(XS);
+      if(XSet.size)sents.forEach(st=>{const LW=st.marks.worn||(st.marks.worn=[]);st.T.forEach(tk=>{if(!tk.w||!XSet.has(tk.l))return;xn++;cnt.set(tk.l,(cnt.get(tk.l)||0)+1);
+        if(wordLevel(tk.l)===2&&!LW.some(m=>m.a<tk.e&&tk.s<m.b))LW.push({a:tk.s,b:tk.e,cls:'ul hu-ink',tip:'On the list of words that became much more common in research abstracts in 2023 and 2024 (Kobak et al. 2025). The word itself is fine. Ask whether it is the word you would have chosen.'});});});
+      R.excess=XSet.size?{n:xn,per:per(xn),types:cnt.size,list:XSet.size,words:[...cnt.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,14)}:null;}
+    /* promotional adjectives, in the eight groups of Millar, Batalo & Budgell (2022) */
+    {const by={},cnt=new Map();let hn=0;Object.keys(HYPE).forEach(k=>{by[k]=0;});
+      sents.forEach(st=>{const LC=st.marks.claims||(st.marks.claims=[]),stat=/\bp\s*[<=>]|\bstatistically\b|\bsignificance\b/i.test(st.text);st.T.forEach((tk,i)=>{if(!tk.w)return;const cat=HYPEOF.get(tk.l);if(!cat)return;
+        if(tk.l==='significant'&&stat)return;if(tk.l==='first'){const nx=st.T[i+1];if(!nx||!nx.w||!/^(?:study|studies|evidence|report|demonstration|time|to|systematic|comprehensive|direct|empirical|large-scale)$/.test(nx.l))return;}
+        if((tk.l==='key'||tk.l==='quality'||tk.l==='top'||tk.l==='major'||tk.l==='senior'||tk.l==='ready'||tk.l==='rich'||tk.l==='strong'||tk.l==='broad'||tk.l==='international'||tk.l==='scientific'||tk.l==='immediate')&&!(st.T[i+1]&&st.T[i+1].w&&!isFunc(st.T[i+1].l)))return;
+        hn++;by[cat]++;cnt.set(tk.l,(cnt.get(tk.l)||0)+1);
+        if(!LC.some(m=>m.a<tk.e&&tk.s<m.b))LC.push({a:tk.s,b:tk.e,cls:'ul hu-amber',tip:'An adjective that often promotes (group: '+cat+'; Millar, Batalo & Budgell 2022). Could you delete it, or swap in a neutral word, and lose no information?'});});});
+      R.hype={n:hn,per:per(hn),by,words:[...cnt.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,14).map(([w,c])=>[w,c,HYPEOF.get(w)])};}
+    /* stance and engagement, in the categories of Hyland (2005); the word lists are this page's own */
+    {let hd=0,bo=0,you=0,dir=0,qn=0,shared=0;
+      sents.forEach(st=>{const text=st.text,LH=st.marks.hedge||(st.marks.hedge=[]);let m,fw=null;const put=(a,b,cls,tip)=>{if(!LH.some(x=>x.a<b&&a<x.b))LH.push({a,b,cls,tip});};
+        st.T.forEach(tk=>{if(!tk.w)return;if(fw==null)fw=tk;if(HEDGE.has(tk.l))hd++;else if(BOOSTW.has(tk.l)){bo++;put(tk.s,tk.e,'ul hu-amber','A booster: a word that raises the certainty of the claim (Hyland 2005).');}else if(tk.l==='you'||tk.l==='your'||tk.l==='yours'){you++;put(tk.s,tk.e,'ul hu-blue','This addresses the reader directly (Hyland 2005).');}});
+        HEDGEP.lastIndex=0;while((m=HEDGEP.exec(text)))hd++;
+        BOOSTP.lastIndex=0;while((m=BOOSTP.exec(text))){bo++;put(m.index,m.index+m[0].length,'ul hu-amber','A booster: wording that raises the certainty of the claim (Hyland 2005).');}
+        if(fw&&DIRW.has(fw.l)&&/^[A-Z]/.test(fw.t)){dir++;put(fw.s,fw.e,'ul hu-blue','A directive: it tells the reader to do something (Hyland 2005).');}
+        DIRP.lastIndex=0;while((m=DIRP.exec(text))){dir++;put(m.index,m.index+m[0].length,'ul hu-blue','A directive: it tells the reader what to do or what matters (Hyland 2005).');}
+        SHAREP.lastIndex=0;while((m=SHAREP.exec(text))){shared++;put(m.index,m.index+m[0].length,'ul hu-blue','An appeal to shared knowledge: it treats the point as something the reader already accepts (Hyland 2005).');}
+        if(/\?["”’)]*\s*$/.test(text))qn++;});
+      R.stance={hedge:hd,boost:bo,hper:per(hd),bper:per(bo),eng:{you,dir,q:qn,shared}};}
+    /* word sequences: four-word runs the draft repeats, and common academic formulas by function (Biber, Conrad & Cortes 2004) */
+    {const g4=new Map(),fc={ref:0,stance:0,org:0},found=new Map();
+      sents.forEach(st=>{const W=st.T.filter(t=>t.w).map(t=>t.l);for(let i=0;i+4<=W.length;i++){const k=W.slice(i,i+4).join(' ');g4.set(k,(g4.get(k)||0)+1);}
+        const low=' '+W.join(' ')+' ';Object.keys(FORMULA).forEach(f=>FORMULA[f].forEach(ph=>{let at=low.indexOf(' '+ph+' ');while(at>=0){fc[f]++;found.set(ph,(found.get(ph)||0)+1);at=low.indexOf(' '+ph+' ',at+1);}}));});
+      const rep=[...g4.entries()].filter(x=>x[1]>=2).sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])),pick=[];
+      rep.forEach(([k,c])=>{if(pick.length>=8)return;const w=k.split(' ');if(pick.some(([q])=>{const v=q.split(' ');return v.slice(1).join(' ')===w.slice(0,3).join(' ')||w.slice(1).join(' ')===v.slice(0,3).join(' ');}))return;pick.push([k,c]);});
+      const fn=fc.ref+fc.stance+fc.org;R.bundles={rep:rep.length,grams:pick,form:fc,n:fn,per:per(fn),found:[...found.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,10)};}
+    /* GRIM: can a mean of whole-number scores from N people come out at this value? (Brown & Heathers 2017) */
+    {let gt=0,gf=0;const NRE=/\b[Nn]\s*=\s*(\d{1,4})\b|\b(\d{1,4})\s+(?:participants|respondents|students|people|subjects|children|adults|patients|women|men|teachers|employees|workers|pupils|interviewees|learners|users|voters|nurses|individuals)\b/g,
+        MRE=/\b(?:M|[Mm]ean(?: [a-z-]+){0,3}?|[Aa]verage(?: [a-z-]+){0,3}?)\s*(?:=|:|of|was|is)\s*(\d+\.(\d{1,2}))(?!\d)/g;
+      sents.forEach(st=>{const text=st.text,Ns=new Set();let m;NRE.lastIndex=0;while((m=NRE.exec(text)))Ns.add(+(m[1]||m[2]));if(Ns.size!==1)return;const N=[...Ns][0];if(N<2)return;
+        MRE.lastIndex=0;while((m=MRE.exec(text))){const d=m[2].length,mean=parseFloat(m[1]);if(N>=Math.pow(10,d))continue;gt++;const x=mean*N,tol=0.5*Math.pow(10,-d)+1e-9,lo=Math.floor(x),hi=Math.ceil(x);
+          if(Math.abs(lo/N-mean)<=tol||Math.abs(hi/N-mean)<=tol)continue;gf++;
+          const a=m.index+m[0].length-m[1].length,b=m.index+m[0].length,nr=[...new Set([lo/N,hi/N].map(v=>v.toFixed(d)))].join(' and ');
+          const id=add({lens:'checks',s:st.i,a,b,sev:2,title:'A mean of '+m[1]+' with N = '+N,q:'Is each score a whole number, and did all '+N+' people give one?',
+            detail:'If '+N+' people each give a whole-number score, their mean is a whole number divided by '+N+'. No such mean rounds to '+m[1]+'. The nearest are '+nr+'. This is the GRIM test (Brown & Heathers 2017). A mean from a scale that averages several items, or from fewer people than the N in this sentence, can still be right.',
+            tip:'Check the mean and the N against your data. If the scores are not whole numbers, or the scale averages several items, mark the note as checked.'});
+          (st.marks.checks||(st.marks.checks=[])).push({a,b,cls:'hl hb-olive',f:id});}});
+      R.grim={tested:gt,flagged:gf};}
     return R;})();
   findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title))f.nouns=pw;});
   /* lens moves: empty openers sit with clutter; typing slips and source matches have lenses of their own */
@@ -926,5 +1024,31 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
   const rAll=rstat(sents.map(s=>s.nW),sents.map(s=>s.preV));rAll.npvi=rPairN?100*rPair/rPairN:null;
   return{paras,sents,findings,tracer,terms,jobs:jobsOut,vocab:vocabOut,grid,moves:movesOut,research,rhythm:{all:rAll,flat:flatN},stats:{nS:sents.length,nW,avg:sents.length?nW/sents.length:0,max:sents.reduce((a,s)=>Math.max(a,s.nW),0)}};
 }
-return{analyze,parse,stem,isFunc,EVID,JOBS,PB,JOBPB,MOVES};
+/* what kind of change a rewrite made: wording only, or content added and removed (after Faigley & Witte 1981) */
+function revKind(a,b){const ks=t=>{const m=new Map();tokenize(t).forEach(tk=>{if(isContent(tk)){const k=stem(tk.l);if(!m.has(k))m.set(k,tk.l);}});return m;},A=ks(a),B=ks(b),
+  has=(M,k)=>{if(M.has(k))return true;for(const x of M.keys())if(near(x,k))return true;return false;},added=[],removed=[];
+  B.forEach((w,k)=>{if(!has(A,k))added.push(w);});A.forEach((w,k)=>{if(!has(B,k))removed.push(w);});
+  return{kind:!added.length&&!removed.length?'surface':added.length&&removed.length?'both':added.length?'add':'cut',added,removed};}
+/* optional word norms. The files are read as published; nothing in them is changed. */
+function parseNorms(src){const N={conc:new Map(),aoa:new Map(),zipf:new Map(),prev:new Map()},lines=t=>(t||'').replace(/^﻿/,'').split(/\r?\n/).slice(1);
+  const phi=z=>{const t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>=0?1-p:p;};
+  lines(src.conc).forEach(l=>{const c=l.split('\t');if(c.length>2&&c[1]==='0'){const v=+c[2];if(v)N.conc.set(c[0].toLowerCase(),v);}});
+  lines(src.aoa).forEach(l=>{const c=l.split(','),v=+c[4];if(c[0]&&v)N.aoa.set(c[0].toLowerCase(),v);});
+  lines(src.freq).forEach(l=>{const c=l.split(','),v=+c[c.length-1];if(c[0]&&v)N.zipf.set(c[0].toLowerCase(),v);});
+  lines(src.prev).forEach(l=>{const c=l.split('\t');if(c[0]&&c[1]!==undefined&&c[1]!=='')N.prev.set(c[0].toLowerCase(),phi(+c[1]));});
+  return N;}
+function norms(A,N){const look=(M,l)=>{let v=M.get(l);if(v!=null)return v;for(const c of lemmas(l)){v=M.get(c);if(v!=null)return v;}return null;};
+  const acc=()=>({n:0,sum:0,miss:0}),C=acc(),Ao=acc(),Z=acc(),P=acc(),seen=new Map(),per=[];let lowP=0,rare=0;
+  A.sents.forEach(st=>{let fw=-1,sc=0,sn=0;const cwI=new Set(st.cw.map(c=>c.i));
+    st.T.forEach((tk,i)=>{if(!tk.w)return;if(fw<0)fw=i;if(!/^[a-z][a-z'’-]*$/i.test(tk.t))return;if(tk.l!=='i'&&(/[A-Z]/.test(tk.t.slice(1))||(i!==fw&&/^[A-Z]/.test(tk.t))))return;
+      const l=tk.l.replace(/[’']s$/,'').replace(/[’']/g,''),zz=look(N.zipf,l);if(zz!=null){Z.n++;Z.sum+=zz;if(zz<3)rare++;}else{Z.miss++;rare++;}
+      if(!cwI.has(i))return;let e=seen.get(l);if(!e){e={w:l,c:0,conc:look(N.conc,l),aoa:look(N.aoa,l),prev:look(N.prev,l),zipf:zz,s:st.i};seen.set(l,e);}e.c++;
+      if(e.conc!=null){C.n++;C.sum+=e.conc;sc+=e.conc;sn++;}else C.miss++;
+      if(e.aoa!=null){Ao.n++;Ao.sum+=e.aoa;}else Ao.miss++;
+      if(e.prev!=null){P.n++;P.sum+=e.prev;if(e.prev<0.9)lowP++;}else P.miss++;});
+    per.push(sn>=3?sc/sn:null);});
+  const W=[...seen.values()],top=(f,dir,k)=>W.filter(e=>e[f]!=null).sort((a,b)=>dir*(a[f]-b[f])||a.w.localeCompare(b.w)).slice(0,k).map(e=>({w:e.w,v:e[f],s:e.s})),mean=a=>a.n?a.sum/a.n:null;
+  return{conc:{mean:mean(C),n:C.n,miss:C.miss,low:top('conc',1,8)},aoa:{mean:mean(Ao),n:Ao.n,miss:Ao.miss,high:top('aoa',-1,8)},zipf:{mean:mean(Z),n:Z.n,miss:Z.miss,rare,low:top('zipf',1,8)},
+    prev:{mean:mean(P),n:P.n,miss:P.miss,under90:lowP,low:top('prev',1,8)},abstract:per.map((v,i)=>({i,v})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v).slice(0,3),sent:per};}
+return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();

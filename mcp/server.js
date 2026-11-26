@@ -19,7 +19,9 @@ const VERSION = (read('CITATION.cff').match(/^version:\s*(\S+)/m) || [, '0'])[1]
 
 /* The rule engine is the same file the page uses. It needs the two word lists in front of it. */
 const lists = 'const NGSL_RAW=' + JSON.stringify(read('src/ngsl.txt').split(/\s+/).join(' ')) +
-  ';const NAWL_RAW=' + JSON.stringify(read('src/nawl.txt').split(/\s+/).join(' ')) + ';';
+  ';const NAWL_RAW=' + JSON.stringify(read('src/nawl.txt').split(/\s+/).join(' ')) +
+  ';const DALE_RAW=' + JSON.stringify(read('src/dalechall.txt').split(/\s+/).join(' ')) +
+  ';const EXCESS_RAW=' + JSON.stringify(read('src/excess.txt').split(/\s+/).join(' ')) + ';';
 const E = new Function(lists + read('src/engine.js') + ';return E;')();
 const GUIDE = JSON.parse(read('mcp/guide.json')).lenses;
 const LENS = Object.fromEntries(GUIDE.map(l => [l.key, l]));
@@ -53,6 +55,17 @@ function note(A, text, f, reveal) {
   return o;
 }
 
+/* Optional word norms: used when the four files are in data/norms/. They keep their authors' licences. */
+let NORMS = null;
+try {
+  const d = 'data/norms/';
+  NORMS = E.parseNorms({ conc: read(d + 'Concreteness_ratings_Brysbaert_et_al_BRM.txt'), aoa: read(d + 'AoA_ratings_Kuperman_et_al_BRM.csv'), freq: read(d + 'SUBTLEX-US_frequency_list_with_PoS_and_Zipf.csv'), prev: read(d + 'word_prevalence_Brysbaert_et_al_2019.txt') });
+} catch (e) { NORMS = null; if (process.env.TE_DEBUG) console.error(String(e)); }
+function wordNorms(A) {
+  if (!NORMS) return null;
+  const M = E.norms(A, NORMS), r2 = v => v == null ? null : Math.round(v * 100) / 100;
+  return { mean_concreteness_of_content_words_1_to_5: r2(M.conc.mean), mean_age_of_acquisition_of_content_words: r2(M.aoa.mean), mean_share_of_people_who_know_each_content_word_pct: M.prev.mean == null ? null : r1(100 * M.prev.mean), content_words_known_to_fewer_than_nine_in_ten: M.prev.under90, mean_zipf_frequency_of_all_words: r2(M.zipf.mean), rare_words_zipf_under_3_or_unlisted: M.zipf.rare, content_words_with_a_concreteness_rating: M.conc.n, content_words_without_one: M.conc.miss };
+}
 function profile(A) {
   const R = A.research, O = R.over, X = R.read;
   return {
@@ -63,7 +76,17 @@ function profile(A) {
     words_used_once: { content_words_used_once: R.once.once, different_content_words: R.once.types },
     word_variety: { mtld: R.lex.mtld == null ? null : r1(R.lex.mtld), mattr_50: R.lex.mattr == null ? null : Math.round(R.lex.mattr * 100) / 100, words_counted: R.lex.n },
     wait_for_the_verb: { median_words_before_main_verb: R.pre.median, longest: R.pre.max, longest_is_sentence: R.pre.maxI >= 0 ? R.pre.maxI + 1 : null },
-    readability_formulas: X ? { flesch_reading_ease: r1(X.fre), flesch_kincaid_grade: r1(X.fk), ari_grade: r1(X.ari), smog_grade: r1(X.smog) } : null,
+    readability_formulas: X ? { flesch_reading_ease: r1(X.fre), flesch_kincaid_grade: r1(X.fk), ari_grade: r1(X.ari), smog_grade: r1(X.smog), coleman_liau_grade: r1(X.cl), gunning_fog_grade: r1(X.fog), lix: r1(X.lix), words_longer_than_six_letters_pct: r1(X.long), dale_chall_1948_score: X.dale ? r1(X.dale.score) : null, words_off_the_dale_chall_list_pct: X.dale ? r1(X.dale.pdw) : null } : null,
+    word_list_coverage: R.cover ? { running_words: R.cover.n, on_ngsl_or_nawl_pct: pct(R.cover.ngsl + R.cover.nawl, R.cover.n), with_proper_nouns_counted_as_known_pct: pct(R.cover.ngsl + R.cover.nawl + R.cover.proper, R.cover.n), on_neither_list: R.cover.off, proper_nouns: R.cover.proper } : null,
+    thematic_progression: R.prog ? { sentences_after_the_first_in_their_paragraph: R.prog.n, same_topic_as_sentence_before: R.prog.constant, opens_from_close_of_sentence_before: R.prog.linear, returns_to_an_earlier_sentence: R.prog.ret, opens_with_a_pronoun_alone: R.prog.ref, opens_on_words_new_to_the_paragraph: R.prog.fresh } : null,
+    topic_continuity: A.grid.terms.filter(g => g.rd != null).slice(0, 8).map(g => ({ term: g.w, sentences: g.n, mean_gap_in_sentences: r1(g.rd), longest_gap: g.rdMax, persistence: r1(g.pers) })),
+    transition_profile: R.trans ? { connective_before_main_verb: R.trans.before, connective_only_after_main_verb: R.trans.after, no_connective: R.trans.none } : null,
+    word_sequences: R.bundles ? { common_academic_sequences_per_1000_words: r1(R.bundles.per), referential: R.bundles.form.ref, stance: R.bundles.form.stance, discourse_organising: R.bundles.form.org, repeated_four_word_runs: R.bundles.rep } : null,
+    stance_and_engagement: R.stance ? { hedges: R.stance.hedge, boosters: R.stance.boost, hedges_per_1000_words: r1(R.stance.hper), boosters_per_1000_words: r1(R.stance.bper), reader_pronouns: R.stance.eng.you, directives: R.stance.eng.dir, questions: R.stance.eng.q, appeals_to_shared_knowledge: R.stance.eng.shared } : null,
+    promotional_adjectives: R.hype ? Object.assign({ per_1000_words: r1(R.hype.per), total: R.hype.n }, R.hype.by) : null,
+    excess_vocabulary: R.excess ? { per_1000_words: r1(R.excess.per), uses: R.excess.n, different_words: R.excess.types } : null,
+    grim: R.grim ? { means_that_could_be_tested: R.grim.tested, means_that_fail: R.grim.flagged } : null,
+    word_norms: wordNorms(A),
     passives: { total: R.pas.n, with_no_agent: R.pas.agentless },
     negatives: { per_1000_words: r1(R.neg.per), stacked: R.neg.stack },
     tense: { neighbouring_sentences_keeping_the_same_tense_pct: pct(R.tense.same, R.tense.pairs) },

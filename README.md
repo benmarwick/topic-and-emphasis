@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.6.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.7.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.6.0},
+  version = {0.7.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -132,7 +132,26 @@ You do not need to clear every note. A note is a question about the sentence, an
 
 ### Research profile
 
-The Overview carries a **Research profile**: 17 counts that writing researchers use to describe a text, each recomputed here by a fixed rule and each shown with the publication it comes from and a line on how to read it. They describe a draft. None is a score and none has a target. The same counts appear in a "Research measure" box inside the lens they belong to, with what the research found and how the rule-based count differs from the published one.
+The Overview carries a **Research profile**: 22 counts that writing researchers use to describe a text, each recomputed here by a fixed rule and each shown with the publication it comes from and a line on how to read it. They describe a draft. None is a score and none has a target. The same counts appear in a "Research measure" box inside the lens they belong to, with what the research found and how the rule-based count differs from the published one.
+
+### Added in 0.7.0: more measures, word lists and word norms
+
+| Where | What | Source |
+|---|---|---|
+| Length & rhythm | Three more readability formulas beside Flesch-Kincaid, ARI and SMOG: **Coleman-Liau**, **Gunning Fog** and **LIX**, plus the **Dale-Chall** score with the share of words off its list of familiar words. Coleman-Liau, ARI and LIX need no syllable estimate, so they are exact for the text. | [Coleman & Liau 1975](https://doi.org/10.1037/h0076540) · Björnsson 1968 · [Anderson 1983](https://www.jstor.org/stable/40031755) · Gunning 1952 · [Dale & Chall 1948](https://www.jstor.org/stable/1473169) · Chall & Dale 1995 · [Mac et al. 2022](https://pmc.ncbi.nlm.nih.gov/articles/PMC9856555/) |
+| Vocabulary level | **Running-word coverage**: the share of all words that are on the NGSL or NAWL, with proper nouns counted apart. | [Nation 2006](https://www.wgtn.ac.nz/__data/assets/pdf_file/0018/1626120/2006-How-large-a-vocab.pdf) |
+| Vocabulary level | **Word norms** (optional data, loaded on request): concreteness, age of acquisition, prevalence and frequency of the draft's words, with the most abstract, latest-learned, least-known and rarest words and the most abstract sentences. | [Brysbaert et al. 2014](https://doi.org/10.3758/s13428-013-0403-5) · [Kuperman et al. 2012](https://doi.org/10.3758/s13428-012-0210-4) · [Brysbaert et al. 2019](https://doi.org/10.3758/s13428-018-1077-9) · [Brysbaert & New 2009](https://doi.org/10.3758/BRM.41.4.977) · [van Heuven et al. 2014](https://doi.org/10.1080/17470218.2013.850521) |
+| Topic grid | **Thematic progression**: a strip above each paragraph showing whether each sentence keeps the topic of the one before, opens from where it closed, returns to an earlier sentence, or opens on new words. **Referential distance and persistence** for each recurring term. | [Daneš 1974](https://www.coli.uni-saarland.de/~korbay/Courses/esslli04/Scans/danes74.pdf) · [Givón 1983](https://doi.org/10.1075/tsl.3) · Witte 1983 · [Connor & Farmer 1990](https://doi.org/10.1017/CBO9781139524551.013) · [Barzilay & Lapata 2008](https://doi.org/10.1162/coli.2008.34.1.1) |
+| Signal phrases | **Transition profile** (a connective before the main verb, only after it, or none), common academic word sequences by function, and four-word runs the draft repeats. | [Biber, Conrad & Cortes 2004](https://doi.org/10.1093/applin/25.3.371) · [Simpson-Vlach & Ellis 2010](https://public.websites.umich.edu/~ncellis/NickEllis/Publications_files/AFL_paper_AppLinxPrepub.pdf) |
+| Hedging | **Boosters** and **reader engagement** (reader pronouns, directives, questions, appeals to shared knowledge) counted beside hedges, and underlined in the text. | [Hyland 2005](https://doi.org/10.1177/1461445605050365) |
+| Claim strength | **Promotional adjectives** in eight groups, underlined in the text. | [Millar, Batalo & Budgell 2022](https://doi.org/10.1001/jamanetworkopen.2022.28676) |
+| Vague & worn words | Words on the **excess-vocabulary** list: style words that became much more common in research abstracts in 2023 and 2024. | [Kobak et al. 2025](https://doi.org/10.1126/sciadv.adt3813) |
+| Mechanical checks | **GRIM**: a question on any mean that cannot come from whole-number scores for the sample size in the same sentence. | [Brown & Heathers 2017](https://doi.org/10.1177/1948550616673876) |
+| Before & after | Each rewritten sentence is labelled as **wording only**, **content added**, **content removed** or both, and the revision receipt counts each kind. | Faigley & Witte 1981 |
+
+None of these raises a note except GRIM, which asks a question. The word norms keep their authors' non-commercial licences; see [`data/README.md`](data/README.md). The Academic Formulas List is not included, because it carries no open licence. References with no link above are books, or articles whose DOI could not be confirmed; their full details are in the page's reference list.
+
+`tests/readability/` holds five fixed passages, this page's figures for them, and two scripts (Python with textstat, R with quanteda.textstats; [Benoit et al. 2018](https://doi.org/10.21105/joss.00774)) that record what those calculators give for the same passages, because readability calculators are known to disagree.
 
 ### Meaning model (optional)
 
@@ -236,5 +255,7 @@ The code of this application was written with the assistance of an AI coding too
 [MIT](LICENSE) © 2026 Ben Marwick.
 
 The application includes the **New General Service List** and the **New Academic Word List** (version 1.2 of each) by Charles Browne, Brent Culligan and Joseph Phillips, under a [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) licence. The typefaces (IBM Plex and Newsreader, SIL Open Font License) are loaded from Google Fonts when the page opens and are not included in this repository.
+
+The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The Dale-Chall list and the excess-vocabulary list are MIT-licensed. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
 
 The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT).
