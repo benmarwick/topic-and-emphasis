@@ -1,0 +1,1158 @@
+{
+ "lenses": [
+  {
+   "key": "overview",
+   "name": "Overview",
+   "group": "Overview",
+   "reads": "Every open note from every lens, underlined. Tap a sentence to open it for rewriting. Pick a lens to see the whole structure it reads, including the parts that are working. The guided pass walks you through the notes one at a time.",
+   "to_revise": null,
+   "marks": [],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": null,
+   "sources": []
+  },
+  {
+   "key": "sv",
+   "name": "Subject → verb",
+   "group": "Gopen & Swan’s principles",
+   "reads": "Readers wait for the verb. Until it arrives they hold the subject in suspense, and whatever sits in between reads as an interruption that carries less weight.",
+   "to_revise": "Bring the verb up to its subject. Material that matters gets its own clause or sentence. Material that does not can go.",
+   "marks": [
+    {
+     "label": "subject and verb",
+     "meaning": "Subject or main verb. Once readers have the subject, they wait for the verb."
+    },
+    {
+     "label": "what separates them",
+     "meaning": "These words stand between the subject and its verb. Readers treat them as an interruption."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Coh-Metrix counts the words before the main verb as a measure of syntactic complexity (McNamara et al. 2014). Holding a subject in mind until its verb arrives costs working memory (Gibson 1998). In 120 student essays this was the strongest of three measures that separated the higher-rated from the lower-rated, and the better essays had more words before the main verb: 4.9 on average against 4.1 (McNamara et al. 2010). A long wait is a cost to weigh against what the opening does. It is not an error.",
+    "how_this_count_differs": "The main verb is found by rules, not by a parser, so an unusual sentence can be misread. Open the sentence and check which verb is marked."
+   },
+   "with_meaning_model": null,
+   "limits": "The subject and the main verb are found by rules, not by a parser. A long or unusual sentence can be misread, so check which words are marked before acting on a note.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Gibson, E. (1998). Linguistic complexity: Locality of syntactic dependencies. Cognition, 68(1), 1–76.",
+     "doi": "10.1016/S0010-0277(98)00034-1",
+     "url": "https://doi.org/10.1016/S0010-0277(98)00034-1"
+    },
+    {
+     "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
+     "doi": "10.1017/CBO9780511894664",
+     "url": "https://doi.org/10.1017/CBO9780511894664"
+    }
+   ]
+  },
+  {
+   "key": "topic",
+   "name": "Topic position",
+   "group": "Gopen & Swan’s principles",
+   "reads": "The opening of a sentence tells readers whose story this is and how it connects to what they just read. Familiar material belongs there.",
+   "to_revise": "Open with something the reader has already met: a term, a pronoun, a phrase that sums up the last sentence. Keep one character at the head of most sentences in a paragraph.",
+   "marks": [
+    {
+     "label": "topic position",
+     "meaning": "Topic position: the opening of the sentence, where readers look for whose story this is and for a link to what they just read."
+    },
+    {
+     "label": "already met",
+     "meaning": "Already met: this word, or a close relative of it, appeared earlier in the draft."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "The lens sees what opens a sentence. It cannot tell whether that opening is the right topic for your argument.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
+     "doi": null,
+     "url": null
+    }
+   ]
+  },
+  {
+   "key": "stress",
+   "name": "Stress position",
+   "group": "Gopen & Swan’s principles",
+   "reads": "Readers give the most emphasis to whatever closes a sentence, or whatever comes just before a colon or semicolon. The new information you most want remembered belongs there.",
+   "to_revise": "Look at your last few words. If they are familiar, filler or a citation, move the news to the end, or trim the tail so the news lands last.",
+   "marks": [
+    {
+     "label": "stress position",
+     "meaning": "Stress position: the close of the sentence, or the words before a colon or semicolon. Readers weight it most."
+    },
+    {
+     "label": "new to the reader",
+     "meaning": "New to the reader: this word appears here for the first time."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "It judges the close by familiar words, filler and citations. It cannot tell whether what you ended on is the point you meant to stress.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    }
+   ]
+  },
+  {
+   "key": "flow",
+   "name": "Old → new",
+   "group": "Gopen & Swan’s principles",
+   "reads": "A sentence reads easily when it starts from what the reader already holds and travels toward what is new. News delivered before its context has nothing to attach to.",
+   "to_revise": "Reorder so familiar terms come first and new ones last. A passive verb is often the right tool for the job.",
+   "marks": [
+    {
+     "label": "old: seen earlier",
+     "meaning": "Old: this word, or a close relative of it, appeared earlier in the draft."
+    },
+    {
+     "label": "new: first appearance",
+     "meaning": "New: this word appears here for the first time."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Crossley, Kyle & McNamara call this givenness: how much of each sentence the reader can recover from what came before. It is the idea behind putting old information before new (Haviland & Clark 1974). In their study, essays with a higher ratio of pronouns to nouns were rated lower in quality (Crossley et al. 2016). A pronoun is given information only if the reader can tell what it points to.",
+    "how_this_count_differs": "This page has no part-of-speech tagger, so it cannot count nouns. It reports pronouns per 100 words where the study used pronouns per noun, and it counts only I, we, you, he, she, it, they and their object forms."
+   },
+   "with_meaning_model": null,
+   "limits": "“Old” means a word used in an earlier sentence, matched by its stem. A synonym or a pronoun counts as new.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Haviland, S. E., & Clark, H. H. (1974). What’s new? Acquiring new information as a process in comprehension. Journal of Verbal Learning and Verbal Behavior, 13(5), 512–521.",
+     "doi": "10.1016/S0022-5371(74)80003-4",
+     "url": "https://doi.org/10.1016/S0022-5371(74)80003-4"
+    },
+    {
+     "citation": "Crossley, S. A., Kyle, K., & McNamara, D. S. (2016). The tool for the automatic analysis of text cohesion (TAACO): Automatic assessment of local, global, and text cohesion. Behavior Research Methods, 48(4), 1227–1237.",
+     "doi": "10.3758/s13428-015-0651-7",
+     "url": "https://doi.org/10.3758/s13428-015-0651-7"
+    }
+   ]
+  },
+  {
+   "key": "action",
+   "name": "Action in verbs",
+   "group": "Gopen & Swan’s principles",
+   "reads": "Readers expect the verb to say what is happening. When the action is packed into a noun and the verb only reports that something was performed or occurred, they have to dig for it.",
+   "to_revise": "Find the buried action, make it the verb, and let its agent or its object be the subject.",
+   "marks": [
+    {
+     "label": "action held in a noun",
+     "meaning": "A noun that holds the action of this sentence."
+    },
+    {
+     "label": "other nominalizations",
+     "meaning": "A nominalization: a noun made from a verb. Fine when it names a known thing, costly when it hides the action."
+    },
+    {
+     "label": "verb that only reports",
+     "meaning": "A verb that only reports that something happened."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Nouns made from verbs are a main way academic prose compresses (Biber & Gray 2010), and phrase-level measures were the better predictors of rated quality in Kyle & Crossley (2018). So a high count is not a fault. Gopen and Swan’s fifth principle is narrower: the trouble starts when the noun holds the action and the verb is left empty. Those are the ones with a note.",
+    "how_this_count_differs": "A nominalisation is found by its ending (-tion, -sion, -ment) and a fixed list, so some are missed, and a few words that only look like one are counted."
+   },
+   "with_meaning_model": null,
+   "limits": "Nominalisations are found by their endings and a fixed list. Some are missed, and some nouns that end like one are legitimate terms.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Biber, D., & Gray, B. (2010). Challenging stereotypes about academic writing: Complexity, elaboration, explicitness. Journal of English for Academic Purposes, 9(1), 2–20.",
+     "doi": "10.1016/j.jeap.2010.01.001",
+     "url": "https://doi.org/10.1016/j.jeap.2010.01.001"
+    },
+    {
+     "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
+     "doi": null,
+     "url": "https://github.com/labarba/sciwrite"
+    },
+    {
+     "citation": "Kyle, K., & Crossley, S. A. (2018). Measuring syntactic complexity in L2 writing using fine-grained clausal and phrasal indices. The Modern Language Journal, 102(2), 333–349.",
+     "doi": "10.1111/modl.12468",
+     "url": "https://doi.org/10.1111/modl.12468"
+    }
+   ]
+  },
+  {
+   "key": "outline",
+   "name": "Reverse outline",
+   "group": "Is the argument clear?",
+   "reads": "Only the first and last sentence of each paragraph are shown. Read them straight through. A reader who skims sees roughly this, so your argument should survive it.",
+   "to_revise": "If the outline does not hold, rewrite the openings and closes so each paragraph states its issue first and its point last.",
+   "marks": [],
+   "research_measure": {
+    "what_the_research_found": "In the interactive textbooks studied by Morris et al. (2025), readers write a summary in their own words at the end of each section. The same move works on your own draft. Say what a paragraph is for, then check that the paragraph says it where readers look: at its opening or its close (Gopen & Swan 1990).",
+    "how_this_count_differs": "In that study trained language models score each summary. Here a fixed rule checks only whether at least half of your point’s content words appear in the first sentence or in the last. Nothing judges whether the point is a good one."
+   },
+   "with_meaning_model": "Each paragraph shows which sentence is closest in meaning to the rest, whether that sentence sits at an edge, and which sentence is furthest from the rest. If you typed the paragraph’s point, it shows which sentence carries that point best.",
+   "limits": "It shows first and last sentences and checks the words of the point you type. It does not judge whether the point is a good one.",
+   "sources": [
+    {
+     "citation": "Mensh, B., & Kording, K. (2017). Ten simple rules for structuring papers. PLoS Computational Biology, 13(9), e1005619.",
+     "doi": "10.1371/journal.pcbi.1005619",
+     "url": "https://doi.org/10.1371/journal.pcbi.1005619"
+    },
+    {
+     "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Morris, W., Crossley, S., Holmes, L., Ou, C., Dascalu, M., & McNamara, D. (2025). Formative feedback on student-authored summaries in intelligent textbooks using large language models. International Journal of Artificial Intelligence in Education, 35, 1022–1043.",
+     "doi": "10.1007/s40593-024-00395-0",
+     "url": "https://doi.org/10.1007/s40593-024-00395-0"
+    }
+   ]
+  },
+  {
+   "key": "jobs",
+   "name": "Paragraph jobs",
+   "group": "Is the argument clear?",
+   "reads": "Give each paragraph one job. The sequence of jobs is the shape of your argument.",
+   "to_revise": "A paragraph that needs two labels is two paragraphs. A job that is missing is a question your reader will ask.",
+   "marks": [],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "You supply the labels. The lens checks what you tell it against the usual order of moves, which a good paragraph may depart from.",
+   "sources": [
+    {
+     "citation": "Swales, J. M. (1990). Genre analysis: English in academic and research settings. Cambridge University Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Mensh, B., & Kording, K. (2017). Ten simple rules for structuring papers. PLoS Computational Biology, 13(9), e1005619.",
+     "doi": "10.1371/journal.pcbi.1005619",
+     "url": "https://doi.org/10.1371/journal.pcbi.1005619"
+    },
+    {
+     "citation": "Rimagination. good-story [open-source agent skill for building a defensible paper storyline]. GitHub.",
+     "doi": null,
+     "url": "https://github.com/Rimagination/good-story"
+    },
+    {
+     "citation": "Morley, J. Academic Phrasebank. University of Manchester.",
+     "doi": null,
+     "url": "https://www.phrasebank.manchester.ac.uk/"
+    },
+    {
+     "citation": "Appelbaum, M., Cooper, H., Kline, R. B., Mayo-Wilson, E., Nezu, A. M., & Rao, S. M. (2018). Journal article reporting standards for quantitative research in psychology: The APA Publications and Communications Board task force report. American Psychologist, 73(1), 3–25.",
+     "doi": "10.1037/amp0000191",
+     "url": "https://doi.org/10.1037/amp0000191"
+    }
+   ]
+  },
+  {
+   "key": "tracer",
+   "name": "Claim tracer",
+   "group": "Is the argument clear?",
+   "reads": "Write your central claim in one sentence. Its key terms are traced through the draft, so you can see which paragraphs carry the claim and which never touch it. Add your title and its words are traced as well. The panel also lists the sentences the draft is built around, to set beside your claim.",
+   "to_revise": "Bring the claim’s own words into the paragraphs that support it, and into your opening and your close.",
+   "marks": [
+    {
+     "label": "a term from your claim",
+     "meaning": "A term from your central claim."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": "It names the sentence that states your claim most directly, in your words or in others, and shows how close each paragraph is to the claim.",
+   "limits": "Claim words are matched by their stems, so a claim restated in other words is not seen unless the meaning model is on.",
+   "sources": [
+    {
+     "citation": "Toulmin, S. E. (2003). The uses of argument (updated ed.). Cambridge University Press.",
+     "doi": "10.1017/CBO9780511840005",
+     "url": "https://doi.org/10.1017/CBO9780511840005"
+    },
+    {
+     "citation": "Mensh, B., & Kording, K. (2017). Ten simple rules for structuring papers. PLoS Computational Biology, 13(9), e1005619.",
+     "doi": "10.1371/journal.pcbi.1005619",
+     "url": "https://doi.org/10.1371/journal.pcbi.1005619"
+    },
+    {
+     "citation": "Rimagination. good-story [open-source agent skill for building a defensible paper storyline]. GitHub.",
+     "doi": null,
+     "url": "https://github.com/Rimagination/good-story"
+    },
+    {
+     "citation": "Kinnunen, T., Leisma, H., Machunik, M., Kakkonen, T., & Lebrun, J.-L. (2012). SWAN – Scientific Writing AssistaNt: A tool for helping scholars to write reader-friendly manuscripts. In Proceedings of the Demonstrations at the 13th Conference of the European Chapter of the Association for Computational Linguistics (pp. 20–24). Association for Computational Linguistics.",
+     "doi": null,
+     "url": "https://aclanthology.org/E12-2005/"
+    },
+    {
+     "citation": "Mihalcea, R., & Tarau, P. (2004). TextRank: Bringing order into texts. In Proceedings of the 2004 Conference on Empirical Methods in Natural Language Processing (pp. 404–411). Association for Computational Linguistics.",
+     "doi": null,
+     "url": "https://aclanthology.org/W04-3252/"
+    }
+   ]
+  },
+  {
+   "key": "claims",
+   "name": "Claim strength",
+   "group": "Is the argument clear?",
+   "reads": "Causal, certain, absolute and first-ever wording is marked. For each one, say what evidence stands behind it. A fixed table then tells you whether the wording fits.",
+   "to_revise": "Where the wording outruns the evidence, step down to the verb the evidence earns.",
+   "marks": [
+    {
+     "label": "strong wording to check",
+     "meaning": "Strong wording. Name the evidence behind it in the note."
+    },
+    {
+     "label": "fits the evidence you named",
+     "meaning": "Strong wording that fits the evidence you named."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "Strong wording is found from fixed lists. The lens cannot read your evidence. It compares the wording with the kind of evidence you name.",
+   "sources": [
+    {
+     "citation": "Toulmin, S. E. (2003). The uses of argument (updated ed.). Cambridge University Press.",
+     "doi": "10.1017/CBO9780511840005",
+     "url": "https://doi.org/10.1017/CBO9780511840005"
+    },
+    {
+     "citation": "Haber, N., Smith, E. R., Moscoe, E., et al. (2018). Causal language and strength of inference in academic and media articles shared in social media (CLAIMS): A systematic review. PLoS ONE, 13(5), e0196346.",
+     "doi": "10.1371/journal.pone.0196346",
+     "url": "https://doi.org/10.1371/journal.pone.0196346"
+    },
+    {
+     "citation": "Vinkers, C. H., Tijdink, J. K., & Otte, W. M. (2015). Use of positive and negative words in scientific PubMed abstracts between 1974 and 2014: Retrospective analysis. BMJ, 351, h6467.",
+     "doi": "10.1136/bmj.h6467",
+     "url": "https://doi.org/10.1136/bmj.h6467"
+    },
+    {
+     "citation": "Rimagination. good-story [open-source agent skill for building a defensible paper storyline]. GitHub.",
+     "doi": null,
+     "url": "https://github.com/Rimagination/good-story"
+    },
+    {
+     "citation": "Morley, J. Academic Phrasebank. University of Manchester.",
+     "doi": null,
+     "url": "https://www.phrasebank.manchester.ac.uk/"
+    }
+   ]
+  },
+  {
+   "key": "hedge",
+   "name": "Hedging",
+   "group": "Is the argument clear?",
+   "reads": "One hedge states your confidence honestly. Several in a row make it hard to tell what you are claiming at all.",
+   "to_revise": "Keep the single hedge that matches your evidence.",
+   "marks": [
+    {
+     "label": "hedge",
+     "meaning": "A hedge: a word that lowers the certainty of the claim."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "Hedges are found from a fixed list. One hedge may be exactly right. The lens notices when several pile up.",
+   "sources": [
+    {
+     "citation": "Hyland, K. (1996). Talking to the academy: Forms of hedging in science research articles. Written Communication, 13(2), 251–281.",
+     "doi": null,
+     "url": "http://hdl.handle.net/10722/130132"
+    },
+    {
+     "citation": "Pinker, S. (2014). The sense of style: The thinking person’s guide to writing in the 21st century. Viking.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Morley, J. Academic Phrasebank. University of Manchester.",
+     "doi": null,
+     "url": "https://www.phrasebank.manchester.ac.uk/"
+    }
+   ]
+  },
+  {
+   "key": "grid",
+   "name": "Topic grid",
+   "group": "Does it flow?",
+   "reads": "Each row is a term the draft keeps using, and each column is a sentence. A filled dot means the term comes before the main verb, where readers look for what a sentence is about. A ring means it comes after, as news. Rows that run on carry the argument, and a row that stops is a topic dropped. Each sentence also gets a label for how it links to the one before.",
+   "to_revise": "Where a sentence is labelled “no link”, or a paragraph shares nothing with the one before, start it from a term the reader already has.",
+   "marks": [
+    {
+     "label": "Term before the main verb",
+     "meaning": "A recurring term that comes before the main verb here: on the topic side of the sentence, where readers look for what it is about."
+    },
+    {
+     "label": "Term after it",
+     "meaning": "A recurring term that comes after the main verb here: on the news side of the sentence."
+    },
+    {
+     "label": "Word that links back",
+     "meaning": "A word that links this sentence back to an earlier one."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "In 313 student essays, word overlap between neighbouring paragraphs went with higher ratings of coherence and of overall quality. Overlap between neighbouring sentences did not (Crossley, Kyle & McNamara 2016). In an earlier study of 120 essays, none of thirteen measures of overlap between sentences separated the higher-rated from the lower-rated (McNamara, Crossley & McCarthy 2010). So read the paragraph figure first. The line above each paragraph in the text names the words it carries over.",
+    "how_this_count_differs": "Words are matched by their stems. There is no lemmatiser, no synonym list and no model of meaning. The published measures also use latent semantic analysis (Graesser et al. 2004) and word-vector similarity (Crossley, Kyle & Dascalu 2019)."
+   },
+   "with_meaning_model": "Sentences the rules label “no link” are relabelled “meaning only” when they are close in meaning to the sentence before. The line above each paragraph adds how close it is to the paragraph before, and marks the weakest join in the draft.",
+   "limits": "Links are judged by repeated words, matched by stem. Two sentences can be tightly connected and share no word.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Kinnunen, T., Leisma, H., Machunik, M., Kakkonen, T., & Lebrun, J.-L. (2012). SWAN – Scientific Writing AssistaNt: A tool for helping scholars to write reader-friendly manuscripts. In Proceedings of the Demonstrations at the 13th Conference of the European Chapter of the Association for Computational Linguistics (pp. 20–24). Association for Computational Linguistics.",
+     "doi": null,
+     "url": "https://aclanthology.org/E12-2005/"
+    },
+    {
+     "citation": "Kaufer, D., & Ishizaki, S. OnTopic and DocuScope [revision tools that show topics across a text and on either side of the main verb]. Carnegie Mellon University, Department of English.",
+     "doi": null,
+     "url": "https://www.cmu.edu/dietrich/english/research-and-publications/docuscope.html"
+    },
+    {
+     "citation": "Crossley, S. A., Kyle, K., & McNamara, D. S. (2016). The tool for the automatic analysis of text cohesion (TAACO): Automatic assessment of local, global, and text cohesion. Behavior Research Methods, 48(4), 1227–1237.",
+     "doi": "10.3758/s13428-015-0651-7",
+     "url": "https://doi.org/10.3758/s13428-015-0651-7"
+    },
+    {
+     "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
+     "doi": "10.1017/CBO9780511894664",
+     "url": "https://doi.org/10.1017/CBO9780511894664"
+    }
+   ]
+  },
+  {
+   "key": "signals",
+   "name": "Signal phrases",
+   "group": "Does it flow?",
+   "reads": "Phrases that announce what a stretch of text is doing: stating a gap, an aim, a result or a meaning, or turning from one point to the next. Readers use them to follow the argument. Each sentence is tagged with the move its wording signals. Say what kind of text this is, and the lens checks for the moves that kind usually makes.",
+   "to_revise": "A paragraph with no signal leaves the reader to work out its job. Add a few words that announce it.",
+   "marks": [
+    {
+     "label": "announces a move",
+     "meaning": "A phrase that announces a move."
+    },
+    {
+     "label": "transition word",
+     "meaning": "A transition word."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "A connective states the relation between two ideas outright, so the reader does not have to infer it. Coh-Metrix counts connectives by type (McNamara et al. 2014), and the four types here are the classes of conjunction in Halliday & Hasan (1976). More is not better. Connective counts had little or no relation to rated coherence in Crossley et al. (2016), and none of thirteen connective measures separated higher-rated essays in McNamara et al. (2010). A type with a count of zero is still worth a look: a draft that argues with no “because” or “therefore” may be leaving its reasoning unstated.",
+    "how_this_count_differs": "These are fixed word lists, shorter than the published ones. Bare “and” and “or” are left out. So are “since” and “as”, which can be causal or temporal. “While” is counted as temporal even where it marks a contrast."
+   },
+   "with_meaning_model": null,
+   "limits": "Moves are tagged from fixed cue phrases, so a move made in other words is not seen.",
+   "sources": [
+    {
+     "citation": "Swales, J. M. (1990). Genre analysis: English in academic and research settings. Cambridge University Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Morley, J. Academic Phrasebank. University of Manchester.",
+     "doi": null,
+     "url": "https://www.phrasebank.manchester.ac.uk/"
+    },
+    {
+     "citation": "Knight, S., Shibani, A., Abel, S., Gibson, A., Ryan, P., Sutton, N., Wight, R., Lucas, C., Sándor, Á., Kitto, K., Liu, M., Vijay Mogarkar, R., & Buckingham Shum, S. (2020). AcaWriter: A learning analytics tool for formative feedback on academic writing. Journal of Writing Research, 12(1), 141–186.",
+     "doi": "10.17239/jowr-2020.12.01.06",
+     "url": "https://doi.org/10.17239/jowr-2020.12.01.06"
+    },
+    {
+     "citation": "Kinnunen, T., Leisma, H., Machunik, M., Kakkonen, T., & Lebrun, J.-L. (2012). SWAN – Scientific Writing AssistaNt: A tool for helping scholars to write reader-friendly manuscripts. In Proceedings of the Demonstrations at the 13th Conference of the European Chapter of the Association for Computational Linguistics (pp. 20–24). Association for Computational Linguistics.",
+     "doi": null,
+     "url": "https://aclanthology.org/E12-2005/"
+    },
+    {
+     "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
+     "doi": "10.1017/CBO9780511894664",
+     "url": "https://doi.org/10.1017/CBO9780511894664"
+    },
+    {
+     "citation": "Crossley, S. A., Kyle, K., & McNamara, D. S. (2016). The tool for the automatic analysis of text cohesion (TAACO): Automatic assessment of local, global, and text cohesion. Behavior Research Methods, 48(4), 1227–1237.",
+     "doi": "10.3758/s13428-015-0651-7",
+     "url": "https://doi.org/10.3758/s13428-015-0651-7"
+    }
+   ]
+  },
+  {
+   "key": "skeleton",
+   "name": "Skeleton read",
+   "group": "Does it flow?",
+   "reads": "Only the opening and the close of each sentence are shown, and the middles are hidden. The opening says what a sentence is about and ties it to the one before. The close is what the reader is left holding. Read straight down the page. If the argument still comes through, the structure is carrying it.",
+   "to_revise": "Where the thread breaks, open that sentence and move the missing idea into its opening or its close.",
+   "marks": [
+    {
+     "label": "Opening",
+     "meaning": "The opening of the sentence, its topic position: what the sentence says it is about, and its link back to the one before."
+    },
+    {
+     "label": "Close",
+     "meaning": "The close of the sentence, its stress position: what the reader is left holding."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "A way of reading, with no notes of its own.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    }
+   ]
+  },
+  {
+   "key": "mviews",
+   "name": "Meaning views",
+   "group": "Does it flow?",
+   "reads": "Pictures of the whole draft, drawn by the optional meaning model: a thread showing where the subject jumps, a quilt of every sentence against every other, the draft’s topics as a band of colour, a map, a place to try a new order of paragraphs, a search of your own text, and two drills.",
+   "to_revise": "Each view is a way of seeing where the draft holds together and where it does not. Tap any dot, square or bar to open the sentence behind it.",
+   "marks": [],
+   "research_measure": null,
+   "with_meaning_model": "Eight views. Thread: closeness of each sentence to the one before, and to your claim. Quilt: every sentence against every other. Topics: the model’s grouping of sentences, as a band of colour. Map: sentences as dots on a flat map. Reorder: move paragraphs and watch the joins. Ask: find the sentences closest to a question. Abstract & ending: what the abstract covers, and whether the ending returns to the opening. Drills: two exercises built from your draft.",
+   "limits": "Everything in this lens comes from the model, which does not see negation or logic, and whose scores only rank things inside one draft.",
+   "sources": [
+    {
+     "citation": "Kjell, O., Giorgi, S., & Schwartz, H. A. (2023). The text-package: An R-package for analyzing and visualizing human language using natural language processing and transformers. Psychological Methods, 28(6), 1478–1498.",
+     "doi": "10.1037/met0000542",
+     "url": "https://doi.org/10.1037/met0000542"
+    },
+    {
+     "citation": "Reimers, N., & Gurevych, I. (2019). Sentence-BERT: Sentence embeddings using Siamese BERT-networks. In Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing (pp. 3982–3992). Association for Computational Linguistics.",
+     "doi": "10.18653/v1/D19-1410",
+     "url": "https://doi.org/10.18653/v1/D19-1410"
+    }
+   ]
+  },
+  {
+   "key": "rhythm",
+   "name": "Length & rhythm",
+   "group": "Is each sentence easy to read?",
+   "reads": "Colour places each sentence on a fixed scale of length: short (1 to 12 words), medium (13 to 22), long (23 to 29) and very long (30 or more). The edges sit on Flesch’s 1948 reading-ease scale, and research articles average about 25 words a sentence. Length is something you spend. A short sentence after longer ones reads as emphasis, and a long one asks the reader to hold more before its point arrives.",
+   "to_revise": "For each paragraph, tell the lens which sentence you most want remembered, then see whether its length sets it apart. Split very long sentences at a joint, join short ones that belong together, and break up runs of equal length.",
+   "marks": [
+    {
+     "label": "Short · 1–12",
+     "meaning": "Short: 1 to 12 words. Flesch (1948) found that prose averaging 11 words a sentence reads as “easy”, and 8 or fewer as “very easy”. Research prose averages about 25, so a short sentence stands out. Spend it on a point you want remembered."
+    },
+    {
+     "label": "Medium · 13–22",
+     "meaning": "Medium: 13 to 22 words. This spans Flesch’s “fairly easy” (14 words), “standard” (17) and “fairly difficult” (21) averages. Recent non-fiction averages about 20 (Rudnicka 2018). The working length for most statements."
+    },
+    {
+     "label": "Long · 23–29",
+     "meaning": "Long: 23 to 29 words. Flesch rated prose averaging 25 words as “difficult”. It is also the usual length in research articles: about 25 words in education journals (Deveci 2019) and 27 in science (Gross et al. 2002). Fine when the structure is clear."
+    },
+    {
+     "label": "Very long · 30+",
+     "meaning": "Very long: 30 words or more. Flesch rated prose averaging 29 or more as “very difficult”. One such sentence is no fault, but it holds many candidates for emphasis and a single stress position. Look for a joint."
+    },
+    {
+     "label": "Joint",
+     "meaning": "A joint: a semicolon, a colon, or a comma followed by and, but, so, which, whereas, although or because, at a point where a complete statement has ended. The sentence could stop here."
+    },
+    {
+     "label": "Before the main verb",
+     "meaning": "The words a reader must hold before the main verb arrives. Twelve or more raises a note. Memory-based accounts of reading predict the cost (Gibson 1998), and Coh-Metrix counts the same words as its measure of syntactic load (McNamara et al. 2010)."
+    },
+    {
+     "label": "Level run",
+     "meaning": "A level run: four or more sentences in a row whose lengths stay within about a quarter of each other (or within four words). Nothing in the run stands out."
+    },
+    {
+     "label": "Choppy run",
+     "meaning": "A choppy run: three or more short sentences (12 words or fewer) in a row. Every point gets the same weight, and the links between them go unstated."
+    },
+    {
+     "label": "Long run",
+     "meaning": "A long run: two or more very long sentences (30 words or more) back to back, with no shorter sentence for the reader to rest on."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Choi & Crossley (2021) built a tool that runs eight readability formulas side by side. The formulas rarely agree, which is why this is a range. Each is built from sentence length and word length alone (Flesch 1948; Kincaid et al. 1975; Smith & Senter 1967; McLaughlin 1969). They were fitted to school reading passages and military training material, not to research articles, and they are blind to order, cohesion and meaning. Grade 13 and above means college level. Plain counts are not to be looked down on: a handful of them predicted essay scores about as well as a far larger set of measures (Crossley, Allen, Kyle & McNamara 2014).",
+    "how_this_count_differs": "Syllables are estimated from spelling, so each figure can be off by about a grade. SMOG was designed for samples of 30 sentences, and this draft has 12. Newer readability measures rely on trained models and are not reproduced here."
+   },
+   "with_meaning_model": null,
+   "limits": "The length bands are fixed. The rules for runs and for contrast between neighbours are this tool’s working values, not published norms.",
+   "sources": [
+    {
+     "citation": "Flesch, R. (1948). A new readability yardstick. Journal of Applied Psychology, 32(3), 221–233.",
+     "doi": "10.1037/h0057532",
+     "url": "https://doi.org/10.1037/h0057532"
+    },
+    {
+     "citation": "Deveci, T. (2019). Sentence length in education research articles: A comparison between Anglophone and Turkish authors. The Linguistics Journal, 13(1), 73 ff.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Gibson, E. (1998). Linguistic complexity: Locality of syntactic dependencies. Cognition, 68(1), 1–76.",
+     "doi": "10.1016/S0010-0277(98)00034-1",
+     "url": "https://doi.org/10.1016/S0010-0277(98)00034-1"
+    },
+    {
+     "citation": "McNamara, D. S., Crossley, S. A., & McCarthy, P. M. (2010). Linguistic features of writing quality. Written Communication, 27(1), 57–86.",
+     "doi": "10.1177/0741088309351547",
+     "url": "https://doi.org/10.1177/0741088309351547"
+    },
+    {
+     "citation": "Grabe, E., & Low, E. L. (2002). Durational variability in speech and the rhythm class hypothesis. In C. Gussenhoven & N. Warner (Eds.), Laboratory phonology 7 (pp. 515–546). Mouton de Gruyter.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Provost, G. (1985). 100 ways to improve your writing. New American Library.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
+     "doi": null,
+     "url": "https://github.com/labarba/sciwrite"
+    },
+    {
+     "citation": "Choi, J. S., & Crossley, S. A. (2021). Readability assessment tool for English texts (EasyChair Preprint 6190).",
+     "doi": null,
+     "url": "https://easychair.org/publications/preprint/pgb8"
+    },
+    {
+     "citation": "Kincaid, J. P., Fishburne, R. P., Jr., Rogers, R. L., & Chissom, B. S. (1975). Derivation of new readability formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy enlisted personnel (Research Branch Report 8-75). Chief of Naval Technical Training, Naval Air Station Memphis.",
+     "doi": null,
+     "url": "https://apps.dtic.mil/sti/pdfs/ADA006655.pdf"
+    },
+    {
+     "citation": "Crossley, S. A., Allen, L. K., Kyle, K., & McNamara, D. S. (2014). Analyzing discourse processing using a simple natural language processing tool. Discourse Processes, 51(5–6), 511–534.",
+     "doi": "10.1080/0163853X.2014.910723",
+     "url": "https://doi.org/10.1080/0163853X.2014.910723"
+    }
+   ]
+  },
+  {
+   "key": "dense",
+   "name": "Dense phrases",
+   "group": "Is each sentence easy to read?",
+   "reads": "Long stacks of nouns and chains of prepositions leave the reader to work out relations you did not state. They usually hide a verb.",
+   "to_revise": "Unpack the phrase so it says what acts on what.",
+   "marks": [
+    {
+     "label": "noun stack",
+     "meaning": "A stack of nouns with nothing to show how they relate."
+    },
+    {
+     "label": "chain of prepositions",
+     "meaning": "A chain of prepositional phrases."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "In essays by second-language writers, measures of complexity inside the phrase predicted rated quality better than measures of the sentence or the clause (Kyle & Crossley 2018). Academic prose packs its meaning into noun phrases more than into clauses (Biber & Gray 2010). So the phrase is where density lives. A stack or a chain is compact for the writer, and slow for a reader who does not already know how its nouns relate.",
+    "how_this_count_differs": "Kyle and Crossley used a parser to measure every noun phrase. This page counts only the two patterns its rules can find: nouns stacked in a row before a head noun, and prepositional phrases in a row."
+   },
+   "with_meaning_model": null,
+   "limits": "Noun stacks and chains of prepositions are found by rules. A settled technical term can look like a stack.",
+   "sources": [
+    {
+     "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Lanham, R. A. (2007). Revising prose (5th ed.). Pearson Longman.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Biber, D., & Gray, B. (2010). Challenging stereotypes about academic writing: Complexity, elaboration, explicitness. Journal of English for Academic Purposes, 9(1), 2–20.",
+     "doi": "10.1016/j.jeap.2010.01.001",
+     "url": "https://doi.org/10.1016/j.jeap.2010.01.001"
+    },
+    {
+     "citation": "Kyle, K., & Crossley, S. A. (2018). Measuring syntactic complexity in L2 writing using fine-grained clausal and phrasal indices. The Modern Language Journal, 102(2), 333–349.",
+     "doi": "10.1111/modl.12468",
+     "url": "https://doi.org/10.1111/modl.12468"
+    }
+   ]
+  },
+  {
+   "key": "voice",
+   "name": "Voice",
+   "group": "Is each sentence easy to read?",
+   "reads": "Passive is not a fault. It is the right choice when it moves familiar material to the front of the sentence. It costs something when it pushes a needed agent to the back.",
+   "to_revise": "Check each passive against the topic position: does it put the right thing first?",
+   "marks": [
+    {
+     "label": "passive",
+     "meaning": "A passive verb. Not a fault in itself."
+    },
+    {
+     "label": "passive with a “by” agent",
+     "meaning": "A passive verb with its agent attached after it."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Coh-Metrix counts agentless passives as a measure of their own (McNamara et al. 2014). Gopen and Swan do not object to the passive, which is often the way to put old information first. The question for each one is whether the reader needs to know who acted. Where the actor is you, the first person names it in one word: “we measured”.",
+    "how_this_count_differs": "A passive is found from a form of “be” followed by a participle, and an agent from a “by” phrase after it. A passive whose participle the rules do not know is missed."
+   },
+   "with_meaning_model": null,
+   "limits": "A passive is found from a form of “be” and a participle. A participle the rules do not know is missed.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
+     "doi": "10.1017/CBO9780511894664",
+     "url": "https://doi.org/10.1017/CBO9780511894664"
+    }
+   ]
+  },
+  {
+   "key": "clutter",
+   "name": "Clutter",
+   "group": "Is each sentence easy to read?",
+   "reads": "Words that carry nothing. Stock phrases spend the reader’s attention and push your real subject or your news further from where the reader looks for it. Empty openers (“There is”, “It is … that”, a bare “This”) fill the topic position without naming a topic.",
+   "to_revise": "Replace the phrase with the short word, or delete it. Start the sentence with its real subject, and give a bare “this” its noun.",
+   "marks": [
+    {
+     "label": "phrase to shorten, or opener that names nothing",
+     "meaning": "A stock phrase with a shorter equivalent."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Coh-Metrix reports negation density among its measures of syntax (McNamara et al. 2014). One negative is plain enough. Two in a clause make the reader reverse the meaning twice, and those are the ones this lens puts a note on.",
+    "how_this_count_differs": "It counts not, no, never, neither, none, nothing, without, cannot and contractions in n’t. Negative prefixes such as un- and in- are seen only in a fixed list of pairs like “not uncommon”."
+   },
+   "with_meaning_model": null,
+   "limits": "Stock phrases come from a fixed list. A phrase on the list is sometimes the right one.",
+   "sources": [
+    {
+     "citation": "Zinsser, W. (2006). On writing well: The classic guide to writing nonfiction (30th anniversary ed.). HarperCollins.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Strunk, W., Jr., & White, E. B. (2000). The elements of style (4th ed.). Allyn & Bacon.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Orwell, G. (1946). Politics and the English language. Horizon, 13(76), 252–265.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
+     "doi": null,
+     "url": "https://github.com/labarba/sciwrite"
+    },
+    {
+     "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
+     "doi": "10.1017/CBO9780511894664",
+     "url": "https://doi.org/10.1017/CBO9780511894664"
+    },
+    {
+     "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Sword, H. (2012). Stylish academic writing. Harvard University Press.",
+     "doi": "10.4159/harvard.9780674065093",
+     "url": "https://doi.org/10.4159/harvard.9780674065093"
+    }
+   ]
+  },
+  {
+   "key": "worn",
+   "name": "Vague & worn words",
+   "group": "Are the words well chosen?",
+   "reads": "Intensifiers, vague quantities and worn phrases take up the space where a specific fact should be.",
+   "to_revise": "Replace each with the number, the name or the plain statement it stands in for.",
+   "marks": [
+    {
+     "label": "vague or worn wording",
+     "meaning": "Vague or worn wording."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "The lists are fixed and general. A word flagged as vague may be precise in your field.",
+   "sources": [
+    {
+     "citation": "Zinsser, W. (2006). On writing well: The classic guide to writing nonfiction (30th anniversary ed.). HarperCollins.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Ford, B. write-good [open-source prose linter]. GitHub. MIT licence.",
+     "doi": null,
+     "url": "https://github.com/btford/write-good"
+    },
+    {
+     "citation": "Amperser Labs. proselint [open-source prose linter]. GitHub. BSD-3-Clause licence.",
+     "doi": null,
+     "url": "https://github.com/amperser/proselint"
+    }
+   ]
+  },
+  {
+   "key": "vocab",
+   "name": "Vocabulary level",
+   "group": "Are the words well chosen?",
+   "reads": "Every content word is looked up in two open word lists: the 2,809 most useful everyday English words, and 957 words common across academic writing. A word on neither list is a specialist term or a rare word, and each one is a small cost to a reader outside your specialty.",
+   "to_revise": "Define specialist terms at first use, and prefer the listed word where it says the same thing.",
+   "marks": [
+    {
+     "label": "general academic word",
+     "meaning": "A general academic word, on the New Academic Word List."
+    },
+    {
+     "label": "on neither list",
+     "meaning": "On neither word list: a specialist term, or a rare word."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "MTLD is the average number of words the text runs before its share of new words falls below a set level (McCarthy & Jarvis 2010). MATTR is the average share of different words in every stretch of 50 (Covington & McFall 2010). Both were designed so that the score does not simply fall as a text gets longer, as the plain type-token ratio does. In 120 student essays the higher-rated group averaged an MTLD of 79 and the lower-rated group 73 (McNamara et al. 2010). Human ratings of how varied an essay’s wording is track the plain number of different words more closely than any ratio (Kyle, Crossley & Jarvis 2021). A research paper is a different case: repeating your key terms exactly is good practice, so a low figure is not a fault.",
+    "how_this_count_differs": "Counted on word forms, not lemmas, so “study” and “studies” are two words. A count made on lemmas would come out a little lower."
+   },
+   "with_meaning_model": null,
+   "limits": "The two word lists cover general English. Every field has ordinary terms outside them, so an unlisted word is not an error.",
+   "sources": [
+    {
+     "citation": "Browne, C., Culligan, B., & Phillips, J. (2013). The New General Service List (version 1.2) and The New Academic Word List (version 1.2). Both lists are included in this page under a Creative Commons Attribution-ShareAlike 4.0 licence.",
+     "doi": null,
+     "url": "https://www.newgeneralservicelist.com/"
+    },
+    {
+     "citation": "Rakedzon, T., Segev, E., Chapnik, N., Yosef, R., & Baram-Tsabari, A. (2017). Automatic jargon identifier for scientists engaging with the public and science communication educators. PLoS ONE, 12(8), e0181742.",
+     "doi": "10.1371/journal.pone.0181742",
+     "url": "https://doi.org/10.1371/journal.pone.0181742"
+    },
+    {
+     "citation": "McCarthy, P. M., & Jarvis, S. (2010). MTLD, vocd-D, and HD-D: A validation study of sophisticated approaches to lexical diversity assessment. Behavior Research Methods, 42(2), 381–392.",
+     "doi": "10.3758/BRM.42.2.381",
+     "url": "https://doi.org/10.3758/BRM.42.2.381"
+    },
+    {
+     "citation": "Covington, M. A., & McFall, J. D. (2010). Cutting the Gordian knot: The moving-average type–token ratio (MATTR). Journal of Quantitative Linguistics, 17(2), 94–100.",
+     "doi": null,
+     "url": null
+    }
+   ]
+  },
+  {
+   "key": "terms",
+   "name": "Term tracker",
+   "group": "Are the words well chosen?",
+   "reads": "Every recurring noun and where it appears. Readers take a new word to mean a new thing, so two names for one thing read as two things.",
+   "to_revise": "Tap a term to see it in the text. Select names that mean the same thing, mark them, then keep one. Add your own list of words to keep in view or to avoid.",
+   "marks": [
+    {
+     "label": "selected term, or a second name",
+     "meaning": "A term you selected, or a second name for something you marked as one thing."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Essays with a higher type-token ratio (more different words, fewer repeated ones) were rated lower in quality (Crossley, Kyle & McNamara 2016). A term that comes back keeps its topic in view. A term used once is a detail, or it is a second name for something you have already named.",
+    "how_this_count_differs": "Counted on the stems of all content words, while the lists below cover nouns only. The type-token ratio itself is not shown, because it falls as any text gets longer."
+   },
+   "with_meaning_model": "The closest pairs in meaning among your terms, as candidates for two names for one thing. The model judges single words less well than sentences, so treat the list as a prompt.",
+   "limits": "Terms are nouns found by rule and matched by stem. The lens cannot know that two different words name one thing until you tell it.",
+   "sources": [
+    {
+     "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Pinker, S. (2014). The sense of style: The thinking person’s guide to writing in the 21st century. Viking.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
+     "doi": null,
+     "url": "https://github.com/labarba/sciwrite"
+    },
+    {
+     "citation": "Crossley, S. A., Kyle, K., & McNamara, D. S. (2016). The tool for the automatic analysis of text cohesion (TAACO): Automatic assessment of local, global, and text cohesion. Behavior Research Methods, 48(4), 1227–1237.",
+     "doi": "10.3758/s13428-015-0651-7",
+     "url": "https://doi.org/10.3758/s13428-015-0651-7"
+    },
+    {
+     "citation": "Kyle, K., Crossley, S. A., & Kim, Y. J. (2015). Native language identification and writing proficiency. International Journal of Learner Corpus Research, 1(2), 187–209.",
+     "doi": "10.1075/ijlcr.1.2.01kyl",
+     "url": "https://doi.org/10.1075/ijlcr.1.2.01kyl"
+    }
+   ]
+  },
+  {
+   "key": "acr",
+   "name": "Acronyms",
+   "group": "Are the words well chosen?",
+   "reads": "Each abbreviation is a lookup the reader has to perform. One that is never defined stops them.",
+   "to_revise": "Define at first use, and spell out any abbreviation used only once or twice.",
+   "marks": [
+    {
+     "label": "abbreviation",
+     "meaning": "An abbreviation."
+    },
+    {
+     "label": "never defined here",
+     "meaning": "An abbreviation that this text never defines."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "It recognises abbreviations by their capitals and looks for a definition nearby. An abbreviation defined in an unusual way may be reported as undefined.",
+   "sources": [
+    {
+     "citation": "Pinker, S. (2014). The sense of style: The thinking person’s guide to writing in the 21st century. Viking.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Camerer, C., Loewenstein, G., & Weber, M. (1989). The curse of knowledge in economic settings: An experimental analysis. Journal of Political Economy, 97(5), 1232–1254.",
+     "doi": "10.1086/261651",
+     "url": "https://doi.org/10.1086/261651"
+    },
+    {
+     "citation": "Barnett, A., & Doubleday, Z. (2020). The growth of acronyms in the scientific literature. eLife, 9, e60080.",
+     "doi": "10.7554/eLife.60080",
+     "url": "https://doi.org/10.7554/eLife.60080"
+    },
+    {
+     "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
+     "doi": null,
+     "url": "https://github.com/labarba/sciwrite"
+    }
+   ]
+  },
+  {
+   "key": "people",
+   "name": "Describing people",
+   "group": "Are the words well chosen?",
+   "reads": "Research in the social sciences is about people, and the words used for them carry judgments. This lens marks terms that APA style advises against.",
+   "to_revise": "Be specific, and use the terms people use for themselves. Where a community’s preference is clear, follow it.",
+   "marks": [
+    {
+     "label": "term APA style advises against",
+     "meaning": "A term for people that APA style advises against."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "It applies general advice from a fixed list. Preferred terms differ between communities and change over time.",
+   "sources": [
+    {
+     "citation": "American Psychological Association. Bias-free language guidelines. APA Style.",
+     "doi": null,
+     "url": "https://apastyle.apa.org/style-grammar-guidelines/bias-free-language"
+    }
+   ]
+  },
+  {
+   "key": "stats",
+   "name": "Statistics reporting",
+   "group": "Is it polished?",
+   "reads": "Reported test results are checked by arithmetic. Each p value is recomputed from its test statistic and degrees of freedom, percentages are recomputed from their counts, and the wording around a result is checked against the numbers.",
+   "to_revise": "Correct the number that is wrong, and report an effect size and an exact p with every test.",
+   "marks": [
+    {
+     "label": "result that checks out",
+     "meaning": "A reported result. Its numbers agree with each other."
+    },
+    {
+     "label": "result to check",
+     "meaning": "A reported result whose numbers or wording should be checked."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "Only results reported in the usual form, such as t(28) = 2.20, p = .036, are rechecked. A result written another way is not checked.",
+   "sources": [
+    {
+     "citation": "Nuijten, M. B., Hartgerink, C. H. J., van Assen, M. A. L. M., Epskamp, S., & Wicherts, J. M. (2016). The prevalence of statistical reporting errors in psychology (1985–2013). Behavior Research Methods, 48(4), 1205–1226.",
+     "doi": "10.3758/s13428-015-0664-2",
+     "url": "https://doi.org/10.3758/s13428-015-0664-2"
+    },
+    {
+     "citation": "Appelbaum, M., Cooper, H., Kline, R. B., Mayo-Wilson, E., Nezu, A. M., & Rao, S. M. (2018). Journal article reporting standards for quantitative research in psychology: The APA Publications and Communications Board task force report. American Psychologist, 73(1), 3–25.",
+     "doi": "10.1037/amp0000191",
+     "url": "https://doi.org/10.1037/amp0000191"
+    },
+    {
+     "citation": "Wasserstein, R. L., & Lazar, N. A. (2016). The ASA’s statement on p-values: Context, process, and purpose. The American Statistician, 70(2), 129–133.",
+     "doi": "10.1080/00031305.2016.1154108",
+     "url": "https://doi.org/10.1080/00031305.2016.1154108"
+    },
+    {
+     "citation": "Barba, L. A. sciwrite [agent skill for reviewing manuscripts, based on K. Sainani’s course Writing in the Sciences]. GitHub. CC BY 4.0.",
+     "doi": null,
+     "url": "https://github.com/labarba/sciwrite"
+    }
+   ]
+  },
+  {
+   "key": "checks",
+   "name": "Mechanical checks",
+   "group": "Is it polished?",
+   "reads": "Figures and tables cited out of order or not at all, earlier work mentioned with no citation, “significant” with no statistic, a sentence that opens with a numeral, and tense that switches back and forth within a paragraph.",
+   "to_revise": "Each of these is a small promise to the reader that the text has not kept.",
+   "marks": [
+    {
+     "label": "check this",
+     "meaning": "A mechanical check. Open the note for detail."
+    },
+    {
+     "label": "main verb, for tense",
+     "meaning": "The main verb, underlined so you can follow the tense through the paragraph."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Coh-Metrix scores temporal cohesion as how often tense and aspect repeat from one sentence to the next (McNamara et al. 2014). The strip above each paragraph shows the tense of every main verb, so a change you did not intend stands out. A change is right when you move from what you did (past) to what holds in general (present).",
+    "how_this_count_differs": "Tense is read from the main verb by rule, and aspect is not read. A verb the rules cannot read shows as “?”."
+   },
+   "with_meaning_model": null,
+   "limits": "Fixed patterns only. No mark does not mean no problem.",
+   "sources": [
+    {
+     "citation": "Wasserstein, R. L., & Lazar, N. A. (2016). The ASA’s statement on p-values: Context, process, and purpose. The American Statistician, 70(2), 129–133.",
+     "doi": "10.1080/00031305.2016.1154108",
+     "url": "https://doi.org/10.1080/00031305.2016.1154108"
+    },
+    {
+     "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",
+     "doi": "10.1017/CBO9780511894664",
+     "url": "https://doi.org/10.1017/CBO9780511894664"
+    }
+   ]
+  },
+  {
+   "key": "slips",
+   "name": "Typing slips",
+   "group": "Is it polished?",
+   "reads": "Small errors of typing and word choice that survive proofreading, because the eye skips them or because both words are real: a doubled word, a space before a comma, “a” where “an” belongs, a bracket never closed, “casual” for “causal”.",
+   "to_revise": "Each note offers the correction where there is one. Preview it, then accept it or mark the note as checked.",
+   "marks": [
+    {
+     "label": "likely slip",
+     "meaning": "A likely slip of typing or word choice."
+    }
+   ],
+   "research_measure": {
+    "what_the_research_found": "Crossley, Bradfield & Bustamante (2019) checked automatic flags for errors of grammar and mechanics against human judgement. What was flagged was mostly right, and many errors were missed, punctuation most of all. Expect the same here: trust a flag, and do not trust the absence of one.",
+    "how_this_count_differs": "These are about two dozen fixed patterns, chosen so that a flag is nearly always right. There is no dictionary, so misspellings are not found, and no grammar is parsed."
+   },
+   "with_meaning_model": null,
+   "limits": "About two dozen patterns, chosen to be nearly always right. There is no dictionary, so misspellings are not found.",
+   "sources": [
+    {
+     "citation": "Crossley, S. A., Bradfield, F., & Bustamante, A. (2019). Using human judgments to examine the validity of automated grammar, syntax, and mechanical errors in writing. Journal of Writing Research, 11(2), 251–270.",
+     "doi": "10.17239/jowr-2019.11.02.01",
+     "url": "https://doi.org/10.17239/jowr-2019.11.02.01"
+    }
+   ]
+  },
+  {
+   "key": "source",
+   "name": "Source overlap",
+   "group": "Is it polished?",
+   "reads": "For a summary, a review, or any passage that leans on one text. Paste that text below and the lens marks every run of five or more words your draft shares with it, and shows which of its key terms you kept.",
+   "to_revise": "A matching run is either a quotation, which needs quotation marks and a citation, or wording to make your own. Put the source away and rewrite those sentences from what you remember.",
+   "marks": [
+    {
+     "label": "words matching the source",
+     "meaning": "Words that match your source word for word."
+    },
+    {
+     "label": "a match inside quotation marks",
+     "meaning": "A match with the source that sits inside quotation marks."
+    }
+   ],
+   "research_measure": null,
+   "with_meaning_model": "A table of your sentences closest in meaning to a source sentence, including restatements that share no run of words, and the parts of the source your draft says least about.",
+   "limits": "It compares exact words. A close paraphrase is not seen unless the meaning model is on, and this is not a plagiarism check.",
+   "sources": [
+    {
+     "citation": "Crossley, S., Kyle, K., Davenport, J., & McNamara, D. S. (2016). Automatic assessment of constructed response data in a chemistry tutor. In Proceedings of the 9th International Conference on Educational Data Mining (pp. 336–340).",
+     "doi": null,
+     "url": null
+    }
+   ]
+  },
+  {
+   "key": "compare",
+   "name": "Before & after",
+   "group": "Your progress",
+   "reads": "A receipt of the revising you have done, then the text you started from against the text as it stands, with the number of open notes in each lens before and now.",
+   "to_revise": null,
+   "marks": [],
+   "research_measure": null,
+   "with_meaning_model": "A table of rewritten sentences with how close each is to the one it replaced, lowest first. It can show drift. It cannot confirm that a meaning was kept.",
+   "limits": "The receipt counts notes by rule. A rewrite counts only when it keeps at least four in ten of the sentence’s content words.",
+   "sources": []
+  },
+  {
+   "key": "practice",
+   "name": "Practice",
+   "group": "Your progress",
+   "reads": "Short drills on the principles the lenses read for. One set uses sentences written for this page. Two sets are built from your own draft, so they change as you revise.",
+   "to_revise": null,
+   "marks": [],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "The drills have fixed answers for the built-in sentences. Drills built from your own draft use the lenses’ rules, with their limits.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Kinnunen, T., Leisma, H., Machunik, M., Kakkonen, T., & Lebrun, J.-L. (2012). SWAN – Scientific Writing AssistaNt: A tool for helping scholars to write reader-friendly manuscripts. In Proceedings of the Demonstrations at the 13th Conference of the European Chapter of the Association for Computational Linguistics (pp. 20–24). Association for Computational Linguistics.",
+     "doi": null,
+     "url": "https://aclanthology.org/E12-2005/"
+    }
+   ]
+  }
+ ]
+}

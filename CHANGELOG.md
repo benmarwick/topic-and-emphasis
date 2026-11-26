@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 (2026-11-25)
+
+- MCP server (`mcp/server.js`) with six tools, so an agent can use the rule engine as a tutor, a grader's aid, or for batch analysis. No dependencies.
+- `mcp/guide.json`, the lens descriptions as data, and a script to regenerate it.
+
 ## 0.5.0 (2026-11-25)
 
 - Guide: every lens on one searchable page, with its marks, research measure, meaning-model additions, limits and sources in full.

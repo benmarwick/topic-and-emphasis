@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.5.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.6.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.5.0},
+  version = {0.6.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -52,6 +52,7 @@ git clone https://github.com/benmarwick/topic-and-emphasis.git
 cd topic-and-emphasis
 python3 build.py        # writes index.html
 node tests/smoke.js     # optional: checks the rule engine
+node tests/mcp.test.js  # optional: checks the MCP server
 ```
 
 Requires Python 3. The test needs Node.js 18 or later.
@@ -175,6 +176,38 @@ The model does not see negation or logic, and its scores only rank things within
 | Reading comfort | Text size, spacing and colour settings |
 
 Each citation above links to its DOI or to the full text. Four have neither: three are books, which link to a library catalogue record, and the 2016 conference paper by Crossley, Kyle, Davenport and McNamara links to its publication record. All 67 sources are listed at the foot of the application.
+
+---
+
+## 🔌 MCP Server
+
+The repository includes a small [Model Context Protocol](https://modelcontextprotocol.io/) server, so that an AI agent can use the same fixed rules as the page. It is meant for three jobs: a **tutor** that asks a writer each note's question and lets them revise, a **grader's aid**, and **batch analysis** of a set of drafts for research. It runs on your own machine over stdio, needs only Node.js 18 or later, has no dependencies, opens no network connection and writes nothing to disk. The optional meaning model is not part of it.
+
+Add it to an MCP client with a configuration like this, using the full path to your copy:
+
+```json
+{
+  "mcpServers": {
+    "topic-and-emphasis": {
+      "command": "node",
+      "args": ["/full/path/to/topic-and-emphasis/mcp/server.js"]
+    }
+  }
+}
+```
+
+| Tool | What it does |
+|---|---|
+| `list_lenses` | Lists the lenses with a line on what each reads |
+| `describe_lens` | Explains one lens in full: what it reads, its marks, the research, its limits, and its sources with DOIs |
+| `analyse_draft` | Returns the notes on a draft. By default it returns only each note's **question**, for a tutor to ask. With `reveal: "full"` it adds the finding, explanation, advice and any suggested change. Can be limited to chosen lenses or one sentence |
+| `research_profile` | Returns the descriptive counts for a draft |
+| `compare_drafts` | Compares two versions: notes in each lens before and after, and both profiles |
+| `analyse_batch` | One row per draft for up to 200 drafts, with a CSV copy. No draft text is returned |
+
+The server tells the agent how it is meant to be used: ask the question, do not rewrite for the writer, check notes against the text, and treat no count as a score. Those are instructions to the agent and not a guarantee of how it will behave.
+
+The lens descriptions the server gives come from `mcp/guide.json`, which is exported from the page. After changing the lenses, regenerate it with `python3 build.py && python3 mcp/export_guide.py` (this step needs the Python package `playwright` and Chrome). Test the server with `node tests/mcp.test.js`.
 
 ---
 
