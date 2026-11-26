@@ -32,7 +32,12 @@ def fragment():
              'Dictionary, Copyright (C) 1993-2015 Carnegie Mellon University, BSD 2-clause licence. '
              'General science jargon: Plaven-Sigray et al. (2017), github.com/wiheto/readabilityinscience (MIT). */\n'
              'const SYL_RAW="' + read('syllables.txt').strip() + '";\n'
-             'const JARGON_RAW="' + ' '.join(read('jargon.txt').split()) + '";')
+             'const JARGON_RAW="' + ' '.join(read('jargon.txt').split()) + '";'
+             '\n/* The Academic Keyword List: Paquot, M. (2010). Academic Vocabulary in Learner Writing. Continuum, 56-58. '
+             'Licensed CC BY 4.0, uclouvain.be/en/research-institutes/ilc/cecl/the-academic-keyword-list-akl. '
+             'Hedges, weasels, fillers and buzzwords: github.com/words (MIT), Copyright (c) Titus Wormer. */\n'
+             'const AKL_RAW="' + read('akl.txt').strip() + '";\n'
+             'const WLISTS_RAW="' + read('wordlists.txt').strip() + '";')
     # how each count tracks judged reading ease (tests/validation), shown in the Guide
     vpath = os.path.join(ROOT, 'tests', 'validation', 'results.json')
     valid = 'null'

@@ -23,7 +23,9 @@ const lists = 'const NGSL_RAW=' + JSON.stringify(read('src/ngsl.txt').split(/\s+
   ';const DALE_RAW=' + JSON.stringify(read('src/dalechall.txt').split(/\s+/).join(' ')) +
   ';const EXCESS_RAW=' + JSON.stringify(read('src/excess.txt').split(/\s+/).join(' ')) +
   ';const SYL_RAW=' + JSON.stringify(read('src/syllables.txt').trim()) +
-  ';const JARGON_RAW=' + JSON.stringify(read('src/jargon.txt').split(/\s+/).join(' ')) + ';';
+  ';const JARGON_RAW=' + JSON.stringify(read('src/jargon.txt').split(/\s+/).join(' ')) +
+  ';const AKL_RAW=' + JSON.stringify(read('src/akl.txt').trim()) +
+  ';const WLISTS_RAW=' + JSON.stringify(read('src/wordlists.txt').trim()) + ';';
 const E = new Function(lists + read('src/engine.js') + ';return E;')();
 const GUIDE = JSON.parse(read('mcp/guide.json')).lenses;
 const LENS = Object.fromEntries(GUIDE.map(l => [l.key, l]));
@@ -96,6 +98,8 @@ function profile(A) {
     grim: R.grim ? { means_that_could_be_tested: R.grim.tested, means_that_fail: R.grim.flagged } : null,
     word_norms: wordNorms(A),
     passives: { total: R.pas.n, with_no_agent: R.pas.agentless },
+    academic_keyword_list: R.akl ? { nouns_verbs_adjectives_adverbs_on_the_list_pct_of_words: r1(100 * R.akl.share), by_class: R.akl.by, different_words: R.akl.types, multi_word_entries: R.akl.multiN, most_used: R.akl.words.slice(0, 10).map(x => ({ word: x.w, uses: x.c, listed_as: x.k })), note: 'Paquot (2010), CC BY 4.0; matched by word form with no part-of-speech tagger; single function words on the list are not counted' } : null,
+    crowd_word_lists: R.wl ? Object.fromEntries(Object.entries(R.wl).map(([k, v]) => [k, { uses: v.n, per_1000_words: r1(v.per), most_used: v.words.slice(0, 8) }])) : null,
     citations_by_form: R.patter ? { sentences_citing_a_source: R.patter.cite.sents, sentences_opening_with_a_cited_author: R.patter.cite.lead, sentences_with_sources_in_brackets_only: R.patter.cite.brack, brackets_with_five_or_more_sources: R.patter.clusters } : null,
     signposting: R.patter ? { sentences_about_the_text_itself: R.patter.sign.n, of_sentences: R.patter.sign.of } : null,
     reporting_words: R.patter ? R.patter.verbs.slice(0, 8) : null,

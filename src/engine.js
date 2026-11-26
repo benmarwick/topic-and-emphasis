@@ -197,6 +197,17 @@ function parseFormulas(src){src=String(src||'');if(FLC.s===src)return FLC.P;cons
     const e={f:parts.join(' '),ftw:nums.length?nums[nums.length-1]:null,sp:nums.length>=3?nums[nums.length-3]:null,wr:nums.length>=3?nums[nums.length-2]:null,list:lab||list};let any=false;
     vs.forEach(v=>{if(v.length<2||v.length>8)return;const k=v.join(' ');if(!map.has(k)){map.set(k,e);any=true;mx=Math.max(mx,v.length);}});if(any)n++;});
   const P={map,n,mx};FLC={s:src,P};return P;}
+/* Built-in lists added in 0.21.0. The Academic Keyword List (Paquot 2010), CC BY 4.0: single words by the class they are listed under, and its multi-word entries.
+   Four lists from github.com/words (MIT): hedges, weasels, fillers, buzzwords. All are looked up and counted; none raises a note. */
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),phraseRe=a=>a.length?new RegExp("(?<![\\p{L}\\p{N}])(?:"+a.slice().sort((x,y)=>y.length-x.length).map(reEsc).join('|')+")(?![\\p{L}\\p{N}])",'giu'):null;
+const AKL=(()=>{const M=new Map(),ph=[],C={nou:'noun',ver:'verb',adj:'adjective',adv:'adverb',oth:'other'};let size=0;
+  (typeof AKL_RAW!=='undefined'?AKL_RAW:'').split('|').forEach(g=>{const i=g.indexOf(':');if(i<0)return;const c=C[g.slice(0,i)];g.slice(i+1).split(';').forEach(w=>{w=w.trim();if(!w)return;size++;const k=w.replace(/\s*\(.*\)$/,'');if(/[\s.]/.test(k))ph.push(k);else if(!M.has(k))M.set(k,c);});});
+  const UK={behavior:'behaviour',center:'centre',program:'programme',defense:'defence',favor:'favour'},
+    find=l=>{const tr=x=>{let c=M.get(x);if(c)return[x,c];for(const y of lemmas(x)){c=M.get(y);if(c&&c!=='other')return[y,c];}return null;};let r=tr(l);if(r)return r;
+      const v=UK[l]||l.replace(/iz(?=e|a|i)/,'is').replace(/yz(?=e|i)/,'ys').replace(/^(behavio|favo)r/,'$1ur').replace(/^center/,'centre');return v!==l?tr(v):null;};
+  return{M,size,re:phraseRe(ph),find};})();
+const WLSKIP=new Set('up down back over own ever well far bit sort real like just even then also only still again close already enough all that so'.split(' '));
+const WLISTS=(()=>{const o={};(typeof WLISTS_RAW!=='undefined'?WLISTS_RAW:'').split('|').forEach(g=>{const i=g.indexOf(':');if(i<0)return;const k=g.slice(0,i),S1=new Set(),ph=[];let size=0,skipped=0;g.slice(i+1).split(';').forEach(w=>{w=w.trim().replace(/’/g,"'");if(!w||/-$/.test(w))return;size++;if(/^[a-z]+$/.test(w)){if(k==='hedges'||!(isFunc(w)||STOPX.has(w)||WLSKIP.has(w)))S1.add(w);else skipped++;}else ph.push(w);});o[k]={S:S1,re:phraseRe(ph),size,skipped};});return o;})();
 function lemmas(w){const c=[w],seen=new Set(c),add=x=>{if(x.length>1&&!seen.has(x)&&c.length<60){seen.add(x);c.push(x);}};
   UKUS.forEach(([re,r])=>{if(re.test(w))add(w.replace(re,r));});
   for(let q=0;q<c.length;q++){const b=c[q];
@@ -1318,6 +1329,16 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       const v=ser.ld.filter(x=>x!=null).sort((a,b)=>a-b);let mi=-1,mx=-1;ser.ld.forEach((x,i)=>{if(x!=null&&x>mx){mx=x;mi=i;}});
       R.ld={all:nWd?100*cwT/nWd:0,median:v.length?v[Math.floor(v.length/2)]:null,min:v.length?v[0]:null,max:mx<0?null:mx,maxI:mi};R.series=ser;}
     R.refs=refCheck;R.blocks={};paras.forEach(p=>{if(p.head&&p.kind&&p.kind!=='heading')R.blocks[p.kind]=(R.blocks[p.kind]||0)+1;});
+    /* the Academic Keyword List and the four lists from github.com/words: counted, never noted */
+    {R.akl=null;R.wl=null;const low=st=>st.text.toLowerCase().replace(/’/g,"'"),top=(m,n)=>[...m.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,n);
+      if(AKL.size){const cnt=new Map(),cls=new Map(),multi=new Map(),by={noun:0,verb:0,adjective:0,adverb:0};let hit=0,all=0,fn=0,mw=0;
+        sents.forEach(st=>{const spans=[];if(AKL.re){AKL.re.lastIndex=0;let m;const t=low(st);while((m=AKL.re.exec(t))){spans.push([m.index,m.index+m[0].length]);multi.set(m[0],(multi.get(m[0])||0)+1);mw++;}}
+          st.T.forEach(tk=>{if(!tk.w||tk.cite||!/^\p{L}/u.test(tk.t))return;all++;if(spans.some(([a,b])=>tk.s>=a&&tk.e<=b))return;const r=AKL.find(tk.l);if(!r)return;if(r[1]==='other'){fn++;return;}hit++;by[r[1]]++;cnt.set(r[0],(cnt.get(r[0])||0)+1);cls.set(r[0],r[1]);});});
+        R.akl={size:AKL.size,n:hit,of:all,share:all?hit/all:0,by,fn,types:cnt.size,multiN:mw,words:top(cnt,18).map(([w,c])=>({w,c,k:cls.get(w)})),multi:top(multi,8).map(([w,c])=>({w,c}))};}
+      if(Object.keys(WLISTS).length){R.wl={};for(const k in WLISTS){const W=WLISTS[k],cnt=new Map(),extra=new Map();let n=0;
+          sents.forEach(st=>{st.T.forEach(tk=>{if(!tk.w||tk.cite||!W.S.has(tk.l))return;n++;cnt.set(tk.l,(cnt.get(tk.l)||0)+1);if(k==='hedges'&&!HEDGE.has(tk.l))extra.set(tk.l,(extra.get(tk.l)||0)+1);});
+            if(W.re){W.re.lastIndex=0;let m;const t=low(st);while((m=W.re.exec(t))){n++;cnt.set(m[0],(cnt.get(m[0])||0)+1);if(k==='hedges')extra.set(m[0],(extra.get(m[0])||0)+1);}}});
+          R.wl[k]={size:W.size,skipped:W.skipped,n,types:cnt.size,per:nWd?1000*n/nWd:0,words:top(cnt,12).map(([w,c])=>({w,c})),extra:top(extra,12).map(([w,c])=>({w,c}))};}}}
     R.patter=patter;R.point={named:sents.filter(s=>s.shell).length,bare:findings.filter(f=>/ what\?$/.test(f.title)).length};
     return R;})();
   findings.forEach(f=>{if(!f.q)f.q=Q(f);f.para=!!f.para||/^(outline|tracer|jobs|signals)$/.test(f.lens)||/^(New characters|Every sentence|Tense changes)/.test(f.title);f.sig=f.lens==='sv'?'sv':f.claim?'claims|'+f.title.split('”')[0]:f.lens+'|'+f.title;if(!f.pb)f.pb=pbFor(f);const pv=f.s>0?sents[f.s-1]:null,pw=pv?[...new Set(pv.cw.map(c=>pv.T[c.i].t).filter(w=>!/(ed|ly)$/i.test(w)))].slice(-4):[];if(f.starters&&!f.starters.length){f.starters=pw;f.prevTerms=true;}if(f.lens==='openers'&&/what\?$/.test(f.title)){const dm=f.title.split(' ')[0],plural=/^(these|those)$/i.test(dm),ns=[];

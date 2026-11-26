@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.21.0 (2026-11-26)
+
+- The Academic Keyword List (Paquot 2010; CC BY 4.0) is built in: `data/lists/akl.json`, `src/akl.txt`. Vocabulary level reports the share of running words that are AKL nouns, verbs, adjectives or adverbs, by class, the words used most, and the list's multi-word entries found. Single function words on the list are not counted. The source page states 930 words; its table holds 928, which is what is stored.
+- Four lists from github.com/words (MIT) are built in and only counted: hedges (Hedging, with the words this page's own rule does not mark), weasels and buzzwords (Vague & worn words), fillers (Clutter). Function words and particles on the weasel and filler lists are skipped when counting.
+- None of these raises a note. MCP `research_profile` gains `academic_keyword_list` and `crowd_word_lists`. `tools/make_wordlists.py`, `tests/akl.test.js`.
+- Looked at and not added, from the same organisation: `spache` (a children's reading list), `profanities` and `cuss`, the AFINN sentiment lists, `moby` (a 25 MB thesaurus), `wordnet`, `an-array-of-english-words` (a 3 MB spelling list), `brill` (a part-of-speech lexicon), and the code packages for readability formulas, stemming, phonetics and string distance, which the page already covers with its own rules.
+
 ## 0.20.0 (2026-11-26)
 
 Nine checks after Pat Thomson's revision strategies (Kamler & Thomson 2014; Thomson 2023; the blog *patter*). Each reads a surface cue and asks a question; thresholds are working values.

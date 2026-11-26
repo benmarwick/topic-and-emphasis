@@ -488,6 +488,11 @@
      "citation": "Thomson, P. (2011–). patter [blog on academic writing]. Posts used here: “the lightbulb test” (2026), “three ways to link paragraphs” (2025), “saving words – check your citations” (2023), “can you have too much signposting?” (2023), “check the passive voice” (2021), “the disappearing writer” (2021), “making your writing authoritative” (2021), “a very neat hack to avoid repetition and duplication” (2021) and “check for ‘code words’” (2018).",
      "doi": null,
      "url": "https://patthomson.net/category/academic-writing/"
+    },
+    {
+     "citation": "Wormer, T. (2014–2022). hedges, weasels, fillers and buzzwords [word lists compiled from style guides, blogs and Wikipedia]. GitHub, words organisation. MIT licence. Included in this page.",
+     "doi": null,
+     "url": "https://github.com/words"
     }
    ]
   },
@@ -981,6 +986,11 @@
      "citation": "Sword, H. (2012). Stylish academic writing. Harvard University Press.",
      "doi": "10.4159/harvard.9780674065093",
      "url": "https://doi.org/10.4159/harvard.9780674065093"
+    },
+    {
+     "citation": "Wormer, T. (2014–2022). hedges, weasels, fillers and buzzwords [word lists compiled from style guides, blogs and Wikipedia]. GitHub, words organisation. MIT licence. Included in this page.",
+     "doi": null,
+     "url": "https://github.com/words"
     }
    ]
   },
@@ -1019,6 +1029,11 @@
      "citation": "Kobak, D., González-Márquez, R., Horvát, E.-Á., & Lause, J. (2025). Delving into LLM-assisted writing in biomedical publications through excess vocabulary. Science Advances, 11(27), eadt3813. [Word list: github.com/berenslab/llm-excess-vocab, MIT licence.]",
      "doi": "10.1126/sciadv.adt3813",
      "url": "https://doi.org/10.1126/sciadv.adt3813"
+    },
+    {
+     "citation": "Wormer, T. (2014–2022). hedges, weasels, fillers and buzzwords [word lists compiled from style guides, blogs and Wikipedia]. GitHub, words organisation. MIT licence. Included in this page.",
+     "doi": null,
+     "url": "https://github.com/words"
     }
    ]
   },
@@ -1026,7 +1041,7 @@
    "key": "vocab",
    "name": "Vocabulary level",
    "group": "Are the words well chosen?",
-   "reads": "Every content word is looked up in two open word lists: the 2,809 most useful everyday English words, and 957 words common across academic writing. A word on neither list is a specialist term or a rare word, and each one is a small cost to a reader outside your specialty. The Academic Word List (Coxhead 2000) can be loaded beside them as optional data.",
+   "reads": "Every content word is looked up in two open word lists: the 2,809 most useful everyday English words, and 957 words common across academic writing. A word on neither list is a specialist term or a rare word, and each one is a small cost to a reader outside your specialty. The panels below also count the words of the Academic Keyword List (Paquot 2010), which is built in, and the Academic Word List (Coxhead 2000), which can be loaded as optional data.",
    "to_revise": "Define specialist terms at first use, and prefer the listed word where it says the same thing.",
    "marks": [
     {
@@ -1099,6 +1114,11 @@
      "citation": "Brysbaert, M., Mandera, P., McCormick, S. F., & Keuleers, E. (2019). Word prevalence norms for 62,000 English lemmas. Behavior Research Methods, 51(2), 467–479.",
      "doi": "10.3758/s13428-018-1077-9",
      "url": "https://doi.org/10.3758/s13428-018-1077-9"
+    },
+    {
+     "citation": "Paquot, M. (2010). Academic vocabulary in learner writing: From extraction to analysis. London & New York: Continuum, 56–58. [The Academic Keyword List, published by the Centre for English Corpus Linguistics, UCLouvain, under a Creative Commons Attribution 4.0 licence. Included in this page.]",
+     "doi": null,
+     "url": "https://uclouvain.be/en/research-institutes/ilc/cecl/the-academic-keyword-list-akl"
     }
    ]
   },

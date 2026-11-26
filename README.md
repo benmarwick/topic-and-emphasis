@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.20.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.21.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.20.0},
+  version = {0.21.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -51,10 +51,10 @@ Please also cite the article the workbench is built on:
 git clone https://github.com/benmarwick/topic-and-emphasis.git
 cd topic-and-emphasis
 python3 build.py        # writes index.html
-for t in tests/*.js; do node "$t" || break; done   # optional: the 15 test files
+for t in tests/*.js; do node "$t" || break; done   # optional: the 16 test files
 ```
 
-Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, move order, and the nine reviser's checks).
+Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, move order, the nine reviser's checks, and the built-in keyword and style lists).
 
 ---
 
@@ -156,6 +156,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **The Academic Keyword List, and four open lists** (0.21.0). The AKL ([Paquot 2010](https://uclouvain.be/en/research-institutes/ilc/cecl/the-academic-keyword-list-akl), *Academic Vocabulary in Learner Writing*, Continuum, 56–58) is published under CC BY 4.0, so it is built into the page whole: 928 entries in five classes, multi-word entries included. *Vocabulary level* reports the share of running words that are AKL nouns, verbs, adjectives or adverbs, by class, with the words used most. Four MIT-licensed lists from [github.com/words](https://github.com/words) are also built in and only counted: a wider list of hedges (*Hedging*, showing the words this page's own rule does not mark), weasel words and buzzwords (*Vague & worn words*), and fillers (*Clutter*). None raises a note. `tests/akl.test.js`.
+
 - **Nine questions a reviser asks** (0.20.0). Checks drawn from Pat Thomson's revision strategies (Kamler & Thomson 2014, *Helping Doctoral Students Write*; Thomson 2023, *Refining Your Academic Writing*; and her blog [patter](https://patthomson.net/category/academic-writing/)), each read from a surface cue and each asking a question. *Paragraph jobs*: a paragraph in which sentence after sentence opens with a cited author, one where the writer's own work appears only in the last sentence, and one that ends on a quotation; a panel counts sentences led by a source against sources kept in brackets (the integral and non-integral citations of Swales 1990). *Mechanical checks*: a bracket holding five or more sources. *Hedging*: a sentence that hedges its claim and limits its reach at once. *Term tracker*: an abstract term used three times or more and never explained (the "code words" of Flower & Hayes 1977, *College English* 39(4)), with counts of reporting verbs and repeated sentence openers. *Old → new*: a paragraph joined to the last only by "Furthermore" or "In addition". *Signal phrases*: the share of sentences that talk about the text itself (Hyland 2005; Haag 2021, *Revise*), counted with no note. *Voice*: a paragraph told almost wholly in passives with no agent. The thresholds are working values. `tests/patter.test.js`.
 
 - **Open a file.** "Open a file", or drag a file onto the page: Word (.docx), Markdown, Quarto (.qmd), R Markdown, LaTeX and plain text. A .docx file is unpacked in the browser by about forty lines of code in the page, so there is no upload and no added library; headings are kept, and footnotes, comments and tracked deletions are left out.
@@ -238,7 +240,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 129 sources are listed at the foot of the application, 63 of them with a DOI and 37 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 131 sources are listed at the foot of the application, 63 of them with a DOI and 39 more with a link to the full text or the publisher's page.
 
 ---
 
@@ -284,7 +286,7 @@ The rules read structure and have no idea what your sentences mean. There is no 
 
 - Report a problem or suggest a rule in the [issue tracker](https://github.com/benmarwick/topic-and-emphasis/issues). A sentence the rules misread is especially useful: paste the sentence and say which lens marked it.
 - Changes are recorded in the [changelog](CHANGELOG.md).
-- The source is four files in `src/`: `head.html` (styles), `body.html` (page structure), `engine.js` (the rules) and `ui.js` (the interface), with six word lists beside them as `.txt` files. Optional data is in `data/` and is rebuilt by the scripts in `tools/`. Run `python3 build.py` and every file in `tests/` before opening a pull request.
+- The source is four files in `src/`: `head.html` (styles), `body.html` (page structure), `engine.js` (the rules) and `ui.js` (the interface), with eight word-list files beside them as `.txt` files. Optional data is in `data/` and is rebuilt by the scripts in `tools/`. Run `python3 build.py` and every file in `tests/` before opening a pull request.
 
 ---
 
@@ -300,6 +302,6 @@ The code of this application was written with the assistance of an AI coding too
 
 The application includes the **New General Service List** and the **New Academic Word List** (version 1.2 of each) by Charles Browne, Brent Culligan and Joseph Phillips, under a [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) licence. The typefaces (IBM Plex and Newsreader, SIL Open Font License) are loaded from Google Fonts when the page opens and are not included in this repository.
 
-The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The Dale-Chall list, the excess-vocabulary list and the science-jargon list are MIT-licensed, and the syllable counts come from the CMU Pronouncing Dictionary (BSD 2-clause). The phrase bank in `data/phrases/` is under the **GNU GPL 3 or later**; it is kept apart from the application and loaded only on request. `data/lists/awl.json` and `data/lists/afl.json` hold the words and figures of the Academic Word List (Coxhead 2000) and the Academic Formulas List (Simpson-Vlach & Ellis 2010) and nothing else from those publications; no permission was sought for either, and `data/README.md` sets out the position taken and how to remove them. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
+The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The **Academic Keyword List** (Paquot 2010) is included under **CC BY 4.0**. The Dale-Chall list, the excess-vocabulary list, the science-jargon list and the four lists from github.com/words (hedges, weasels, fillers, buzzwords) are MIT-licensed, and the syllable counts come from the CMU Pronouncing Dictionary (BSD 2-clause). The phrase bank in `data/phrases/` is under the **GNU GPL 3 or later**; it is kept apart from the application and loaded only on request. `data/lists/awl.json` and `data/lists/afl.json` hold the words and figures of the Academic Word List (Coxhead 2000) and the Academic Formulas List (Simpson-Vlach & Ellis 2010) and nothing else from those publications; no permission was sought for either, and `data/README.md` sets out the position taken and how to remove them. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
 
 The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT).

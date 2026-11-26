@@ -71,6 +71,20 @@ how they are arranged, it waives them under CC0 1.0. If a rights holder objects,
 not distribute them, delete the files: the panels then offer a box to paste a copy into, and
 everything else works as before.
 
+## `lists/akl.json` and `lists/words-*.txt` — built into the page
+
+| File | What it is | Source | Licence |
+|---|---|---|---|
+| `akl.json` | The Academic Keyword List: 928 entries in five classes (353 nouns, 233 verbs, 180 adjectives, 87 adverbs, 75 others), multi-word entries included. Entries unchanged; British spelling as published. `src/akl.txt` is the same list in one line. | The table on the [UCLouvain page](https://uclouvain.be/en/research-institutes/ilc/cecl/the-academic-keyword-list-akl). Nouns, verbs and adjectives were read from [lpmi-13/machine_readable_wordlists](https://github.com/lpmi-13/machine_readable_wordlists) (CC0), which splits multi-word entries; adverbs and others were read from the page and checked word for word against that copy. | **CC BY 4.0**, as the page states. Cite Paquot, M. (2010). *Academic Vocabulary in Learner Writing: From Extraction to Analysis*. London & New York: Continuum, 56–58. |
+| `words-hedges.txt`, `words-weasels.txt`, `words-fillers.txt`, `words-buzzwords.txt` | 162 hedges, 116 weasel words, 83 fillers and 322 buzzwords. The first three are the packages' `data.txt` unchanged, with their own notes on sources; the fourth is the package's list written one to a line. `src/wordlists.txt` holds all four in one line. | [words/hedges](https://github.com/words/hedges), [words/weasels](https://github.com/words/weasels), [words/fillers](https://github.com/words/fillers), [words/buzzwords](https://github.com/words/buzzwords), as of November 2022. | MIT, Copyright (c) 2014 Titus Wormer (`words-LICENSE.txt`). |
+
+The UCLouvain page says the list has 930 words (355 nouns). Its table, read in November 2026, has 353 nouns
+and 928 entries, and that is what is stored. The four `words` lists are compiled from style guides, blogs and
+Wikipedia. They are not research instruments, and the page only counts them: the function words and particles
+on the weasel and filler lists ("that", "so", "up") are skipped when counting, and the files are left whole.
+
+`tools/make_wordlists.py` rebuilds all of these.
+
 ## Pasting a copy of your own
 
 The Vocabulary level lens and the Signal phrases lens also accept a pasted list, kept in that browser.

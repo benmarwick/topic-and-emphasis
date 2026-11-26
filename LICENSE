@@ -76,3 +76,14 @@ University, distributed under a BSD 2-clause licence whose full text is in
 data/lists/CMUdict-LICENSE.txt. src/jargon.txt and
 data/lists/science_common_words_Plaven-Sigray_et_al_2017.csv are from
 github.com/wiheto/readabilityinscience (MIT; Plaven-Sigray et al. 2017).
+
+src/akl.txt, data/lists/akl.json and the copy in index.html are the Academic
+Keyword List: Paquot, M. (2010). Academic Vocabulary in Learner Writing: From
+Extraction to Analysis. London & New York: Continuum, 56-58. The list is
+published by the Centre for English Corpus Linguistics, UCLouvain, under the
+Creative Commons Attribution 4.0 International licence (CC BY 4.0), not under
+the MIT licence above. The entries are unchanged.
+
+src/wordlists.txt, data/lists/words-*.txt and the copy in index.html are the
+lists hedges, weasels, fillers and buzzwords from github.com/words, Copyright
+(c) 2014 Titus Wormer, MIT licence (text in data/lists/words-LICENSE.txt).
