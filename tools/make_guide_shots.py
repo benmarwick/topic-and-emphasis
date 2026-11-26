@@ -51,7 +51,9 @@ SHOTS = [
  ['model', 'sv', 'sel:#ms', 'Trunk view: what the sentence can lose', "document.querySelector('[data-trunk]').click()"],
 ]
 NEED = {'revised': 'a draft you have revised', 'data': 'optional data, loaded from the lens', 'model': 'the meaning model'}
-HIDE = """(el)=>{el.querySelectorAll(':scope > p:not([class]), :scope > .lm-key, :scope > .hint, :scope > .tilebar, :scope > details, :scope > .cap, :scope > ul.obs, .mvask').forEach(e=>{if(!e.querySelector('svg,canvas'))e.style.display='none';});}"""
+# a box that starts folded is opened first; its text is hidden so that the picture fills the shot
+HIDE = """(el)=>{if(el.tagName==='DETAILS')el.open=true;const s=el.querySelector(':scope > summary');if(s)s.style.display='none';const b=el.querySelector(':scope > .rp-in')||el;
+ b.querySelectorAll(':scope > p:not([class]), :scope > .lm-key, :scope > .hint, :scope > .tilebar, :scope > details, :scope > .cap, :scope > ul.obs, .mvask').forEach(e=>{if(!e.querySelector('svg,canvas'))e.style.display='none';});}"""
 
 def slug(s):
     return ''.join(c if c.isalnum() else '-' for c in s.lower()).strip('-').replace('--', '-')[:60]

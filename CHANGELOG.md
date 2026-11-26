@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.32.0 (2026-11-26)
+
+- Claim tracer: "Toulmin layout". Six parts round the claim (grounds, warrant, backing, qualifier, rebuttal). For each, the writer picks sentences from the draft or writes the part in their own words. Candidates are offered by cue: sentences naming a source or a figure for grounds and backing, sentences with a word of contrast or limitation for the rebuttal, hedging words found in the claim for the qualifier. The warrant has no candidates, because it cannot be found by rule. A table sets out how the paragraphs feed the claim. Stored in this browser, kept with a set-aside draft, reset by a new draft. No notes.
+- Boxes: in every lens that shows the text, every captioned box above the text starts folded, with a triangle that glows twice when the lens opens (not under reduced motion). An opened box stays open for the visit. Lenses with no text of their own (Load map, Before & after, Practice, Guide) are not folded, nor is the Meaning views panel.
+- Text box: "Quiet drafting" hides the live counts and stops the Analyse button pulsing while a draft is being written.
+- Sources: Reed & Rowe (2005) and Silvia (2019) added.
+
 ## 0.31.1 (2026-11-26)
 
 - Focus timer: while it runs or is paused, the button in the top row shows the time ("Focus timer on · 24:59").
