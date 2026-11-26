@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.0 (2026-11-26)
+
+- Export, in Before & after and from a new "Export" button above the draft: the current text as a Word file with each open note as a margin comment on the words it points at, as a Word file with no comments, or as a plain file that keeps the format you opened.
+- The .docx is written in the browser with no library (`E.docx`): a stored ZIP of document, styles and comments parts.
+- Revision portfolio: adds the reverse outline (main claim, each paragraph's job, stated point and opening words) and the notes still open, by lens and for the sentences with the most; saves as a web page or Markdown, and prints (save as PDF from the print window).
+- Saving inside the Claude viewer goes through its downloads capability; where no file can be saved the page offers copying.
+- The name of an opened file is remembered and used for the files saved.
+- `tests/docx.test.js`.
+
 ## 0.12.0 (2026-11-26)
 
 - Unpack the noun: in the workbench, the "action is in a noun" note carries a template with three blanks (who or what, did what, to what). The verb takes the tense of the verb it replaces, the object comes from the words after the noun, and the actor is left for the writer unless the sentence names one after "by" or as a possessive. Words that are not carried over are listed. A preview shows which notes the change would clear.

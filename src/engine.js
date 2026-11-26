@@ -1249,5 +1249,43 @@ function norms(A,N){const look=(M,l)=>{let v=M.get(l);if(v!=null)return v;for(co
   const W=[...seen.values()],top=(f,dir,k)=>W.filter(e=>e[f]!=null).sort((a,b)=>dir*(a[f]-b[f])||a.w.localeCompare(b.w)).slice(0,k).map(e=>({w:e.w,v:e[f],s:e.s})),mean=a=>a.n?a.sum/a.n:null;
   return{conc:{mean:mean(C),n:C.n,miss:C.miss,low:top('conc',1,8)},aoa:{mean:mean(Ao),n:Ao.n,miss:Ao.miss,high:top('aoa',-1,8)},zipf:{mean:mean(Z),n:Z.n,miss:Z.miss,rare,low:top('zipf',1,8)},
     prev:{mean:mean(P),n:P.n,miss:P.miss,under90:lowP,low:top('prev',1,8)},abstract:per.map((v,i)=>({i,v})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v).slice(0,3),hardest:perA.map((v,i)=>({i,v})).filter(x=>x.v!=null).sort((a,b)=>b.v-a.v).slice(0,3),sent:per,sentAoa:perA};}
-return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,syl,sylGuess,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
+/* ---------- a Word file, written here without a library ----------
+   A .docx is a ZIP of small XML parts. The parts are stored uncompressed, so the only arithmetic is a CRC.
+   blocks: [{style, text, marks:[{a,b,id}]}]   style is Normal, Title, Heading1 to Heading6, Quote or Code
+   comments: [{id, lines:[{t, b, i}]}]         each line is one paragraph of the comment; b bold, i italic */
+const CRCT=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+const crc32=u=>{let c=0xFFFFFFFF;for(let i=0;i<u.length;i++)c=CRCT[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0;};
+function zipStore(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;
+  files.forEach(f=>{const nm=enc.encode(f.name),d=typeof f.data==='string'?enc.encode(f.data):f.data,crc=crc32(d),lh=new Uint8Array(30+nm.length),v=new DataView(lh.buffer);
+    v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x0800,true);v.setUint16(12,0x21,true);v.setUint32(14,crc,true);v.setUint32(18,d.length,true);v.setUint32(22,d.length,true);v.setUint16(26,nm.length,true);lh.set(nm,30);
+    const ch=new Uint8Array(46+nm.length),c=new DataView(ch.buffer);c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(14,0x21,true);c.setUint32(16,crc,true);c.setUint32(20,d.length,true);c.setUint32(24,d.length,true);c.setUint16(28,nm.length,true);c.setUint32(42,off,true);ch.set(nm,46);
+    parts.push(lh,d);cd.push(ch);off+=lh.length+d.length;});
+  const cdLen=cd.reduce((a,x)=>a+x.length,0),end=new Uint8Array(22),e=new DataView(end.buffer);e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cdLen,true);e.setUint32(16,off,true);
+  const all=parts.concat(cd,[end]),out=new Uint8Array(all.reduce((a,x)=>a+x.length,0));let p=0;all.forEach(x=>{out.set(x,p);p+=x.length;});return out;}
+function docx(blocks,comments,meta){meta=meta||{};comments=comments||[];
+  const X=t=>String(t).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g,'').replace(/[\t\n\r]/g,' ').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'),XA=t=>X(t).replace(/"/g,'&quot;');
+  const W='xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"',HEAD='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
+  const run=(t,pr)=>t?'<w:r>'+(pr?'<w:rPr>'+pr+'</w:rPr>':'')+'<w:t xml:space="preserve">'+X(t)+'</w:t></w:r>':'',ids=new Set(comments.map(c=>c.id)),used=new Set();
+  const para=b=>{const text=b.text||'',n=text.length,ms=(b.marks||[]).filter(m=>ids.has(m.id)).map(m=>({id:m.id,a:Math.max(0,Math.min(n,m.a)),b:Math.max(0,Math.min(n,m.b))})).filter(m=>m.b>m.a),cuts=(ms.forEach(m=>used.add(m.id)),0)||[...new Set([0,n].concat(...ms.map(m=>[m.a,m.b])))].sort((x,y)=>x-y);
+    let h='<w:p>'+(b.style&&b.style!=='Normal'?'<w:pPr><w:pStyle w:val="'+XA(b.style)+'"/></w:pPr>':'');
+    cuts.forEach((x,k)=>{ms.filter(m=>m.b===x).forEach(m=>{h+='<w:commentRangeEnd w:id="'+m.id+'"/><w:r><w:rPr><w:rStyle w:val="CommentReference"/></w:rPr><w:commentReference w:id="'+m.id+'"/></w:r>';});
+      ms.filter(m=>m.a===x).forEach(m=>{h+='<w:commentRangeStart w:id="'+m.id+'"/>';});if(k<cuts.length-1)h+=run(text.slice(x,cuts[k+1]));});
+    return h+'</w:p>';};
+  const doc=HEAD+'<w:document '+W+'><w:body>'+blocks.map(para).join('')+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';
+  const when=XA(meta.date||'2026-01-01T00:00:00Z'),who=XA(meta.author||'Topic & Emphasis');
+  const cm=HEAD+'<w:comments '+W+'>'+comments.filter(c=>used.has(c.id)).map(c=>'<w:comment w:id="'+c.id+'" w:author="'+who+'" w:date="'+when+'" w:initials="'+XA(meta.initials||'TE')+'">'+c.lines.filter(l=>l&&l.t).map((l,k)=>'<w:p><w:pPr><w:pStyle w:val="CommentText"/></w:pPr>'+(k?'':'<w:r><w:rPr><w:rStyle w:val="CommentReference"/></w:rPr><w:annotationRef/></w:r>')+run(l.t,(l.b?'<w:b/>':'')+(l.i?'<w:i/>':''))+'</w:p>').join('')+'</w:comment>').join('')+'</w:comments>';
+  const hs=[32,28,26,24,24,24].map((sz,i)=>'<w:style w:type="paragraph" w:styleId="Heading'+(i+1)+'"><w:name w:val="heading '+(i+1)+'"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="'+(i?200:320)+'" w:after="120"/><w:outlineLvl w:val="'+i+'"/></w:pPr><w:rPr><w:b/>'+(i>2?'<w:i/>':'')+'<w:sz w:val="'+sz+'"/><w:szCs w:val="'+sz+'"/></w:rPr></w:style>').join('');
+  const styles=HEAD+'<w:styles '+W+'><w:docDefaults><w:rPrDefault><w:rPr><w:sz w:val="24"/><w:szCs w:val="24"/><w:lang w:val="en-GB"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="160" w:line="360" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'+
+    '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style><w:style w:type="character" w:default="1" w:styleId="DefaultParagraphFont"><w:name w:val="Default Paragraph Font"/><w:uiPriority w:val="1"/><w:semiHidden/></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:after="240"/></w:pPr><w:rPr><w:b/><w:sz w:val="40"/><w:szCs w:val="40"/></w:rPr></w:style>'+hs+
+    '<w:style w:type="paragraph" w:styleId="Quote"><w:name w:val="Quote"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:ind w:left="720" w:right="720"/></w:pPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Code"><w:name w:val="Code"/><w:basedOn w:val="Normal"/><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/></w:pPr><w:rPr><w:rFonts w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New"/><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="CommentText"><w:name w:val="annotation text"/><w:basedOn w:val="Normal"/><w:pPr><w:spacing w:after="60" w:line="240" w:lineRule="auto"/></w:pPr><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr></w:style>'+
+    '<w:style w:type="character" w:styleId="CommentReference"><w:name w:val="annotation reference"/><w:rPr><w:sz w:val="16"/><w:szCs w:val="16"/></w:rPr></w:style></w:styles>';
+  const R='http://schemas.openxmlformats.org/officeDocument/2006/relationships',CT='application/vnd.openxmlformats-officedocument.wordprocessingml.';
+  return zipStore([{name:'[Content_Types].xml',data:HEAD+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="'+CT+'document.main+xml"/><Override PartName="/word/styles.xml" ContentType="'+CT+'styles+xml"/><Override PartName="/word/comments.xml" ContentType="'+CT+'comments+xml"/></Types>'},
+    {name:'_rels/.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="word/document.xml"/></Relationships>'},
+    {name:'word/document.xml',data:doc},{name:'word/styles.xml',data:styles},{name:'word/comments.xml',data:cm},
+    {name:'word/_rels/document.xml.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/styles" Target="styles.xml"/><Relationship Id="rId2" Type="'+R+'/comments" Target="comments.xml"/></Relationships>'}]);}
+return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,syl,sylGuess,docx,crc32,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();

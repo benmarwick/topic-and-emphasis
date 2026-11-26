@@ -335,6 +335,8 @@ details.morenotes>summary{cursor:pointer;font-size:13px;color:var(--blue);paddin
 .tile.ghost{position:fixed;z-index:70;margin:0;pointer-events:none;cursor:grabbing;box-shadow:0 10px 24px rgba(0,0,0,.3);transform:rotate(-1.5deg) scale(1.03)}
 .tdrop{flex:none;align-self:stretch;width:4px;min-height:30px;margin:0 -1px;background:var(--blue);border-radius:2px}
 .tilebar{display:flex;flex-wrap:wrap;gap:6px}
+#printArea{display:none}
+@media print{body.printing>*{display:none!important}body.printing>#printArea{display:block!important}body.printing{background:#fff!important;padding:0!important}}
 .tile small em{font-style:normal;color:var(--rose);border:1px solid currentColor;border-radius:8px;padding:0 5px;margin-left:4px;font-size:10px;text-transform:none;letter-spacing:0}
 .movewhy{border-left:3px solid var(--ink);padding-left:8px}
 .movefacts{margin:10px 0 8px}
