@@ -35,7 +35,7 @@ In text: (Marwick 2026).
 
 Please also cite the article the workbench is built on:
 
-> Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. *American Scientist*, 78(6), 550–558.
+> Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. *American Scientist*, 78(6), 550–558. [Full text](https://www.americanscientist.org/node/924)
 
 ---
 
@@ -75,57 +75,57 @@ You do not need to clear every note. A note is a question about the sentence, an
 
 | Lens | What it reads | Drawn from |
 |---|---|---|
-| Subject → verb | Words that stand between a subject and its verb | Gopen & Swan, principle 1; Gibson (1998) |
-| Topic position | What opens each sentence, and whether it names the topic | Gopen & Swan, principles 3, 4; Williams (1990) |
-| Stress position | What closes each sentence, where readers place the emphasis | Gopen & Swan, principles 2, 7 |
-| Old → new | Whether each sentence starts from what the reader already holds | Gopen & Swan, principles 4, 6; Haviland & Clark (1974) |
-| Action in verbs | Actions hidden in nouns while the verb says little | Gopen & Swan, principle 5; Biber & Gray (2010) |
+| Subject → verb | Words that stand between a subject and its verb | [Gopen & Swan](https://www.americanscientist.org/node/924), principle 1; [Gibson (1998)](https://doi.org/10.1016/S0010-0277%2898%2900034-1) |
+| Topic position | What opens each sentence, and whether it names the topic | [Gopen & Swan](https://www.americanscientist.org/node/924), principles 3, 4; [Williams (1990)](https://catalog.hathitrust.org/Record/002224980) |
+| Stress position | What closes each sentence, where readers place the emphasis | [Gopen & Swan](https://www.americanscientist.org/node/924), principles 2, 7 |
+| Old → new | Whether each sentence starts from what the reader already holds | [Gopen & Swan](https://www.americanscientist.org/node/924), principles 4, 6; [Haviland & Clark (1974)](https://doi.org/10.1016/S0022-5371%2874%2980003-4) |
+| Action in verbs | Actions hidden in nouns while the verb says little | [Gopen & Swan](https://www.americanscientist.org/node/924), principle 5; [Biber & Gray (2010)](https://doi.org/10.1016/j.jeap.2010.01.001) |
 
 ### Is the argument clear?
 
 | Lens | What it reads | Drawn from |
 |---|---|---|
-| Reverse outline | The first and last sentence of each paragraph, and the point you say it makes | Mensh & Kording (2017); Morris et al. (2025) |
-| Paragraph jobs | The job you give each paragraph, and the moves that job usually needs | Swales (1990); Academic Phrasebank |
-| Claim tracer | Where the words of your central claim and your title appear | Toulmin (2003); Mihalcea & Tarau (2004) |
-| Claim strength | Causal, certain and absolute wording, against the evidence you name | Toulmin (2003); Haber et al. (2018) |
-| Hedging | Hedges, and several in a row | Hyland (1996) |
+| Reverse outline | The first and last sentence of each paragraph, and the point you say it makes | [Mensh & Kording (2017)](https://doi.org/10.1371/journal.pcbi.1005619); [Morris et al. (2025)](https://doi.org/10.1007/s40593-024-00395-0) |
+| Paragraph jobs | The job you give each paragraph, and the moves that job usually needs | [Swales (1990)](https://search.worldcat.org/title/23079178); [Academic Phrasebank](https://www.phrasebank.manchester.ac.uk/) |
+| Claim tracer | Where the words of your central claim and your title appear | [Toulmin (2003)](https://doi.org/10.1017/CBO9780511840005); [Mihalcea & Tarau (2004)](https://aclanthology.org/W04-3252/) |
+| Claim strength | Causal, certain and absolute wording, against the evidence you name | [Toulmin (2003)](https://doi.org/10.1017/CBO9780511840005); [Haber et al. (2018)](https://doi.org/10.1371/journal.pone.0196346) |
+| Hedging | Hedges, and several in a row | [Hyland (1996)](http://hdl.handle.net/10722/130132) |
 
 ### Does it flow?
 
 | Lens | What it reads | Drawn from |
 |---|---|---|
-| Topic grid | Recurring terms across sentences, and how each sentence links back | Kinnunen et al. (2012); Crossley, Kyle & McNamara (2016) |
-| Signal phrases | Phrases that announce a move, and connectives by type | Swales (1990); Knight et al. (2020); McNamara et al. (2014) |
-| Skeleton read | Only the opening and close of each sentence | Gopen & Swan, principles 2, 3 |
+| Topic grid | Recurring terms across sentences, and how each sentence links back | [Kinnunen et al. (2012)](https://aclanthology.org/E12-2005/); [Crossley, Kyle & McNamara (2016)](https://doi.org/10.3758/s13428-015-0651-7) |
+| Signal phrases | Phrases that announce a move, and connectives by type | [Swales (1990)](https://search.worldcat.org/title/23079178); [Knight et al. (2020)](https://doi.org/10.17239/jowr-2020.12.01.06); [McNamara et al. (2014)](https://doi.org/10.1017/CBO9780511894664) |
+| Skeleton read | Only the opening and close of each sentence | [Gopen & Swan](https://www.americanscientist.org/node/924), principles 2, 3 |
 
 ### Is each sentence easy to read?
 
 | Lens | What it reads | Drawn from |
 |---|---|---|
-| Length & rhythm | Sentence length on a fixed scale, runs of equal length, readability formulas | Flesch (1948); Choi & Crossley (2021) |
-| Dense phrases | Noun stacks and chains of prepositions | Williams (1990); Kyle & Crossley (2018) |
-| Voice | Passives, and whether each names who acted | Gopen & Swan; McNamara et al. (2014) |
-| Clutter | Stock phrases, empty openers and stacked negatives | Zinsser (2006); Williams (1990) |
+| Length & rhythm | Sentence length on a fixed scale, runs of equal length, readability formulas | [Flesch (1948)](https://doi.org/10.1037/h0057532); [Choi & Crossley (2021)](https://easychair.org/publications/preprint/pgb8) |
+| Dense phrases | Noun stacks and chains of prepositions | [Williams (1990)](https://catalog.hathitrust.org/Record/002224980); [Kyle & Crossley (2018)](https://doi.org/10.1111/modl.12468) |
+| Voice | Passives, and whether each names who acted | [Gopen & Swan](https://www.americanscientist.org/node/924); [McNamara et al. (2014)](https://doi.org/10.1017/CBO9780511894664) |
+| Clutter | Stock phrases, empty openers and stacked negatives | [Zinsser (2006)](https://search.worldcat.org/oclc/62421288); [Williams (1990)](https://catalog.hathitrust.org/Record/002224980) |
 
 ### Are the words well chosen?
 
 | Lens | What it reads | Drawn from |
 |---|---|---|
-| Vague & worn words | Intensifiers, vague quantities and worn phrases | Zinsser (2006) |
-| Vocabulary level | Content words against two open word lists, and word variety | Browne, Culligan & Phillips (2013); McCarthy & Jarvis (2010) |
-| Term tracker | Recurring terms, second names for one thing, and your own word list | Williams (1990); Kyle, Crossley & Kim (2015) |
-| Acronyms | Abbreviations that are never defined, or used only once or twice | Barnett & Doubleday (2020) |
-| Describing people | Labels for people that carry a judgment | APA bias-free language guidelines |
+| Vague & worn words | Intensifiers, vague quantities and worn phrases | [Zinsser (2006)](https://search.worldcat.org/oclc/62421288) |
+| Vocabulary level | Content words against two open word lists, and word variety | [Browne, Culligan & Phillips (2013)](https://www.newgeneralservicelist.com/); [McCarthy & Jarvis (2010)](https://doi.org/10.3758/BRM.42.2.381) |
+| Term tracker | Recurring terms, second names for one thing, and your own word list | [Williams (1990)](https://catalog.hathitrust.org/Record/002224980); [Kyle, Crossley & Kim (2015)](https://doi.org/10.1075/ijlcr.1.2.01kyl) |
+| Acronyms | Abbreviations that are never defined, or used only once or twice | [Barnett & Doubleday (2020)](https://doi.org/10.7554/eLife.60080) |
+| Describing people | Labels for people that carry a judgment | [APA bias-free language guidelines](https://apastyle.apa.org/style-grammar-guidelines/bias-free-language) |
 
 ### Is it polished?
 
 | Lens | What it reads | Drawn from |
 |---|---|---|
-| Statistics reporting | Reported test results, rechecked by arithmetic | Nuijten et al. (2016); Appelbaum et al. (2018) |
-| Mechanical checks | Figure and table order, missing citations, tense | McNamara et al. (2014) |
-| Typing slips | Doubled words, stray spaces, "a" for "an", look-alike words | Crossley, Bradfield & Bustamante (2019) |
-| Source overlap | Runs of words shared with a source you paste | Crossley, Kyle, Davenport & McNamara (2016) |
+| Statistics reporting | Reported test results, rechecked by arithmetic | [Nuijten et al. (2016)](https://doi.org/10.3758/s13428-015-0664-2); [Appelbaum et al. (2018)](https://doi.org/10.1037/amp0000191) |
+| Mechanical checks | Figure and table order, missing citations, tense | [McNamara et al. (2014)](https://doi.org/10.1017/CBO9780511894664) |
+| Typing slips | Doubled words, stray spaces, "a" for "an", look-alike words | [Crossley, Bradfield & Bustamante (2019)](https://doi.org/10.17239/jowr-2019.11.02.01) |
+| Source overlap | Runs of words shared with a source you paste | [Crossley, Kyle, Davenport & McNamara (2016)](https://asu.elsevierpure.com/en/publications/automatic-assessment-of-constructed-response-data-in-a-chemistry-) |
 
 ### Research profile
 
@@ -143,7 +143,7 @@ The Overview carries a **Research profile**: 17 counts that writing researchers 
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-All 67 sources are listed, with DOIs where they could be confirmed, at the foot of the application.
+Each citation above links to its DOI or to the full text. Four have neither: three are books, which link to a library catalogue record, and the 2016 conference paper by Crossley, Kyle, Davenport and McNamara links to its publication record. All 67 sources are listed at the foot of the application.
 
 ---
 
