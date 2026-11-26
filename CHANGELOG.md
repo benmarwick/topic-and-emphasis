@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.14.0 (2026-11-26)
+
+- Overview: "The draft at a glance", a strip with one column a sentence, length above the line and open notes below.
+- Load map: rows for open notes, claim words, evidence named in the sentence, strong wording and hedges.
+- Old → new: the link ladder, a small picture for each paragraph that joins every repeated word to where it stood in the sentence before.
+- Skeleton read: openings and closes in two aligned columns.
+- Paragraph jobs: a paragraph map with length, claim words and point.
+- Claim strength and Hedging: a table of wording against evidence named in the sentence.
+- Before & after: a slopegraph of open notes by stage, start to now.
+- Workbench: an arc from the subject to its verb, with a mark for each comma, bracket or dash inside the gap.
+- Engine: per-sentence series for hedges, strong wording, evidence and claim words. `tests/series.test.js`.
+
 ## 0.13.0 (2026-11-26)
 
 - Export, in Before & after and from a new "Export" button above the draft: the current text as a Word file with each open note as a margin comment on the words it points at, as a Word file with no comments, or as a plain file that keeps the format you opened.

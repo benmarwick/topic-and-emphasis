@@ -710,6 +710,7 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
     /* hedging */
     const hs=[];T.forEach((t,i)=>{if(t.w&&HEDGE.has(t.l)){hs.push(i);mk('hedge',i,i,'hl hb-olive');}});
     let hp=0,hx;HEDGEP.lastIndex=0;while((hx=HEDGEP.exec(text))){hp++;L('hedge').push({a:hx.index,b:hx.index+hx[0].length,cls:'hl hb-olive'});}
+    st.hedgeN=hs.length+hp;
     const adj=hs.some((h,q)=>q>0&&h-hs[q-1]<=2);
     if(hs.length+hp>=3||adj)add({lens:'hedge',s:st.i,a:null,sev:2,title:hs.length+hp>=3?'Stacked hedges':'Double hedge',
       detail:(hs.length+hp)+' hedges in this sentence: '+uniq(hs.map(i=>T[i].t.toLowerCase())).join(', ')+(hp?', and a hedging phrase':'')+'.',
@@ -1166,14 +1167,14 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
       R.hype={n:hn,per:per(hn),by,words:[...cnt.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,14).map(([w,c])=>[w,c,HYPEOF.get(w)])};}
     /* stance and engagement, in the categories of Hyland (2005); the word lists are this page's own */
     {let hd=0,bo=0,you=0,dir=0,qn=0,shared=0;
-      sents.forEach(st=>{const text=st.text,LH=st.marks.hedge||(st.marks.hedge=[]);let m,fw=null;const put=(a,b,cls,tip)=>{if(!LH.some(x=>x.a<b&&a<x.b))LH.push({a,b,cls,tip});};
+      sents.forEach(st=>{const bo0=bo,text=st.text,LH=st.marks.hedge||(st.marks.hedge=[]);let m,fw=null;const put=(a,b,cls,tip)=>{if(!LH.some(x=>x.a<b&&a<x.b))LH.push({a,b,cls,tip});};
         st.T.forEach(tk=>{if(!tk.w)return;if(fw==null)fw=tk;if(HEDGE.has(tk.l))hd++;else if(BOOSTW.has(tk.l)){bo++;put(tk.s,tk.e,'ul hu-amber','A booster: a word that raises the certainty of the claim (Hyland 2005).');}else if(tk.l==='you'||tk.l==='your'||tk.l==='yours'){you++;put(tk.s,tk.e,'ul hu-blue','This addresses the reader directly (Hyland 2005).');}});
         HEDGEP.lastIndex=0;while((m=HEDGEP.exec(text)))hd++;
         BOOSTP.lastIndex=0;while((m=BOOSTP.exec(text))){bo++;put(m.index,m.index+m[0].length,'ul hu-amber','A booster: wording that raises the certainty of the claim (Hyland 2005).');}
         if(fw&&DIRW.has(fw.l)&&/^[A-Z]/.test(fw.t)){dir++;put(fw.s,fw.e,'ul hu-blue','A directive: it tells the reader to do something (Hyland 2005).');}
         DIRP.lastIndex=0;while((m=DIRP.exec(text))){dir++;put(m.index,m.index+m[0].length,'ul hu-blue','A directive: it tells the reader what to do or what matters (Hyland 2005).');}
         SHAREP.lastIndex=0;while((m=SHAREP.exec(text))){shared++;put(m.index,m.index+m[0].length,'ul hu-blue','An appeal to shared knowledge: it treats the point as something the reader already accepts (Hyland 2005).');}
-        if(/\?["”’)]*\s*$/.test(text))qn++;});
+        if(/\?["”’)]*\s*$/.test(text))qn++;st.boostN=bo-bo0;});
       R.stance={hedge:hd,boost:bo,hper:per(hd),bper:per(bo),eng:{you,dir,q:qn,shared}};}
     /* word sequences: four-word runs the draft repeats, and common academic formulas by function (Biber, Conrad & Cortes 2004) */
     {const g4=new Map(),fc={ref:0,stance:0,org:0},found=new Map();
@@ -1195,7 +1196,10 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
           (st.marks.checks||(st.marks.checks=[])).push({a,b,cls:'hl hb-olive',f:id});}});
       R.grim={tested:gt,flagged:gf};}
     /* sentence-by-sentence series for the load map, and lexical density: the share of words that carry content (Ure 1971) */
-    {const ser={len:[],pre:[],ld:[],long:[],fresh:[],nom:[],conn:[],pas:[]};let cwT=0;
+    {const ser={len:[],pre:[],ld:[],long:[],fresh:[],nom:[],conn:[],pas:[],hedge:[],force:[],evid:[],claim:[]},CK=new Set(claimTerms.map(t=>t.k)),FIG=/\d+(?:\.\d+)?\s*%|\bper ?cent\b|\bp\s*[<=>]\s*0?\.\d|\b[nN]\s*=\s*\d|\b\d+\.\d+\b/;let cwT=0;
+      /* where the argument sits, sentence by sentence: hedges, strong wording, evidence named in the sentence, and words from the claim */
+      sents.forEach(st=>{const strong=(st.marks.claims||[]).filter(m=>m.f!=null).length;st.evid=(st.cite||st.T.some(t=>t.cite)||CITE.test(st.text)?1:0)+(FIG.test(st.text)?1:0);
+        ser.hedge.push(st.hedgeN||0);ser.force.push(strong+(st.boostN||0));ser.evid.push(st.evid);ser.claim.push(CK.size?new Set(st.cw.filter(c=>CK.has(c.k)).map(c=>c.k)).size:0);});
       sents.forEach(st=>{let lg=0,nm=0;st.longI=[];st.nomI=[];st.T.forEach((tk,ti)=>{if(!tk.w||tk.cite)return;if((tk.t.match(/\p{L}/gu)||[]).length>6){lg++;st.longI.push(ti);}if(isNom(tk.l)){nm++;st.nomI.push(ti);}});
         const nw=st.nW||1,fr=st.cw.filter(c=>!c.old).length;st.ld=st.cw.length/nw;cwT+=st.cw.length;
         ser.len.push(st.nW);ser.pre.push(st.preV==null?null:st.preV);ser.ld.push(st.nW>=5?100*st.ld:null);ser.long.push(st.nW>=5?100*lg/nw:null);ser.fresh.push(st.cw.length?100*fr/st.cw.length:null);ser.nom.push(nm);ser.conn.push(st.conn.length);ser.pas.push((st.passives||[]).length);});
