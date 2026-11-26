@@ -53,6 +53,8 @@ function note(A, text, f, reveal) {
   if (reveal !== 'questions') {
     o.finding = f.title; o.explanation = f.detail || null; o.advice = f.tip || null;
     if (f.fix) o.suggested_change = { replace: text.slice(f.fix.s, f.fix.e), with: f.fix.text };
+    // the fill-in template for a noun that holds the action: the actor is the writer's to supply
+    if (f.unpack) { const u = f.unpack; o.unpack_the_noun = { replace: text.slice(u.s, u.e), who_or_what: u.kind === 'obj' ? (u.subj || null) : (u.actor || null), actor_missing: u.kind === 'subj' && !u.actor, verb: u.verb, object: u.obj || null, not_carried_over: u.left }; }
   }
   return o;
 }

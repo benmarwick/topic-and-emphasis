@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.12.0 (2026-11-26)
+
+- Unpack the noun: in the workbench, the "action is in a noun" note carries a template with three blanks (who or what, did what, to what). The verb takes the tense of the verb it replaces, the object comes from the words after the noun, and the actor is left for the writer unless the sentence names one after "by" or as a possessive. Words that are not carried over are listed. A preview shows which notes the change would clear.
+- Rearrange: pieces that bring in a word the draft has not used before are marked "new"; "move to start" joins "move to end"; an interruption stays in one piece even when it holds a list; and a table sets the sentence before your moves against the sentence now (opening, subject-to-verb distance, close).
+- Notes about a subject far from its verb, a weak close, new before old, and a late backward link have a button that opens Rearrange, with the interruption already picked where there is one.
+- Subject and verb: a list inside an opening phrase ("with tenants, landlords and officials, the council …") no longer hides the subject.
+- "undertake" is now a known verb.
+- `tests/unpack.test.js`.
+
 ## 0.11.0 (2026-11-26)
 
 - Four stages of revising: Claim strength and Hedging move from stage 1 to a new stage 4, Calibration.

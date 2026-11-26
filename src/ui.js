@@ -740,6 +740,8 @@ function guideHTML(){const A=state.A,R=A.research;
     '<p><b>Lenses.</b> A lens reads the draft for one thing and marks it in the text. Pick a lens from the list, or type in the box above the list to find one. The Overview shows every open note at once.</p>'+
     '<p><b>Notes.</b> A note starts with a question about the sentence. The advice and any suggested change come after it. Where a note offers a change, preview it first: the preview shows which notes it would clear and any it would bring in. A note is not an order. “I checked this” is a valid answer, and it counts as work done.</p>'+
     '<p><b>The rewrite box.</b> Tap a sentence to open it under its paragraph. Marks from every open note show inside the box and update as you type. Undo and Redo work on the whole text.</p>'+
+    '<p><b>Rearrange.</b> The Rearrange tab under the rewrite box cuts the sentence into labelled pieces: opening, subject, interruption, verb, middle and close. A piece marked “new” brings in a word the draft has not used before. Drag a piece, or tap it and tap where it should go. A table then sets the sentence before your moves against the sentence now: how it opens, how far the subject sits from its verb, and what it closes on. Notes about a subject far from its verb, a weak close, or new before old carry a button that opens Rearrange with the piece to move already picked.</p>'+
+    '<p><b>Unpack the noun.</b> When Action in verbs finds the action sitting in a noun, as in “the implementation of the policy was conducted”, the note in the workbench shows a template with three blanks: who or what, did what, to what. The page fills the verb and its object from your words. It leaves the actor empty unless the sentence names one after “by”, because only you know who acted. A preview shows which notes the new wording would clear before anything changes.</p>'+
     '<p><b>Research measures.</b> Most lenses carry a box headed “Research measure”: a count that writing researchers use, recomputed here by a fixed rule, with what the research found and how this count differs from the published one. The Research profile on the Overview gathers them. None is a score and none has a target.</p>'+
     '<p><b>The meaning model.</b> Off unless you switch it on. It is a small language model that compares sentences by meaning, in your browser. It is the only part of the page that is AI, and its results are always labelled. It never creates notes and never changes the revision receipt.</p>'+
     '<p><b>Opening a file.</b> Paste your text, or use “Open a file”, or drag a file onto the page. The page reads Word (.docx), Markdown, Quarto, R Markdown, LaTeX and plain text. A Word file is unpacked here in the browser, with no upload. Its headings are kept, and its footnotes, comments and tracked deletions are left out.</p>'+
@@ -1363,7 +1365,27 @@ function renderMs(){
 /* ---------- notes ---------- */
 const PBURL='https://www.phrasebank.manchester.ac.uk/';
 const STARTERS=[['It continues the same point','This ___ '],['It is a result','As a result of this ___, '],['It is a contrast','In contrast to this ___, '],['It is an example','As an example of this ___, '],['It adds a new point','Beyond this ___, ']];
-function helpHTML(f){let h='';if(f.dis)return h;
+function upVals(f){const u=f.unpack,S=state.up||(state.up={});return S[f.key]||(S[f.key]={a:u.actor,v:u.verb,o:u.obj});}
+const upClean=x=>x.trim().replace(/\s+/g,' ');
+function upParts(f){const u=f.unpack,x=upVals(f),a=upClean(x.a),v=upClean(x.v),o=upClean(x.o),up=t=>t.charAt(0).toUpperCase()+t.slice(1);
+  return u.kind==='subj'?[u.cap&&a?up(a):a,v,o]:[null,v,o];}
+function upText(f){return upParts(f).filter(Boolean).join(' ');}
+function upReady(f){const x=upVals(f);return !!x.v.trim()&&(f.unpack.kind!=='subj'||!!x.a.trim());}
+function upLine(f){const u=f.unpack,st=state.A.sents[f.s],[a,v,o]=upParts(f),gap=w=>'<span class="upgap">'+w+'</span>';
+  return esc(state.raw.slice(st.s,u.s))+'<b class="upnew">'+[u.kind==='subj'?(a?esc(a):gap('who or what?')):null,v?esc(v):gap('did what?'),o?esc(o):null].filter(x=>x!=null).join(' ')+'</b>'+esc(state.raw.slice(u.e,st.e));}
+function upHTML(f){const u=f.unpack,x=upVals(f),id='up'+f.id,slot=(k,lab,val,ph,cls,tip)=>'<label class="upslot '+cls+'"'+tipA(tip)+'><small>'+lab+'</small><input type="text" id="'+id+k+'" data-upf="'+k+'" value="'+esc(val)+'" placeholder="'+ph+'" autocomplete="off" autocapitalize="off" spellcheck="false"></label>';
+  const lead=u.kind==='obj'?'“'+esc(u.nom)+'” names an action, and the sentence already says who acts. Let the action be the verb.':u.own?'“'+esc(u.nom)+'” names something that happened. What changed can be the subject itself, so it is filled in for you. If something caused the change, name that instead and move what changed to the last blank.':u.poss?'“'+esc(u.nom)+'” names an action, and “'+esc(u.poss)+'” hints at who did it. That actor is filled in as the subject. Change it if it is wrong.':u.agent?'“'+esc(u.nom)+'” names an action, and the sentence says who did it only after “by”. That actor is filled in as the subject. Change it if it is wrong.':'“'+esc(u.nom)+'” names an action, but the sentence does not say who or what did it. Only you know. Fill in the first blank.';
+  return '<div class="aid up" data-up="'+f.id+'"><span class="cap"'+tipA('A noun made from a verb hides who acted. This template turns the noun back into a verb and leaves a blank for the actor. The page fills in the verb and what it acted on from your own words, and you supply the rest. Every blank can be edited.')+'>Unpack the noun</span><p>'+lead+'</p>'+
+    '<div class="uprow">'+[u.kind==='subj'?slot('a','who or what?',x.a,'you say','who','The actor: the person, group or thing that did it. The page cannot work this out. If nothing outside did it, the thing itself can be the subject.'):u.subj?'<span class="upslot fixed"'+tipA('The subject the sentence already has. It stays where it is.')+'><small>who or what</small><b>'+esc(u.subj)+'</b></span>':'',
+    slot('v','did what',x.v,'the action as a verb','verb','The action, as a verb. '+(u.base?'“'+u.base+'” is the verb inside “'+u.nom+'”, in the tense of the verb it replaces. ':'The page does not know the verb inside “'+u.nom+'”, so type it. ')+'Change the ending so it agrees with your subject.'),
+    slot('o','to what',x.o,'what it acted on','obj','What the action was done to, taken from the words after the noun. Leave it empty if the verb needs no object.')].filter(Boolean).join('<i aria-hidden="true">+</i>')+'</div>'+
+    '<p class="upout" aria-live="polite">'+upLine(f)+'</p>'+
+    (u.left.length?'<p class="hint">Not carried over: “'+esc(u.left.join(' '))+'”. Work it back in if it matters.</p>':'')+
+    '<button type="button" class="apply" data-upgo="'+f.id+'"'+tipA('See which notes this change would clear, and any it would bring in, before you decide. The result is a rough draft to read over.')+'>Preview this in the sentence</button></div>';}
+const MOVABLE=f=>!f.para&&(f.lens==='sv'||f.lens==='stress'||(f.lens==='flow'&&f.title==='New before old')||(f.lens==='topic'&&f.title==='The backward link arrives late'));
+function helpHTML(f,px){let h='';if(f.dis)return h;
+  if(px==='w'&&f.unpack&&state.sel)h+=upHTML(f);
+  if(px==='w'&&MOVABLE(f)&&state.sel)h+='<div class="aid"><button type="button" class="apply" data-tomove="'+f.id+'"'+tipA('Opens the Rearrange tab with this sentence cut into its parts: opening, subject, interruption, verb, middle and close. Nothing changes until you move a piece.')+'>Try it with the pieces</button></div>';
   if(f.ladder&&f.ladder.length)h+='<div class="aid"><span class="cap"'+tipA('Wording that the evidence you named does support. Tap one to swap it into your text, then fix the grammar around it.')+'>Wording your evidence supports</span><div class="chips">'+f.ladder.map((w,i)=>'<button type="button" class="chip" data-swap="'+f.id+':'+i+'">'+(w?esc(w):'delete it')+'</button>').join('')+'</div></div>';
   if(f.starters)h+='<div class="aid"><span class="cap"'+tipA('Choose how this sentence relates to the one before it. An opener goes into the rewrite box with a blank, which you fill with something the reader already knows.')+'>How does this sentence follow from the last?</span><div class="chips">'+STARTERS.map((s,i)=>'<button type="button" class="chip" data-start="'+f.id+':'+i+'"'+tipA('Starts the sentence with “'+s[1].trim()+'”.')+'>'+esc(s[0])+'</button>').join('')+'</div>'+(f.starters.length?'<p>'+(f.prevTerms?'Terms from the previous sentence':'Familiar terms in this sentence')+': '+f.starters.map(esc).join(', ')+'.</p>':'')+'</div>';
   if(f.nouns&&f.nouns.length)h+='<div class="aid"><span class="cap"'+tipA('Words from the previous sentence. Tap one to put it after the pointing word, or type your own noun in the rewrite box.')+'>Name the noun</span><div class="chips">'+f.nouns.map((w,i)=>'<button type="button" class="chip" data-noun="'+f.id+':'+i+'">… '+esc(w.toLowerCase())+'</button>').join('')+'</div></div>';
@@ -1377,7 +1399,7 @@ function noteHTML(f,o){
   o=o||{};const l=LBY[f.lens],px=o.px||'n';
   const body='<p>'+esc(f.detail)+'</p>'+(f.tip?'<p class="tip"><b'+tipA('One way to revise. A suggestion, not a rule.')+'>Try</b>'+esc(f.tip)+'</p>':'')+
     (f.sketch?'<dl class="sk">'+f.sketch.map(([a,b])=>'<dt>'+esc(a)+'</dt><dd>'+esc(b)+'</dd>').join('')+'</dl>':'')+
-    (f.fix&&!f.dis?'<button type="button" class="apply" data-fix="'+f.id+'"'+tipA('See which notes this change would clear, and any it would bring in, before you decide.')+'>'+(f.fix.lab?'Preview: '+esc(f.fix.lab):f.fix.text?'Preview: replace with “'+esc(f.fix.text)+'”':'Preview: delete the phrase')+'</button>':'')+helpHTML(f)+pvBox(f);
+    (f.fix&&!f.dis?'<button type="button" class="apply" data-fix="'+f.id+'"'+tipA('See which notes this change would clear, and any it would bring in, before you decide.')+'>'+(f.fix.lab?'Preview: '+esc(f.fix.lab):f.fix.text?'Preview: replace with “'+esc(f.fix.text)+'”':'Preview: delete the phrase')+'</button>':'')+helpHTML(f,px)+pvBox(f);
   let ev='';
   if(f.claim){ev='<label class="ev"'+tipA('Your answer is checked against a fixed table of the wording each kind of evidence supports.')+'>The evidence behind it<select id="'+px+'ev-'+f.id+'" data-claim="'+f.id+'"><option value="">Choose…</option>'+E.EVID[f.claim.cat].map(r=>'<option value="'+r[0]+'"'+(f.claim.val===r[0]?' selected':'')+'>'+esc(r[1])+'</option>').join('')+'</select></label>';}
   return '<li class="note hb-'+(f.lens===state.lens?l.hue:'ink')+(f.key===state.hot?' hot':'')+(f.dis||f.ok?' settled':'')+'"><button type="button" class="nh" data-go="'+f.id+'"'+tipA('Open this sentence in the workbench.')+'><span class="ns">Sentence '+(f.s+1)+'</span><span>'+esc(l.n)+'</span></button>'+
@@ -1448,14 +1470,24 @@ function chunk(st){
   else{const sa=st.stress?st.stress[0]:0;segs.push(['opening',0,sa-1],['close',sa,last]);}
   const first=st.words.length?st.words[0]:-1,out=[];
   segs.forEach(([role,a,b])=>{if(a>b)return;const pieces=[];let x=a,dp=0;
-    for(let i=a;i<=b;i++){const t=T[i].t;if(t==='('||t==='[')dp++;else if(t===')'||t===']')dp=Math.max(0,dp-1);else if(!dp&&(t===','||t===';')&&(role==='opening'||role==='interruption'||role==='middle')){pieces.push([x,i-1]);x=i+1;}}
+    for(let i=a;i<=b;i++){const t=T[i].t;if(t==='('||t==='[')dp++;else if(t===')'||t===']')dp=Math.max(0,dp-1);else if(!dp&&(t===','||t===';')&&(role==='opening'||role==='middle')){pieces.push([x,i-1]);x=i+1;}}
     pieces.push([x,b]);
     pieces.forEach(([p,q])=>{while(p<=q&&/^[,;]$/.test(T[p].t))p++;while(q>=p&&/^[,;]$/.test(T[q].t))q--;if(p>q)return;let w=false;for(let i=p;i<=q;i++)if(T[i].w)w=true;if(!w)return;
       const cB=p>0&&T[p-1].t===',',cA=q<last&&T[q+1].t===',';
-      out.push({id:'tile'+(state.tid++),role,text:text.slice(T[p].s,T[q].e),init:first>=p&&first<=q,off:(cB&&cA)||(role==='opening'&&cA)||(q===last&&cB),cB,cA});});});
+      const nw=st.i>0?[...new Set(st.cw.filter(c=>!c.old&&c.i>=p&&c.i<=q).map(c=>T[c.i].t))]:[];
+      out.push({id:'tile'+(state.tid++),role,text:text.slice(T[p].s,T[q].e),init:first>=p&&first<=q,off:(cB&&cA)||(role==='opening'&&cA)||(q===last&&cB),cB,cA,nw});});});
   return{tiles:out,end};
 }
-function buildTiles(){const ss=spanSents(),t=[];let end='.';ss.forEach((st,i)=>{const c=chunk(st);if(i)t.push({id:'tile'+(state.tid++),brk:true});t.push(...c.tiles);end=c.end;});state.tiles=t;state.tend=end;state.tsrc=state.sel?state.raw.slice(state.sel.s,state.sel.e):'';state.picked=-1;}
+function wbFacts(ss){return ss.map(st=>{const T=st.T,t=r=>r?st.text.slice(T[r[0]].s,T[r[1]].e):'',sr=st.stress;
+  const nw=st.i>0?st.cw.filter(c=>!c.old):[],inC=sr?[...new Set(nw.filter(c=>c.i>=sr[0]&&c.i<=sr[1]).map(c=>T[c.i].t))]:[];
+  return{open:t(st.topic),gap:st.head>=0&&st.v>=0?st.gap:null,close:t(sr),nw:nw.length,inC};});}
+function factsHTML(){const now=wbFacts(spanSents()),was=state.tbase||[],moved=state.tsrc!=null&&state.sel&&state.raw.slice(state.sel.s,state.sel.e)!==state.tsrc;
+  if(!moved||!was.length)return '<p class="hint movefacts">Move a piece, and a table here shows what the move did: how the sentence opens, how far the subject sits from its verb, and what it closes on.</p>';
+  const gapT=g=>g==null?'no main verb found':g===0?'side by side':g+(g===1?' word apart':' words apart'),q=x=>x?'“'+esc(x)+'”':'–',one=was.length===1&&now.length===1;
+  const row=(lab,f,b)=>'<tr><th scope="row">'+lab+'</th><td data-l="Opens with"'+(b&&b.open!==f.open?' class="chg"':'')+'>'+q(f.open)+'</td><td data-l="Subject → verb"'+(b&&b.gap!==f.gap?' class="chg"':'')+'>'+gapT(f.gap)+'</td><td data-l="Closes on"'+(b&&b.close!==f.close?' class="chg"':'')+'>'+q(f.close)+(f.nw?'<small>'+(f.inC.length?'new here: '+esc(f.inC.join(', ')):'no new term here')+'</small>':'')+'</td></tr>';
+  return '<div class="movefacts"><span class="cap"'+tipA('Three things readers use, read from the sentence before your moves and from the sentence now. A cell in bold has changed. “New here” lists words in the close that the draft has not used before this sentence. The table reports what the structure is and leaves the judgement to you.')+'>What your moves changed</span><div class="tblwrap"><table class="cmp mf"><thead><tr><th></th><th'+tipA('The topic position: the opening words, where readers look for whose story this is and for the link to what came before.')+'>Opens with</th><th'+tipA('How many words stand between the subject and its main verb. Readers hold the subject in mind until the verb arrives.')+'>Subject → verb</th><th'+tipA('The stress position: the closing words, which readers weight most.')+'>Closes on</th></tr></thead><tbody>'+
+    was.map((f,i)=>row(was.length>1?'Before, '+(i+1):'Before',f)).join('')+now.map((f,i)=>row(now.length>1?'Now, '+(i+1):'Now',f,one?was[0]:null)).join('')+'</tbody></table></div></div>';}
+function buildTiles(){state.tbase=wbFacts(spanSents());const ss=spanSents(),t=[];let end='.';ss.forEach((st,i)=>{const c=chunk(st);if(i)t.push({id:'tile'+(state.tid++),brk:true});t.push(...c.tiles);end=c.end;});state.tiles=t;state.tend=end;state.tsrc=state.sel?state.raw.slice(state.sel.s,state.sel.e):'';state.picked=-1;}
 function decap(s){const w=(s.match(/^\S+/)||[''])[0];if(!/^[A-Z][a-z]/.test(w))return s;const lo=w.toLowerCase();
   if(E.isFunc(lo)||new RegExp('(^|[^A-Za-z])'+lo.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^A-Za-z]|$)').test(state.raw))return s.charAt(0).toLowerCase()+s.slice(1);return s;}
 function compose(){let out='',start=true,prev=null;
@@ -1552,9 +1584,10 @@ function renderWb(){
       if(par.length)h+='<span class="cap grp"'+tipA('These notes are about the whole paragraph. They are attached to this sentence, but the traffic light does not count them, because editing one sentence cannot settle them.')+'>About the paragraph ('+par.length+')</span>'+list(par);}
     pN.innerHTML=h;}
   else if(state.tab==='move'){if(!ss.length){pM.innerHTML='<p class="empty">Nothing to rearrange.</p>';}else{if(!state.tiles)buildTiles();const pk=state.picked;
-    pM.innerHTML='<p class="hint">Drag a piece to where it should go. You can also tap a piece and then tap the piece it should go in front of. The box above shows the result as a rough draft, so fix its commas and small words by hand.</p><div class="tiles">'+
-      state.tiles.map((x,i)=>x.brk?'<button type="button" class="tile brk'+(i===pk?' on':'')+'" id="'+x.id+'" data-tile="'+i+'">full stop</button>':'<button type="button" class="tile r-'+x.role+(i===pk?' on':'')+'" id="'+x.id+'" data-tile="'+i+'"'+tipA(TILETIP[x.role])+'><small>'+x.role+'</small>'+esc(x.text)+'</button>').join('')+
-      (pk>=0?'<button type="button" class="tile slot" data-tile="end">move to end</button>':'')+'</div>'+
+    pM.innerHTML='<p class="hint">Each piece is labelled with the part it played in the sentence as you wrote it. Drag a piece to where it should go. You can also tap a piece and then tap the piece it should go in front of. The box above shows the result as a rough draft, so fix its commas and small words by hand.</p>'+(state.moveWhy?'<p class="hint movewhy">'+esc(state.moveWhy)+'</p>':'')+'<div class="tiles">'+
+      (pk>0?'<button type="button" class="tile slot" data-tile="start">move to start</button>':'')+
+      state.tiles.map((x,i)=>x.brk?'<button type="button" class="tile brk'+(i===pk?' on':'')+'" id="'+x.id+'" data-tile="'+i+'">full stop</button>':'<button type="button" class="tile r-'+x.role+(i===pk?' on':'')+(x.nw&&x.nw.length?' nw':'')+'" id="'+x.id+'" data-tile="'+i+'"'+tipA(TILETIP[x.role]+(x.nw&&x.nw.length?' It brings in '+(x.nw.length===1?'a word':'words')+' the draft has not used before: '+x.nw.join(', ')+'. Readers look for news like this at the end of a sentence.':''))+'><small>'+x.role+(x.nw&&x.nw.length?' <em>new</em>':'')+'</small>'+esc(x.text)+'</button>').join('')+
+      (pk>=0&&pk<state.tiles.length-1?'<button type="button" class="tile slot" data-tile="end">move to end</button>':'')+'</div>'+factsHTML()+
       '<div class="tilebar"><button type="button" class="btn sm" id="tStop">Add a full stop</button>'+(pk>=0&&state.tiles[pk].brk?'<button type="button" class="btn sm" id="tDel">Remove this full stop</button>':'')+'<button type="button" class="btn sm" id="tReset">Start again</button></div>';}}
   else if(state.tab==='mark'){if(!st){pK.innerHTML='<p class="empty">Nothing to mark.</p>';}else{const row=(q,hue)=>{let h='',c=0;st.T.forEach((t,i)=>{h+=esc(st.text.slice(c,t.s));c=t.e;h+=t.w?'<button type="button" class="tk hb-'+hue+(state.pick[q].has(i)?' on':'')+'" data-q="'+q+'" data-w="'+i+'">'+esc(t.t)+'</button>':esc(t.t);});return '<p class="toks">'+h+'</p>';};
     pK.innerHTML='<p class="hint">Answer from what you mean, without looking at the marks. Then check your answers against the structure.</p>'+
@@ -1734,9 +1767,19 @@ document.addEventListener('click',e=>{
   if((el=c('[data-bar]'))){openWb(+el.dataset.bar,{scroll:true});return;}
   if((el=c('[data-open]'))){state.open.add(+el.dataset.open);renderMs();return;}
   if((el=c('[data-undis]'))){const f=state.A.byId[+el.dataset.undis];if(f){delete state.dismissed[f.key];save();run();}return;}
-  if((el=c('[data-tab]'))){state.tab=el.dataset.tab;renderWb();return;}
+  if((el=c('[data-tab]'))){state.tab=el.dataset.tab;state.moveWhy='';renderWb();return;}
+  if((el=c('[data-tomove]'))){const f=state.A.byId[+el.dataset.tomove];if(!f)return;state.tab='move';if(!state.tiles)buildTiles();const T=state.tiles;let pk=-1,why='';
+    if(f.lens==='sv'){pk=T.findIndex(x=>x.role==='interruption');if(pk>=0)why='The interruption is picked. Tap the piece it should go in front of, or use “move to start” or “move to end”, and watch the subject meet its verb.';}
+    else if(f.lens==='stress'||f.lens==='flow'){if(T.some(x=>x.nw&&x.nw.length))why='Pieces marked “new” bring in words the draft has not used before. Readers weight the end of a sentence most, so see whether one of them belongs there, with the familiar words leading up to it.';}
+    else if(f.lens==='topic')why='Readers look to the opening for the link to what came before. See whether a piece that holds a familiar word can go first.';
+    state.picked=pk;state.moveWhy=why;renderWb();const pm=$('#pMove');if(pm&&pm.scrollIntoView)pm.scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'});return;}
+  if((el=c('[data-upgo]'))){const f=state.A.byId[+el.dataset.upgo];if(!f||!f.unpack)return;
+    if(!upReady(f)){const bx=el.closest('[data-up]'),inp=bx&&bx.querySelector(f.unpack.kind==='subj'&&!upVals(f).a.trim()?'[data-upf="a"]':'[data-upf="v"]');if(inp)inp.focus();return;}
+    const tx=upText(f);pvSet('up:'+f.id+':'+tx,f.id,{s:f.unpack.s,e:f.unpack.e,text:tx});return;}
   if((el=c('[data-tile]'))){if(Date.now()-(state.dragAt||0)<450)return;const v=el.dataset.tile,T=state.tiles;
+    state.moveWhy='';
     if(v==='end'){if(state.picked>=0){T.push(T.splice(state.picked,1)[0]);state.picked=-1;applyTiles();}return;}
+    if(v==='start'){if(state.picked>=0){T.unshift(T.splice(state.picked,1)[0]);state.picked=-1;applyTiles();}return;}
     const i=+v;if(state.picked<0){state.picked=i;renderWb();return;}
     if(i===state.picked){state.picked=-1;renderWb();return;}
     const tgt=T[i],x=T.splice(state.picked,1)[0];T.splice(T.indexOf(tgt),0,x);state.picked=-1;applyTiles();return;}
@@ -1780,6 +1823,9 @@ let typeT=0,wbT=0,claimT=0;
 function flushEdit(){if(wbT){clearTimeout(wbT);wbT=0;if(state.sel)commitEdit($('#wbText').value);}}
 document.addEventListener('input',e=>{
   const t=e.target;
+  if(t.dataset&&t.dataset.upf){const bx=t.closest('[data-up]'),f=bx&&state.A.byId[+bx.dataset.up];if(!f||!f.unpack)return;upVals(f)[t.dataset.upf]=t.value;
+    bx.querySelectorAll('.upout').forEach(o=>{o.innerHTML=upLine(f);});
+    if(state.pv&&state.pv.fid===f.id){state.pv=null;const n=bx.closest('.note'),pv=n&&n.querySelector('.pv');if(pv)pv.remove();}return;}
   if(t.id==='lensQ'){state.lensQ=t.value;renderRail();return;}
   if(t.id==='guideQ'){state.guideQ=t.value;guideFilter();return;}
   if(t.id==='histRange'){const H=state.hist&&state.hist[state.scrubKey||(state.scrubKey=vKey())];if(H&&state.sel&&H[+t.value]!=null){state.scrubbing=true;replaceRaw(state.sel.s,state.sel.e,H[+t.value]);run();syncWbText();}return;}
@@ -1791,6 +1837,7 @@ document.addEventListener('keydown',e=>{
   const t=e.target;
   if((e.ctrlKey||e.metaKey)&&(e.key==='z'||e.key==='Z')&&!(t.matches&&t.matches('textarea,input,select'))){e.preventDefault();if(e.shiftKey)restore(state.redo,state.undo||(state.undo=[]));else restore(state.undo,state.redo||(state.redo=[]));return;}
   if(t.id==='wbText'&&e.key==='Enter'){e.preventDefault();return;}
+  if(t.dataset&&t.dataset.upf&&e.key==='Enter'){e.preventDefault();const bx=t.closest('[data-up]'),b=bx&&bx.querySelector('[data-upgo]');if(b)b.click();return;}
   if(t.matches&&t.matches('.tile[data-tile]')&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){const i=+t.dataset.tile,j=i+(e.key==='ArrowLeft'?-1:1),T=state.tiles;if(isNaN(i)||j<0||j>=T.length)return;e.preventDefault();[T[i],T[j]]=[T[j],T[i]];state.picked=-1;applyTiles();return;}
   if(e.key==='Escape'&&state.sel&&t.id!=='wbText')closeWb();
 });
@@ -1825,17 +1872,17 @@ window.addEventListener('scroll',hideTip,true);
 /* drag and drop for the Rearrange pieces (pointer events, so it works by touch, pen and mouse) */
 {let dg=null;const box=()=>document.querySelector('#pMove .tiles');
   const clean=()=>{if(!dg)return;if(dg.ghost)dg.ghost.remove();if(dg.mark)dg.mark.remove();dg.el.classList.remove('dragging');try{dg.el.releasePointerCapture(dg.id);}catch(x){}dg=null;};
-  document.addEventListener('pointerdown',e=>{const el=e.target.closest?e.target.closest('#pMove .tile[data-tile]'):null;if(!el||el.dataset.tile==='end'||e.button>0||!state.tiles)return;clean();dg={el,i:+el.dataset.tile,x:e.clientX,y:e.clientY,id:e.pointerId,on:false,at:-1};});
+  document.addEventListener('pointerdown',e=>{const el=e.target.closest?e.target.closest('#pMove .tile[data-tile]'):null;if(!el||el.dataset.tile==='end'||el.dataset.tile==='start'||e.button>0||!state.tiles)return;clean();dg={el,i:+el.dataset.tile,x:e.clientX,y:e.clientY,id:e.pointerId,on:false,at:-1};});
   document.addEventListener('pointermove',e=>{if(!dg||e.pointerId!==dg.id)return;
     if(!dg.on){if(Math.hypot(e.clientX-dg.x,e.clientY-dg.y)<7)return;const r=dg.el.getBoundingClientRect();dg.on=true;dg.ox=dg.x-r.left;dg.oy=dg.y-r.top;hideTip();
       const g=dg.ghost=dg.el.cloneNode(true);g.removeAttribute('id');g.removeAttribute('data-tip');g.classList.add('ghost');g.style.width=r.width+'px';document.body.appendChild(g);
       dg.mark=document.createElement('span');dg.mark.className='tdrop';dg.el.classList.add('dragging');try{dg.el.setPointerCapture(dg.id);}catch(x){}}
     e.preventDefault();dg.ghost.style.left=(e.clientX-dg.ox)+'px';dg.ghost.style.top=(e.clientY-dg.oy)+'px';
-    const bx=box();if(!bx)return;const ts=[...bx.querySelectorAll('.tile[data-tile]')].filter(t=>t.dataset.tile!=='end'&&t!==dg.el);let at=state.tiles.length,ref=null;
+    const bx=box();if(!bx)return;const ts=[...bx.querySelectorAll('.tile[data-tile]')].filter(t=>t.dataset.tile!=='end'&&t.dataset.tile!=='start'&&t!==dg.el);let at=state.tiles.length,ref=null;
     for(const t of ts){const q=t.getBoundingClientRect();if(e.clientY<q.top-3||(e.clientY<=q.bottom+3&&e.clientX<q.left+q.width/2)){at=+t.dataset.tile;ref=t;break;}}
     if(at!==dg.at||!dg.mark.parentNode){dg.at=at;bx.insertBefore(dg.mark,ref||bx.querySelector('[data-tile="end"]'));}},{passive:false});
   const drop=(e,cancel)=>{if(!dg||e.pointerId!==dg.id)return;if(!dg.on){dg=null;return;}const from=dg.i;let to=dg.at;clean();state.dragAt=Date.now();
-    if(cancel||to<0||!state.tiles)return;if(to>from)to--;if(to===from)return;const T=state.tiles,x=T.splice(from,1)[0];T.splice(to,0,x);state.picked=-1;applyTiles();};
+    if(cancel||to<0||!state.tiles)return;if(to>from)to--;if(to===from)return;const T=state.tiles,x=T.splice(from,1)[0];T.splice(to,0,x);state.picked=-1;state.moveWhy='';applyTiles();};
   document.addEventListener('pointerup',e=>drop(e,false));document.addEventListener('pointercancel',e=>drop(e,true));}
 /* labels for the marks under the rewrite box: by pointer, and by cursor position */
 {const ta=$('#wbText');let bkEl=null;

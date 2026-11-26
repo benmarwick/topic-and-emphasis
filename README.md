@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.11.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.12.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.11.0},
+  version = {0.12.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -158,6 +158,7 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 - **Open a file.** "Open a file", or drag a file onto the page: Word (.docx), Markdown, Quarto (.qmd), R Markdown, LaTeX and plain text. A .docx file is unpacked in the browser by about forty lines of code in the page, so there is no upload and no added library; headings are kept, and footnotes, comments and tracked deletions are left out.
 - **Parts that are not prose are set aside.** The settings block of a Quarto file, code blocks, displayed equations, layout markup, block quotations and the reference list stay in the text, greyed and labelled, and no lens reads them. Inline code, inline maths, web addresses and LaTeX references are not counted as words. Nothing is removed, so the text you copy back out is the text you put in.
 - **Reference list check** (Mechanical checks). The list under a References or Bibliography heading is compared with the author-and-year citations in the text: cited but not listed, a year that differs, and listed but never cited.
+- **Sentence tools in the workbench** (0.12.0). *Rearrange* cuts the sentence into labelled pieces (opening, subject, interruption, verb, middle, close), marks the pieces that bring in a word the draft has not used before, and after each move sets the sentence before against the sentence now: how it opens, how far the subject sits from its verb, and what it closes on. Notes about a subject far from its verb, a weak close, or new before old open it with one button. *Unpack the noun* appears in the "action is in a noun" note: three blanks (who or what, did what, to what), with the verb and its object filled from the writer's own words and the actor left empty unless the sentence names one after "by" or as a possessive. A preview shows which notes the new wording would clear. Neither tool writes a sentence for the student: both assemble the student's own words, and the result is a rough draft to read over.
 - **Four stages of revising** (0.11.0). Buttons above the lens list narrow the page to Argument, Flow, Polish or Calibration, hiding the other lenses and their notes. Each button shows its open notes. Pressing "I have reviewed this stage" ticks it, outlines the next one and records the order in the portfolio. Nothing is locked: one line appears if you start polishing while the argument stage is unreviewed and still has open notes, and you can carry on.
 - **Revision portfolio** (Before & after). The receipt, the research profile at the start and now, every rewritten sentence with its kind of change, the notes weighed and kept with the reasons given, and a written reflection, copied as Markdown or JSON.
 - **Stress position.** A short bracketed aside at the end of a sentence is now set aside like a citation, and a few more weak endings are recognised ("in part", "to some degree", "on the whole").
@@ -216,7 +217,8 @@ The model does not see negation or logic, and its scores only rank things within
 |---|---|
 | Workbench | Rewrite a sentence in place; marks from every open note show inside the box |
 | Previews | See which notes a suggested change would clear, and any it would bring in, before accepting it |
-| Rearrange | Drag the parts of a sentence into a new order |
+| Rearrange | Drag the labelled parts of a sentence into a new order; a table shows what the move did to the opening, the subject-to-verb distance and the close |
+| Unpack the noun | A fill-in template that turns a noun such as "implementation" back into a verb and leaves the actor for the writer to supply |
 | Guided and timed passes | Walk through the notes one at a time, or work for 5, 10 or 20 minutes |
 | Before & after | A revision receipt, counts by lens, and the starting text against the current one |
 | Practice | Short drills on the principles, some built from your own draft |
