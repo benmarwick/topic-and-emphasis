@@ -1,5 +1,5 @@
 // Lists the writer brings: an academic word list, and a formulas list with teaching worth.  Run:  node tests/ownlists.test.js
-// The lists below are a few made-up lines in the accepted formats. The published lists are not in this repository.
+// The lists below are a few made-up lines in the accepted formats. The published lists are checked in tests/lists.test.js.
 const fs = require('fs'), path = require('path'), assert = require('assert');
 const ROOT = path.join(__dirname, '..'), read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const j = f => JSON.stringify(read(f).split(/\s+/).join(' '));
@@ -28,7 +28,7 @@ assert.strictEqual(W.words[0].c, 2, '"analyzed" and "analyses" both count under 
 assert.ok(W.words.some(e => e.w === 'labour' && e.s === 2), '"labor" is matched to "labour", in the sublist of its heading');
 assert.ok(W.words.some(e => e.w === 'strategy' && e.s === 2), 'a number on the line gives the sublist');
 assert.ok(W.fam);
-assert.ok(A.sents[0].marks.vocab.some(m => /academic word list, sublist 1, under “analyse”/.test(m.tip || '')));
+assert.ok(A.sents[0].marks.vocab.some(m => /academic word list you loaded, sublist 1, under “analyse”/.test(m.tip || '')));
 
 // the formulas list: the last number is the teaching worth, headings give the list, a bracketed word is optional
 const F = A.research.afl;

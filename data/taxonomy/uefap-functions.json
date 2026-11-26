@@ -1,0 +1,204 @@
+{
+ "name": "Rhetorical functions in academic writing",
+ "reference": "Gillett, A. Using English for Academic Purposes (UEFAP): Rhetorical functions in academic writing. https://www.uefap.org/writing-functions-introduction/",
+ "holds": "The names of the functions and the groups they are listed in, the address of the UEFAP page for a function where that address has been checked, and this project's own tagging of the phrase bank's groups with those names. No text from the UEFAP pages is included.",
+ "base": "https://www.uefap.org/",
+ "groups": [
+  {
+   "group": "Descriptive",
+   "functions": [
+    {
+     "name": "Describing objects, location, structure and direction"
+    },
+    {
+     "name": "Reporting and narrating"
+    },
+    {
+     "name": "Defining"
+    },
+    {
+     "name": "Writing instructions"
+    },
+    {
+     "name": "Describing function"
+    },
+    {
+     "name": "Describing processes, developments and operations"
+    },
+    {
+     "name": "Classifying and categorising"
+    },
+    {
+     "name": "Giving examples"
+    },
+    {
+     "name": "Including tables and charts"
+    }
+   ]
+  },
+  {
+   "group": "Critical",
+   "functions": [
+    {
+     "name": "Writing critically",
+     "page": "writing-functions-10-critical"
+    },
+    {
+     "name": "Arguing and discussing",
+     "page": "writing-functions-11-discussing"
+    },
+    {
+     "name": "Evaluating other points of view"
+    },
+    {
+     "name": "Comparing and contrasting",
+     "page": "writing-functions-13-comparing"
+    },
+    {
+     "name": "Generalising",
+     "page": "writing-functions-14-generalising"
+    },
+    {
+     "name": "Expressing degrees of certainty",
+     "page": "writing-functions-15-certainty"
+    },
+    {
+     "name": "Expressing reasons and explanations",
+     "page": "writing-functions-16-reasons"
+    },
+    {
+     "name": "Expressing feelings"
+    }
+   ]
+  },
+  {
+   "group": "Analytical and applied",
+   "functions": [
+    {
+     "name": "Analysing",
+     "page": "writing-functions-20-analysis"
+    },
+    {
+     "name": "Planning action"
+    },
+    {
+     "name": "Providing support"
+    },
+    {
+     "name": "Application"
+    },
+    {
+     "name": "Working with different voices and finding your own"
+    },
+    {
+     "name": "Taking a stance"
+    },
+    {
+     "name": "Using theory",
+     "page": "writing-functions-26-theory"
+    }
+   ]
+  },
+  {
+   "group": "Research writing",
+   "functions": [
+    {
+     "name": "Introducing"
+    },
+    {
+     "name": "Previous research",
+     "page": "writing-functions-41-prevres"
+    },
+    {
+     "name": "Indicating a gap",
+     "page": "writing-functions-42-gap"
+    },
+    {
+     "name": "Presenting findings from statistical analyses"
+    },
+    {
+     "name": "Presenting findings from interviews",
+     "page": "writing-functions-44-presenting-findings-from-interviews"
+    },
+    {
+     "name": "Presenting findings from mixed methods"
+    },
+    {
+     "name": "Discussing limitations",
+     "page": "writing-functions-46-limits"
+    },
+    {
+     "name": "Drawing conclusions"
+    },
+    {
+     "name": "Recommendations"
+    },
+    {
+     "name": "Practical implications"
+    }
+   ]
+  },
+  {
+   "group": "Reflective",
+   "functions": [
+    {
+     "name": "Writing reflectively"
+    }
+   ]
+  }
+ ],
+ "phrase_bank_tags": {
+  "1": "Introducing",
+  "2": "Previous research",
+  "3": "Introducing",
+  "4": "Indicating a gap",
+  "5": "Introducing",
+  "6": "Defining",
+  "7": "Defining",
+  "8": "Introducing",
+  "9": "Previous research",
+  "10": "Previous research",
+  "11": "Previous research",
+  "12": "Previous research",
+  "13": "Evaluating other points of view",
+  "14": "Indicating a gap",
+  "15": "Evaluating other points of view",
+  "16": "Evaluating other points of view",
+  "17": "Describing processes, developments and operations",
+  "18": "Comparing and contrasting",
+  "19": "Describing objects, location, structure and direction",
+  "20": "Describing processes, developments and operations",
+  "21": "Describing processes, developments and operations",
+  "22": "Using theory",
+  "23": "Expressing reasons and explanations",
+  "24": "Describing processes, developments and operations",
+  "25": "Describing processes, developments and operations",
+  "26": "Reporting and narrating",
+  "27": "Describing processes, developments and operations",
+  "28": "Writing instructions",
+  "29": "Arguing and discussing",
+  "30": "Comparing and contrasting",
+  "31": "Presenting findings from statistical analyses",
+  "32": "Presenting findings from interviews",
+  "33": "Presenting findings from statistical analyses",
+  "34": "Presenting findings from statistical analyses",
+  "35": "Presenting findings from statistical analyses",
+  "36": "Comparing and contrasting",
+  "37": "Comparing and contrasting",
+  "38": "Arguing and discussing",
+  "39": "Expressing degrees of certainty",
+  "40": "Presenting findings from statistical analyses",
+  "41": "Discussing limitations",
+  "42": "Expressing reasons and explanations",
+  "43": "Arguing and discussing",
+  "44": "Expressing degrees of certainty",
+  "45": "Drawing conclusions",
+  "46": "Drawing conclusions",
+  "47": "Drawing conclusions",
+  "48": "Discussing limitations",
+  "49": "Practical implications",
+  "50": "Recommendations",
+  "51": "Recommendations",
+  "53": "Including tables and charts"
+ }
+}

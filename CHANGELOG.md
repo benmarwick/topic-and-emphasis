@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.0 (2026-11-26)
+
+- `data/lists/awl.json` and `data/lists/afl.json`: the Academic Word List (570 headwords, ten sublists, families) and the Academic Formulas List (607 formulas with list, rank, frequency per million in speech and writing, and formula teaching worth), as word strings and numbers only. Loaded by one button in Vocabulary level and in Signal phrases; a pasted copy still works.
+- The formulas table shows frequency per million in speech and in writing beside the teaching worth.
+- `data/taxonomy/uefap-functions.json`: the names and groups of UEFAP's rhetorical functions, with this project's tagging of the phrase bank's groups. The Phrases tab has a Function filter, and each group shows its function.
+- The Section filter in the Phrases tab now responds when changed.
+- `tools/make_lists.py` rebuilds the lists and cross-checks the formulas against a second transcription. `tests/lists.test.js`.
+
 ## 0.17.0 (2026-11-26)
 
 - Vocabulary level: a panel that reads your own copy of the Academic Word List and reports the draft's running words on it, by sublist, with the words marked in the text.

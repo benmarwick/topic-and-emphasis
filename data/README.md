@@ -48,25 +48,34 @@ the `lexopsdata` package. If you plan any commercial use of this application, re
 [nashamri/academic-phrases](https://github.com/nashamri/academic-phrases) (GPL-3.0-or-later), which was made from
 Adrian Wallwork's "Useful Phrases" with the permission of Springer Nature and the author. See `phrases/README.md`.
 
-## Not included, and how to bring your own copy
+## `lists/awl.json`, `lists/afl.json` and `taxonomy/` — optional, fetched only when a reader asks
 
-Two lists are **not** in this repository because neither carries an open licence:
+These three files hold **word strings and numbers only**. Nothing else from the publications is in
+them: no definitions, no example sentences, no explanatory text and no page markup.
 
-- The **Academic Word List** (Coxhead 2000, *TESOL Quarterly*, 34(2), 213–238). The pages of
-  Victoria University of Wellington that describe it state no licence.
-- The **Academic Formulas List**, with its formula teaching worth (Simpson-Vlach & Ellis 2010,
-  *Applied Linguistics*, 31(4), 487–512). The article is marked Oxford University Press 2010 and
-  the full list is in the journal's supplementary material.
+| File | What it holds | Credit | Read from |
+|---|---|---|---|
+| `lists/awl.json` | The Academic Word List: 570 headwords in ten sublists, with the members of each word family. | Coxhead, A. (2000). A new academic word list. *TESOL Quarterly*, 34(2), 213–238. | [lpmi-13/machine_readable_wordlists](https://github.com/lpmi-13/machine_readable_wordlists) (CC0 1.0), which names the Victoria University of Wellington pages as its source. |
+| `lists/afl.json` | The Academic Formulas List: 607 formulas, the list each is on (core, written, spoken), its rank there, its frequency per million words in academic speech and writing, and its formula teaching worth. | Simpson-Vlach, R., & Ellis, N. C. (2010). An Academic Formulas List: New methods in phraseology research. *Applied Linguistics*, 31(4), 487–512. | The table in [egumasa/Multi-Word-Units-Profiler](https://github.com/egumasa/Multi-Word-Units-Profiler), checked row by row against the one in [bouxin/Vocabs](https://github.com/bouxin/Vocabs). The two agree on all 607 rows. |
+| `taxonomy/uefap-functions.json` | The names of 35 rhetorical functions and the groups they are listed in, the address of the UEFAP page for 12 of them, and this project's own tagging of the phrase bank's groups with those names. | Gillett, A. *Using English for Academic Purposes*. https://www.uefap.org/ | The names are from the UEFAP introduction to rhetorical functions. The tagging was done for this project. |
 
-The page reads a copy of either if you have one. Paste it into the box in the Vocabulary level
-lens (word list) or the Signal phrases lens (formulas). It is kept in that browser only. If you
-run your own copy of the page and have the right to distribute a list with it, save it as one of
-the files below and "Look beside this page" will read it.
+`tools/make_lists.py` rebuilds the two lists from those sources.
 
-| File | Format |
+**Rights.** The words, formulas and figures are the work of the authors credited above and are
+reproduced so that the page can count them in a draft. The position taken here is that single words,
+short phrases and measured statistics are not themselves protected by copyright, and that is why only
+those are stored. That position is strongest under United States law. Elsewhere, a compilation or a
+database can carry rights of its own, and nobody has given this project permission for either list.
+This project claims no copyright in the contents of these files. To the extent it holds any rights in
+how they are arranged, it waives them under CC0 1.0. If a rights holder objects, or you would rather
+not distribute them, delete the files: the panels then offer a box to paste a copy into, and
+everything else works as before.
+
+## Pasting a copy of your own
+
+The Vocabulary level lens and the Signal phrases lens also accept a pasted list, kept in that browser.
+
+| List | Format |
 |---|---|
-| `data/lists/awl.txt` (or `.csv`) | One headword to a line. A family is `headword: member, member`. A line `Sublist 3`, or a number from 1 to 10 on a word's line, gives the sublist. |
-| `data/lists/afl.csv` (or `.tsv`, `.txt`) | One formula to a line, then its numbers, separated by commas, tabs or two or more spaces. The last number on the line is read as the formula teaching worth. A line `Core`, `Written` or `Spoken`, or that word in a column, gives the list. A word in brackets is optional. |
-
-Without a copy, the Vocabulary level lens uses the New Academic Word List, and the Signal phrases
-lens counts a short inventory of common academic word sequences written for this application.
+| Word list | One headword to a line. A family is `headword: member, member`. A line `Sublist 3`, or a number from 1 to 10 on a word's line, gives the sublist. |
+| Formulas | One formula to a line, then its numbers, separated by commas, tabs or two or more spaces. The last number is read as the formula teaching worth, and the two before it as frequency per million in speech and in writing. A line `Core`, `Written` or `Spoken`, or that word in a column, gives the list. A word in brackets is optional. |

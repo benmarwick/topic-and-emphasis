@@ -52,6 +52,15 @@ McCormick & Keuleers 2019) are licensed CC BY-NC-SA 4.0. They are for
 non-commercial use, are loaded only on request, and can be deleted without
 affecting the rest of the application.
 
+data/lists/awl.json (the Academic Word List; Coxhead 2000), data/lists/afl.json
+(the Academic Formulas List with formula teaching worth; Simpson-Vlach & Ellis
+2010) and data/taxonomy/uefap-functions.json (the names of UEFAP's rhetorical
+functions; Gillett) hold word strings and numbers only, credited to those
+authors. This project claims no copyright in their contents and waives, under
+CC0 1.0, any rights it may hold in their arrangement. No permission has been
+given by the authors or publishers; see data/README.md. They are fetched only on
+request and can be deleted without affecting the rest of the application.
+
 data/phrases/academic-phrases.json is NOT under the MIT licence. It is a JSON
 conversion of the phrase table in the Emacs package academic-phrases, Copyright
 (C) 2017-2018 Nasser Alshammari, licensed under the GNU General Public License
