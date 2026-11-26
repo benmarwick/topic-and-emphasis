@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.25.0 (2026-11-26)
+
+Five pictures made of the text itself, after Brath (2020) and Brath & Banissi (2016). Rule-based counts; no notes.
+
+- Topic position: "How your sentences open", a stem-and-leaf plot of words (the first word of a sentence as the stem, the next three words as a leaf), for stems that open two or more sentences.
+- Term tracker: "Repetition, drawn", arcs joining successive uses of a content word within a paragraph, the three most repeated coloured and named, up to nine words a paragraph.
+- Length & rhythm: "Cadence without the words": one square a sentence shaded by length, and the punctuation of each sentence alone (marks inside brackets left out), with counts of commas, semicolons, colons, dashes, brackets and questions.
+- Reverse outline: "Outline with proportions": one line a paragraph, with a chosen quantity set into the line as a length of heavy type on a common scale.
+
 ## 0.24.0 (2026-11-26)
 
 Measures in and beside the text. None makes a note or changes the receipt.

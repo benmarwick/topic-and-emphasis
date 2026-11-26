@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.24.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.25.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.24.0},
+  version = {0.25.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -155,6 +155,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Five pictures made of text** (0.25.0), after Brath (2020, *Visualizing with Text*) and [Brath & Banissi (2016)](https://doi.org/10.1016/j.sheji.2016.05.003). *How your sentences open* (Topic position): a stem-and-leaf plot of words, each stem a word that opens more than one sentence and each leaf the words that follow. *Repetition, drawn* (Term tracker): each paragraph as a line of words with an arc from each use of a content word to its next. *Cadence without the words* (Length & rhythm): one square a sentence, darker the longer it is, and the punctuation alone. *Outline with proportions* (Reverse outline): each paragraph's first sentence or stated point, with a quantity (share of words, open notes, wait for the verb, claim words) set into the line as a length of heavy type. All are rule-based counts and none makes a note.
 
 - **Measures in and beside the text** (0.24.0). *Fingerprints* (Overview): six small cells beside each sentence, shaded by its rank in the draft for length, wait for the verb, density, long words, new words and nouns from verbs, after the sentence-level views of [Oelke et al. (2012)](https://doi.org/10.1109/TVCG.2011.266) and [Keim & Oelke (2007)](https://doi.org/10.1109/VAST.2007.4389004). *Profile* (a new workbench tab): one sentence against the whole draft, measure by measure, with the draft's middle marked and a ring where the sentence started. *Trunk view* (Subject → verb): subject, verb and close in full ink; openers, interruptions and comma-set asides lighter; with the meaning model on, each lighter part is graded by how much meaning the sentence loses without it. It follows the idea of [Gu et al. (2024)](https://arxiv.org/abs/2401.10873) and is not their method, which needs a large language model. *Facets by paragraph* (Load map): words, syntax, cohesion and stance as rows, paragraphs under their headings as columns ([Graesser et al. 2011](https://doi.org/10.3102/0013189X11413260)). *Scatter*: wait for the verb and part-of-speech density as upright scales, and a line from where each rewritten sentence started. *Typographic view* (Load map): the words set by a measure, one at a time: how common each is, new or repeated, syllables, part of speech, age learned, concreteness (Brath 2020, *Visualizing with Text*; [Brath & Banissi 2016](https://doi.org/10.1016/j.sheji.2016.05.003)). None of these makes a note.
 
