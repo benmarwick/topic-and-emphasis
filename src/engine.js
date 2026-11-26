@@ -597,7 +597,9 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
 
     /* 1 subject → verb */
     if(head>=0&&v>=0){
-      mk('sv',head,head,'ul st hu-amber');mk('sv',v,ve,'ul st hu-amber');
+      {const sw='“'+T[head].t+'”',vw='“'+tx(v,ve)+'”',far=gap>0?gap+(gap===1?' word':' words'):'';
+        mk('sv',head,head,'ul st sj hu-amber',{tip:'Subject: '+sw+'. Its main verb is '+vw+(far?', '+far+' later.':', straight after it.')});
+        mk('sv',v,ve,'ul st vb hu-amber',{tip:'Main verb: '+vw+'. Its subject is '+sw+(far?', '+far+' earlier.':', straight before it.')});}
       if(gap>=3){let id=null;
         if(gap>=8){let c1=-1;for(let i=head+1;i<v;i++)if(T[i].t===','){c1=i;break;}
           const closed=T[v-1].t===','&&c1>=0&&c1<v-1,pred=text.slice(T[v].s).trim();let sketch,tip;

@@ -29,16 +29,23 @@ assert.deepStrictEqual(notes(t), ['voice:5'], 'after the tutorial\'s rewrites: '
 assert.ok(ui.includes("tourEdit(f,/, which ran for two years,/,'')"), 'the subject-verb step has changed');
 assert.ok(ui.includes('Within a year, however, those who joined a group recovered most of their lost contact.'), 'the stress step has changed');
 
-// 4 the header cards: twelve, each with a source that is in the reference list, none raising a note
-const cards = [...ui.slice(ui.indexOf('const DGS=['), ui.indexOf('function dgShow')).matchAll(/\['((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','([a-z0-9]+)','((?:[^'\\]|\\.)*)'\]/g)];
-assert.strictEqual(cards.length, 12, 'header cards: ' + cards.length);
+// 4 the header cards: sixteen quotations and twelve paraphrases, each with a source in the reference list.
+//   A paraphrase must raise no note. A quotation is left as its author wrote it, and its source must have a link.
+const cards = [...ui.slice(ui.indexOf('const DGS=['), ui.indexOf('function dgShow')).matchAll(/\['((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','([a-z0-9]+)','((?:[^'\\]|\\.)*)'(,1)?\]/g)];
 const strip = s => s.replace(/[{}\[\]]/g, '');
+const quoted = cards.filter(c => c[7]), own = cards.filter(c => !c[7]);
+assert.strictEqual(quoted.length, 16, 'quoted cards: ' + quoted.length);
+assert.strictEqual(own.length, 12, 'paraphrased cards: ' + own.length);
 for (const c of cards) {
+  const ref = ui.match(new RegExp("\\['" + c[5] + "','[^\\n]*?','([^']*)','([^']*)'\\]"));
+  assert.ok(ref, 'no reference with the key ' + c[5]);
+  if (c[7]) assert.ok(/^https:\/\/www\.gutenberg\.org\/ebooks\/\d+$/.test(ref[2]), 'a quoted card has no link to its source: ' + c[5]);
+}
+for (const c of own) {
   const text = strip(c[1]) + ' ' + strip(c[2]) + ' ' + c[3] + ' ' + strip(c[4]);
   assert.deepStrictEqual(notes(text), [], 'a header card raises a note: ' + text + ' → ' + notes(text).join(' '));
   assert.ok(/\{[^}]+\}/.test(c[1]) && /\[[^\]]+\]/.test(c[2]), 'a header card lacks its marks: ' + text);
-  assert.ok(ui.includes("['" + c[5] + "','"), 'no reference with the key ' + c[5]);
 }
 // the subtitle
 assert.deepStrictEqual(notes('A revision workbench for research writing, built on Gopen and Swan’s “The Science of Scientific Writing” (1990).'), []);
-console.log('tutorial: the example has its five notes, the tutorial clears them, and ' + cards.length + ' header cards raise none');
+console.log('tutorial: the example has its five notes, the tutorial clears them, ' + own.length + ' paraphrased cards raise no note and ' + quoted.length + ' quoted cards link to their sources');

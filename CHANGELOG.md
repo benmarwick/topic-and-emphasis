@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.30.0 (2026-11-26)
+
+- Guide: a section "Where the pictures are" lists the 16 lenses that draw the draft and counts their 29 pictures; each lens entry shows its pictures as half-size examples. The examples are drawn by the lens code itself from a fixed example draft (`guidePics`), so they cannot drift from the real thing. Overview and Load map now have Guide entries. Pictures that need a revised draft, loaded data or the meaning model are not shown as examples.
+- Old → new: the Link ladder is one full-width picture a paragraph, with dots and rings more than twice the size, a halo round each, and a tooltip on each dot and ring naming the word and where it was last used. Under it: what to aim for, the sentences whose link comes late, and the sentences into which no word carries over, each as a chip that opens the sentence.
+- Subject → verb: the subject has a single underline and the main verb a double one, with separate entries in the key. Each tooltip names the word and its partner and says how far apart they are.
+- Research measure boxes start folded, showing the title, the sources and the headline figure. An opened box stays open for the visit.
+- Focus timer: patterns of 12 + 3, 25 + 5 and 50 + 10 minutes, and "Until I stop", which counts up and sizes the break to the time worked (5, 8 or 10 minutes). After four rounds in a row it offers twenty minutes. The panel summarises Biwer et al. (2023), Smits et al. (2025), Albulescu et al. (2022), Sword (2016) and Cirillo (2018), all added to the sources.
+- Header cards: sixteen quotations from public-domain works, each checked word for word against the Project Gutenberg text and linked to it, beside the twelve paraphrases of later sources. Nine works added to the sources. The labels under the three places now describe what readers do there, so that they hold for a quoted sentence that breaks the rule.
+- Tooltips: the five that showed one of the writer's sentences without quotation marks (the Overview strip, the Link ladder, the move strip, the meaning map, and the chips under “Wording against evidence”) now quote it on its own line.
+- Header: the article title in the subtitle links to the article; "Nothing uploaded" reads "Nothing leaves your device"; the paragraph beginning "You do not need to settle every note" is set like the paragraphs round it.
+- Overview: the second "The draft at a glance" panel is renamed "Four portraits of the draft".
+
 ## 0.29.0 (2026-11-26)
 
 - Tutorial: a button in the top row starts it at any time. It now walks through five notes on the built-in example (spare words, subject and verb, a passive to keep, an action in a noun, the close of a sentence) and reads the state of the draft, so it keeps its place if the writer goes off the path. Each step has "Show me". A draft of the writer's own is set aside before an example replaces it, and "Back to my draft" restores it.

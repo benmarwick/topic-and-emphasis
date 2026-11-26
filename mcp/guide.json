@@ -99,8 +99,12 @@
    "to_revise": "Bring the verb up to its subject. Material that matters gets its own clause or sentence. Material that does not can go.",
    "marks": [
     {
-     "label": "subject and verb",
-     "meaning": "Subject or main verb. Once readers have the subject, they wait for the verb."
+     "label": "subject",
+     "meaning": "The subject: the word the sentence is about, found by rule. It has a single underline. Once readers have it, they wait for its verb."
+    },
+    {
+     "label": "main verb",
+     "meaning": "The main verb: what the subject does or is. It has a double underline. Readers look for it straight after the subject."
     },
     {
      "label": "what separates them",
