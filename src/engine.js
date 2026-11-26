@@ -1379,6 +1379,8 @@ function pos(A,M){const AUX=new Set("be is am are was were been being have has h
     else if(sw>=4){const c=st.T.find(tk=>tk.w&&tk.pos&&'zdM'.includes(tk.pos[0])&&!AUX.has(tk.l));if(c)none.push({s:st.i,w:c.t,e:c.pos});}});
   const v=ld.filter(x=>x!=null).sort((a,b)=>a-b);
   return{size:M.size,all,known,unk,amb,by,aux,lex,ld:all?100*lex/all:0,ldMedian:v.length?v[Math.floor(v.length/2)]:null,series:ld,nPerV:by.V?by.N/by.V:null,verbs:vs,off,none};}
+/* How common a word is, from the built-in lists alone: 0 a function word, 1 on the New General Service List, 2 on the New Academic Word List or the Dale-Chall list, 3 general science jargon, 4 on none of them. */
+function wordTier(w){const l=String(w||'').toLowerCase().replace(/’/g,"'"),c=[l].concat(lemmas(l));if(isFunc(l)||STOPX.has(l))return 0;if(c.some(x=>NGSL.has(x)))return 1;if(c.some(x=>NAWL.has(x)||DALE.has(x)))return 2;if(c.some(x=>JARGON.has(x)))return 3;return 4;}
 function parseNorms(src){const N={conc:new Map(),aoa:new Map(),zipf:new Map(),prev:new Map()},lines=t=>(t||'').replace(/^﻿/,'').split(/\r?\n/).slice(1);
   const phi=z=>{const t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>=0?1-p:p;};
   lines(src.conc).forEach(l=>{const c=l.split('\t');if(c.length>2&&c[1]==='0'){const v=+c[2];if(v)N.conc.set(c[0].toLowerCase(),v);}});
@@ -1437,5 +1439,5 @@ function docx(blocks,comments,meta){meta=meta||{};comments=comments||[];
     {name:'_rels/.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/officeDocument" Target="word/document.xml"/></Relationships>'},
     {name:'word/document.xml',data:doc},{name:'word/styles.xml',data:styles},{name:'word/comments.xml',data:cm},
     {name:'word/_rels/document.xml.rels',data:HEAD+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="'+R+'/styles" Target="styles.xml"/><Relationship Id="rId2" Type="'+R+'/comments" Target="comments.xml"/></Relationships>'}]);}
-return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,parsePos,pos,syl,sylGuess,docx,crc32,parseWordList,parseFormulas,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
+return{analyze,parse,stem,isFunc,lemmas,revKind,parseNorms,norms,parsePos,pos,wordTier,syl,sylGuess,docx,crc32,parseWordList,parseFormulas,HYPE,EVID,JOBS,PB,JOBPB,MOVES};
 })();

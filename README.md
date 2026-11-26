@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.23.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.24.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.23.0},
+  version = {0.24.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -156,6 +156,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **Measures in and beside the text** (0.24.0). *Fingerprints* (Overview): six small cells beside each sentence, shaded by its rank in the draft for length, wait for the verb, density, long words, new words and nouns from verbs, after the sentence-level views of [Oelke et al. (2012)](https://doi.org/10.1109/TVCG.2011.266) and [Keim & Oelke (2007)](https://doi.org/10.1109/VAST.2007.4389004). *Profile* (a new workbench tab): one sentence against the whole draft, measure by measure, with the draft's middle marked and a ring where the sentence started. *Trunk view* (Subject → verb): subject, verb and close in full ink; openers, interruptions and comma-set asides lighter; with the meaning model on, each lighter part is graded by how much meaning the sentence loses without it. It follows the idea of [Gu et al. (2024)](https://arxiv.org/abs/2401.10873) and is not their method, which needs a large language model. *Facets by paragraph* (Load map): words, syntax, cohesion and stance as rows, paragraphs under their headings as columns ([Graesser et al. 2011](https://doi.org/10.3102/0013189X11413260)). *Scatter*: wait for the verb and part-of-speech density as upright scales, and a line from where each rewritten sentence started. *Typographic view* (Load map): the words set by a measure, one at a time: how common each is, new or repeated, syllables, part of speech, age learned, concreteness (Brath 2020, *Visualizing with Text*; [Brath & Banissi 2016](https://doi.org/10.1016/j.sheji.2016.05.003)). None of these makes a note.
+
 - **Three more pictures from the meaning model** (0.23.0; optional, labelled AI, no notes). *Old → new*: a given-new ribbon, described in the table below. *Reverse outline*: every sentence ranked by how far it sits below its own paragraph. *Meaning views, Abstract & ending*: the sentences that set the draft going (the claim, and sentences signalling a gap or an aim) joined to the sentences of the last paragraph closest to them, with open circles for what is not returned to and what appears only at the end. Each mark has a tooltip with the sentences and the scores behind it. Tested first on small sets: the given-new measure picked the chain in five joins of six and in one of six when shuffled; a planted sentence was ranked lowest in seven paragraphs of nine; the model scores an ending that reports the opposite finding almost as close as one that answers the aim, and the page says so.
 
 - **A part-of-speech lexicon** (0.22.0, optional data). The lexicon of the Brill tagger ([Brill 1992](https://doi.org/10.3115/974499.974526)), as packaged in [words/brill](https://github.com/words/brill) (MIT): about 54,000 words with the parts of speech each can take, 670 KB, loaded on request. *Subject → verb* lists the sentences where the lexicon and the rules disagree about the main verb: a word the rules took as the verb that has no verb reading, and a likely finite verb in a sentence where the rules found none. *Dense phrases* counts lexical density the published way, by part of speech, with the ratio of nouns to lexical verbs. The page has the lexicon and none of the tagger's contextual rules, so each word takes its most likely class. It changes no note and no mark. `tests/pos.test.js`.
@@ -204,6 +206,7 @@ Switched off unless the student turns it on. It loads a small sentence-embedding
 
 | Lens | What the model adds |
 |---|---|
+| Subject → verb | In the trunk view, each opener, interruption and aside is graded by how close the sentence stays to the whole without it, and sentences whose trunk alone says least of the whole are listed |
 | Topic grid | Sentences that are close in meaning to the one before but repeat none of its words; how close each paragraph is to the one before, and the weakest join in the draft |
 | Old → new | A ribbon picture of each paragraph. Each sentence is divided at its main verb into an opening and a close, and the opening is compared with the close and the opening of the sentence before: a ribbon where it picks up the last close, a dashed line where it keeps the last opening, an amber line where it reaches further back, an open circle for a fresh start |
 | Reverse outline | The sentence closest in meaning to the rest of its paragraph, and whether it sits at an edge; the sentence that best carries the point you stated; a strip of dots and a table ranking every sentence of the draft by how far it sits below its own paragraph |
@@ -235,6 +238,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Workbench | Rewrite a sentence in place; marks from every open note show inside the box |
 | Previews | See which notes a suggested change would clear, and any it would bring in, before accepting it |
 | Rearrange | Drag the labelled parts of a sentence into a new order; a table shows what the move did to the opening, the subject-to-verb distance and the close |
+| Profile | Why this sentence is heavy: each measure for the sentence on the draft's own range, with the draft's middle and the lens to open |
 | Unpack the noun | A fill-in template that turns a noun such as "implementation" back into a verb and leaves the actor for the writer to supply |
 | Phrases | About 590 sentence frames in 57 groups, opening on the group that fits the paragraph's job or the sentence's move (optional data) |
 | Phrase look-up | Sends the words you select, eight at most, to SkELL or Linggle to see them in real use, or copies them for Ludwig |
@@ -245,7 +249,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 132 sources are listed at the foot of the application, 64 of them with a DOI and 39 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 140 sources are listed at the foot of the application, 69 of them with a DOI and 42 more with a link to the full text or the publisher's page.
 
 ---
 

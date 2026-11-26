@@ -36,3 +36,12 @@ const T = 'We believe that the effect is really quite large, and in my view it w
 assert.deepStrictEqual(E.analyze(T, {}).findings.map(f => f.key), E0.analyze(T, {}).findings.map(f => f.key));
 assert.strictEqual(E0.analyze(T, {}).research.akl, null);
 console.log('akl: ok');
+
+// wordTier: how common a word is, from the built-in lists (used by the typographic view)
+{
+  const one2 = f => JSON.stringify(read(f).split(/\s+/).join(' '));
+  const E2 = new Function('const NGSL_RAW=' + j('src/ngsl.txt') + ';const NAWL_RAW=' + j('src/nawl.txt') + ';const DALE_RAW=' + one2('src/dalechall.txt') + ';const JARGON_RAW=' + one2('src/jargon.txt') + ';' + read('src/engine.js') + ';return E;')();
+  assert.strictEqual(E2.wordTier('the'), 0); assert.strictEqual(E2.wordTier('Results'), 1); assert.strictEqual(E2.wordTier('heteroskedasticity'), 4);
+  assert.ok([1, 2, 3].includes(E2.wordTier('hypothesis')));
+  console.log('wordTier: ok');
+}

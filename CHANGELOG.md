@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.24.0 (2026-11-26)
+
+Measures in and beside the text. None makes a note or changes the receipt.
+
+- Overview: a fingerprint of six cells beside each sentence (length, wait for the verb, lexical density, long words, new words, nouns from verbs), shaded by rank within the draft, the top fifth in red. A link in "The draft at a glance" hides it.
+- Workbench: a Profile tab. Each measure for the open sentence on the draft's range, with the draft's middle, the sentence's rank, where it started if rewritten, and the lens to open.
+- Subject → verb: a trunk view. Openers, interruptions and comma-set asides are drawn lighter (above reading contrast); a count of sentences with more than half their words outside the trunk. With the meaning model on, each part is graded by the closeness of the sentence without it to the whole (0.95 or more lightest, 0.88 or more lighter, otherwise left dark and dotted), and sentences whose trunk alone is under 0.85 are listed. Skipped above 250 sentences.
+- Load map: facets by paragraph (words, syntax, cohesion, stance), grouped under headings; the scatter gains wait for the verb and part-of-speech density as upright scales and a line from where each rewritten sentence started.
+- Load map: a typographic view. Words set by one measure at a time: how common (word lists, or Zipf frequency when norms are loaded), new or repeated, syllables (letter-spacing), part of speech (with the lexicon), age learned and concreteness (with the norms). The text shows in the Load map only while this view is on.
+- `E.wordTier`. Newsreader is now requested as a variable font, weights 300 to 800.
+
 ## 0.23.0 (2026-11-26)
 
 Three additions to the optional meaning model. All are labelled as coming from the model, and none makes a note or changes the receipt.

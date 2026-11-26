@@ -1,6 +1,6 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Topic &amp; Emphasis</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&display=swap">
 <style>
 /* Layout: an editor's desk. Lens rail on the left, the manuscript sheet in the centre, margin notes on the right.
    A tapped sentence opens a workbench in the sheet, directly under its paragraph, where it is rewritten in place.
@@ -860,4 +860,24 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
 :root:not(.still) .vizin .gn-r:not(.gn-c):not(.gn-b),:root:not(.still) .vizin .ec-l{stroke-dasharray:1;animation:vDraw .7s ease-out both;animation-delay:var(--d,0ms)}
 :root:not(.still) .vizin .gn-c,:root:not(.still) .vizin .gn-b,:root:not(.still) .vizin .gn-o,:root:not(.still) .vizin .or-d,:root:not(.still) .vizin .or-x{animation:vFade .5s ease-out both;animation-delay:var(--d,0ms)}
 :root:not(.still) .gn-o{filter:drop-shadow(0 0 1.5px color-mix(in srgb,var(--amber) 60%,transparent))}}
+
+/* 0.24.0 fingerprints, sentence profile, trunk view, facet grid, typographic view */
+:root{--dim1:color-mix(in srgb,var(--ink2) 88%,var(--ink3));--dim2:color-mix(in srgb,var(--ink2) 55%,var(--ink3))}
+.fp{display:inline-flex;gap:1px;vertical-align:-1px;margin:0 5px 0 1px;padding:1px;border-radius:2px}.fp i{display:block;width:4px;height:11px;background:var(--ink)}
+.fp .q0{opacity:.1}.fp .q1{opacity:.22}.fp .q2{opacity:.4}.fp .q3{opacity:.62}.fp .q4{opacity:.88}.fp .hot{background:var(--rose)}.fp .na{opacity:.1;height:2px;align-self:flex-end}
+.clean .fp{display:none}
+.pf{display:grid;gap:5px 0;margin:.2rem 0 .5rem}.pf-row{display:grid;grid-template-columns:9.5em minmax(60px,1fr) 6.2em auto;gap:0 10px;align-items:center;font-size:12.5px}
+.pf-l{color:var(--ink2)}.pf-t{position:relative;height:14px;border-bottom:1px solid var(--line)}.pf-t i{position:absolute;top:50%;transform:translate(-50%,-50%)}
+.pf-m{width:1.5px;height:11px;background:var(--ink3)}.pf-d{width:8px;height:8px;border-radius:50%;background:var(--ink2);transition:left .35s ease}.pf-d.hot{background:var(--rose)}.pf-o{width:7px;height:7px;border-radius:50%;border:1.3px solid var(--ink3);background:var(--sheet)}
+.pf-v{font:400 12px var(--f-mono);color:var(--ink2);white-space:nowrap}.pf-v b{color:var(--ink);font-weight:600}.pf-go{font-size:12px;white-space:nowrap}
+@media (max-width:720px){.pf-row{grid-template-columns:7.2em minmax(50px,1fr) 5.4em}.pf-go{display:none}}
+.mk.dim1{color:var(--dim1)}.mk.dim2{color:var(--dim2)}.mk.dim0{text-decoration:underline dotted var(--ink3);text-underline-offset:3px}
+.dimk0{color:var(--ink);font-weight:500}.dimk1{color:var(--dim1)}.dimk2{color:var(--dim2)}
+.fg{display:block}.fg-s{fill:var(--ink2)}.fg-g{font-weight:600;fill:var(--ink2);letter-spacing:.04em;text-transform:uppercase}.fg-c{fill:var(--ink)}.fg0{fill-opacity:.07}.fg1{fill-opacity:.2}.fg2{fill-opacity:.38}.fg3{fill-opacity:.6}.fg4{fill-opacity:.86}.fg-c.top{stroke:var(--rose);stroke-width:1.4}.fg-na{fill:none;stroke:var(--line);stroke-width:.6}
+.sc-mv{stroke:var(--violet);stroke-width:1;stroke-opacity:.7}.sc-was{fill:var(--sheet);stroke:var(--violet);stroke-width:1.2;cursor:pointer}
+.ty{transition:font-weight .25s}.ty0{font-weight:300;color:var(--dim1)}.ty1{font-weight:400}.ty2{font-weight:500}.ty3{font-weight:650}.ty4{font-weight:800}.tyu{font-weight:400;text-decoration:underline dotted var(--ink3);text-underline-offset:3px}.tyx{color:var(--dim1)}
+.ts0{letter-spacing:-.02em}.ts1{letter-spacing:0}.ts2{letter-spacing:.06em}.ts3{letter-spacing:.13em}.ts4{letter-spacing:.21em;font-weight:500}
+.tpN{font-weight:750}.tpV{font-style:italic;font-weight:500}.tpJ{font-weight:400}.tpF{font-weight:300;color:var(--dim1)}.tcA{font-style:italic;font-weight:300}.tcC{font-weight:750}
+.tyleg{font-family:var(--f-text);font-size:1.02rem;line-height:1.7}
+@media (prefers-reduced-motion:no-preference){:root:not(.still) .vizin .fg-c{animation:vFade .45s ease-out both;animation-delay:var(--d,0ms)}:root:not(.still) .vizin .sc-mv{stroke-dasharray:1;animation:vDraw .7s ease-out both .3s}}
 </style>

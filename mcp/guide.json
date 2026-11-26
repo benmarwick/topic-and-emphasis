@@ -53,6 +53,41 @@
      "citation": "Jenset, G. (2026, March 27). The myth of the ‘unreadable’ humanities and social sciences. Research Communities by Springer Nature [post, with data on Figshare].",
      "doi": "10.6084/m9.figshare.31860601",
      "url": "https://doi.org/10.6084/m9.figshare.31860601"
+    },
+    {
+     "citation": "Oelke, D., Spretke, D., Stoffel, A., & Keim, D. A. (2012). Visual readability analysis: How to make your writings easier to read. IEEE Transactions on Visualization and Computer Graphics, 18(5), 662–674.",
+     "doi": "10.1109/TVCG.2011.266",
+     "url": "https://doi.org/10.1109/TVCG.2011.266"
+    },
+    {
+     "citation": "Keim, D. A., & Oelke, D. (2007). Literature fingerprinting: A new method for visual literary analysis. In 2007 IEEE Symposium on Visual Analytics Science and Technology (pp. 115–122).",
+     "doi": "10.1109/VAST.2007.4389004",
+     "url": "https://doi.org/10.1109/VAST.2007.4389004"
+    },
+    {
+     "citation": "Goffin, P., Willett, W., Fekete, J.-D., & Isenberg, P. (2014). Exploring the placement and design of word-scale visualizations. IEEE Transactions on Visualization and Computer Graphics, 20(12), 2291–2300.",
+     "doi": null,
+     "url": "https://hal.archives-ouvertes.fr/hal-01024278"
+    },
+    {
+     "citation": "Graesser, A. C., McNamara, D. S., & Kulikowich, J. M. (2011). Coh-Metrix: Providing multilevel analyses of text characteristics. Educational Researcher, 40(5), 223–234.",
+     "doi": "10.3102/0013189X11413260",
+     "url": "https://doi.org/10.3102/0013189X11413260"
+    },
+    {
+     "citation": "Brath, R. (2020). Visualizing with text. A K Peters/CRC Press.",
+     "doi": null,
+     "url": "https://richardbrath.wordpress.com/books-and-chapters-by-richard-brath/visualizing-with-text-book-companion-web-site/"
+    },
+    {
+     "citation": "Brath, R., & Banissi, E. (2016). Using typography to expand the design space of data visualization. She Ji: The Journal of Design, Economics, and Innovation, 2(1), 59–87.",
+     "doi": "10.1016/j.sheji.2016.05.003",
+     "url": "https://doi.org/10.1016/j.sheji.2016.05.003"
+    },
+    {
+     "citation": "Strobelt, H., Oelke, D., Kwon, B. C., Schreck, T., & Pfister, H. (2016). Guidelines for effective usage of text highlighting techniques. IEEE Transactions on Visualization and Computer Graphics, 22(1), 489–498.",
+     "doi": "10.1109/TVCG.2015.2467759",
+     "url": "https://doi.org/10.1109/TVCG.2015.2467759"
     }
    ]
   },
@@ -98,6 +133,11 @@
      "citation": "Brill, E. (1992). A simple rule-based part of speech tagger. In Proceedings of the Third Conference on Applied Natural Language Processing (pp. 152–155). Association for Computational Linguistics. [Its lexicon, as packaged in github.com/words/brill under the MIT licence, is optional data in this page.]",
      "doi": "10.3115/974499.974526",
      "url": "https://doi.org/10.3115/974499.974526"
+    },
+    {
+     "citation": "Gu, Z., Arawjo, I., Li, K., Kummerfeld, J. K., & Glassman, E. L. (2024). An AI-resilient text rendering technique for reading and skimming documents. In Proceedings of the CHI Conference on Human Factors in Computing Systems. [Grammar-preserving text saliency modulation. Link: the authors’ preprint.]",
+     "doi": null,
+     "url": "https://arxiv.org/abs/2401.10873"
     }
    ]
   },
