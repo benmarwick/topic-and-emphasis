@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.29.0 (2026-11-26)
+
+- Tutorial: a button in the top row starts it at any time. It now walks through five notes on the built-in example (spare words, subject and verb, a passive to keep, an action in a noun, the close of a sentence) and reads the state of the draft, so it keeps its place if the writer goes off the path. Each step has "Show me". A draft of the writer's own is set aside before an example replaces it, and "Back to my draft" restores it.
+- Built-in example: a seventh sentence, a passive that keeps its topic first, so that one of the five notes is settled by "I checked this" and not by rewriting. `tests/tutorial.test.js` checks that the example raises exactly the five notes and that the tutorial's rewrites clear them.
+- Focus timer: 10, 15, 25 or 45 minutes, pause and stop, an optional chime, a five-minute break, a count of rounds done today. The countdown is a small panel in the corner; at the end it reports open notes, sentences changed and words, before and after. It survives a reload.
+- Text box: live counts as a draft is typed or pasted (words, sentences, paragraphs, words per sentence, longest sentence, sentences of 30 words or more, longest wait for a verb, notes waiting).
+- "Analyse" is green while the text box is open, and pulses once there is text to analyse. No pulse under reduced motion.
+- "Clean view" moved from the line of counts to the row of buttons above the text. "Fingerprints" has a switch there too, and fingerprints now show in every lens that shows the text, not only the Overview.
+- Overview: the Research profile starts folded.
+- Load map: the sentence under the scatter now counts the sentences in the top right of the picture (above the middle on both scales), then says how many of those are in the highest quarter on both. Before, it reported only the second figure, which read as wrong when dots sat in the top right.
+- Load map, Typographic view: links to load the part-of-speech lexicon and the word norms from inside the lens. "Words free to move" is now the starting state; "Words held in place" is the option.
+- Header: the twelve sentences beside the title each state an idea from a cited source in the page's own words, with a link to the reference. None is a quotation. The test checks that none raises a note.
+
 ## 0.28.0 (2026-11-26)
 
 - Topic grid: "Cohesion map" after Lachner, Backfisch & Nückles (2018). Up to 22 repeated terms on a ring, joined where a sentence uses both; groups joined to nothing else are drawn in amber and named. Cited authors are left out.

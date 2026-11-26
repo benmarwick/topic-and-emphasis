@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.28.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.29.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.28.0},
+  version = {0.29.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -51,7 +51,7 @@ Please also cite the article the workbench is built on:
 git clone https://github.com/benmarwick/topic-and-emphasis.git
 cd topic-and-emphasis
 python3 build.py        # writes index.html
-for t in tests/*.js; do node "$t" || break; done   # optional: the 17 test files
+for t in tests/*.js; do node "$t" || break; done   # optional: the 18 test files
 ```
 
 Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, move order, the nine reviser's checks, the built-in keyword and style lists, and the part-of-speech lexicon).
@@ -60,7 +60,7 @@ Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/sm
 
 ## 🚀 Quick Start
 
-1. **Paste your text**, or choose **Try the example** for six sentences with four quick things to fix.
+1. **Paste your text**, or choose **Try the example** for seven sentences with five notes to clear. **Tutorial** walks you through them.
 2. **Pick a lens** from the list. Each lens reads the draft for one thing and marks it in the text. The Overview shows every open note at once and suggests where to start.
 3. **Tap a sentence** to open the workbench under its paragraph. Read the note, rewrite the sentence in the box, and the marks update as you type. Where a note offers a change, preview it before you accept it.
 4. **Check your progress** in Before & after, which shows what your revising has changed, and copy the revised text when you are done.
@@ -155,6 +155,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **A longer tutorial, a focus timer and live counts** (0.29.0). The built-in example now has seven sentences and five notes, and the **Tutorial** button walks through clearing all five: two by a one-tap change, two by rewriting, and one by deciding that the sentence is right as it stands. Each step has a *Show me* button, and a draft of your own is set aside first and brought back at the end. The **Focus timer** counts down 10, 15, 25 or 45 minutes in the corner of the page, then reports what changed and offers a five-minute break. The box where a draft is typed shows **live counts**: words, sentences, paragraphs, words per sentence, the longest sentence, sentences of 30 words or more, the longest wait for a verb, and the notes waiting. *Clean view* and *Fingerprints* now sit with the other buttons above the text, and fingerprints show in every lens that shows the text. The Research profile starts folded. The sentences beside the title each state an idea from a source the page cites, in the page's own words.
 
 - **Five pictures from tools for reading and teaching, and an information box** (0.28.0). *Cohesion map* (Topic grid): the main terms round a ring, joined where one sentence uses two of them; terms that no sentence ties to the main group stand apart in amber ([Lachner, Backfisch & Nückles 2018](https://doi.org/10.1007/s11423-018-9571-4)). *Argument board* (Claim tracer): the writer says what each paragraph does for the claim (supports, qualifies, answers an objection, background) and the page draws the result and asks about its shape ([Chang, Lin & Hwang 2025](https://doi.org/10.3389/feduc.2025.1672105)). *The reader's skim* (Signal phrases): only the sentences that signal a move, with the unsignalled sentences counted between them ([Fok et al. 2023](https://arxiv.org/abs/2205.04561)). *Words that mark out each part* (Term tracker): the distinctive words of each section in parallel alphabetical columns, by log-likelihood, with a line where neighbouring columns share a word; also the starting draft against the draft now (Collins, Viégas & Wattenberg 2009). *Where each source is cited* (Mechanical checks): a row a source, a column a paragraph (Hearst 1995; [Chang et al. 2023](https://arxiv.org/pdf/2302.07302)). All five are counts and pictures; none makes a note. An **information button** at the upper right opens a box with the author, the citation, where to send corrections, the licences and details of how the page works. The stage buttons now also narrow the marks in the Overview, and every button on the page has a tooltip that says what it does.
 

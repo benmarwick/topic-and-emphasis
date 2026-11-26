@@ -10,26 +10,28 @@
       <div class="aboutgrid">
         <div class="abouttext">
           <p>Gopen and Swan showed that readers look for particular things in particular places: the verb soon after its subject, familiar material at the opening of a sentence, and the news at its close. Paste a draft and the lenses mark where its structure meets those expectations and where it works against them. Tap a sentence to rewrite it in place and watch the marks change.</p>
-          <p class="invite">New here? Try the <button type="button" class="link" id="lnkExample" data-tip="Load the built-in example: six sentences with four quick things to fix.">example</button>, or <button type="button" class="link" id="lnkPractice" data-tip="Open the practice drills: six short sentences with fixed answers.">practise</button> on six short sentences, before you paste your own draft. Or let the page <button type="button" class="link" id="lnkTour" data-tip="A four-step walk through one fix on the built-in example.">show you how it works</button>.</p>
+          <p class="invite">New here? Try the <button type="button" class="link" id="lnkExample" data-tip="Load the built-in example: seven sentences with five notes to clear, each of them quick.">example</button>, or <button type="button" class="link" id="lnkPractice" data-tip="Open the practice drills: six short sentences with fixed answers.">practise</button> on six short sentences, before you paste your own draft. Or let the page <button type="button" class="link" id="lnkTour" data-tip="A guided walk through the built-in example: five notes, cleared one at a time, in about three minutes.">show you how it works</button>.</p>
           <p class="caution"><b>You do not need to settle every note.</b> Each note is a question about what a reader expects, and a sentence can be right as it stands. Mark it as checked and move on. George Orwell closed his own six rules for writers by telling them to break any of the six before writing something ugly. They are in <a href="https://www.orwellfoundation.com/the-orwell-foundation/orwell/essays-and-other-works/politics-and-the-english-language/" target="_blank" rel="noopener">&ldquo;Politics and the English Language&rdquo; (1946)</a>.</p>
         </div>
         <figure class="diagram" id="diagram">
-          <p class="dg-prev" id="dgPrev">Every writer starts with a messy first <span class="dg-old">draft</span>.</p>
+          <p class="dg-prev" id="dgPrev">Readers take the <span class="dg-old">end</span> of a sentence as its point of emphasis.</p>
           <div class="dg-sent">
-            <div class="dg-part dg-open"><span class="dg-words" id="dgOpen">That <u>draft</u></span><span class="dg-lab"><b>Opening</b> Something familiar, linking back to the sentence before.</span></div>
-            <div class="dg-part dg-verb"><span class="dg-words" id="dgVerb"><u>holds</u></span><span class="dg-lab"><b>Verb</b> Straight after its subject.</span></div>
-            <div class="dg-part dg-close"><span class="dg-words" id="dgClose">the sentence you were looking for.</span><span class="dg-lab"><b>Close</b> The news, where readers give it most weight.</span></div>
+            <div class="dg-part dg-open"><span class="dg-words" id="dgOpen">That <u>end</u></span><span class="dg-lab"><b>Opening</b> Something familiar, linking back to the sentence before.</span></div>
+            <div class="dg-part dg-verb"><span class="dg-words" id="dgVerb"><u>is</u></span><span class="dg-lab"><b>Verb</b> Straight after its subject.</span></div>
+            <div class="dg-part dg-close"><span class="dg-words" id="dgClose">the place for the news you want remembered.</span><span class="dg-lab"><b>Close</b> The news, where readers give it most weight.</span></div>
           </div>
-          <figcaption>An invented sentence about writing, marked with the three places readers look (Gopen and Swan, 1990). <button type="button" class="link" id="dgNext" data-tip="There are ten of these. One is chosen at random each time the page opens.">Show another</button></figcaption>
+          <figcaption><span id="dgBy">An idea from <a href="#ref-gs" data-ref="gs">Gopen and Swan (1990)</a>, in this page&rsquo;s words</span>, marked with the three places readers look. <button type="button" class="link" id="dgNext" data-tip="There are twelve of these. Each states an idea from a source this page cites, in the page&rsquo;s own words, and none is a quotation. One is chosen at random each time the page opens.">Show another</button></figcaption>
         </figure>
       </div>
     </details>
     <div class="actions">
       <button class="btn primary" id="btnEdit" type="button" data-tip="Open the whole draft in one box, to paste a new text or make large edits.">Paste your text</button>
       <button class="btn" id="btnFile" type="button" data-tip="Open a Word, Markdown, Quarto, R Markdown, LaTeX or plain-text file from this device. You can also drag a file onto the page. The file is read here in your browser and goes nowhere.">Open a file</button><input type="file" id="fileIn" accept=".docx,.md,.markdown,.qmd,.rmd,.Rmd,.tex,.txt,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
-      <button class="btn" id="btnSample" type="button" data-tip="Load the built-in example: six invented sentences with four quick things to fix. A harder example is offered once it is loaded.">Try the example</button>
+      <button class="btn" id="btnSample" type="button" data-tip="Load the built-in example: seven invented sentences with five notes to clear, each of them quick. A harder example is offered once it is loaded. A draft of your own is set aside first, and you can go back to it.">Try the example</button>
       <button class="btn" id="btnGuideDoc" type="button" data-k="guide" data-tip="Every lens explained on one page, with its marks, its limits and its sources. Searchable.">Guide</button>
       <button class="btn" id="btnPractice" type="button" data-tip="Six short sentences with fixed answers, and two drills built from whatever draft is loaded.">Practise</button>
+      <button class="btn" id="btnTour" type="button" data-tip="A guided walk through the built-in example: five notes, cleared one at a time, in about three minutes. You can come back to it whenever you like. A draft of your own is set aside first and comes back when you finish.">Tutorial</button>
+      <details class="pomo" id="pomo"><summary class="btn" id="pomoSum" data-tip="A focus timer. Set a short stretch of time, work on the draft until it ends, then take a break. The countdown stays in the corner of the page while you work.">Focus timer</summary><div class="pomobox" id="pomoBox"></div></details>
       <button class="btn" id="btnClear" type="button" hidden data-tip="Empty the box.">Clear</button>
       <span class="hint" id="fileMsg" aria-live="polite"></span>
     </div>
@@ -70,6 +72,8 @@
         <button type="button" class="btn sm" id="btnRedo" data-tip="Redo the change you just undid.">Redo</button>
         <button type="button" class="btn sm" id="btnCopy" data-tip="Copy the whole text as it now stands, ready to paste back into your document.">Copy revised text</button>
         <button type="button" class="btn sm" id="btnExport" data-tip="Save the text as a Word file with the open notes as margin comments, or as a plain file, and save or print your revision portfolio.">Export</button>
+        <button type="button" class="btn sm" id="btnClean" aria-pressed="false" data-tip="Hide every mark, number and panel, and just read the text as a reader would.">Clean view</button>
+        <button type="button" class="btn sm" id="btnFp" data-fp="1" aria-pressed="true" data-tip="The row of six small cells beside each sentence.">Fingerprints: on</button>
         <span class="hint" id="copyMsg" aria-live="polite"></span>
         <button type="button" class="btn sm" id="btnMean" aria-pressed="false" data-tip="An optional layer on top of the rules: a small language model that compares sentences by meaning, in Subject &rarr; verb, Topic grid, Old &rarr; new, Reverse outline, Claim tracer, Source overlap, Term tracker, Before &amp; after and Meaning views, with two live gauges in the rewrite box. It is a trained model, so it is AI. It runs in this browser and nothing is uploaded. The first use downloads about 45 MB.">Meaning model: off</button>
         <details class="readset" id="readset"><summary data-tip="Text size, spacing and colour, for comfortable reading. Your choices are remembered on this device.">Reading comfort</summary>
@@ -82,6 +86,7 @@
         </details>
       </div>
       <article class="ms" id="ms">
+        <p class="sampletag" id="stashNote" hidden>Your own draft is set aside and safe. <button type="button" class="link" id="btnUnstash" data-tip="Put the example away and bring back the draft you were working on, as you left it.">Go back to it</button>.</p>
         <p class="sampletag" id="sampleTag" hidden>Sample text, invented for the demonstration. Choose Paste your text to work on your own.</p>
         <section class="wb" id="wb" hidden aria-label="Sentence workbench">
           <div class="guide" id="wbGuide" hidden><span id="gPos"></span><span class="gbtns"><button type="button" id="gPrev" data-tip="Go back to the previous open note.">Back</button><button type="button" id="gNext" data-tip="Go to the next open note. A note you have resolved or marked as checked is skipped.">Next</button><button type="button" id="gEnd" data-tip="Leave the guided pass. Your edits are kept.">End pass</button></span></div>
@@ -120,6 +125,7 @@
       </article>
       <div class="draftwrap">
         <label class="cap" for="draft">Your text</label>
+        <div class="livem" id="liveM" role="status" aria-live="off"></div>
         <textarea id="draft" spellcheck="true" placeholder="Paste a paragraph, an abstract, or a whole section. A blank line starts a new paragraph."></textarea>
         <p>Nothing is uploaded. The analysis runs in this browser tab, with fixed rules and no AI.</p>
       </div>
@@ -168,8 +174,8 @@
           <li><b>Thresholds.</b> Where a published norm exists it is cited. Where the page uses a working threshold of its own, the Guide says so.</li>
           <li><b>What the optional parts may do.</b> The meaning model and the optional data add marks, counts and pictures. They never make a note and never change the record of your revision.</li>
           <li><b>Checked against judgement.</b> The Guide reports how each count tracks teachers&rsquo; ratings of reading ease on 4,721 passages. Several track them weakly, and the Guide says which.</li>
-          <li><b>Tests.</b> Seventeen test files run the rule engine against fixed sentences before each release. The pictures are checked by eye, on constructed drafts more than on real papers.</li>
-          <li><b>What is kept, and where.</b> Your draft, the draft you began with, your choices and your settings are kept in this browser&rsquo;s local storage, on this device, so that work survives a closed tab. Nothing is sent to a server. To erase it, clear this site&rsquo;s data in the browser&rsquo;s settings.</li>
+          <li><b>Tests.</b> Eighteen test files run the rule engine against fixed sentences before each release. The pictures are checked by eye, on constructed drafts more than on real papers.</li>
+          <li><b>What is kept, and where.</b> Your draft, the draft you began with, your choices and your settings are kept in this browser&rsquo;s local storage, on this device, so that work survives a closed tab. Nothing is sent to a server. To erase the draft, use &ldquo;Erase the saved draft&rdquo; under &ldquo;About this tool&rdquo; at the foot of the page. To erase the settings as well, clear this site&rsquo;s data in the browser&rsquo;s settings.</li>
           <li><b>What can leave the page.</b> Only a phrase you choose to look up, eight words at most, sent to the site you pick. The typefaces and the optional files are fetched; the draft is not part of any request.</li>
           <li><b>For other programs.</b> The repository includes a Model Context Protocol server that gives an AI agent the same rules, so that a tutor built on one cannot disagree with this page.</li>
           <li><b>How it is made.</b> One HTML file, built by a short Python script from four source files. The pictures are SVG drawn by hand-written code.</li>
@@ -177,8 +183,9 @@
       </div>
     </div>
   </dialog>
+  <div class="pomopill" id="pomoPill" role="timer" aria-label="Focus timer" hidden></div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-  <div class="tour" id="tour" hidden role="status" aria-live="polite"><p id="tourText"></p><div class="tilebar"><button type="button" class="btn sm primary" id="tourNext">Next</button><button type="button" class="btn sm" id="tourSkip">Skip the tour</button></div></div>
+  <div class="tour" id="tour" hidden role="status" aria-live="polite"><p id="tourText"></p><div class="tilebar"><button type="button" class="btn sm primary" id="tourNext" data-tip="Go on to the next step.">Next</button><button type="button" class="btn sm primary" id="tourShow" data-tip="Do this step for me, so that I can see what it does. The change is real and can be undone.">Show me</button><button type="button" class="btn sm primary" id="tourBack" hidden data-tip="Put the example away and bring back the draft you were working on, as you left it.">Back to my draft</button><button type="button" class="btn sm" id="tourSkip" data-tip="Leave the tutorial and use the page freely. The Tutorial button at the top starts it again.">Leave the tutorial</button></div></div>
   <button type="button" class="fab" id="fab" hidden data-tip="Go to the next open note in this lens.">Next note</button>
   <footer class="foot">
     <section>
