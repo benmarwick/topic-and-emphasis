@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.31.1 (2026-11-26)
+
+- Focus timer: while it runs or is paused, the button in the top row shows the time ("Focus timer on · 24:59").
+- Research measure boxes and the Research profile have a triangle that points right when folded and down when open.
+- Load map: the two rows from the meaning model are on the scale from 0 to 1 that the other lenses use, as 1 minus the closeness they report. They were on a scale of 0 to 100.
+
 ## 0.31.0 (2026-11-26)
 
 - Tutorial: while it runs, the header, the lens list, the notes column, the panels and the buttons are faded to about a seventh, and so are the sentences and the parts of the rewrite box that the step does not use. Nothing is switched off, and the fade lifts at the last step.

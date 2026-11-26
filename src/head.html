@@ -1001,4 +1001,11 @@ body[data-tour="sent"] .top:hover,body[data-tour="wb"] .top:hover,body[data-tour
 
 .gshot-in{flex:1 1 auto;max-height:280px;overflow:hidden;background:#E8ECEB;-webkit-mask-image:linear-gradient(#000 calc(100% - 22px),transparent);mask-image:linear-gradient(#000 calc(100% - 22px),transparent)}.gviz.shot img{display:block;width:100%;height:auto}
 .gneed{display:inline-block;font:500 10.5px var(--f-mono);letter-spacing:.04em;color:var(--violet);border:1px solid currentColor;border-radius:3px;padding:0 5px;margin-left:4px;white-space:nowrap}
+
+/* 0.31.1 */
+details.panel>summary.cap{list-style:none;margin-left:0}details.panel>summary.cap::-webkit-details-marker{display:none}
+details.panel>summary.cap::before{content:"";flex:0 0 auto;align-self:flex-start;width:0;height:0;border-left:.66em solid var(--ink);border-top:.42em solid transparent;border-bottom:.42em solid transparent;margin:.28em .15em 0 0;transition:transform .15s ease}
+details.panel[open]>summary.cap::before{transform:rotate(90deg)}
+details.panel>summary.cap:hover::before{border-left-color:var(--blue)}
+.pomo>summary .pp-t{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 </style>
