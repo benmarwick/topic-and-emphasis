@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.1 (2026-11-26)
+
+- Mechanical checks: a note on a view given to nobody in particular ("some argue", "it is widely believed", "is said to") when the sentence cites no source.
+- Vague & worn words: notes on vague degree words (largely, quite, mostly, substantially) and comment words (interestingly, surprisingly, importantly).
+- "Weasel words" now finds the five lenses that cover them, in the lens search and in the Guide.
+- Readability reference values recorded from textstat and quanteda.textstats.
+
 ## 0.7.0 (2026-11-26)
 
 - Length & rhythm: Coleman-Liau, Gunning Fog, LIX and Dale-Chall beside the existing formulas.
