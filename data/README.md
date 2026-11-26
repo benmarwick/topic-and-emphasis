@@ -4,7 +4,7 @@ Third-party word lists and word norms. **These files are not covered by the MIT 
 of the rest of the repository.** Each keeps the licence its authors gave it, listed below.
 If you reuse them, cite the publication and follow that licence.
 
-## `lists/` — built into the page
+## `lists/` — the lists built into the page (the two optional lists in this folder are described further down)
 
 | File | What it is | Source | Licence |
 |---|---|---|---|

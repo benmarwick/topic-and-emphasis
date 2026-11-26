@@ -10,13 +10,24 @@
    "research_measure": null,
    "with_meaning_model": null,
    "limits": null,
-   "sources": []
+   "sources": [
+    {
+     "citation": "Tufte, E. R. (1983). The Visual Display of Quantitative Information. Cheshire, CT: Graphics Press. [Small multiples, the range-frame and the dot-dash-plot.]",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Tufte, E. R. (2006). Beautiful Evidence. Cheshire, CT: Graphics Press. [Sparklines: intense, simple, word-sized graphics.]",
+     "doi": null,
+     "url": null
+    }
+   ]
   },
   {
    "key": "load",
    "name": "Load map",
    "group": "Overview",
-   "reads": "The whole draft on one screen, sentence by sentence. Six small strips show how long each sentence is, how long it makes the reader wait for the verb, how densely it packs content, how many long words it uses, how much of it is new, and how many of its actions sit in nouns. A second picture places every sentence by its length and its density. A table gives each paragraph a line of its own.",
+   "reads": "The whole draft on one screen, sentence by sentence. Six small strips show how long each sentence is, how long it makes the reader wait for the verb, how densely it packs content, how many long words it uses, how much of it is new, and how many of its actions sit in nouns. Five more strips show where the open notes, the words of your claim, named evidence, strong wording and hedges sit. A second picture places every sentence by its length and its density. A table gives each paragraph a line of its own.",
    "to_revise": "Read down the columns, not along the rows. One tall bar is ordinary. A sentence that is tall in three or four strips at once is carrying too much, and is the one to open first. Tap any column, dot or row to open the sentence behind it.",
    "marks": [],
    "research_measure": null,
@@ -601,6 +612,11 @@
      "citation": "Crossley, S. A., Kyle, K., & McNamara, D. S. (2016). The tool for the automatic analysis of text cohesion (TAACO): Automatic assessment of local, global, and text cohesion. Behavior Research Methods, 48(4), 1227–1237.",
      "doi": "10.3758/s13428-015-0651-7",
      "url": "https://doi.org/10.3758/s13428-015-0651-7"
+    },
+    {
+     "citation": "Simpson-Vlach, R., & Ellis, N. C. (2010). An Academic Formulas List: New methods in phraseology research. Applied Linguistics, 31(4), 487–512. [Link: the authors’ prepublication copy.]",
+     "doi": null,
+     "url": "https://public.websites.umich.edu/~ncellis/NickEllis/Publications_files/AFL_paper_AppLinxPrepub.pdf"
     }
    ]
   },
@@ -764,6 +780,11 @@
      "citation": "Crossley, S. A., Allen, L. K., Kyle, K., & McNamara, D. S. (2014). Analyzing discourse processing using a simple natural language processing tool. Discourse Processes, 51(5–6), 511–534.",
      "doi": "10.1080/0163853X.2014.910723",
      "url": "https://doi.org/10.1080/0163853X.2014.910723"
+    },
+    {
+     "citation": "Carnegie Mellon University. The CMU Pronouncing Dictionary. Copyright 1993–2015 Carnegie Mellon University, BSD 2-clause licence. [The source of the syllable counts for words that the spelling rule gets wrong.]",
+     "doi": null,
+     "url": "https://github.com/cmusphinx/cmudict"
     }
    ]
   },
@@ -809,6 +830,11 @@
      "citation": "Kyle, K., & Crossley, S. A. (2018). Measuring syntactic complexity in L2 writing using fine-grained clausal and phrasal indices. The Modern Language Journal, 102(2), 333–349.",
      "doi": "10.1111/modl.12468",
      "url": "https://doi.org/10.1111/modl.12468"
+    },
+    {
+     "citation": "Johansson, V. (2008). Lexical diversity and lexical density in speech and writing: A developmental perspective. Lund University, Department of Linguistics and Phonetics, Working Papers, 53, 61–79.",
+     "doi": null,
+     "url": "https://journals.lub.lu.se/LWPL/article/view/2273"
     }
    ]
   },
@@ -950,7 +976,7 @@
    "key": "vocab",
    "name": "Vocabulary level",
    "group": "Are the words well chosen?",
-   "reads": "Every content word is looked up in two open word lists: the 2,809 most useful everyday English words, and 957 words common across academic writing. A word on neither list is a specialist term or a rare word, and each one is a small cost to a reader outside your specialty.",
+   "reads": "Every content word is looked up in two open word lists: the 2,809 most useful everyday English words, and 957 words common across academic writing. A word on neither list is a specialist term or a rare word, and each one is a small cost to a reader outside your specialty. The Academic Word List (Coxhead 2000) can be loaded beside them as optional data.",
    "to_revise": "Define specialist terms at first use, and prefer the listed word where it says the same thing.",
    "marks": [
     {
@@ -981,8 +1007,8 @@
     },
     {
      "citation": "Coxhead, A. (2000). A new academic word list. TESOL Quarterly, 34(2), 213–238.",
-     "doi": null,
-     "url": "https://www.wgtn.ac.nz/__data/assets/pdf_file/0020/1626131/Coxhead-2000.pdf"
+     "doi": "10.2307/3587951",
+     "url": "https://doi.org/10.2307/3587951"
     },
     {
      "citation": "Nation, I. S. P. (2006). How large a vocabulary is needed for reading and listening? The Canadian Modern Language Review, 63(1), 59–82.",
@@ -998,6 +1024,31 @@
      "citation": "Covington, M. A., & McFall, J. D. (2010). Cutting the Gordian knot: The moving-average type–token ratio (MATTR). Journal of Quantitative Linguistics, 17(2), 94–100.",
      "doi": null,
      "url": null
+    },
+    {
+     "citation": "Plavén-Sigray, P., Matheson, G. J., Schiffler, B. C., & Thompson, W. H. (2017). The readability of scientific texts is decreasing over time. eLife, 6, e27725.",
+     "doi": "10.7554/eLife.27725",
+     "url": "https://doi.org/10.7554/eLife.27725"
+    },
+    {
+     "citation": "Brysbaert, M., Warriner, A. B., & Kuperman, V. (2014). Concreteness ratings for 40 thousand generally known English word lemmas. Behavior Research Methods, 46(3), 904–911.",
+     "doi": "10.3758/s13428-013-0403-5",
+     "url": "https://doi.org/10.3758/s13428-013-0403-5"
+    },
+    {
+     "citation": "Kuperman, V., Stadthagen-Gonzalez, H., & Brysbaert, M. (2012). Age-of-acquisition ratings for 30,000 English words. Behavior Research Methods, 44(4), 978–990.",
+     "doi": "10.3758/s13428-012-0210-4",
+     "url": "https://doi.org/10.3758/s13428-012-0210-4"
+    },
+    {
+     "citation": "Brysbaert, M., & New, B. (2009). Moving beyond Kučera and Francis: A critical evaluation of current word frequency norms and the introduction of a new and improved word frequency measure for American English. Behavior Research Methods, 41(4), 977–990.",
+     "doi": "10.3758/BRM.41.4.977",
+     "url": "https://doi.org/10.3758/BRM.41.4.977"
+    },
+    {
+     "citation": "Brysbaert, M., Mandera, P., McCormick, S. F., & Keuleers, E. (2019). Word prevalence norms for 62,000 English lemmas. Behavior Research Methods, 51(2), 467–479.",
+     "doi": "10.3758/s13428-018-1077-9",
+     "url": "https://doi.org/10.3758/s13428-018-1077-9"
     }
    ]
   },
@@ -1260,6 +1311,11 @@
    "sources": [
     {
      "citation": "Faigley, L., & Witte, S. (1981). Analyzing revision. College Composition and Communication, 32(4), 400–414.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Tufte, E. R. (1983). The Visual Display of Quantitative Information. Cheshire, CT: Graphics Press. [Small multiples, the range-frame and the dot-dash-plot.]",
      "doi": null,
      "url": null
     }

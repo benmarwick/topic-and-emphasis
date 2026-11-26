@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.19.1 (2026-11-26)
+
+A review of the documentation against the code. No rule changed.
+
+- Corrected statements that had gone stale: that the Academic Formulas List is not included (it is optional data since 0.18.0), that the page fetches only its typefaces (optional data and the meaning model are fetched on request), that nothing leaves the page (the phrase look-up sends the words you select), that no wording resource is part of the page (the phrase bank is), and that there is "no dictionary" (there is no spelling dictionary; there are word lists).
+- "About this tool" now lists every built-in list (adds the science-jargon list and the CMUdict syllable counts) and every optional file, with its licence position.
+- Guide: the portfolio paragraph lists what the portfolio now holds and how it is saved; Unpack the noun mentions the possessive; the Load map description names its five argument strips.
+- README: installation says what a saved copy lacks; the tests are listed; the 0.10 to 0.19 section is retitled; the source count is 124, not 67; the CLEAR run used 4,721 passages; lens name "Dense phrases"; MCP and licence sections cover the new data.
+- Citations: Coxhead (2000) gains its DOI; Ure (1971) and Halliday (1985) are linked where they are cited; lens source lists gain Simpson-Vlach & Ellis (Signal phrases), Tufte (Overview, Before & after), Johansson (Dense phrases), the CMU Pronouncing Dictionary (Length & rhythm), and Plavén-Sigray et al. and the four word-norm papers (Vocabulary level).
+
 ## 0.19.0 (2026-11-26)
 
 - Signal phrases, order of moves: notes for a gap signalled before the context (introduction, paper) and, in an abstract, for a method before the aim, a result before the method, and an implication before the result. The existing note for an aim before the gap is unchanged.

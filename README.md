@@ -7,7 +7,7 @@
 
 **Topic & Emphasis** is a browser workbench for revising **research writing**. Paste a draft and it marks where the structure of each sentence and paragraph meets, or misses, what readers expect, following Gopen and Swan's ["The Science of Scientific Writing"](https://www.americanscientist.org/node/924) (1990). You then rewrite each sentence in place and watch the notes clear. It is written for **students working on their own**, in the social sciences in particular.
 
-Every mark and note comes from a **fixed rule**. The same text always gets the same marks, and **nothing you paste leaves your browser**. The application is a **single HTML file** that works offline once it has loaded. An **optional meaning model**, off by default, adds comparisons of sentences by meaning; it is a small language model that also runs entirely in the browser (see below).
+Every mark and note comes from a **fixed rule**. The same text always gets the same marks, and **your draft is never uploaded**. The application is a **single HTML file** whose rules work offline once it has loaded. Everything else is optional, off until you ask for it, and never makes a note: an **optional meaning model**, a small language model that runs entirely in the browser (see below), and **optional data** fetched from the same site (word norms, the Academic Word List, the Academic Formulas List and a phrase bank). The only text that can leave the page is a phrase you select and choose to look up in SkELL or Linggle.
 
 **Use it online:** <https://benmarwick.github.io/topic-and-emphasis/>
 
@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.19.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.19.1) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.19.0},
+  version = {0.19.1},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -43,7 +43,7 @@ Please also cite the article the workbench is built on:
 
 **Option A: use it online.** Open <https://benmarwick.github.io/topic-and-emphasis/>. Nothing to install.
 
-**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not. The optional meaning model is not available in a copy saved this way, because it needs the files in `model/`.
+**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not. The rules and the built-in word lists all work in a copy saved this way. The optional extras do not, because they are separate files: the meaning model needs `model/`, and the word norms, the Academic Word List, the Academic Formulas List and the phrase bank need `data/`. For those, use the online copy or serve a clone of the repository from a local web server (`python3 -m http.server`). The two lists can also be pasted into a saved copy by hand.
 
 **Option C: build from source.** The page is assembled from the pieces in `src/` by a short Python script with no dependencies.
 
@@ -51,11 +51,10 @@ Please also cite the article the workbench is built on:
 git clone https://github.com/benmarwick/topic-and-emphasis.git
 cd topic-and-emphasis
 python3 build.py        # writes index.html
-node tests/smoke.js     # optional: checks the rule engine
-node tests/mcp.test.js  # optional: checks the MCP server
+for t in tests/*.js; do node "$t" || break; done   # optional: the 14 test files
 ```
 
-Requires Python 3. The test needs Node.js 18 or later.
+Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/smoke.js` checks the rule engine and `tests/mcp.test.js` the MCP server; the others each cover one feature (readability figures, citations, the main-verb probe, document blocks, the point of a paragraph, the noun unpacker, Word export, the pictures' data, the phrase bank, pasted lists, the two published lists, and move order).
 
 ---
 
@@ -116,7 +115,7 @@ You do not need to clear every note. A note is a question about the sentence, an
 | Lens | What it reads | Drawn from |
 |---|---|---|
 | Vague & worn words | Intensifiers, vague quantities and worn phrases | [Zinsser (2006)](https://search.worldcat.org/oclc/62421288) |
-| Vocabulary level | Content words against two open word lists, and word variety | [Browne, Culligan & Phillips (2013)](https://www.newgeneralservicelist.com/); [McCarthy & Jarvis (2010)](https://doi.org/10.3758/BRM.42.2.381) |
+| Vocabulary level | Content words against two open word lists, and word variety; optionally, words on the Academic Word List by sublist | [Browne, Culligan & Phillips (2013)](https://www.newgeneralservicelist.com/); [McCarthy & Jarvis (2010)](https://doi.org/10.3758/BRM.42.2.381); [Coxhead (2000)](https://doi.org/10.2307/3587951) |
 | Term tracker | Recurring terms, second names for one thing, and your own word list | [Williams (1990)](https://catalog.hathitrust.org/Record/002224980); [Kyle, Crossley & Kim (2015)](https://doi.org/10.1075/ijlcr.1.2.01kyl) |
 | Acronyms | Abbreviations that are never defined, or used only once or twice | [Barnett & Doubleday (2020)](https://doi.org/10.7554/eLife.60080) |
 | Describing people | Labels for people that carry a judgment | [APA bias-free language guidelines](https://apastyle.apa.org/style-grammar-guidelines/bias-free-language) |
@@ -132,7 +131,7 @@ You do not need to clear every note. A note is a question about the sentence, an
 
 ### Research profile
 
-The Overview carries a **Research profile**: 23 counts, grouped under Structure, Vocabulary and density, Cohesion, and Stance and care. Beside eight of them is a sparkline, a line the size of a word that draws the measure for every sentence, so a figure also shows where it peaks. The profile holds that writing researchers use to describe a text, each recomputed here by a fixed rule and each shown with the publication it comes from and a line on how to read it. They describe a draft. None is a score and none has a target. The same counts appear in a "Research measure" box inside the lens they belong to, with what the research found and how the rule-based count differs from the published one.
+The Overview carries a **Research profile**: 23 counts, grouped under Structure, Vocabulary and density, Cohesion, and Stance and care. Beside eight of them is a sparkline, a line the size of a word that draws the measure for every sentence, so a figure also shows where it peaks. The profile holds counts that writing researchers use to describe a text, each recomputed here by a fixed rule and each shown with the publication it comes from and a line on how to read it. They describe a draft. None is a score and none has a target. The same counts appear in a "Research measure" box inside the lens they belong to, with what the research found and how the rule-based count differs from the published one.
 
 ### Added in 0.7.0: more measures, word lists and word norms
 
@@ -149,11 +148,13 @@ The Overview carries a **Research profile**: 23 counts, grouped under Structure,
 | Mechanical checks | **GRIM**: a question on any mean that cannot come from whole-number scores for the sample size in the same sentence. | [Brown & Heathers 2017](https://doi.org/10.1177/1948550616673876) |
 | Before & after | Each rewritten sentence is labelled as **wording only**, **content added**, **content removed** or both, and the revision receipt counts each kind. | Faigley & Witte 1981 |
 
-None of these raises a note except GRIM, which asks a question. The word norms keep their authors' non-commercial licences; see [`data/README.md`](data/README.md). The Academic Formulas List is not included, because it carries no open licence. References with no link above are books, or articles whose DOI could not be confirmed; their full details are in the page's reference list.
+None of these raises a note except GRIM, which asks a question. The word norms keep their authors' non-commercial licences; see [`data/README.md`](data/README.md). The Academic Formulas List was not included at 0.7.0; since 0.18.0 it comes with the page as optional data (see below). References with no link above are books, or articles whose DOI could not be confirmed; their full details are in the page's reference list.
 
 `tests/readability/` holds five fixed passages, this page's figures for them, and two scripts (Python with textstat, R with quanteda.textstats; [Benoit et al. 2018](https://doi.org/10.21105/joss.00774)) that record what those calculators give for the same passages, because readability calculators are known to disagree.
 
-### Added in 0.10.0: files, document structure, stages and a portfolio
+### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
+
+Newest first.
 
 - **Open a file.** "Open a file", or drag a file onto the page: Word (.docx), Markdown, Quarto (.qmd), R Markdown, LaTeX and plain text. A .docx file is unpacked in the browser by about forty lines of code in the page, so there is no upload and no added library; headings are kept, and footnotes, comments and tracked deletions are left out.
 - **Parts that are not prose are set aside.** The settings block of a Quarto file, code blocks, displayed equations, layout markup, block quotations and the reference list stay in the text, greyed and labelled, and no lens reads them. Inline code, inline maths, web addresses and LaTeX references are not counted as words. Nothing is removed, so the text you copy back out is the text you put in.
@@ -162,7 +163,7 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 - **The Academic Word List and the Academic Formulas List, as data** (0.18.0). Both now come with the page as optional JSON in `data/lists/`, holding word strings and numbers only: 570 headwords with their families and sublists, and 607 formulas with their list, frequencies per million and formula teaching worth. One button in Vocabulary level and one in Signal phrases loads each. The names of UEFAP's 35 rhetorical functions are in `data/taxonomy/`, with this project's tagging of the phrase bank's groups, and the Phrases tab can be filtered by function. `data/README.md` sets out where each file was read from, how the formulas were cross-checked, and the position on rights.
 - **Pasting a list of your own** (0.17.0). Paste a copy into the Vocabulary level lens (word list) or the Signal phrases lens (formulas) and the page counts and marks the words and formulas of the draft that are on it: by sublist for the word list ([Coxhead 2000](https://www.wgtn.ac.nz/__data/assets/pdf_file/0020/1626131/Coxhead-2000.pdf)), and by list and formula teaching worth for the formulas ([Simpson-Vlach & Ellis 2010](https://public.websites.umich.edu/~ncellis/NickEllis/Publications_files/AFL_paper_AppLinxPrepub.pdf)). British and American spellings are matched to each other. The copy stays in the browser, raises no notes and does not change the revision receipt. `data/README.md` gives the formats.
 - **Phrase bank** (0.16.0, optional data). A *Phrases* tab in the workbench holds about 590 sentence frames in 57 groups ("indicating the gap in knowledge", "admitting limitations"), each with blanks to choose and dots to fill. It opens on the frames that fit the paragraph's job or the move the sentence signals, and notes that link to the Phrasebank open it too. The frames are from [Wallwork 2016](https://doi.org/10.1007/978-3-319-26094-5), as prepared in the open-source package [academic-phrases](https://github.com/nashamri/academic-phrases) with the permission of Springer Nature and the author. They are licensed GPL-3.0, kept in `data/phrases/` apart from the MIT-licensed page, fetched only on request, and can be deleted. This is the page's answer to the "see examples" step of the Research Writing Tutor ([Cotos, Huffman & Link 2020](https://doi.org/10.17239/jowr-2020.12.01.07)): a move leads to frames for that move. The page has no annotated corpus and cannot compare a draft with a discipline.
-- **Where to find wording** (0.15.0). The page asks questions and leaves the words to the writer, so it now points to places where wording can be found, with a citation for each. *Phrases by purpose*: notes link to the matching page of the [Academic Phrasebank](https://www.phrasebank.manchester.ac.uk/) and of [UEFAP's rhetorical functions](https://www.uefap.org/writing-functions-introduction/). *A phrase in real use*: a line under the rewrite box sends the words you select (eight at most, and nothing else) to [SkELL](https://skell.sketchengine.eu/) ([Baisa & Suchomel 2014](https://nlp.fi.muni.cz/raslan/2014/12.pdf)) or [Linggle](https://linggle.com/) ([Boisson et al. 2013](https://aclanthology.org/P13-4024/)), or copies them for [Ludwig](https://ludwig.guru/). The Guide adds the student corpora MICUSP (Römer & O'Donnell 2011, *Corpora* 6(2)) and BAWE ([Alsop & Nesi 2009](https://doi.org/10.3366/E1749503209000227)); the books of [Swales & Feak 2012](https://doi.org/10.3998/mpub.2173936), [Glasman-Deal 2020](https://doi.org/10.1142/q0232) and Graff & Birkenstein 2024; what academics accept as reuse of a stock phrase (Davis & Morley 2015, *Journal of Second Language Writing* 28); and the move-reading tools of [Cotos, Huffman & Link 2015](https://doi.org/10.1016/j.jeap.2015.05.004) and [Knight et al. 2020](https://doi.org/10.17239/jowr-2020.12.01.06). No phrase list from any of these is copied into the page.
+- **Where to find wording** (0.15.0). The page asks questions and leaves the words to the writer, so it now points to places where wording can be found, with a citation for each. *Phrases by purpose*: notes link to the matching page of the [Academic Phrasebank](https://www.phrasebank.manchester.ac.uk/) and of [UEFAP's rhetorical functions](https://www.uefap.org/writing-functions-introduction/). *A phrase in real use*: a line under the rewrite box sends the words you select (eight at most, and nothing else) to [SkELL](https://skell.sketchengine.eu/) ([Baisa & Suchomel 2014](https://nlp.fi.muni.cz/raslan/2014/12.pdf)) or [Linggle](https://linggle.com/) ([Boisson et al. 2013](https://aclanthology.org/P13-4024/)), or copies them for [Ludwig](https://ludwig.guru/). The Guide adds the student corpora MICUSP (University of Michigan 2009; described by Römer & O'Donnell 2011, *Corpora* 6(2)) and BAWE ([Alsop & Nesi 2009](https://doi.org/10.3366/E1749503209000227)); the books of [Swales & Feak 2012](https://doi.org/10.3998/mpub.2173936), [Glasman-Deal 2020](https://doi.org/10.1142/q0232) and Graff & Birkenstein 2024; what academics accept as reuse of a stock phrase (Davis & Morley 2015, *Journal of Second Language Writing* 28); and the move-reading tools of [Cotos, Huffman & Link 2015](https://doi.org/10.1016/j.jeap.2015.05.004) and [Knight et al. 2020](https://doi.org/10.17239/jowr-2020.12.01.06). No phrase list from any of these is copied into the page.
 - **Pictures of the draft** (0.14.0). Each is drawn from the draft's own counts, on one scale, in inline SVG or plain HTML, with no library and no decoration (after Tufte 1983, 2006). *The draft at a glance* (Overview): one column a sentence, its length above the line and its open notes below; tap a column to open the sentence. *Load map*: five new rows for where the open notes, claim words, named evidence, strong wording and hedges sit. *Link ladder* (Old → new): a small picture for each paragraph, every sentence drawn to length with its opening and close marked and a line from each repeated word back to where it stood in the sentence before; links that land in the opening are blue. *Openings and closes, side by side* (Skeleton read): a two-column ledger with a rule as long as the words left out. *Paragraph map* (Paragraph jobs): job, length, a square for each word of the claim, and the point. *Wording against evidence* (Claim strength, Hedging): a table of sentences by strong or hedged wording and by whether a citation or figure is in the sentence. *Open notes by stage* (Before & after): a slopegraph from the start to now. In the workbench, an arc joins the subject to its verb, taller the further apart they are. Movement (0.14.1): each picture draws itself in once when you arrive at a lens or open a text, and holds still while you type; the arc moves to its new shape as you edit, glows amber from eight words apart, pulses slowly from twelve, and the subject and verb flash once when they meet. "Still pictures" under Reading comfort, or the device's reduce-motion setting, switches all of it off.
 - **Export** (0.13.0). *Take the draft with you* saves the current text as a Word file in which every open note is a comment in the margin, attached to the words it points at, with its question first; as a Word file with no comments; or as a plain file in the format you opened. The .docx is written in the browser by about forty lines of code in the page (a ZIP of five small XML parts, stored uncompressed), so there is no upload and no added library. It is a plain file: headings, paragraphs, quotations and the reference list, without the fonts, footnotes, figures or tables of the original. The *revision portfolio* now also holds the reverse outline (main claim, each paragraph's job, your stated point and its opening words) and the notes still open, and it saves as a web page or Markdown, or prints, so it can go to a supervisor or a writing centre with the draft. Inside the Claude viewer, where ordinary downloads are blocked, the page asks the viewer to save the file; where nothing can be saved, copying still works.
 - **Sentence tools in the workbench** (0.12.0). *Rearrange* cuts the sentence into labelled pieces (opening, subject, interruption, verb, middle, close), marks the pieces that bring in a word the draft has not used before, and after each move sets the sentence before against the sentence now: how it opens, how far the subject sits from its verb, and what it closes on. Notes about a subject far from its verb, a weak close, or new before old open it with one button. *Unpack the noun* appears in the "action is in a noun" note: three blanks (who or what, did what, to what), with the verb and its object filled from the writer's own words and the actor left empty unless the sentence names one after "by" or as a possessive. A preview shows which notes the new wording would clear. Neither tool writes a sentence for the student: both assemble the student's own words, and the result is a rough draft to read over.
@@ -177,7 +178,7 @@ None of these raises a note except GRIM, which asks a question. The word norms k
   - *Where the load falls*: one column per sentence and one strip per measure (length, wait for the verb, lexical density, long words, new words, nouns made from verbs), on a shared axis. The tallest fifth of each strip is coloured, and a last strip counts how many loads each sentence carries at once.
   - *Structure and vocabulary*: every sentence as a dot, by its length and its density, with the middle of each scale marked, so the draft's long-but-plain sentences separate from its short-but-dense ones. The two-way view follows [Jenset (2026)](https://communities.springernature.com/posts/the-myth-of-the-unreadable-humanities-and-social-sciences).
   - *Paragraph by paragraph*: one table row per paragraph, with a sparkline of its sentence lengths and of its waits for the verb.
-- **Lexical density** (Phrase load, Research profile, MCP): the share of words that carry content, for the draft, each paragraph and each sentence ([Johansson 2008](https://journals.lub.lu.se/LWPL/article/view/2273), after Ure 1971 and Halliday 1985). It is counted without a part-of-speech tagger, and on the CLEAR passages it had no relation to judged ease (−0.02), so the page presents it as packing and not as difficulty.
+- **Lexical density** (Dense phrases, Research profile, MCP): the share of words that carry content, for the draft, each paragraph and each sentence ([Johansson 2008](https://journals.lub.lu.se/LWPL/article/view/2273), after Ure 1971 and Halliday 1985). It is counted without a part-of-speech tagger, and on the CLEAR passages it had no relation to judged ease (−0.02), so the page presents it as packing and not as difficulty.
 - **Citation keys** (0.8.1): `@Marwick2026`, `[@a; @b, p. 4]` and LaTeX `\cite` commands are read as citations.
 
 ### Added in 0.8.0: cleaner readability figures, science jargon, and a check on the counts
@@ -186,7 +187,7 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 - **Syllables.** A better spelling rule, backed by counts from the [CMU Pronouncing Dictionary](https://github.com/cmusphinx/cmudict) for 1,961 common words the rule gets wrong. On the test passages the figures now sit within about half a grade of quanteda.textstats.
 - **General science jargon** (Vocabulary level): the share of words on the 2,138-word list of [Plavén-Sigray et al. (2017)](https://doi.org/10.7554/eLife.27725), with the words used most.
 - **Sentences with the hardest vocabulary** (word norms): the three sentences whose content words are learned latest, following the per-sentence averages of [Lee & Lee (2023)](https://aclanthology.org/2023.bea-1.1).
-- **What the counts track** (Guide, and [`tests/validation/RESULTS.md`](tests/validation/RESULTS.md)): the correlation of each count with teachers' judgements of reading ease on the 4,724 passages of the CLEAR corpus ([Crossley et al. 2023](https://doi.org/10.3758/s13428-022-01802-x)). The best single count reaches about 0.6, word variety and sentence overlap are near zero, and all counts together reach 0.73. The corpus is not in the repository; `tests/validation/clear.js` reproduces the table from its CSV file.
+- **What the counts track** (Guide, and [`tests/validation/RESULTS.md`](tests/validation/RESULTS.md)): the correlation of each count with teachers' judgements of reading ease on 4,721 passages of the CLEAR corpus ([Crossley et al. 2023](https://doi.org/10.3758/s13428-022-01802-x)). The best single count reaches about 0.6, word variety and sentence overlap are near zero, and all counts together reach 0.73. The corpus is not in the repository; `tests/validation/clear.js` reproduces the table from its CSV file.
 - **Weasel words** (0.7.1): notes on views attributed to nobody, vague degree words and comment words; the lens search and the Guide find all five lenses that cover them.
 
 ### Meaning model (optional)
@@ -226,19 +227,22 @@ The model does not see negation or logic, and its scores only rank things within
 | Previews | See which notes a suggested change would clear, and any it would bring in, before accepting it |
 | Rearrange | Drag the labelled parts of a sentence into a new order; a table shows what the move did to the opening, the subject-to-verb distance and the close |
 | Unpack the noun | A fill-in template that turns a noun such as "implementation" back into a verb and leaves the actor for the writer to supply |
+| Phrases | About 590 sentence frames in 57 groups, opening on the group that fits the paragraph's job or the sentence's move (optional data) |
+| Phrase look-up | Sends the words you select, eight at most, to SkELL or Linggle to see them in real use, or copies them for Ludwig |
+| Four stages | Narrow the page to argument, flow, polish or calibration, and record each stage as reviewed |
 | Guided and timed passes | Walk through the notes one at a time, or work for 5, 10 or 20 minutes |
 | Before & after | A revision receipt, counts by lens, and the starting text against the current one |
 | Export | The text as a Word file with each open note as a margin comment, as a Word file with no comments, or as a plain file; the revision portfolio as a web page, Markdown, JSON or print |
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text. Four have neither: three are books, which link to a library catalogue record, and the 2016 conference paper by Crossley, Kyle, Davenport and McNamara links to its publication record. All 67 sources are listed at the foot of the application.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 124 sources are listed at the foot of the application, 63 of them with a DOI and 36 more with a link to the full text or the publisher's page.
 
 ---
 
 ## 🔌 MCP Server
 
-The repository includes a small [Model Context Protocol](https://modelcontextprotocol.io/) server, so that an AI agent can use the same fixed rules as the page. It is meant for three jobs: a **tutor** that asks a writer each note's question and lets them revise, a **grader's aid**, and **batch analysis** of a set of drafts for research. It runs on your own machine over stdio, needs only Node.js 18 or later, has no dependencies, opens no network connection and writes nothing to disk. The optional meaning model is not part of it.
+The repository includes a small [Model Context Protocol](https://modelcontextprotocol.io/) server, so that an AI agent can use the same fixed rules as the page. It is meant for three jobs: a **tutor** that asks a writer each note's question and lets them revise, a **grader's aid**, and **batch analysis** of a set of drafts for research. It runs on your own machine over stdio, needs only Node.js 18 or later, has no dependencies, opens no network connection and writes nothing to disk. It uses the word norms when the four files are in `data/norms/`. The meaning model, the Academic Word List, the Academic Formulas List and the phrase bank are not part of it.
 
 Add it to an MCP client with a configuration like this, using the full path to your copy:
 
@@ -257,7 +261,7 @@ Add it to an MCP client with a configuration like this, using the full path to y
 |---|---|
 | `list_lenses` | Lists the lenses with a line on what each reads |
 | `describe_lens` | Explains one lens in full: what it reads, its marks, the research, its limits, and its sources with DOIs |
-| `analyse_draft` | Returns the notes on a draft. By default it returns only each note's **question**, for a tutor to ask. With `reveal: "full"` it adds the finding, explanation, advice and any suggested change. Can be limited to chosen lenses or one sentence |
+| `analyse_draft` | Returns the notes on a draft. By default it returns only each note's **question**, for a tutor to ask. With `reveal: "full"` it adds the finding, explanation, advice and any suggested change, and for a noun that hides an action the parts of the unpacking template (`unpack_the_noun`). Can be limited to chosen lenses or one sentence |
 | `research_profile` | Returns the descriptive counts for a draft |
 | `compare_drafts` | Compares two versions: notes in each lens before and after, and both profiles |
 | `analyse_batch` | One row per draft for up to 200 drafts, with a CSV copy. No draft text is returned |
@@ -270,7 +274,7 @@ The lens descriptions the server gives come from `mcp/guide.json`, which is expo
 
 ## ⚠️ Limits
 
-The rules read structure and have no idea what your sentences mean. There is no parser, no part-of-speech tagger and no dictionary, so some sentences will be misjudged, synonyms are not recognised (unless the meaning model is on), and misspellings are not found. The working thresholds (for example, twelve words before the main verb, or five matching words in a row) are this tool's own values and are labelled as such in the application. They are not published norms.
+The rules read structure and have no idea what your sentences mean. There is no parser, no part-of-speech tagger and no spelling dictionary, so some sentences will be misjudged, synonyms are not recognised (unless the meaning model is on), and misspellings are not found. The word lists say how common a word is and nothing about what it means. Moves are read from cue phrases, so a move made without one is not seen. The working thresholds (for example, twelve words before the main verb, or five matching words in a row) are this tool's own values and are labelled as such in the application. They are not published norms.
 
 ---
 
@@ -278,7 +282,7 @@ The rules read structure and have no idea what your sentences mean. There is no 
 
 - Report a problem or suggest a rule in the [issue tracker](https://github.com/benmarwick/topic-and-emphasis/issues). A sentence the rules misread is especially useful: paste the sentence and say which lens marked it.
 - Changes are recorded in the [changelog](CHANGELOG.md).
-- The source is four files in `src/`: `head.html` (styles), `body.html` (page structure), `engine.js` (the rules) and `ui.js` (the interface). Run `python3 build.py` and `node tests/smoke.js` before opening a pull request.
+- The source is four files in `src/`: `head.html` (styles), `body.html` (page structure), `engine.js` (the rules) and `ui.js` (the interface), with six word lists beside them as `.txt` files. Optional data is in `data/` and is rebuilt by the scripts in `tools/`. Run `python3 build.py` and every file in `tests/` before opening a pull request.
 
 ---
 
@@ -294,6 +298,6 @@ The code of this application was written with the assistance of an AI coding too
 
 The application includes the **New General Service List** and the **New Academic Word List** (version 1.2 of each) by Charles Browne, Brent Culligan and Joseph Phillips, under a [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) licence. The typefaces (IBM Plex and Newsreader, SIL Open Font License) are loaded from Google Fonts when the page opens and are not included in this repository.
 
-The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The Dale-Chall list and the excess-vocabulary list are MIT-licensed. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
+The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The Dale-Chall list, the excess-vocabulary list and the science-jargon list are MIT-licensed, and the syllable counts come from the CMU Pronouncing Dictionary (BSD 2-clause). The phrase bank in `data/phrases/` is under the **GNU GPL 3 or later**; it is kept apart from the application and loaded only on request. `data/lists/awl.json` and `data/lists/afl.json` hold the words and figures of the Academic Word List (Coxhead 2000) and the Academic Formulas List (Simpson-Vlach & Ellis 2010) and nothing else from those publications; no permission was sought for either, and `data/README.md` sets out the position taken and how to remove them. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
 
 The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT).
