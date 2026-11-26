@@ -348,10 +348,20 @@ function Q(f){const t=f.title;switch(f.lens){
 /* A citation key in the style of pandoc, Quarto and R Markdown (@Marwick2026, [@a; @b, p. 3], -@a) is one token.
    Inside square brackets the key and its page reference are citation apparatus, so they do not count as words.
    Outside brackets the key stands for the author's name, so it counts as one word but never as a term. */
+const CITE_Y='(?:(?:1[5-9]|20)\\d\\d[a-z]?|n\\.d\\.|in press|forthcoming)',CITE_N="(?:(?:de|del|della|der|den|di|da|du|la|le|van|von|bin|al|ten|ter)\\s+)*\\p{Lu}[\\p{L}'’.-]*(?:\\s+(?:\\p{Lu}[\\p{L}'’.-]*|de|del|della|der|den|di|da|du|la|le|van|von|bin|al|of|for|the))*",
+  CITE_A=CITE_N+'(?:\\s*(?:,\\s*(?:&|and)?|&|and)\\s*'+CITE_N+')*(?:,?\\s+et\\s+al\\.?)?',CITE_L='(?:\\s*,\\s*(?:pp?\\.|ch\\.|chap\\.|para\\.|§)?\\s*\\d+(?:\\s*[–-]\\s*\\d+)?)?',
+  CITE_1='(?:(?:see(?:\\s+also)?|e\\.g\\.,?|cf\\.|i\\.e\\.,?|for\\s+(?:example|a\\s+review),?(?:\\s+see)?|as\\s+cited\\s+in|but\\s+see|also)\\s+)?'+CITE_A+',?\\s+'+CITE_Y+'(?:\\s*,\\s*'+CITE_Y+')*'+CITE_L,
+  CITE_IN=new RegExp('^\\s*(?:'+CITE_1+'(?:\\s*;\\s*'+CITE_1+')*|'+CITE_Y+'(?:\\s*,\\s*'+CITE_Y+')*'+CITE_L+')\\s*$','u'),CITE_NUM=/^\s*\d{1,3}(?:\s*[,–-]\s*\d{1,3})*\s*$/;
 function tokenize(text){const T=[];const re=/`[^`\n]+`|\$(?=\S)[^$\n]{0,160}?(?<=\S)\$(?!\d)|\\\([^\n]*?\\\)|\\(?:[a-zA-Z]*cite[a-zA-Z]*|ref|eqref|autoref|cref|Cref|pageref|label|url)\*?(?:\[[^\]\n]*\])*\{[^{}\n]*\}|https?:\/\/[^\s)>\]]+|\]\([^)\s]+\)|(?<![\p{L}\p{N}._%+-])-?@[\p{L}_][\p{L}\p{N}_]*(?:[:.#$%&+?<>~\/-][\p{L}\p{N}_]+)*|[\p{L}\p{N}]+(?:[-'’.\/][\p{L}\p{N}]+)*%?|[^\s\p{L}\p{N}]/gu;let m,any=false;
   while((m=re.exec(text))){const t=m[0],ck=/^-?@./.test(t),mask=t.length>1&&/^(?:`|\$|\\[(a-zA-Z]|https?:|\]\()/.test(t);if(ck)any=true;T.push({t,l:t.toLowerCase().replace(/’/g,"'"),s:m.index,e:m.index+t.length,w:!mask&&/[\p{L}\p{N}]/u.test(t),cite:ck||(mask&&/^\\[a-zA-Z]*cite/.test(t))||undefined,mask:mask||undefined});}
   if(any)for(let i=0;i<T.length;i++){if(T[i].t!=='[')continue;let j=i+1,has=false;while(j<T.length&&T[j].t!==']'&&T[j].t!=='['){if(T[j].cite)has=true;j++;}
     if(has&&j<T.length&&T[j].t===']'){for(let q=i+1;q<j;q++){T[q].w=false;T[q].cite=true;}i=j;}}
+  /* 0.34.0: an author-and-year citation in parentheses, a year in parentheses after a name, and a numbered citation in
+     square brackets each become one token that is not a word, as a \cite{} already is. So the names and years inside do not
+     count as words, do not stand between a subject and its verb, and their commas and semicolons do not read as clause breaks. */
+  for(let i=0;i<T.length;i++){const o=T[i].t;if(o!=='('&&o!=='[')continue;const cl=o==='('?')':']';let j=i+1;while(j<T.length&&T[j].t!==cl&&T[j].t!==o&&j-i<90)j++;
+    if(j>=T.length||T[j].t!==cl||j===i+1)continue;const inner=text.slice(T[i].e,T[j].s);if(inner.length>320||!(o==='('?CITE_IN.test(inner):CITE_NUM.test(inner)))continue;
+    const tt=text.slice(T[i].s,T[j].e);T.splice(i,j-i+1,{t:tt,l:tt.toLowerCase(),s:T[i].s,e:T[j].e,w:false,cite:true,mask:true});}
   return T;}
 /* Split the text into blocks. A block with head:true is shown but not analysed: a heading, or a stretch that is not the
    writer's prose (kind: yaml, code, math, markup, quote, refs). Offsets are kept, so nothing in the text is moved or removed. */

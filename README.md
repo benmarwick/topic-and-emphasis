@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.33.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.34.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.33.0},
+  version = {0.34.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -43,7 +43,7 @@ Please also cite the article the workbench is built on:
 
 **Option A: use it online.** Open <https://benmarwick.github.io/topic-and-emphasis/>. Nothing to install.
 
-**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not. The rules and the built-in word lists all work in a copy saved this way. The optional extras do not, because they are separate files: the meaning model needs `model/`, and the word norms, the Academic Word List, the Academic Formulas List, the part-of-speech lexicon and the phrase bank need `data/`. For those, use the online copy or serve a clone of the repository from a local web server (`python3 -m http.server`). The two lists can also be pasted into a saved copy by hand.
+**Option B: download one file.** Save [`index.html`](index.html) from this repository and open it in a browser. It runs from your own disk. It loads its typefaces from Google Fonts when a connection is available and falls back to system fonts when not. The rules and the built-in word lists all work in a copy saved this way. The optional extras do not, because they are separate files: the meaning model needs `model/`, the second reading in Subject → verb needs `lib/`, and the word norms, the Academic Word List, the Academic Formulas List, the part-of-speech lexicon and the phrase bank need `data/`. For those, use the online copy or serve a clone of the repository from a local web server (`python3 -m http.server`). The two lists can also be pasted into a saved copy by hand.
 
 **Option C: build from source.** The page is assembled from the pieces in `src/` by a short Python script with no dependencies.
 
@@ -63,6 +63,8 @@ Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/sm
 1. **Paste your text**, or choose **Try the example** for seven sentences with five notes to clear. **Tutorial** walks you through them.
 2. **Pick a lens** from the list. Each lens reads the draft for one thing and marks it in the text. The Overview shows every open note at once and suggests where to start.
 3. **Tap a sentence** to open the workbench under its paragraph. Read the note, rewrite the sentence in the box, and the marks update as you type. Where a note offers a change, preview it before you accept it.
+New to revising? Press **Simple view** for eight lenses in three steps, with three notes at a time. A link that ends in `#simple` opens the page that way.
+
 4. **Check your progress** in Before & after, which shows what your revising has changed, and copy the revised text when you are done.
 
 To find a lens, type part of its name in the box above the list. The **Guide** explains every lens on one searchable page: what it reads, what its marks mean, what the research says, where its limits are, and its sources in full.
@@ -155,6 +157,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Simple view, citations that are not words, a second reading, and more of Toulmin** (0.34.0). *Simple view* is for writers who are new to revising: eight lenses in three steps (is my point clear, does each sentence lead to the next, is each sentence easy to read), three notes at a time, an invented before-and-after example on the notes it fits, a goal for the sitting, and a school-essay example. It hides and changes no rule: the same text gets the same notes (Sommers 1980; [Kellogg 2008](https://doi.org/10.17239/jowr-2008.01.01.1); [Shute 2008](https://doi.org/10.3102/0034654307313795)). *Citations*: an author-and-year citation in parentheses, a year after a name, and a numbered citation in square brackets are now each one token that is not a word, so names and years no longer count towards sentence length or stand between a subject and its verb. *A second reading* (Subject → verb) lists the sentences where a second rule-based parser, [compromise](https://github.com/spencermountain/compromise), disagrees with the page's rules about the main verb, or finds a verb where the rules found none. *Toulmin layout*: with the meaning model on, candidates are ordered by closeness to the claim and a part written in your own words shows the nearest sentence of the draft; each rebuttal can be tied to the sentence that answers it; the layout is drawn as a diagram and can be copied as text. The card beside the introduction is marked by hand-drawn strokes ([Rough Notation](https://github.com/rough-stuff/rough-notation)).
 
 - **Numbers, three-noun runs and weak verbs, shown and not flagged** (0.33.0). Three counts taken from a study of 20 million abstracts in health and medicine ([Hohmann et al. 2025](https://doi.org/10.1007/s11192-025-05353-8)), each added to a lens that already exists and none of them making a note. *Dense phrases* underlines runs of exactly three nouns with dots (a note still starts at four). *Action in verbs* lists the sentences whose main verb is a form of "be" or "have" or a light verb, so that they can be read one after another. *Statistics reporting* gains "Where the numbers are", a count of the figures in digits in each sentence, and the Load map gains a Numbers row. The paper's averages (under 15 words per sentence, about 31 nouns and 11 verbs per 100 words) are shown beside the page's own counts as comparisons for one kind of text in one field, and are not given as ranges. The "About this project" button now matches the badges beside it, the box opens its Corrections section by saying what to expect of fixed rules, and every item in the Licence list links to the work it names.
 
@@ -267,7 +271,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 175 sources are listed at the foot of the application, 77 of them with a DOI and 64 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 176 sources are listed at the foot of the application, 77 of them with a DOI and 65 more with a link to the full text or the publisher's page.
 
 ---
 
@@ -331,4 +335,4 @@ The application includes the **New General Service List** and the **New Academic
 
 The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The **Academic Keyword List** (Paquot 2010) is included under **CC BY 4.0**. The Dale-Chall list, the excess-vocabulary list, the science-jargon list and the four lists from github.com/words (hedges, weasels, fillers, buzzwords) are MIT-licensed, and the syllable counts come from the CMU Pronouncing Dictionary (BSD 2-clause). The phrase bank in `data/phrases/` is under the **GNU GPL 3 or later**; it is kept apart from the application and loaded only on request. `data/lists/awl.json` and `data/lists/afl.json` hold the words and figures of the Academic Word List (Coxhead 2000) and the Academic Formulas List (Simpson-Vlach & Ellis 2010) and nothing else from those publications; no permission was sought for either, and `data/README.md` sets out the position taken and how to remove them. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
 
-The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT).
+The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT). The `lib/` folder holds **compromise** (MIT), and `src/vendor/` holds **Rough Notation** bundled with the parts of **Rough.js** it uses (MIT); [`lib/README.md`](lib/README.md) gives the versions.

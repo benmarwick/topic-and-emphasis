@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.34.0 (2026-11-26)
+
+- Simple view: a switch in the top row, kept in the browser, and opened by a link ending in `#simple`. Eight lenses (Claim tracer, Reverse outline, Topic position, Stress position, Subject → verb, Action in verbs, Clutter, Length & rhythm) in three steps. Every other lens, the research panels, the pictures, the fingerprints, the optional data and the Guide and Practise buttons are hidden. Notes are listed three at a time, in step order, with the chosen goal's step first. A note carries an invented before-and-after example where one fits its kind of problem. "Try the example" loads a paragraph from a school essay. The tutorial sets simple view aside while it runs. Opening a lens that simple view hides turns simple view off. The rule engine is unchanged and does not know about the view.
+- Engine: a citation in parentheses with authors and a year, a year in parentheses, and a numbered citation in square brackets are each read as one token that is not a word, as `\cite{}` and `@key` already were. Sentence lengths, words before the main verb and density no longer count the names and years, and a long citation no longer hides the main verb.
+- Subject → verb: "A second reading". compromise 14.21.0, a rule-based parser, is fetched from `lib/` the first time the lens opens. The panel lists the sentences where it and the rules disagree about the main verb and those where the rules found none. No note is made or removed.
+- Toulmin layout: with the meaning model on, the offered sentences are ordered by closeness to the claim, and a warrant, backing or rebuttal written in your own words shows the nearest sentence of the draft with its closeness. Each rebuttal takes the sentence that answers it. The layout is drawn as a diagram, and "Copy the layout as text" gives it as plain text.
+- The card beside the introduction: hand-drawn brackets, circle and underline (Rough Notation 0.5.1, carried in the page).
+- The "About this project" button sits on one line with the three badges.
+- Tests: `tests/simple.test.js`. The smoke test reads the page's own script, which is now the last of two.
+
 ## 0.33.0 (2026-11-26)
 
 - Dense phrases: runs of exactly three nouns are underlined with dots in the text and make no note; a note still starts at four. The measure reports how many there are. Hohmann et al. (2025) count a "noun chunk" from three nouns up.

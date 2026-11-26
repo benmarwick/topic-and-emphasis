@@ -44,7 +44,10 @@ def fragment():
     if os.path.exists(vpath):
         with io.open(vpath, encoding='utf-8') as f:
             valid = json.dumps(json.load(f), ensure_ascii=False, separators=(',', ':'))
-    return (head + body + '\n<script>\n/*ENGINE-START*/' + lists + engine +
+    vendor = ('\n<script>\n/*! Rough Notation 0.5.1 with the parts of Rough.js 4.6.6 it uses, (c) Preet Shihn, MIT licence, '
+              'github.com/rough-stuff/rough-notation. Bundled and minified; see lib/README.md. */\n' +
+              read(os.path.join('vendor', 'rough-notation.min.js')).strip() + '\n</script>')
+    return (head + body + vendor + '\n<script>\n/*ENGINE-START*/' + lists + engine +
             '/*ENGINE-END*/\nconst VALID=' + valid + ';\nconst APP=' + app_meta() + ';\nconst GSHOTS=' + guide_shots() + ';\n' + ui + '</script>\n')
 
 

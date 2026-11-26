@@ -6,7 +6,8 @@ const path = require('path');
 const assert = require('assert');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-const script = html.match(/<script>([\s\S]*)<\/script>/)[1];
+// the page's own script is the last one; a small bundled library sits in a script of its own before it
+const script = html.slice(html.lastIndexOf('<script>') + 8, html.lastIndexOf('</script>'));
 new Function(script); // throws on a syntax error
 
 const engineSrc = script.match(/\/\*ENGINE-START\*\/([\s\S]*)\/\*ENGINE-END\*\//)[1];

@@ -24,7 +24,8 @@ A.paras.forEach(p => assert.ok(p.s >= 0 && p.e <= DOC.length && p.e > p.s));
 assert.ok(/^library/.test(DOC.slice(A.paras.find(p => p.kind === 'code').s).split('\n')[1]));
 // inline maths and code are not words; a web address is one token; a cross-reference is not a citation
 const s2 = A.sents[1];
-assert.strictEqual(s2.nW, 7, 'words in sentence 2: ' + s2.T.filter(t => t.w).map(t => t.t).join(' '));
+// since 0.34.0 the year of a citation, as in "Smith (2019)", is not a word either
+assert.strictEqual(s2.nW, 6, 'words in sentence 2: ' + s2.T.filter(t => t.w).map(t => t.t).join(' '));
 assert.ok(A.sents[2].T.some(t => t.mask && /^https/.test(t.t)));
 assert.ok(!A.grid.terms.some(t => /beta|trust_score|lme4|lmer|alpha/.test(t.w)));
 // the reference list against the citations

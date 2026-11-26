@@ -29,7 +29,7 @@
   "need": "a draft you have revised",
   "file": "data/guide/rhythm-the-draft-as-a-line-over-the-starting-draft.webp",
   "w": 1044,
-  "h": 491
+  "h": 490
  },
  {
   "lens": "load",
@@ -37,7 +37,7 @@
   "need": "optional data, loaded from the lens",
   "file": "data/guide/load-sentence-length-against-the-age-at-which-words-are-learned.webp",
   "w": 1044,
-  "h": 678
+  "h": 677
  },
  {
   "lens": "load",
@@ -69,7 +69,7 @@
   "need": "the meaning model",
   "file": "data/guide/outline-sentences-that-sit-far-from-their-paragraph.webp",
   "w": 1044,
-  "h": 790
+  "h": 791
  },
  {
   "lens": "mviews",

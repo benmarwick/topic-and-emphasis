@@ -142,6 +142,11 @@
      "citation": "Gu, Z., Arawjo, I., Li, K., Kummerfeld, J. K., & Glassman, E. L. (2024). An AI-resilient text rendering technique for reading and skimming documents. In Proceedings of the CHI Conference on Human Factors in Computing Systems. [Grammar-preserving text saliency modulation. Link: the authors’ preprint.]",
      "doi": null,
      "url": "https://arxiv.org/abs/2401.10873"
+    },
+    {
+     "citation": "Kelly, S. (2026). compromise: Modest natural-language processing (Version 14.21.0) [Computer software].",
+     "doi": null,
+     "url": "https://github.com/spencermountain/compromise"
     }
    ]
   },
