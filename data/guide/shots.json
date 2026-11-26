@@ -1,0 +1,138 @@
+[
+ {
+  "lens": "compare",
+  "name": "Open notes by stage, start to now",
+  "need": "a draft you have revised",
+  "file": "data/guide/compare-open-notes-by-stage-start-to-now.webp",
+  "w": 1044,
+  "h": 296
+ },
+ {
+  "lens": "overview",
+  "name": "Four portraits: the start and now",
+  "need": "a draft you have revised",
+  "file": "data/guide/overview-four-portraits-the-start-and-now.webp",
+  "w": 1044,
+  "h": 252
+ },
+ {
+  "lens": "load",
+  "name": "Structure and vocabulary, with where each rewritten sentence started",
+  "need": "a draft you have revised",
+  "file": "data/guide/load-structure-and-vocabulary-with-where-each-rewritten-sentence-.webp",
+  "w": 1044,
+  "h": 677
+ },
+ {
+  "lens": "rhythm",
+  "name": "The draft as a line, over the starting draft",
+  "need": "a draft you have revised",
+  "file": "data/guide/rhythm-the-draft-as-a-line-over-the-starting-draft.webp",
+  "w": 1044,
+  "h": 475
+ },
+ {
+  "lens": "load",
+  "name": "Sentence length against the age at which words are learned",
+  "need": "optional data, loaded from the lens",
+  "file": "data/guide/load-sentence-length-against-the-age-at-which-words-are-learned.webp",
+  "w": 1044,
+  "h": 677
+ },
+ {
+  "lens": "load",
+  "name": "Typographic view: parts of speech",
+  "need": "optional data, loaded from the lens",
+  "file": "data/guide/load-typographic-view-parts-of-speech.webp",
+  "w": 1044,
+  "h": 618
+ },
+ {
+  "lens": "load",
+  "name": "Typographic view: abstract and concrete words",
+  "need": "optional data, loaded from the lens",
+  "file": "data/guide/load-typographic-view-abstract-and-concrete-words.webp",
+  "w": 1044,
+  "h": 618
+ },
+ {
+  "lens": "flow",
+  "name": "Old → new by meaning: the ribbon",
+  "need": "the meaning model",
+  "file": "data/guide/flow-old--new-by-meaning-the-ribbon.webp",
+  "w": 1044,
+  "h": 793
+ },
+ {
+  "lens": "outline",
+  "name": "Sentences that sit far from their paragraph",
+  "need": "the meaning model",
+  "file": "data/guide/outline-sentences-that-sit-far-from-their-paragraph.webp",
+  "w": 1044,
+  "h": 775
+ },
+ {
+  "lens": "mviews",
+  "name": "Meaning views: Thread",
+  "need": "the meaning model",
+  "file": "data/guide/mviews-meaning-views-thread.webp",
+  "w": 1044,
+  "h": 481
+ },
+ {
+  "lens": "mviews",
+  "name": "Meaning views: Quilt",
+  "need": "the meaning model",
+  "file": "data/guide/mviews-meaning-views-quilt.webp",
+  "w": 1044,
+  "h": 951
+ },
+ {
+  "lens": "mviews",
+  "name": "Meaning views: Topics",
+  "need": "the meaning model",
+  "file": "data/guide/mviews-meaning-views-topics.webp",
+  "w": 1044,
+  "h": 577
+ },
+ {
+  "lens": "mviews",
+  "name": "Meaning views: Map",
+  "need": "the meaning model",
+  "file": "data/guide/mviews-meaning-views-map.webp",
+  "w": 1044,
+  "h": 785
+ },
+ {
+  "lens": "mviews",
+  "name": "Meaning views: Abstract and ending",
+  "need": "the meaning model",
+  "file": "data/guide/mviews-meaning-views-abstract-and-ending.webp",
+  "w": 1044,
+  "h": 782
+ },
+ {
+  "lens": "load",
+  "name": "Where the load falls, with two rows from the meaning model",
+  "need": "the meaning model",
+  "file": "data/guide/load-where-the-load-falls-with-two-rows-from-the-meaning-model.webp",
+  "w": 1044,
+  "h": 978
+ },
+ {
+  "lens": "load",
+  "name": "Typographic view: closeness to your claim",
+  "need": "the meaning model",
+  "file": "data/guide/load-typographic-view-closeness-to-your-claim.webp",
+  "w": 1044,
+  "h": 618
+ },
+ {
+  "lens": "sv",
+  "name": "Trunk view: what the sentence can lose",
+  "need": "the meaning model",
+  "file": "data/guide/sv-trunk-view-what-the-sentence-can-lose.webp",
+  "w": 1044,
+  "h": 618
+ }
+]

@@ -104,3 +104,10 @@ The Vocabulary level lens and the Signal phrases lens also accept a pasted list,
 |---|---|
 | Word list | One headword to a line. A family is `headword: member, member`. A line `Sublist 3`, or a number from 1 to 10 on a word's line, gives the sublist. |
 | Formulas | One formula to a line, then its numbers, separated by commas, tabs or two or more spaces. The last number is read as the formula teaching worth, and the two before it as frequency per million in speech and in writing. A line `Core`, `Written` or `Spoken`, or that word in a column, gives the list. A word in brackets is optional. |
+
+## `guide/` — screenshots for the Guide
+
+Seventeen WebP screenshots of the application's own pictures, made from an invented example draft by
+`tools/make_guide_shots.py`, with a manifest (`shots.json`) that `build.py` reads. They show the pictures
+that need a revised draft, optional data or the meaning model, which the Guide cannot draw when it opens.
+They are part of the application and are covered by its MIT licence.

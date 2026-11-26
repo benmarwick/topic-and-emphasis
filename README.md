@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.30.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.31.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.30.0},
+  version = {0.31.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -156,6 +156,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **A tutorial that dims the rest, more from the meaning model, and Guide screenshots** (0.31.0). While the **Tutorial** runs, everything that is not in play for the step is faded. The **meaning model** (optional, AI, no notes) now also adds two rows to the Load map (jump in meaning, far from your claim), two mappings to the typographic view (closeness to your claim, jumps in meaning), and a list in Clutter of sentences standing apart that are close enough in meaning to be one point made twice. The **Guide** shows 17 more pictures as screenshots, each labelled with what it needs: a revised draft, optional data, or the meaning model (`tools/make_guide_shots.py` regenerates them). In the Load map the typographic controls now sit directly above the text, and *Flip to plain text* is a link in the row above it. Ten of the **quoted sentences** beside the title are by women: Wollstonecraft, Austen, Mary Shelley, George Eliot, Alcott, Dickinson and Woolf.
+
 - **Pictures in the Guide, a larger link ladder, quoted cards and an evidence-based timer** (0.30.0). The **Guide** now says which lenses draw the draft (16 of 31, in 29 pictures) and shows each picture as a small example, drawn by the page's own code from an example draft. The **Link ladder** in Old → new runs the full width, with larger dots and rings, a halo round each, a tooltip on each that names the word, and two lists under it: sentences whose link comes late, and sentences into which no word carries over. **Subject → verb** now marks the subject with a single underline and the main verb with a double one, and each tooltip names the other. **Research measure** boxes start folded, with their headline figure showing. The **Focus timer** offers patterns that have been studied (12 + 3, 25 + 5, 50 + 10, and an open-ended clock with a break sized to the time worked), a twenty-minute break after four rounds, and a summary of the evidence ([Biwer et al. 2023](https://doi.org/10.1111/bjep.12593); [Smits et al. 2025](https://doi.org/10.3390/bs15070861); [Albulescu et al. 2022](https://doi.org/10.1371/journal.pone.0272460); [Sword 2016](https://doi.org/10.1080/1360144X.2016.1210153); Cirillo 2018). Sixteen of the **sentences beside the title** are now quoted word for word from public-domain advice on writing (Strunk 1918, Spencer 1852, Bacon 1625, Schopenhauer 1851, Twain 1894, Carroll 1865, Pope 1711, Jonson 1641, Quiller-Couch 1916), each checked against the Project Gutenberg text and linked to it. Every tooltip that shows one of the writer's sentences now sets it in quotation marks, on a line of its own.
 
 - **A longer tutorial, a focus timer and live counts** (0.29.0). The built-in example now has seven sentences and five notes, and the **Tutorial** button walks through clearing all five: two by a one-tap change, two by rewriting, and one by deciding that the sentence is right as it stands. Each step has a *Show me* button, and a draft of your own is set aside first and brought back at the end. The **Focus timer** counts down 10, 15, 25 or 45 minutes in the corner of the page, then reports what changed and offers a five-minute break. The box where a draft is typed shows **live counts**: words, sentences, paragraphs, words per sentence, the longest sentence, sentences of 30 words or more, the longest wait for a verb, and the notes waiting. *Clean view* and *Fingerprints* now sit with the other buttons above the text, and fingerprints show in every lens that shows the text. The Research profile starts folded. The sentences beside the title each state an idea from a source the page cites, in the page's own words.
@@ -261,7 +263,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 163 sources are listed at the foot of the application, 75 of them with a DOI and 55 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 172 sources are listed at the foot of the application, 75 of them with a DOI and 64 more with a link to the full text or the publisher's page.
 
 ---
 

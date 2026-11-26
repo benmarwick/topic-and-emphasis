@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.31.0 (2026-11-26)
+
+- Tutorial: while it runs, the header, the lens list, the notes column, the panels and the buttons are faded to about a seventh, and so are the sentences and the parts of the rewrite box that the step does not use. Nothing is switched off, and the fade lifts at the last step.
+- Meaning model, reviewed lens by lens. Added: two rows in the Load map ("Jump in meaning", "Far from your claim"), two typographic mappings ("Closeness to your claim", "Jumps in meaning"), and in Clutter the pairs of sentences standing apart that score 0.72 or more, as candidates for a point made twice. All are counts and pictures; none makes a note. Tried and left out: the closest pair of paragraphs as a candidate for merging (an introduction and a discussion score high for good reason).
+- Guide: 17 screenshots of pictures the example cannot draw by itself, each labelled with what it needs (a revised draft, optional data, the meaning model). `tools/make_guide_shots.py` makes them from the real page and writes `data/guide/shots.json`, which `build.py` reads.
+- Load map: "In the text" is now the last panel, with its explanation above its controls, so that the mapping buttons sit directly above the text. "Flip to plain text" is a link in the row of buttons above the text.
+- Stage panels: the text no longer touches the coloured rule on the left.
+- Header cards: ten more quotations, all by women and all checked against the source text: Wollstonecraft (two), George Eliot (three), Austen, Mary Shelley, Alcott, Dickinson and Woolf. Nine works added to the sources.
+
 ## 0.30.0 (2026-11-26)
 
 - Guide: a section "Where the pictures are" lists the 16 lenses that draw the draft and counts their 29 pictures; each lens entry shows its pictures as half-size examples. The examples are drawn by the lens code itself from a fixed example draft (`guidePics`), so they cannot drift from the real thing. Overview and Load map now have Guide entries. Pictures that need a revised draft, loaded data or the meaning model are not shown as examples.

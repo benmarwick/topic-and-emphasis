@@ -987,4 +987,18 @@ details.panel.res{display:block}details.panel>summary{cursor:pointer;list-style-
 .gpic{font:500 10.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--teal);border:1px solid currentColor;border-radius:3px;padding:1px 6px;vertical-align:middle;white-space:nowrap}
 
 .pomobox details p{margin-top:7px}.pomobox a{color:var(--blue)}.pomobox details summary{cursor:pointer;font-size:13.5px;color:var(--ink)}
+
+/* 0.31.0 */
+.panel.stagebar,.panel.stagenudge{padding-left:14px}
+.tools .tyflip{font-size:13px;padding:4px 2px;margin-left:6px}
+/* the tutorial: whatever is not in play for the step is faded. Nothing is switched off, so the reader can still leave the path. */
+body[data-tour="sent"] .top,body[data-tour="wb"] .top,body[data-tour="sent"] .rail,body[data-tour="wb"] .rail,body[data-tour="sent"] .notes,body[data-tour="wb"] .notes,body[data-tour="sent"] .lenscard,body[data-tour="wb"] .lenscard,body[data-tour="sent"] .stripwrap,body[data-tour="wb"] .stripwrap,body[data-tour="sent"] #extra,body[data-tour="wb"] #extra,body[data-tour="sent"] #startBox,body[data-tour="wb"] #startBox,body[data-tour="sent"] #tools,body[data-tour="wb"] #tools,body[data-tour="sent"] .foot,body[data-tour="wb"] .foot,body[data-tour="sent"] .sampletag,body[data-tour="wb"] .sampletag{opacity:.14}
+body[data-tour="sent"] #ms .para .sent:not(.tour-target),body[data-tour="wb"] #ms .para .sent:not(.sel),body[data-tour="sent"] #ms .ktag,body[data-tour="sent"] #wb{opacity:.22}
+body[data-tour="wb"] #wb>:not(:has(.tour-target)):not(.tour-target):not(.wbhead):not(.guide){opacity:.22}
+body[data-tour="wb"] #pNotes>li:not(:has(.tour-target)):not(.tour-target),body[data-tour="wb"] #pNotes .note:not(:has(.tour-target)):not(.tour-target){opacity:.22}
+body[data-tour] .top,body[data-tour] .rail,body[data-tour] .notes,body[data-tour] .lenscard,body[data-tour] .stripwrap,body[data-tour] #extra,body[data-tour] #startBox,body[data-tour] #tools,body[data-tour] .foot,body[data-tour] #ms .sent,body[data-tour] #wb>*,body[data-tour] #wb{transition:opacity .35s ease}
+body[data-tour="sent"] .top:hover,body[data-tour="wb"] .top:hover,body[data-tour="sent"] .rail:hover,body[data-tour="wb"] .rail:hover,body[data-tour="sent"] .notes:hover,body[data-tour="wb"] .notes:hover{opacity:.6}
+
+.gshot-in{flex:1 1 auto;max-height:280px;overflow:hidden;background:#E8ECEB;-webkit-mask-image:linear-gradient(#000 calc(100% - 22px),transparent);mask-image:linear-gradient(#000 calc(100% - 22px),transparent)}.gviz.shot img{display:block;width:100%;height:auto}
+.gneed{display:inline-block;font:500 10.5px var(--f-mono);letter-spacing:.04em;color:var(--violet);border:1px solid currentColor;border-radius:3px;padding:0 5px;margin-left:4px;white-space:nowrap}
 </style>

@@ -45,7 +45,16 @@ def fragment():
         with io.open(vpath, encoding='utf-8') as f:
             valid = json.dumps(json.load(f), ensure_ascii=False, separators=(',', ':'))
     return (head + body + '\n<script>\n/*ENGINE-START*/' + lists + engine +
-            '/*ENGINE-END*/\nconst VALID=' + valid + ';\nconst APP=' + app_meta() + ';\n' + ui + '</script>\n')
+            '/*ENGINE-END*/\nconst VALID=' + valid + ';\nconst APP=' + app_meta() + ';\nconst GSHOTS=' + guide_shots() + ';\n' + ui + '</script>\n')
+
+
+def guide_shots():
+    """The screenshots that the Guide shows for pictures its example cannot draw (tools/make_guide_shots.py)."""
+    p = os.path.join(ROOT, 'data', 'guide', 'shots.json')
+    if not os.path.exists(p):
+        return '[]'
+    with io.open(p, encoding='utf-8') as f:
+        return json.dumps(json.load(f), ensure_ascii=False, separators=(',', ':'))
 
 
 def app_meta():

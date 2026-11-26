@@ -29,12 +29,14 @@ assert.deepStrictEqual(notes(t), ['voice:5'], 'after the tutorial\'s rewrites: '
 assert.ok(ui.includes("tourEdit(f,/, which ran for two years,/,'')"), 'the subject-verb step has changed');
 assert.ok(ui.includes('Within a year, however, those who joined a group recovered most of their lost contact.'), 'the stress step has changed');
 
-// 4 the header cards: sixteen quotations and twelve paraphrases, each with a source in the reference list.
+// 4 the header cards: twenty-six quotations and twelve paraphrases, each with a source in the reference list.
 //   A paraphrase must raise no note. A quotation is left as its author wrote it, and its source must have a link.
 const cards = [...ui.slice(ui.indexOf('const DGS=['), ui.indexOf('function dgShow')).matchAll(/\['((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','([a-z0-9]+)','((?:[^'\\]|\\.)*)'(,1)?\]/g)];
 const strip = s => s.replace(/[{}\[\]]/g, '');
 const quoted = cards.filter(c => c[7]), own = cards.filter(c => !c[7]);
-assert.strictEqual(quoted.length, 16, 'quoted cards: ' + quoted.length);
+assert.strictEqual(quoted.length, 26, 'quoted cards: ' + quoted.length);
+const WOMEN = ['wollstonecraft92', 'eliot72', 'eliot79', 'eliot59', 'alcott68', 'austen13', 'dickinson96', 'shelley31', 'woolf25'];
+assert.ok(quoted.filter(c => WOMEN.includes(c[5])).length >= 10, 'fewer than ten quoted cards by women');
 assert.strictEqual(own.length, 12, 'paraphrased cards: ' + own.length);
 for (const c of cards) {
   const ref = ui.match(new RegExp("\\['" + c[5] + "','[^\\n]*?','([^']*)','([^']*)'\\]"));

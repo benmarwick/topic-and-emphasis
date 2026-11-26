@@ -1058,7 +1058,7 @@
     "what_the_research_found": "Coh-Metrix reports negation density among its measures of syntax (McNamara et al. 2014). One negative is plain enough. Two in a clause make the reader reverse the meaning twice, and those are the ones this lens puts a note on.",
     "how_this_count_differs": "It counts not, no, never, neither, none, nothing, without, cannot and contractions in n’t. Negative prefixes such as un- and in- are seen only in a fixed list of pairs like “not uncommon”."
    },
-   "with_meaning_model": null,
+   "with_meaning_model": "The pairs of sentences that are not neighbours and are closest in meaning, as candidates for a point made twice. The model scores a statement and its denial as close, so each pair needs reading.",
    "limits": "Stock phrases come from a fixed list. A phrase on the list is sometimes the right one.",
    "sources": [
     {
