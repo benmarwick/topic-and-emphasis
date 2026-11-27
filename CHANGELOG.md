@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.36.0 (2026-11-26)
+
+- Topic grid, meaning model: "meaning steps". One dot for each sentence at its closeness in meaning to the sentence before, on a stem from the 75th-percentile level of all sentence pairs in the draft, with a band down to the median pair. Dots above the line are the sentences the count calls closer than most pairs; a ring is one of those that repeats no word. Gaps are paragraph breaks.
+- Load map, "Structure and vocabulary": dots are larger and their size shows a third measure, words before the main verb (lexical density when the wait for the verb is on the upright scale). The value is in each dot's tooltip and the range is in the key.
+- Load map, "In the text": pressing a button keeps that button where it was on the screen. Before, the pictures above folded away and the page was left showing something further down.
+- Signal phrases: the Academic Formulas List panel defines its core, written and spoken lists, with an example of each.
+- Simple view: on devices with a pointer, the notes beside the text are faint until pointed at, focused or selected.
+
 ## 0.35.0 (2026-11-26)
 
 - Topic grid: "Paragraph ladder". One line for each paragraph on one scale, the first sentence marked, a gap at each sentence break, a dot for each content word shared with the paragraph before (blue when it is in the first sentence), a ring where nothing carries over, and lists of the paragraphs whose join comes late or not at all. A cold start under a new heading is counted apart.

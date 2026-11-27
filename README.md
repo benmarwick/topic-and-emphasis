@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.35.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.36.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.35.0},
+  version = {0.36.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -157,6 +157,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Meaning steps, a third variable on the scatter, and quieter notes in simple view** (0.36.0). With the meaning model on, Topic grid draws each sentence at its closeness to the one before, as a stem from the level that three-quarters of all sentence pairs in the draft fall below, so the count "closer than most pairs" can be seen sentence by sentence. In the Load map, the dots of *Structure and vocabulary* are larger and sized by a third measure (words before the main verb, or lexical density when the wait is on the upright scale). Pressing a button under *In the text* no longer moves the page away from the text. The Academic Formulas List panel says what its three lists are. In simple view the notes are faint until pointed at.
 
 - **Paragraph ladder, and flying words in simple view** (0.35.0). *Paragraph ladder* (Topic grid) draws what each paragraph carries over from the one before: one line a paragraph, to length on one scale, with its first sentence marked, a dot for each content word the paragraph before also used, and a ring where nothing carries over. It pictures the paragraph-overlap count, the one overlap measure that went with better-rated essays ([Crossley, Kyle & McNamara 2016](https://doi.org/10.3758/s13428-015-0651-7)). The Link ladder in Old → new now sits in a card like the boxes round it. In *Simple view*, the Guide and Practise buttons are back (the Guide covers the eight lenses), and when a rewrite clears a note the words that were cut fly off the page ([canvas-confetti](https://github.com/catdad/canvas-confetti)); this can be switched off and is skipped under reduced motion.
 

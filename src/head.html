@@ -1051,4 +1051,11 @@ body[data-simpleview]:not([data-lens="rhythm"]) .stripwrap .strip{display:none}
 
 /* 0.35.0: paragraph ladder */
 .pl-tk{stroke:var(--sheet);stroke-width:2.2}.pl-c{fill:var(--sheet);stroke:var(--rose);stroke-width:1.8}
+
+/* 0.36.0: meaning steps; simple view fades the notes until they are pointed at; larger scatter dots */
+.panel figure.ms,figure.ms{margin:8px 0 2px;padding:0;background:none;border:0;box-shadow:none;border-radius:0}.ms svg{width:100%;height:auto;display:block;max-width:760px}.ms-band{fill:color-mix(in srgb,var(--ink3) 13%,transparent)}.ms-q{stroke:var(--ink2);stroke-width:1}.ms-m{stroke:var(--ink3);stroke-width:.8;stroke-dasharray:3 3}
+.ms-t{font:400 9px var(--f-mono);fill:var(--ink3)}.ms-st{stroke:var(--ink3);stroke-width:1.2}.ms-st.close,.ms-st.only{stroke:var(--teal);stroke-width:1.6}.ms-d{fill:var(--ink3)}.ms-d.close{fill:var(--teal)}.ms-d.only{fill:var(--sheet);stroke:var(--teal);stroke-width:1.8}
+.ms-hit{fill:transparent;cursor:pointer}.ms-hit:hover{fill:color-mix(in srgb,var(--teal) 12%,transparent)}.ms-kc{color:var(--teal);font-weight:600}
+:root:not(.still) .vizin .ms-d{animation:vFade .4s ease-out both;animation-delay:var(--d,0ms)}
+@media (hover:hover){body[data-simpleview] #noteList>li,body[data-simpleview] #settled{opacity:.22;transition:opacity .18s}body[data-simpleview] #noteList>li:hover,body[data-simpleview] #noteList>li:focus-within,body[data-simpleview] #noteList>li:has(.hot),body[data-simpleview] #noteList>li.hot,body[data-simpleview] #settled:hover,body[data-simpleview] #settled:focus-within{opacity:1}}
 </style>
