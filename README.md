@@ -20,7 +20,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.44.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.45.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -29,7 +29,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.44.0},
+  version = {0.45.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -160,7 +160,9 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
-- **Charged words and metadiscourse by kind, as optional data** (0.44.0). In **Claim strength**, one press loads ratings of valence, arousal and dominance for 13,915 words ([Warriner et al. 2013](https://doi.org/10.3758/s13428-012-0314-x)) and counts the words of the draft that readers rate as strongly pleasant, unpleasant or arousing. If you have a copy of the NRC VAD Lexicon ([Mohammad 2025](https://arxiv.org/abs/2503.23547)), you can choose the file and the page uses it instead; that lexicon may not be redistributed, so it is not in this repository. In **Hedging**, one press loads a starter set of 106 cues under the ten categories of Hyland (2005), from [CorpusMind](https://github.com/waleedmandour/CorpusMind) (AGPL 3, kept apart in `data/lists/`), and counts each kind in every 1,000 words. Neither makes a note.
+- **Four more optional lists, and Hyland's own metadiscourse items** (0.45.0). Each loads at one press, counts only, and makes no note. **Hedging** now counts 478 items from the appendix to Hyland (2005) in his ten categories, in place of the earlier starter set. **Clutter** lists the words of the draft that the US plain-language guidelines (CC0) pair with a plainer one, and **Action in verbs** lists phrases that hide a verb. **Signal phrases** counts connectives by the relation they mark, from [en_dimlex](https://github.com/discourse-lab/en_dimlex) (CC BY-NC-SA 4.0). **Old → new** tells sentences that open “This finding…” from those that open with a bare “This…”, using a list of 959 shell nouns.
+
+- **Charged words and metadiscourse by kind, as optional data** (0.44.0). In **Claim strength**, one press loads ratings of valence, arousal and dominance for 13,915 words ([Warriner et al. 2013](https://doi.org/10.3758/s13428-012-0314-x)) and counts the words of the draft that readers rate as strongly pleasant, unpleasant or arousing. If you have a copy of the NRC VAD Lexicon ([Mohammad 2025](https://arxiv.org/abs/2503.23547)), you can choose the file and the page uses it instead; that lexicon may not be redistributed, so it is not in this repository. In **Hedging**, one press loads a list of metadiscourse items in the ten categories of Hyland (2005) and counts each kind in every 1,000 words. Neither makes a note.
 
 - **Section context, an instructor page, and links that open a step** (0.43.0). **Section context** finds the Abstract, Introduction or Literature review, Methods, Results and Discussion from your headings, counts what each is doing, and adds a line to the notes whose advice depends on the section (a passive in the Methods is usual; a hedge in the Discussion often belongs). It only annotates: no note is added or removed. The **Guide** has a one-page section for instructors, and adding `#step1`, `#step2`, `#step3` or `#tutorial` to the address opens the page already set up. With the meaning model on, the trial paragraph order in Reverse outline also shows closeness in meaning at each join.
 

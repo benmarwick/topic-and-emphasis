@@ -10,15 +10,31 @@ for (const r of rows) assert.ok(r.length === 4 && r[0] === r[0].toLowerCase() &&
 const get = w => rows.find(r => r[0] === w).slice(1).map(Number);
 assert.ok(get('disaster')[0] < 3 && get('happy')[0] > 7, 'the valence scale is not the published one');
 
-// 2 the cue list: Hyland's ten categories, strings only, with its source and licence stated
-const J = JSON.parse(read('data/lists/metadiscourse_starter.json'));
+// 2 the metadiscourse list: Hyland's ten categories, strings only
+const J = JSON.parse(read('data/lists/metadiscourse_hyland2005.json'));
 const cats = [...Object.keys(J.interactive), ...Object.keys(J.interactional)];
 assert.deepStrictEqual(cats, ['transitions', 'frame_markers', 'endophoric_markers', 'evidentials', 'code_glosses', 'hedges', 'boosters', 'attitude_markers', 'self_mentions', 'engagement_markers']);
 const cues = cats.flatMap(c => (J.interactive[c] || J.interactional[c]));
-assert.strictEqual(cues.length, 106);
-assert.ok(cues.every(c => typeof c === 'string' && /^[A-Za-z][A-Za-z .'-]*$/.test(c) && c.length < 40), 'a cue is not a plain string: ' + cues.filter(c => !/^[A-Za-z][A-Za-z .'-]*$/.test(c)));
-assert.ok(/AGPL/.test(J.licence) && /CorpusMind/.test(J.read_from), 'the cue list does not state its source and licence');
+assert.ok(cues.length >= 450 && cues.length <= 520, 'items: ' + cues.length);
+assert.ok(cues.every(c => typeof c === 'string' && /^[a-z(][a-z .'’()-]*$/.test(c) && c.length < 45), 'an item is not a plain string');
+assert.ok(/Hyland/.test(J.reference) && !fs.existsSync(path.join(ROOT, 'data/lists/metadiscourse_starter.json')), 'the starter set is still there');
 for (const c of cats) assert.ok(ui.includes(c + ':['), 'no name for the category ' + c);
+// no wildcard: an item is matched whole
+assert.ok(!/metadiscourse[\s\S]{0,400}\\w\*/.test(ui.slice(ui.indexOf('async function mdLoad'), ui.indexOf('async function mdLoad') + 900)), 'a wildcard has crept into the matching of items');
+
+// 2b the three other optional lists
+const P = JSON.parse(read('data/lists/plain_words.json'));
+assert.ok(P.simple.length >= 300 && P.hidden.length >= 140 && [...P.simple, ...P.hidden].every(x => x.length === 2 && x[0] && x[1]), 'the plain-language pairs are not pairs');
+for (const [p] of [...P.simple, ...P.hidden]) new RegExp('(?:' + p + ')', 'i');
+assert.ok(P.simple.some(x => /utilize/.test(x[0]) && x[1] === 'use') && P.hidden.some(x => /a decision/.test(x[0]) && x[1] === 'decide'));
+const Cn = JSON.parse(read('data/lists/connectives_en_dimlex.json'));
+assert.strictEqual(Cn.items.length, 142);
+assert.ok(/BY-NC-SA/.test(Cn.licence) && Cn.items.every(x => x[1].length && x[1].every(s => ['Comparison', 'Contingency', 'Expansion', 'Temporal'].includes(s))), 'a connective has no sense');
+assert.ok(Cn.items.find(x => x[0] === 'however')[1][0] === 'Comparison' && Cn.items.find(x => x[0] === 'with')[2] === 1 && Cn.items.find(x => x[0] === 'because')[2] === 0);
+const Sh = JSON.parse(read('data/lists/shell_nouns.json'));
+assert.strictEqual(Sh.items.length, 959);
+assert.ok(Sh.items.every(x => /^[a-z-]+$/.test(x[0]) && x[1] >= 0 && x[1] <= 1), 'a shell noun has no share');
+assert.ok(!/OPT\.|plain_words|en_dimlex|shell_nouns|hyland2005/.test(eng), 'the rule engine refers to the optional lists');
 
 // 3 the NRC VAD Lexicon may not be passed on: it is nowhere in the repository, and the page credits it when a copy is supplied
 const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.name === '.git' || e.name === 'node_modules' ? [] : e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]);
@@ -38,4 +54,4 @@ assert.ok(VADP > 0 && VADP <= 0.1);
 
 // 5 counts only: the rule engine knows neither list
 assert.ok(!/\bVAD\b|vadScan|metadiscourse_starter/.test(eng), 'the rule engine refers to the optional lists');
-console.log('vad: ' + rows.length + ' rated lemmas, ' + cues.length + ' cues in ' + cats.length + ' categories, and no copy of the NRC lexicon in the repository');
+console.log('vad: ' + rows.length + ' rated lemmas, ' + cues.length + ' metadiscourse items, ' + (P.simple.length + P.hidden.length) + ' plain-language pairs, ' + Cn.items.length + ' connectives, ' + Sh.items.length + ' shell nouns, and no copy of the NRC lexicon in the repository');

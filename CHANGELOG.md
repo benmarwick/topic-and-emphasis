@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.45.0 (2026-11-27)
+
+- Hedging, “Metadiscourse by kind”: the starter set of 106 cues is replaced by 478 items from the appendix to Hyland (2005), in his ten categories, read from the book by script (strings and category names only). The CorpusMind file and its AGPL licence are gone from the repository. An item is matched whole and by form, with no wildcard: a bracketed word is optional and a lone “x” stands for one word. The panel says that Hyland checked each item in context by hand and the page cannot.
+- Clutter, “Plainer words · optional data”: 332 words and phrases with a plainer substitute, from the United States government's plain-language guidelines (CC0), by way of vale-cli/PlainLanguage (MIT). Action in verbs, “Hidden verbs · optional data”: 148 phrases that hide a verb, with the verb. Both list what is in the draft, with the sentences.
+- Signal phrases, “Connectives by sense · optional data”: the 142 connectives of en_dimlex (Das et al. 2018; CC BY-NC-SA 4.0, kept apart), counted per 1,000 words under comparison, contingency, expansion and time, by section where sections were found. Eight of them that are more often prepositions or join two words (“with”, “as”, “and” and others) are set aside and listed under the table. That choice is this page's.
+- Old → new, “Pointing back with a noun · optional data”: 959 shell nouns (ycd2016/shellnouns; no licence stated). Counts the sentences that open with “this” or “these” and a shell noun against those that open with a bare “this” and a verb.
+- All five load at a press, are counts only, make no note and leave the receipt unchanged. Tests cover each file.
+- Not done from the plan: the two-word expressions in the concreteness norms, and irregular participles for Voice. The second would change which passives are found, and so the notes.
+
 ## 0.44.0 (2026-11-26)
 
 - Claim strength: “Charged words · optional data”. One press loads the ratings of valence, arousal and dominance for 13,915 words (Warriner, Kuperman & Brysbaert 2013), kept in `data/norms/`. The panel counts the words of the draft rated as strongly pleasant, unpleasant or arousing, lists them with their ratings, names the sentences with two or more, and gives the rate by section where Section context has found sections. A word is charged when its valence is in the lowest or highest 4% of the list, or its arousal in the highest 4%; the share is a working value. A capitalised word inside a sentence is taken for a name and left out.
