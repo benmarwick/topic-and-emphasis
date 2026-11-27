@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.46.3 (2026-11-27)
+
+- README: a Gallery of twelve pictures in four rows of three: Skeleton read, Topic grid, Paragraph ladder; Where the load falls, Abstraction heatmap, Abstract or concrete, calm or charged; Toulmin layout, Hedges against boosters, The draft as a line; Where each rewritten sentence started, and the Quilt and the Map of the meaning views. Each is captured from the real page at three times the screen's resolution, trimmed to what is drawn and set on a canvas of 1600 x 1200, and each has an alternative text of 460 to 880 characters that gives the values in the picture. `tools/make_gallery.py` makes them (`docs/gallery/`).
+- Three of the twelve use the Guide's example after a change, and the README says which: four confident words added for Hedges against boosters, and five sentences rewritten for the two pictures of a revision.
+- README: the animation of the tutorial holds every step for at least 3.2 seconds, and steps with a task for 4 seconds. It was 1.75 to 2.4 seconds. The animation now runs for 96 seconds; the file is 2.5 MB, as before.
+- A new test, `tests/readme.test.js`: the gallery is four rows of three, every picture exists at the stated size, no two alternative texts are the same or shorter than 300 characters, and no step of the animation is shorter than three seconds.
+- The page itself is unchanged apart from its version number.
+
 ## 0.46.2 (2026-11-27)
 
 - Every card above the text now has one format: a tinted ground, a rule down the left edge and the same padding. An audit of all the lenses on the example draft found two formats before the change, with 34 cards as bare text and 75 as tinted cards; “Wording against evidence” was one of the bare ones. After it, all 109 share one. The stage notices keep their own smaller format, on purpose.

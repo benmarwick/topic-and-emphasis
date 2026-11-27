@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """An animated GIF of the tutorial, for the README: every step of the first-visit tutorial, walked by pressing
-the page's own buttons, at laptop proportions (1280 x 800). Two frames a step, so that the pulse shows.
+the page's own buttons, at laptop proportions (1280 x 800). Two frames a step, so that the pulse shows, and
+every step stays on screen for at least three seconds (PAUSE), longer where there is a task to read.
 
     python3 build.py
     python3 -m http.server 8767 &
@@ -13,7 +14,8 @@ from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 URL = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:8767/index.html'
-W, H, HOLD = 1280, 800, 0.75
+W, H, PAUSE = 1280, 800, 3.2
+HOLD = PAUSE / 2
 tmp = pathlib.Path(tempfile.mkdtemp())
 frames = []
 
@@ -36,7 +38,7 @@ with sync_playwright() as p:
         pg.wait_for_timeout(1050)
         st = pg.evaluate("(()=>{const S=state.tour.step||{},q=s=>!!document.querySelector(s);return {kind:S.kind,pulse:S.pulse||'',pv:q('#pNotes [data-pvgo]'),fix:q('#pNotes [data-fix]'),next:!document.querySelector('#tourNext').hidden}})()")
         pg.mouse.move(W - 4, H - 4)
-        shot(pg); pg.wait_for_timeout(620); shot(pg, HOLD + (0.9 if st['kind'] in ('task', 'beat', 'fin') else 0.25))
+        shot(pg); pg.wait_for_timeout(620); shot(pg, HOLD + (0.8 if st['kind'] in ('task', 'beat', 'fin') else 0))
         if st['next']:
             pg.wait_for_timeout(300); pg.click('#tourNext')
         elif st['kind'] == 'tap':
@@ -47,7 +49,7 @@ with sync_playwright() as p:
             pg.click('#pNotes [data-fix]')
         else:
             pg.click('#tourShow')
-    pg.wait_for_timeout(900); pg.mouse.move(W - 4, H - 4); shot(pg, 2.5)
+    pg.wait_for_timeout(900); pg.mouse.move(W - 4, H - 4); shot(pg, 4.0)
     b.close()
 
 lst = tmp / 'list.txt'
@@ -56,4 +58,5 @@ out = ROOT / 'docs' / 'tutorial.gif'
 pal = tmp / 'pal.png'
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', str(lst), '-vf', 'palettegen=max_colors=128:stats_mode=diff', str(pal)], check=True)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', str(lst), '-i', str(pal), '-lavfi', 'paletteuse=dither=none:diff_mode=rectangle', '-fps_mode', 'vfr', '-loop', '0', str(out)], check=True)
-print('wrote', out, len(frames), 'frames', round(out.stat().st_size / 1e6, 2), 'MB', round(sum(d for _, d in frames)), 's')
+per = [frames[i][1] + frames[i + 1][1] for i in range(0, len(frames) - 1, 2)]
+print('wrote', out, len(frames), 'frames', round(out.stat().st_size / 1e6, 2), 'MB', round(sum(d for _, d in frames)), 's · shortest step', round(min(per), 2), 's')
