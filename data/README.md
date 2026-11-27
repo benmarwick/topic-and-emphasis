@@ -111,3 +111,14 @@ Seventeen WebP screenshots of the application's own pictures, made from an inven
 `tools/make_guide_shots.py`, with a manifest (`shots.json`) that `build.py` reads. They show the pictures
 that need a revised draft, optional data or the meaning model, which the Guide cannot draw when it opens.
 They are part of the application and are covered by its MIT licence.
+
+## Added in 0.44.0
+
+| File | What it is | Source | Licence |
+|---|---|---|---|
+| `norms/vad_Warriner_et_al_2013.tsv` | Mean ratings of valence, arousal and dominance for 13,915 English lemmas, on scales from 1 to 9 (Warriner, Kuperman & Brysbaert 2013, *Behavior Research Methods*, 45, 1191–1207, <https://doi.org/10.3758/s13428-012-0314-x>). Words and three numbers only. | Read from [JULIELab/JEmAS](https://github.com/JULIELab/JEmAS) (`LexiconWarriner2013_transformed.txt`), with the 5 that repository subtracted from each value added back. Not checked against the authors' own file. | JEmAS is GPL 3.0. The licence the authors gave the norms was not confirmed: one catalogue ([NoRaRe](https://norare.clld.org/sources/Warriner2013)) lists them as CC BY 4.0. Cite the article. |
+| `lists/metadiscourse_starter.json` | 106 cue words and phrases sorted under the ten categories of Hyland (2005), *Metadiscourse*. The cues are CorpusMind's starter set, not Hyland's own list. Strings only. | [waleedmandour/CorpusMind](https://github.com/waleedmandour/CorpusMind), `engine/discourse/service.py`. | GNU AGPL 3.0, as CorpusMind. Kept apart from the page and fetched only when asked for. |
+
+The NRC VAD Lexicon (Mohammad 2025) is **not** in this repository: its terms of use forbid redistribution.
+The page can read a copy that a reader chooses from their own device. Get it from
+<http://saifmohammad.com/WebPages/nrc-vad.html>.
