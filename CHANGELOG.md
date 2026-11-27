@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.39.0 (2026-11-26)
+
+- Typing slips: "Grammar and spelling, a second check". Harper (harper.js 3.2.0, rule-based, about 20 MB) is loaded by a button from `lib/harper/` and reads each sentence. Its results are listed with its message and suggestions. Left out: spellings of capitalised words, of anything with a digit and of terms used three times or more, and anything inside a citation, code or mathematics. Spelling follows British or American English, chosen from the draft and switchable. No note is made. The unused inlined and slim builds of Harper were removed from the repository.
+- Entailment model, five more uses, all optional and labelled as AI. Before & after: each rewritten sentence against the one it replaced. Claim tracer: every sentence close enough in meaning to the claim is read against it and the contradictions listed; each rebuttal is read against the sentence named as its answer. Source overlap: your closest sentences against the source sentences. Meaning views, Abstract & ending: the ending against the opening sentences.
+- The entailment model is applied only to pairs at a closeness of 0.30 or more by the meaning model (a working value). On one test draft it called two unrelated sentences contradictions of the claim (closeness 0.07 and 0.08), while the true ones sat at 0.57 and 0.65.
+- Tutorial: runs in simple view, on the four notes that view shows, and returns to the full view afterwards if that is where it started. After each note is cleared it stops on a line saying so, and Next is held for a moment. The bubble sits under the thing the step is about, and the page is brought to that place once for each step.
+- Old → new, meaning model: the ribbon picture is drawn at the Link ladder's width and row height.
+- Simple view: sentence numbers with an open note carry a slow halo, unless reduced motion is asked for.
+
 ## 0.38.0 (2026-11-26)
 
 - Fixed: the arc over the sentence bar in the rewrite box was drawn several times too tall and below the bar. A style added in 0.36.0 for a new picture also matched it.

@@ -1067,4 +1067,10 @@ body[data-simpleview]:not([data-lens="rhythm"]) .stripwrap .strip{display:none}
 /* 0.38.0: map key; simple view's rewrite box says less */
 .mvleg{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font:400 12px/1.4 var(--f-ui);color:var(--ink2);margin:4px 0 6px}.mvleg span{display:inline-flex;align-items:center;gap:6px}.mvleg .lg{fill:var(--ink3);fill-opacity:.6}.mvleg .lv{fill:var(--violet)}.mvleg .mvsw{display:inline-block;margin:0 1px 0 0}
 body[data-simpleview] #wbLook,body[data-simpleview] #wbMeter,body[data-simpleview] #wbScrub,body[data-simpleview] #wbKeys,body[data-simpleview] #wbHint,body[data-simpleview] #wb .tabs{display:none!important}
+
+/* 0.39.0: tutorial bubble beside its subject; a slow halo on sentence numbers with a note, in simple view */
+.tour.near{position:absolute;right:auto;bottom:auto}.tour.near::before{content:"";position:absolute;left:22px;top:-7px;border:7px solid transparent;border-top:0;border-bottom-color:var(--ink)}
+#tourNext:disabled{opacity:.45;cursor:default}
+@media (prefers-reduced-motion:no-preference){:root:not(.still) body[data-simpleview] #ms .sn.on{animation:snHalo 2.8s ease-in-out infinite}}
+@keyframes snHalo{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--hb) 0%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--hb) 30%,transparent)}}
 </style>

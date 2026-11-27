@@ -1515,6 +1515,11 @@
      "citation": "Crossley, S. A., Bradfield, F., & Bustamante, A. (2019). Using human judgments to examine the validity of automated grammar, syntax, and mechanical errors in writing. Journal of Writing Research, 11(2), 251–270.",
      "doi": "10.17239/jowr-2019.11.02.01",
      "url": "https://doi.org/10.17239/jowr-2019.11.02.01"
+    },
+    {
+     "citation": "Automattic. (2026). Harper (harper.js 3.2.0) [Computer software: a grammar checker that runs on the reader’s own device].",
+     "doi": null,
+     "url": "https://github.com/Automattic/harper"
     }
    ]
   },

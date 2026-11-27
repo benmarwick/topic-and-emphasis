@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.38.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.39.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.38.0},
+  version = {0.39.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -158,6 +158,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 
 Newest first.
 
+- **Harper, the entailment model in five more places, and a tutorial in simple view** (0.39.0). *Harper* ([Automattic](https://github.com/Automattic/harper), Apache 2.0), a rule-based grammar and spelling checker, can be loaded in Typing slips; it lists places to look and makes no note. The *entailment model* now also says whether a rewrite changed what a sentence says (Before & after), lists the sentences that read as contradicting your claim and checks each rebuttal against its answer (Claim tracer), reads your closest sentences against the source (Source overlap), and reads the ending against the opening (Meaning views). It is used only on pairs the meaning model puts close together, because it calls some unrelated sentences contradictions. The *tutorial* runs in simple view on four notes, pauses after each note is cleared, and keeps its bubble beside the thing to look at. In simple view, sentence numbers with an open note carry a slow halo.
+
 - **An entailment model, topic shares, and a newer runtime** (0.37.0). An optional *entailment model* ([nli-deberta-v3-xsmall](https://huggingface.co/Xenova/nli-deberta-v3-xsmall), about 90 MB, loaded only when asked for) says of two sentences whether one implies the other, contradicts it, or neither. In Clutter it labels each pair of sentences that are close in meaning as saying the same thing or contradicting each other, which closeness cannot tell apart; in the Toulmin layout it reads each sentence you placed against your claim. It is AI, it is labelled as such, and it makes no note. *Topic shares* (Meaning views, Topics) draws how much of each topic is in each sentence as a stacked band along the draft. The meaning model now runs on Transformers.js 3.8.1, with the same scores as before, and can be asked to try the graphics processor, which it keeps only if a fixed check comes out right. The Academic Word List panel defines its ten sublists, and the ladders draw their joining lines much finer than the lines they join.
 
 - **Meaning steps, a third variable on the scatter, and quieter notes in simple view** (0.36.0). With the meaning model on, Topic grid draws each sentence at its closeness to the one before, as a stem from the level that three-quarters of all sentence pairs in the draft fall below, so the count "closer than most pairs" can be seen sentence by sentence. In the Load map, the dots of *Structure and vocabulary* are larger and sized by a third measure (words before the main verb, or lexical density when the wait is on the upright scale). Pressing a button under *In the text* no longer moves the page away from the text. The Academic Formulas List panel says what its three lists are. In simple view the notes are faint until pointed at.
@@ -277,7 +279,7 @@ The model does not see negation or logic, and its scores only rank things within
 | Practice | Short drills on the principles, some built from your own draft |
 | Reading comfort | Text size, spacing and colour settings |
 
-Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 177 sources are listed at the foot of the application, 77 of them with a DOI and 66 more with a link to the full text or the publisher's page.
+Each citation above links to its DOI or to the full text where one could be confirmed. Books, and articles whose DOI could not be confirmed, are named without a link. All 178 sources are listed at the foot of the application, 77 of them with a DOI and 67 more with a link to the full text or the publisher's page.
 
 ---
 
@@ -341,4 +343,4 @@ The application includes the **New General Service List** and the **New Academic
 
 The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The **Academic Keyword List** (Paquot 2010) is included under **CC BY 4.0**. The Dale-Chall list, the excess-vocabulary list, the science-jargon list and the four lists from github.com/words (hedges, weasels, fillers, buzzwords) are MIT-licensed, and the syllable counts come from the CMU Pronouncing Dictionary (BSD 2-clause). The phrase bank in `data/phrases/` is under the **GNU GPL 3 or later**; it is kept apart from the application and loaded only on request. `data/lists/awl.json` and `data/lists/afl.json` hold the words and figures of the Academic Word List (Coxhead 2000) and the Academic Formulas List (Simpson-Vlach & Ellis 2010) and nothing else from those publications; no permission was sought for either, and `data/README.md` sets out the position taken and how to remove them. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
 
-The optional entailment model in `model/nli-deberta-v3-xsmall/` is a conversion of cross-encoder/nli-deberta-v3-xsmall, which is built on Microsoft's DeBERTa (MIT). The `model/` folder also holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT). The `lib/` folder holds **compromise** (MIT), and `src/vendor/` holds **Rough Notation** bundled with the parts of **Rough.js** it uses (MIT) and **canvas-confetti** (ISC); [`lib/README.md`](lib/README.md) gives the versions.
+The optional entailment model in `model/nli-deberta-v3-xsmall/` is a conversion of cross-encoder/nli-deberta-v3-xsmall, which is built on Microsoft's DeBERTa (MIT). The `model/` folder also holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT). The `lib/` folder holds **compromise** (MIT) and **Harper** (Apache-2.0), and `src/vendor/` holds **Rough Notation** bundled with the parts of **Rough.js** it uses (MIT) and **canvas-confetti** (ISC); [`lib/README.md`](lib/README.md) gives the versions.
