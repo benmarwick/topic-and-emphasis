@@ -459,7 +459,7 @@ function parse(text){
       if(!tk.w){if(tk.t===';'||tk.t===':')return false;continue;}
       if(CONJ.has(tk.l)&&T[j-1].t===','&&(isDet(lw(j+1))||PRON.has(lw(j+1))))return false;
       if(REL.has(tk.l)||SUB.has(tk.l)||WHC.has(tk.l)){pend++;continue;}
-      if(!VK[j])continue;if(pend>0){pend--;continue;}
+      if(!VK[j])continue;if(pend>0){pend--;j=groupEnd(j);continue;}   /* the verb of a clause opened by "that", "what" or "because": its whole group ("may charge") belongs to that clause */
       if(sure&&VK[j].weak&&j!==i+1)continue;
       return!prevConj(j);}
     return false;}
@@ -515,6 +515,11 @@ function parse(text){
   for(let i=0;i<N;i++){const q=VK[i];if(!q||!q.weak||q.k!=='fin')continue;const f=kindOf(T[i].l);if(f&&(f.k==='s'||f.k==='base')&&AMBIG.has(f.b)&&!opensClause(i)&&(later(i,N,true)||sureBefore(i)))VK[i]=null;}
   let m=N?mainStart(0,0):-1,head=-1,v=-1,ve=-1,gap=0;
   if(m>=0&&m<N&&T[m].w){head=subjHead(m);if(head>=0)v=findMain(head+1,N);}
+  /* the verb found sits inside a clause opened by "what", "how" or "why" ("Rent caps limit what landlords may charge"): the word just before that opener, if it is a base form after a plural noun, is the main verb */
+  if(v>=0&&m>=0){let w=-1;for(let i=m+1;i<v;i++){if(!T[i].w){if(/^[,;:(\[—–]$/.test(T[i].t))break;continue;}if(VK[i])break;if(WHC.has(T[i].l)){w=i;break;}}
+    if(w>m+1&&T[w-1].w){let i=w-1;const f=kindOf(T[i].l),hp=f&&f.k==='base'&&i-1>m&&/^help(s|ed)?$/.test(lw(i-1));if(hp)i--;   /* "helps explain why": the verb is "helps" */
+      const pl=lw(i-1),fin=hp&&T[i].l!=='help';
+      if(f&&f.k==='base'&&!inAux(i)&&pl&&(fin||isPl(pl))&&!PDET.has(pl)&&!QDET.has(pl)&&!DEMO.has(pl)&&!PREP.has(pl)&&!CONJ.has(pl)&&!adjLike(pl)&&!isFunc(pl)){VK[i]={k:'fin',rescued:true};head=subjHead(m);v=head>=0?findMain(head+1,N):-1;}}}
   /* no finite verb found: look for a base form that agrees with a plural subject, on looser evidence, and try again */
   if(v<0&&m>=0&&m<N&&T[m].w){let relPl=false;const cand=[];
     for(let i=m+1;i<N;i++){const tk=T[i];if(!tk.w){if(tk.t===';'||tk.t===':')break;continue;}

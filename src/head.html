@@ -801,7 +801,7 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
 .mvtop li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;align-items:start}
 .mvsw{width:12px;height:12px;border-radius:2px;background:var(--hb);margin-top:4px}
 .mvwalk{fill:none;stroke:var(--ink3);stroke-width:1;opacity:.6}
-.mvpt{cursor:pointer}.mvpt circle{fill:var(--hb);opacity:.88;stroke:var(--halo,#fff);stroke-width:1.6}.mvpt.byc circle{fill:color-mix(in srgb,var(--violet) var(--o,100%),var(--sheet));opacity:1}.mvpt text{font:700 15.5px var(--f-mono);fill:var(--sheet);pointer-events:none}.mvpt text.dk{fill:var(--ink)}
+.mvpt{cursor:pointer}.mvpt circle{fill:color-mix(in srgb,var(--ink) 45%,var(--sheet));stroke:var(--halo,#fff);stroke-width:1.6}.mvpt.byc circle{fill:color-mix(in srgb,var(--ink) var(--o,45%),var(--sheet))}.mvpt:hover circle,.mvpt:focus-visible circle{fill:var(--rose)}.mvpt:hover text,.mvpt:focus-visible text{fill:var(--sheet)}.mvpt text{font:700 15.5px var(--f-mono);fill:var(--sheet);pointer-events:none}.mvpt text.dk{fill:var(--ink)}
 .mvwas{fill:none;stroke:var(--ink2);stroke-width:1.5;stroke-dasharray:2 2}
 .mvtrail{stroke:var(--ink2);stroke-width:1;stroke-dasharray:2 3}
 .mvstar{font-size:22px;fill:var(--ink)}
@@ -1059,7 +1059,7 @@ body[data-simpleview]:not([data-lens="rhythm"]) .stripwrap .strip{display:none}
 .nli-c{color:var(--rose)}
 
 /* 0.38.0: map key; simple view's rewrite box says less */
-.mvleg{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font:400 12px/1.4 var(--f-ui);color:var(--ink2);margin:4px 0 6px}.mvleg span{display:inline-flex;align-items:center;gap:6px}.mvleg .lg{fill:var(--ink3);fill-opacity:.6}.mvleg .lv{fill:var(--violet)}.mvleg .mvsw{display:inline-block;margin:0 1px 0 0}
+.mvleg{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font:400 12px/1.4 var(--f-ui);color:var(--ink2);margin:4px 0 6px}.mvleg span{display:inline-flex;align-items:center;gap:6px}.mvleg .lg{fill:var(--ink3);fill-opacity:.6}.mvleg .lv{fill:var(--ink)}.mvleg .mvsw{display:inline-block;margin:0 1px 0 0}
 body[data-simpleview] #wbLook,body[data-simpleview] #wbMeter,body[data-simpleview] #wbScrub,body[data-simpleview] #wbKeys,body[data-simpleview] #wbHint,body[data-simpleview] #wb .tabs{display:none!important}
 
 /* 0.39.0: a slow halo on sentence numbers with a note, in simple view. 0.40.0: the tutorial lights one part of the page and places its bubble clear of it */

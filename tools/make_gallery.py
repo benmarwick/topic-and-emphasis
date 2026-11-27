@@ -54,12 +54,12 @@ SHOTS = [
  ['facets', 'data', 'load', 'cap:Facets by paragraph', 'fig', '', 0],
  ['typographic-pos', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"pos\"]').click()", 0],
  ['typographic-concrete', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"conc\"]').click()", 0],
- ['typographic-rare', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"rare\"]').click()", 1],
- ['typographic-role', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"role\"]').click()", 0],
+ ['typographic-rare', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"rare\"]').click()", 0],
+ ['typographic-role', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"role\"]').click()", 1],
  ['typographic-load', 'data', 'load', 'sel:#ms', 'fig', "(()=>{state.fp=true;document.querySelector('[data-typo=\"load\"]').click();})()", 0],
  ['typographic-fresh', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"fresh\"]').click()", 0],
  ['stage-slope', 'revised', 'compare', 'cap:Open notes by stage', 'card', '', 1],
- ['cadence', 'plain', 'rhythm', 'cap:Cadence without the words', 'card', '', 1],
+ ['cadence', 'plain', 'rhythm', 'cap:Cadence without the words', 'card', '', 0],
  ['profile-sparklines', 'plain', 'overview', 'cap:Research profile', 'fig', "(()=>{const d=document.querySelector('#extra > .rprof');d.open=true;d.querySelectorAll('.rguide').forEach(e=>{e.style.display='none';});[...d.querySelector('.prows').children].forEach((e,i)=>{if(i>4)e.style.display='none';});})()", 1],
  ['hedges-boosters', 'sure', 'hedge', 'cap:Hedges against boosters', 'card', '', 1],
  ['toulmin', 'plain', 'tracer', 'sel:#extra svg.td', 'fig', TOUL, 1],
@@ -71,10 +71,18 @@ SHOTS = [
  ['profile', 'plain', 'overview', 'cap:Research profile', 'fig', '', 0],
  ['topic-grid', 'plain', 'grid', 'cap:Terms the draft keeps using', 'fig', '', 1],
  ['cohesion-map', 'plain', 'grid', 'cap:Cohesion map', 'fig', '', 0],
- ['paragraph-ladder', 'plain', 'grid', 'cap:Paragraph ladder', 'fig', '', 1],
+ ['paragraph-ladder', 'plain', 'grid', 'cap:Paragraph ladder', 'fig', '', 0],
  ['skim', 'plain', 'signals', 'cap:The reader', 'fig', '', 0],
- ['trunk', 'plain', 'sv', 'sel:#ms', 'fig', "document.querySelector('[data-trunk]').click()", 0],
- ['skeleton', 'plain', 'skeleton', 'sel:#ms', 'fig', '', 1],
+ ['trunk', 'plain', 'sv', 'sel:#ms', 'fig', "document.querySelector('[data-trunk]').click()", 1],
+ ['skeleton', 'plain', 'skeleton', 'sel:#ms', 'fig', '', 0],
+ ['link-ladder', 'plain', 'flow', 'cap:Link ladder', 'fig', "(()=>{const d=[...document.querySelectorAll('#extra > .panel')].find(e=>/^Link ladder/.test(e.querySelector('.cap').textContent.trim()));[...d.querySelectorAll('.ldxs > *')].forEach((e,i)=>{if(i>1)e.style.display='none';});})()", 1],
+ ['sentence-openings', 'plain', 'topic', 'cap:How your sentences open', 'fig', '', 0],
+ ['whose-story', 'plain', 'topic', 'cap:Whose story the draft tells', 'fig', '', 0],
+ ['outline-proportions', 'plain', 'outline', 'cap:Outline with proportions', 'card', '', 1],
+ ['fixed-scale', 'plain', 'rhythm', 'cap:Sentence lengths on a fixed scale', 'fig', '', 0],
+ ['rhythm-text', 'plain', 'rhythm', 'sel:#ms', 'fig', '', 0],
+ ['argument-shape', 'plain', 'jobs', 'cap:The shape of your argument', 'fig', '', 0],
+ ['paragraph-map', 'plain', 'jobs', 'cap:Paragraph map', 'fig', '', 0],
 ]
 # 'fig': a box that starts folded is opened, and its heading and prose are hidden so that the picture fills the shot
 FIG = """(el)=>{if(el.tagName==='DETAILS')el.open=true;const s=el.querySelector(':scope > summary');if(s)s.style.display='none';const b=el.querySelector(':scope > .rp-in')||el;
@@ -160,7 +168,7 @@ with sync_playwright() as p:
             print('skipped (empty):', fn); continue
         if how == 'sel:#ms':
             # the text itself: whole paragraphs only, as many as the shape of the canvas allows
-            lim = w * (1.0 if fn.startswith('typographic') else 0.75)
+            lim = w * (1.0 if fn.startswith('typographic') or fn == 'trunk' else 0.75)
             hh = pg.evaluate("([e,lim])=>{const t=e.getBoundingClientRect().top;let b=0;[...e.querySelectorAll(':scope > .pblock')].forEach(p=>{const q=p.getBoundingClientRect().bottom-t;if(q<=lim&&p.getBoundingClientRect().height>40)b=Math.max(b,q);});return b+14}", [el, lim])
         hh = min(hh, w * 1.5)
         d = 6 if how == 'sel:#ms' else 2      # inside the edge, so that no rule or rounded corner is caught

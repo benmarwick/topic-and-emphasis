@@ -21,6 +21,7 @@ assert.ok(!/abHeat|abPlot|stanceHTML|plainSlopeHTML|concScan|MWEC/.test(eng), 't
   assert.ok(/class="mvwalk">'\+pts\.slice\(1\)\.map/.test(map) && /pathLength="1"/.test(map), 'the reading-order line is not drawn one join at a time');
   assert.ok(/\[data-mvt\]'\)\)\)\{[^}]*MVMAP\.t0=performance\.now\(\)/.test(ui), 'choosing the Map does not start its drawing');
   assert.ok(/\.mvpt circle\{[^}]*stroke:var\(--halo,#fff\);stroke-width:1\.6/.test(css), 'the dots of the Map have no halo');
+  assert.ok(/\.mvpt circle\{fill:color-mix\(in srgb,var\(--ink\)/.test(css) && !/\.mvpt[^{}]*\{[^}]*var\(--violet\)/.test(css), 'the dots of the Map are not grey like the other plots');
   const k = css.indexOf('.mvin .mvpt'), before = css.slice(0, k);
   assert.ok(k > 0 && before.lastIndexOf('@media (prefers-reduced-motion:no-preference){') > before.lastIndexOf('\n}\n') && /:root:not\(\.still\) \.mvin \.mvpt/.test(css), 'the drawing of the Map is not held back for reduced motion or still pictures');
   assert.ok(!/mvin|MVMAP/.test(eng), 'the rule engine knows about the Map');

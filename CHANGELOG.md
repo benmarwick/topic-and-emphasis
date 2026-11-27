@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.48.0 (2026-11-27)
+
+- Rules, main verb: a base-form verb just before a clause opened by “what”, “how” or “why” was passed over, and the verb inside that clause was taken as the main verb. “Rent caps limit what landlords may charge” was read with “landlords” as subject and “may” as verb; it is now “caps limit”. “Helps explain why” is read as “helps”. On 5,608 sentences (the page's examples, the readability passages, and 5,514 sentences of published academic prose) four readings changed, each to the right verb, and five notes went, each a false one: three “Noun stack” notes that had taken the verb for a noun, and two notes on a wait for the verb that was not there. No note was added. Eight cases join the main-verb probe, which stands at 38 of 38.
+- Meaning views, Map: the dots are grey, as in the page's other plots, and turn rose under the pointer. They were violet, the colour of everything from the meaning model, or four colours by paragraph when no claim was written. Closeness to the claim is now the shade of grey, from faint to strong; with no claim every dot is one grey, and the paragraph is in the tooltip.
+- README: the “Added in” sections are gone, and this changelog is the only history. The 80 links to sources that those sections carried and this file did not are now listed under the release each belonged to.
+- README, Feature Reference: brought up to date. All 33 lenses are in the tables, with new rows for Overview, Load map, Guide, Meaning views, Before & after and Practice, and a column for the counts and pictures each lens carries above the text. New sections list the optional data and models, and the entailment model. “Working on a draft” gains simple view, the tutorial, opening a file, hints, what is already working, the focus timer and the page for instructors.
+- README gallery: Trunk view takes the place of Skeleton read, the Link ladder that of the Paragraph ladder, the typographic view of the parts of each sentence that of the view by word rarity, and Outline with proportions that of Cadence without the words. The figures in three alternative texts follow the corrected rule.
+- Guide: its 21 pictures were taken again.
+
 ## 0.47.0 (2026-11-27)
 
 - Meaning views, Map: the first time the Map is shown, by choosing its tab or by opening the lens with the Map already chosen, the dots come in one at a time in the order of the sentences. The line of reading order is drawn one join at a time, and each dot appears as the line reaches it. A step is 260 ms, or less for a long draft so that the whole drawing takes no more than about eight seconds; the 24 sentences of the Guide's example take about six. A render that falls inside the drawing picks it up where it would be by then, so typing does not restart it, and a later render does not replay it. “Still pictures” and a device's reduce-motion setting show the whole map at once.
@@ -42,6 +51,7 @@
 - Clutter, with the plain-language pairs loaded: “If every plainer word were used”. Five small charts join each reading figure of the draft as it stands to the figure for a copy with every plainer word put in: words, words a sentence, Flesch reading ease, Flesch–Kincaid grade and long words. The draft is not changed.
 - Every mark in the four pictures has a tooltip and can be reached by keyboard, each picture has a text alternative and a line saying how to read it, values are written on the marks, and nothing depends on colour alone. `tests/pictures.test.js`.
 - Each has been run on one constructed draft only.
+- Sources linked from the README when it described this release: [Muraki et al. (2022)](https://osf.io/ksypa/).
 
 ## 0.45.0 (2026-11-27)
 
@@ -51,6 +61,7 @@
 - Old → new, “Pointing back with a noun · optional data”: 959 shell nouns (ycd2016/shellnouns; no licence stated). Counts the sentences that open with “this” or “these” and a shell noun against those that open with a bare “this” and a verb.
 - All five load at a press, are counts only, make no note and leave the receipt unchanged. Tests cover each file.
 - Not done from the plan: the two-word expressions in the concreteness norms, and irregular participles for Voice. The second would change which passives are found, and so the notes.
+- Sources linked from the README when it described this release: [en_dimlex](https://github.com/discourse-lab/en_dimlex).
 
 ## 0.44.0 (2026-11-26)
 
@@ -59,6 +70,7 @@
 - Hedging: “Metadiscourse by kind · optional data”. One press loads a starter set of 106 cues sorted under the ten categories of Hyland (2005), read from the open-source project CorpusMind and kept apart in `data/lists/` under the GNU AGPL 3. A table gives each kind in every 1,000 words, by section where sections were found, with the cues most used. The cues are not Hyland's own list, so the figures cannot be set beside published ones.
 - Both panels are counts only: no note is made and the receipt does not change. `tests/vad.test.js`.
 - Not confirmed: the licence the authors gave the Warriner norms (one catalogue lists CC BY 4.0), and the values were read from a third-party copy and not checked against the authors' file.
+- Sources linked from the README when it described this release: [Warriner et al. 2013](https://doi.org/10.3758/s13428-012-0314-x) · [Mohammad 2025](https://arxiv.org/abs/2503.23547).
 
 ## 0.43.0 (2026-11-26)
 
@@ -105,6 +117,7 @@
 - Tutorial: runs in simple view, on the four notes that view shows, and returns to the full view afterwards if that is where it started. After each note is cleared it stops on a line saying so, and Next is held for a moment. The bubble sits under the thing the step is about, and the page is brought to that place once for each step.
 - Old → new, meaning model: the ribbon picture is drawn at the Link ladder's width and row height.
 - Simple view: sentence numbers with an open note carry a slow halo, unless reduced motion is asked for.
+- Sources linked from the README when it described this release: [Automattic](https://github.com/Automattic/harper).
 
 ## 0.38.0 (2026-11-26)
 
@@ -132,6 +145,7 @@
 - Meaning model: runs on Transformers.js 3.8.1 from `model/lib-next/`, falling back to `model/lib/`. Two fixed pairs score the same as on 3.0.0 (0.7191 and 0.1499). "Try the graphics processor" loads the half-precision file on WebGPU and keeps it only if those pairs score within 0.03 of their reference; otherwise the page says why and stays on the processor.
 - Ladders: joining lines are thinner and the lines they join thicker. The Paragraph ladder no longer clamps long paragraphs at 260 words, which had made several joining lines meet at one point.
 - Vocabulary level: the Academic Word List panel defines its ten sublists and a word family.
+- Sources linked from the README when it described this release: [nli-deberta-v3-xsmall](https://huggingface.co/Xenova/nli-deberta-v3-xsmall).
 
 ## 0.36.1 (2026-11-26)
 
@@ -154,6 +168,7 @@
 - Simple view: the Guide and Practise buttons are shown, and both open without leaving simple view. The Guide lists the Overview and the eight lenses. The heading reads "Three steps to improve your writing, take one at a time".
 - Simple view: when a rewrite clears a note, the words that were cut fly off the page (canvas-confetti 1.9.4, carried in the page; a tick when no word was cut). One burst at most every three and a half seconds, none under reduced motion, and a switch in the steps box turns it off. Marking a note as checked does not set it off.
 - Workbench: "The one note on this sentence is resolved" where it said "All 1 note ... are".
+- Sources linked from the README when it described this release: [Crossley, Kyle & McNamara 2016](https://doi.org/10.3758/s13428-015-0651-7) · [canvas-confetti](https://github.com/catdad/canvas-confetti).
 
 ## 0.34.0 (2026-11-26)
 
@@ -164,6 +179,7 @@
 - The card beside the introduction: hand-drawn brackets, circle and underline (Rough Notation 0.5.1, carried in the page).
 - The "About this project" button sits on one line with the three badges.
 - Tests: `tests/simple.test.js`. The smoke test reads the page's own script, which is now the last of two.
+- Sources linked from the README when it described this release: [Kellogg 2008](https://doi.org/10.17239/jowr-2008.01.01.1) · [Shute 2008](https://doi.org/10.3102/0034654307313795) · [compromise](https://github.com/spencermountain/compromise) · [Rough Notation](https://github.com/rough-stuff/rough-notation).
 
 ## 0.33.0 (2026-11-26)
 
@@ -173,6 +189,7 @@
 - Comparison values from Hohmann et al. (2025), for abstracts in health and medicine: under 15 words per sentence now (about 29 in the 1960s), in the two sentence-length tooltips; about 31 nouns and 11 verbs per 100 words, in the part-of-speech panel. Given as averages for one kind of text, not as ranges or targets.
 - About box: the button is now a text button in the style of the badges beside it. "Corrections and suggestions" opens by saying that fixed rules about language are sometimes wrong and that some misjudgements cannot be fixed. Every item in the Licence list links to the work it names.
 - Sources: Hohmann, Barnett, King & Connell (2025) added.
+- Sources linked from the README when it described this release: [Hohmann et al. 2025](https://doi.org/10.1007/s11192-025-05353-8).
 
 ## 0.32.0 (2026-11-26)
 
@@ -180,6 +197,7 @@
 - Boxes: in every lens that shows the text, every captioned box above the text starts folded, with a triangle that glows twice when the lens opens (not under reduced motion). An opened box stays open for the visit. Lenses with no text of their own (Load map, Before & after, Practice, Guide) are not folded, nor is the Meaning views panel.
 - Text box: "Quiet drafting" hides the live counts and stops the Analyse button pulsing while a draft is being written.
 - Sources: Reed & Rowe (2005) and Silvia (2019) added.
+- Sources linked from the README when it described this release: [Reed & Rowe 2005](https://doi.org/10.1007/s10503-005-4416-9).
 
 ## 0.31.1 (2026-11-26)
 
@@ -207,6 +225,7 @@
 - Tooltips: the five that showed one of the writer's sentences without quotation marks (the Overview strip, the Link ladder, the move strip, the meaning map, and the chips under “Wording against evidence”) now quote it on its own line.
 - Header: the article title in the subtitle links to the article; "Nothing uploaded" reads "Nothing leaves your device"; the paragraph beginning "You do not need to settle every note" is set like the paragraphs round it.
 - Overview: the second "The draft at a glance" panel is renamed "Four portraits of the draft".
+- Sources linked from the README when it described this release: [Biwer et al. 2023](https://doi.org/10.1111/bjep.12593) · [Smits et al. 2025](https://doi.org/10.3390/bs15070861) · [Albulescu et al. 2022](https://doi.org/10.1371/journal.pone.0272460) · [Sword 2016](https://doi.org/10.1080/1360144X.2016.1210153).
 
 ## 0.29.0 (2026-11-26)
 
@@ -233,6 +252,7 @@
 - Stage buttons: the marks in the Overview text now follow the stage, as the notes and the lens list already did. Their tooltips say what a click does and which lenses the stage holds.
 - Tooltips: every button, select, switch and summary now has one. Controls without a written tooltip get one from a table of rules when first pointed at.
 - Rule fix: "this paper aims to", "this study seeks to", "we aim" and similar are now read as stating an aim.
+- Sources linked from the README when it described this release: [Lachner, Backfisch & Nückles 2018](https://doi.org/10.1007/s11423-018-9571-4) · [Chang, Lin & Hwang 2025](https://doi.org/10.3389/feduc.2025.1672105) · [Fok et al. 2023](https://arxiv.org/abs/2205.04561) · [Chang et al. 2023](https://arxiv.org/pdf/2302.07302).
 
 ## 0.27.0 (2026-11-26)
 
@@ -250,6 +270,7 @@ After Brath & Banissi (2016). Rule-based; no notes.
 - Term tracker: "Term index, in type": repeated terms in alphabetical order, weight by use, small capitals for claim words, italics for terms confined to one paragraph.
 - Load map, typographic view: two more mappings (the parts of each sentence; load by sentence), a button to flip to plain text, and for weight mappings an option to hold every word in place by drawing weight as stroke.
 - `E.isNom` and `E.verbBase` are exported.
+- Sources linked from the README when it described this release: [Brath & Banissi (2016)](https://doi.org/10.1016/j.sheji.2016.05.003).
 
 ## 0.25.0 (2026-11-26)
 
@@ -259,6 +280,7 @@ Five pictures made of the text itself, after Brath (2020) and Brath & Banissi (2
 - Term tracker: "Repetition, drawn", arcs joining successive uses of a content word within a paragraph, the three most repeated coloured and named, up to nine words a paragraph.
 - Length & rhythm: "Cadence without the words": one square a sentence shaded by length, and the punctuation of each sentence alone (marks inside brackets left out), with counts of commas, semicolons, colons, dashes, brackets and questions.
 - Reverse outline: "Outline with proportions": one line a paragraph, with a chosen quantity set into the line as a length of heavy type on a common scale.
+- Sources linked from the README when it described this release: [Brath & Banissi (2016)](https://doi.org/10.1016/j.sheji.2016.05.003).
 
 ## 0.24.0 (2026-11-26)
 
@@ -270,6 +292,7 @@ Measures in and beside the text. None makes a note or changes the receipt.
 - Load map: facets by paragraph (words, syntax, cohesion, stance), grouped under headings; the scatter gains wait for the verb and part-of-speech density as upright scales and a line from where each rewritten sentence started.
 - Load map: a typographic view. Words set by one measure at a time: how common (word lists, or Zipf frequency when norms are loaded), new or repeated, syllables (letter-spacing), part of speech (with the lexicon), age learned and concreteness (with the norms). The text shows in the Load map only while this view is on.
 - `E.wordTier`. Newsreader is now requested as a variable font, weights 300 to 800.
+- Sources linked from the README when it described this release: [Oelke et al. (2012)](https://doi.org/10.1109/TVCG.2011.266) · [Keim & Oelke (2007)](https://doi.org/10.1109/VAST.2007.4389004) · [Gu et al. (2024)](https://arxiv.org/abs/2401.10873) · [Graesser et al. 2011](https://doi.org/10.3102/0013189X11413260) · [Brath & Banissi 2016](https://doi.org/10.1016/j.sheji.2016.05.003).
 
 ## 0.23.0 (2026-11-26)
 
@@ -287,6 +310,7 @@ Three additions to the optional meaning model. All are labelled as coming from t
 - Subject → verb: a panel listing sentences where the rules' main verb has no verb reading in the lexicon, and sentences where the rules found no main verb and the lexicon has a likely finite verb.
 - Dense phrases: lexical density by part of speech, the share of nouns, lexical verbs, adjectives and adverbs, and nouns per lexical verb.
 - Read after the analysis by `E.pos`; no note, mark or receipt changes. `tests/pos.test.js`.
+- Sources linked from the README when it described this release: [Brill 1992](https://doi.org/10.3115/974499.974526) · [words/brill](https://github.com/words/brill).
 
 ## 0.21.0 (2026-11-26)
 
@@ -294,6 +318,7 @@ Three additions to the optional meaning model. All are labelled as coming from t
 - Four lists from github.com/words (MIT) are built in and only counted: hedges (Hedging, with the words this page's own rule does not mark), weasels and buzzwords (Vague & worn words), fillers (Clutter). Function words and particles on the weasel and filler lists are skipped when counting.
 - None of these raises a note. MCP `research_profile` gains `academic_keyword_list` and `crowd_word_lists`. `tools/make_wordlists.py`, `tests/akl.test.js`.
 - Looked at and not added, from the same organisation: `spache` (a children's reading list), `profanities` and `cuss`, the AFINN sentiment lists, `moby` (a 25 MB thesaurus), `wordnet`, `an-array-of-english-words` (a 3 MB spelling list), `brill` (a part-of-speech lexicon), and the code packages for readability formulas, stemming, phonetics and string distance, which the page already covers with its own rules.
+- Sources linked from the README when it described this release: [Paquot 2010](https://uclouvain.be/en/research-institutes/ilc/cecl/the-academic-keyword-list-akl) · [github.com/words](https://github.com/words).
 
 ## 0.20.0 (2026-11-26)
 
@@ -307,6 +332,7 @@ Nine checks after Pat Thomson's revision strategies (Kamler & Thomson 2014; Thom
 - Signal phrases: the share of sentences that talk about the text itself, underlined, with no note (Hyland 2005; Haag 2021).
 - Voice: a paragraph of four or more sentences in which three in four are passive with no agent.
 - MCP `research_profile` gains `citations_by_form`, `signposting`, `reporting_words` and `repeated_sentence_openers`. `tests/patter.test.js`.
+- Sources linked from the README when it described this release: [patter](https://patthomson.net/category/academic-writing/).
 
 ## 0.19.1 (2026-11-26)
 
@@ -324,6 +350,7 @@ A review of the documentation against the code. No rule changed.
 - Signal phrases, position of moves: notes for a paper whose aim is first signalled late or which signals no closing move near the end, an introduction that does not end on its aim, and an abstract that does not close on a finding.
 - Signal phrases: the moves as rows, one column a sentence; for an introduction the rows are Swales's three moves.
 - These apply only when the kind of text is chosen. `tests/moves.test.js`.
+- Sources linked from the README when it described this release: [AcaWriter](https://github.com/uts-cic/acawriter) · [Knight et al. 2020](https://doi.org/10.17239/jowr-2020.12.01.06).
 
 ## 0.18.0 (2026-11-26)
 
@@ -340,6 +367,7 @@ A review of the documentation against the code. No rule changed.
 - Neither list is shipped: neither has an open licence. A copy is pasted in, or read from `data/lists/` on a self-hosted page, and is kept in the browser only.
 - Engine: `E.parseWordList`, `E.parseFormulas`, `research.awl`, `research.afl`. These add marks and counts and never a note. `tests/ownlists.test.js`.
 - Reference added: Coxhead 2000.
+- Sources linked from the README when it described this release: [Coxhead 2000](https://www.wgtn.ac.nz/__data/assets/pdf_file/0020/1626131/Coxhead-2000.pdf) · [Simpson-Vlach & Ellis 2010](https://public.websites.umich.edu/~ncellis/NickEllis/Publications_files/AFL_paper_AppLinxPrepub.pdf).
 
 ## 0.16.0 (2026-11-26)
 
@@ -349,6 +377,7 @@ A review of the documentation against the code. No rule changed.
 - References rechecked: MICUSP is now cited as the corpus itself (University of Michigan 2009); added Cotos, Huffman & Link 2020 on the Research Writing Tutor, Wallwork 2016, and the academic-phrases package.
 - Guide: what the Research Writing Tutor and AcaWriter do, and what this page does and does not share with them.
 - `tests/phrases.test.js`.
+- Sources linked from the README when it described this release: [Wallwork 2016](https://doi.org/10.1007/978-3-319-26094-5) · [academic-phrases](https://github.com/nashamri/academic-phrases) · [Cotos, Huffman & Link 2020](https://doi.org/10.17239/jowr-2020.12.01.07).
 
 ## 0.15.0 (2026-11-26)
 
@@ -356,6 +385,7 @@ A review of the documentation against the code. No rule changed.
 - Workbench: "Check a phrase in other people's writing" sends up to eight selected words to SkELL or Linggle, or copies them for Ludwig. Nothing else leaves the page.
 - Guide: "Where to find wording", covering phrase collections, books, corpora of published and student writing, how much of a stock phrase may be reused, and tools that read moves.
 - Twelve new references, among them Swales & Feak 2012, Glasman-Deal 2020, Graff & Birkenstein 2024, Baisa & Suchomel 2014, Boisson et al. 2013, Römer & O'Donnell 2011, Alsop & Nesi 2009, Cotos et al. 2015 and Davis & Morley 2015.
+- Sources linked from the README when it described this release: [Academic Phrasebank](https://www.phrasebank.manchester.ac.uk/) · [UEFAP's rhetorical functions](https://www.uefap.org/writing-functions-introduction/) · [SkELL](https://skell.sketchengine.eu/) · [Baisa & Suchomel 2014](https://nlp.fi.muni.cz/raslan/2014/12.pdf) · [Linggle](https://linggle.com/) · [Boisson et al. 2013](https://aclanthology.org/P13-4024/) · [Ludwig](https://ludwig.guru/) · [Alsop & Nesi 2009](https://doi.org/10.3366/E1749503209000227) · [Swales & Feak 2012](https://doi.org/10.3998/mpub.2173936) · [Glasman-Deal 2020](https://doi.org/10.1142/q0232) · [Cotos, Huffman & Link 2015](https://doi.org/10.1016/j.jeap.2015.05.004) · [Knight et al. 2020](https://doi.org/10.17239/jowr-2020.12.01.06).
 
 ## 0.14.1 (2026-11-26)
 
@@ -434,6 +464,7 @@ A review of the documentation against the code. No rule changed.
 - New lens, Load map: small-multiple strips of six measures by sentence, a structure-and-vocabulary scatter with range-frame axes, and a paragraph table with sparklines.
 - Lexical density for the draft, each paragraph and each sentence, in Phrase load, the Research profile and the MCP profile.
 - Research profile grouped under Structure, Vocabulary and density, Cohesion, and Stance and care, with a sparkline beside eight of its figures. Before-and-after figures are now matched by name.
+- Sources linked from the README when it described this release: [Jenset (2026)](https://communities.springernature.com/posts/the-myth-of-the-unreadable-humanities-and-social-sciences) · [Johansson 2008](https://journals.lub.lu.se/LWPL/article/view/2273).
 
 ## 0.8.1 (2026-11-26)
 
@@ -447,6 +478,7 @@ A review of the documentation against the code. No rule changed.
 - Vocabulary level: general science jargon (Plavén-Sigray et al. 2017).
 - Word norms: sentences with the hardest vocabulary; age of acquisition leads the panel.
 - Guide: "What the counts track", from `tests/validation/clear.js` run on the CLEAR corpus.
+- Sources linked from the README when it described this release: [Plavén-Sigray et al. (2017)](https://doi.org/10.7554/eLife.27725) · [CMU Pronouncing Dictionary](https://github.com/cmusphinx/cmudict) · [Lee & Lee (2023)](https://aclanthology.org/2023.bea-1.1) · [Crossley et al. 2023](https://doi.org/10.3758/s13428-022-01802-x).
 
 ## 0.7.1 (2026-11-26)
 
@@ -467,6 +499,7 @@ A review of the documentation against the code. No rule changed.
 - All of the above in the MCP `research_profile`.
 - `tests/readability/`: fixed passages, a regression test, and scripts to record reference values from textstat and quanteda.textstats.
 - `data/`: third-party lists and norms with their sources and licences.
+- Sources linked from the README when it described this release: [Coleman & Liau 1975](https://doi.org/10.1037/h0076540) · [Anderson 1983](https://www.jstor.org/stable/40031755) · [Dale & Chall 1948](https://www.jstor.org/stable/1473169) · [Mac et al. 2022](https://pmc.ncbi.nlm.nih.gov/articles/PMC9856555/) · [Nation 2006](https://www.wgtn.ac.nz/__data/assets/pdf_file/0018/1626120/2006-How-large-a-vocab.pdf) · [Brysbaert et al. 2014](https://doi.org/10.3758/s13428-013-0403-5) · [Kuperman et al. 2012](https://doi.org/10.3758/s13428-012-0210-4) · [Brysbaert et al. 2019](https://doi.org/10.3758/s13428-018-1077-9) · [Brysbaert & New 2009](https://doi.org/10.3758/BRM.41.4.977) · [van Heuven et al. 2014](https://doi.org/10.1080/17470218.2013.850521) · [Daneš 1974](https://www.coli.uni-saarland.de/~korbay/Courses/esslli04/Scans/danes74.pdf) · [Givón 1983](https://doi.org/10.1075/tsl.3) · [Connor & Farmer 1990](https://doi.org/10.1017/CBO9781139524551.013) · [Barzilay & Lapata 2008](https://doi.org/10.1162/coli.2008.34.1.1) · [Biber, Conrad & Cortes 2004](https://doi.org/10.1093/applin/25.3.371) · [Simpson-Vlach & Ellis 2010](https://public.websites.umich.edu/~ncellis/NickEllis/Publications_files/AFL_paper_AppLinxPrepub.pdf) · [Hyland 2005](https://doi.org/10.1177/1461445605050365) · [Millar, Batalo & Budgell 2022](https://doi.org/10.1001/jamanetworkopen.2022.28676) · [Kobak et al. 2025](https://doi.org/10.1126/sciadv.adt3813) · [Brown & Heathers 2017](https://doi.org/10.1177/1948550616673876) · [Benoit et al. 2018](https://doi.org/10.21105/joss.00774).
 
 ## 0.6.0 (2026-11-25)
 

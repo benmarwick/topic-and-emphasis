@@ -13,7 +13,7 @@
   "need": "a draft you have revised",
   "file": "data/guide/compare-open-notes-by-stage-start-to-now.webp",
   "w": 1044,
-  "h": 311
+  "h": 312
  },
  {
   "lens": "overview",
@@ -61,7 +61,7 @@
   "need": "optional data, loaded from the lens",
   "file": "data/guide/load-abstract-or-concrete-calm-or-charged.webp",
   "w": 986,
-  "h": 601
+  "h": 602
  },
  {
   "lens": "load",
@@ -109,7 +109,7 @@
   "need": "the meaning model",
   "file": "data/guide/mviews-meaning-views-thread.webp",
   "w": 1044,
-  "h": 480
+  "h": 481
  },
  {
   "lens": "mviews",
@@ -117,7 +117,7 @@
   "need": "the meaning model",
   "file": "data/guide/mviews-meaning-views-quilt.webp",
   "w": 1044,
-  "h": 950
+  "h": 951
  },
  {
   "lens": "mviews",
@@ -141,7 +141,7 @@
   "need": "the meaning model",
   "file": "data/guide/mviews-meaning-views-abstract-and-ending.webp",
   "w": 1044,
-  "h": 782
+  "h": 783
  },
  {
   "lens": "load",

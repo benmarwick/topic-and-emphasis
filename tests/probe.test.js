@@ -27,6 +27,10 @@ const C = [['The results model the process well.', 'model'], ['Increases in trus
   ['Changes in policy design influence compliance.', 'influence'], ['The research team estimates suggest a decline.', 'suggest'], ['Higher income levels support higher trust.', 'support'], ['The courts that lose public trust lose compliance.', 'lose#2'], ['Respondents who reported low trust also reported low compliance.', 'reported#2'],
   ['The experiment controls for age and income.', 'controls'], ['Our estimates control for age and income.', 'control'], ['The panel data set limits what we can claim.', 'limits'], ['Trust in institutions that people encounter daily matters most.', 'matters'], ['The need for reform increases with each scandal.', 'increases'],
   ['Public trust in the courts remains low.', 'remains'], ['The decline in turnout among young voters accelerated after 2010.', 'accelerated'], ['Citizens who feel financially vulnerable withdraw their confidence.', 'withdraw'], ['The time respondents spent on each item varied widely.', 'varied'], ['These findings challenge the standard account.', 'challenge'],
+  // the main verb sits just before a clause opened by "what", "how" or "why", whose own verb must not be taken for it
+  ['Rent caps limit what landlords may charge sitting tenants.', 'limit'], ['The results show how tenants respond once a cap is lifted.', 'show'], ['Our interviews explain why tenants moved.', 'explain'],
+  ['The focus groups confirm what has become a common view.', 'confirm'], ['These findings help explain why tenants moved.', 'help'], ['The tendency towards uniformity helps explain why many academics keep a page of their own.', 'helps'],
+  ['We asked tenants what they paid.', 'asked'], ['Studies of what landlords charge are rare.', 'are'],
   // controls: a word that could be a verb is a noun here
   ['The survey results were consistent.', 'were'], ['Income tax rates rose sharply.', 'rose'], ['Levels of public support for reform have fallen.', 'have'], ['The court reports that compliance fell.', 'reports'], ['This model fits the data well.', 'fits'],
   ['Voter surveys indicate that trust is low.', 'indicate'], ['The test measures trust in courts.', 'measures'], ['Trust scores were higher among renters.', 'were'], ['The interview questions focus on income.', 'focus'], ['Public support for the reform plan grew.', 'grew']];
@@ -39,6 +43,6 @@ const score = { A: A.length - out.A.length, B: B.length - out.B.length, C: C.len
 console.log('A passive or adjective: ' + score.A + ' of ' + A.length + (out.A.length ? '   missed: ' + out.A.join(', ') : ''));
 console.log('B noun stack or not:    ' + score.B + ' of ' + B.length + (out.B.length ? '   missed: ' + out.B.join(', ') : ''));
 console.log('C main verb:            ' + score.C + ' of ' + C.length + (out.C.length ? '   missed: ' + out.C.join(', ') : ''));
-const FLOOR = { A: 33, B: 17, C: 29 };
+const FLOOR = { A: 33, B: 17, C: 37 };
 Object.keys(FLOOR).forEach(k => assert.ok(score[k] >= FLOOR[k], k + ' fell to ' + score[k] + ', below the floor of ' + FLOOR[k]));
 console.log('probe checks passed');
