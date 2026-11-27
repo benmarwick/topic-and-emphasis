@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The pictures for the gallery in the README: twelve of the page's visualisations, each captured from the
+"""The pictures for the gallery in the README: sixteen of the page's visualisations, each captured from the
 real page at three times the screen's resolution, trimmed to what is drawn, and set on a canvas of one
 size (1600 x 1200), so that the grid in the README is regular. A picture is only ever made smaller. Nothing is drawn here: every picture is what the page itself draws.
 
@@ -7,9 +7,11 @@ size (1600 x 1200), so that the grid in the README is regular. A picture is only
     python3 -m http.server 8767 &            # the page must be served, for the data and the model
     CHROME=/usr/bin/google-chrome python3 tools/make_gallery.py http://localhost:8767/index.html
 
-Needs Playwright and Pillow. Writes docs/gallery/*.png. The draft is the Guide's own example (GEX in
-src/ui.js). Three pictures use it after a change, which the README says beside each: the revised copy
-that tools/make_guide_shots.py also uses, and a copy with four confident words added so that the
+Needs Playwright and Pillow, and the page's own typefaces installed on the machine if it cannot reach
+Google Fonts (Newsreader, IBM Plex Sans, IBM Plex Mono: all under the Open Font License), because the
+typographic view sets weight by a measure and a fallback face has too few weights. Writes docs/gallery/*.png. The draft is the Guide's own example (GEX in
+src/ui.js). Four pictures use it after a change, which the README says: three use the revised copy
+that tools/make_guide_shots.py also uses, and one a copy with four confident words added so that the
 picture of hedges against boosters has boosters to show.
 
     python3 tools/make_gallery.py URL --all OUTDIR     # every candidate, to choose from
@@ -38,9 +40,9 @@ TOUL = "(()=>{const s=p=>state.A.sents.find(x=>x.text.trim().startsWith(p)).text
 PANEL = "(cap)=>[...document.querySelectorAll('#extra > .panel')].find(e=>e.querySelector('.cap')&&e.querySelector('.cap').textContent.trim().startsWith(cap))"
 # [file, condition, lens, how to find the element, 'fig' (the picture alone) or 'card' (with its heading and as much of its text as fits), what to do first, in the README]
 SHOTS = [
- ['meaning-quilt', 'model', 'mviews', 'mean', 'fig', "document.querySelector('[data-mvt=\"quilt\"]').click()", 1],
+ ['meaning-quilt', 'model', 'mviews', 'mean', 'fig', "document.querySelector('[data-mvt=\"quilt\"]').click()", 0],
  ['meaning-map', 'model', 'mviews', 'mean', 'fig', "document.querySelector('[data-mvt=\"map\"]').click()", 1],
- ['meaning-topics', 'model', 'mviews', 'mean', 'fig', "document.querySelector('[data-mvt=\"stripe\"]').click()", 0],
+ ['meaning-topics', 'model', 'mviews', 'mean', 'fig', "document.querySelector('[data-mvt=\"stripe\"]').click()", 1],
  ['meaning-thread', 'model', 'mviews', 'mean', 'fig', "document.querySelector('[data-mvt=\"thread\"]').click()", 0],
  ['meaning-abstract-ending', 'model', 'mviews', 'mean', 'fig', "document.querySelector('[data-mvt=\"checks\"]').click()", 0],
  ['old-new-ribbon', 'model', 'flow', 'mean', 'fig', '', 0],
@@ -52,11 +54,17 @@ SHOTS = [
  ['facets', 'data', 'load', 'cap:Facets by paragraph', 'fig', '', 0],
  ['typographic-pos', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"pos\"]').click()", 0],
  ['typographic-concrete', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"conc\"]').click()", 0],
+ ['typographic-rare', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"rare\"]').click()", 1],
+ ['typographic-role', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"role\"]').click()", 0],
+ ['typographic-load', 'data', 'load', 'sel:#ms', 'fig', "(()=>{state.fp=true;document.querySelector('[data-typo=\"load\"]').click();})()", 0],
+ ['typographic-fresh', 'data', 'load', 'sel:#ms', 'fig', "document.querySelector('[data-typo=\"fresh\"]').click()", 0],
+ ['stage-slope', 'revised', 'compare', 'cap:Open notes by stage', 'card', '', 1],
+ ['cadence', 'plain', 'rhythm', 'cap:Cadence without the words', 'card', '', 1],
+ ['profile-sparklines', 'plain', 'overview', 'cap:Research profile', 'fig', "(()=>{const d=document.querySelector('#extra > .rprof');d.open=true;d.querySelectorAll('.rguide').forEach(e=>{e.style.display='none';});[...d.querySelector('.prows').children].forEach((e,i)=>{if(i>4)e.style.display='none';});})()", 1],
  ['hedges-boosters', 'sure', 'hedge', 'cap:Hedges against boosters', 'card', '', 1],
  ['toulmin', 'plain', 'tracer', 'sel:#extra svg.td', 'fig', TOUL, 1],
  ['argument-board', 'plain', 'tracer', 'cap:Argument board', 'fig', '', 0],
  ['draft-as-line', 'revised', 'rhythm', 'cap:The draft as a line', 'fig', '', 1],
- ['cadence', 'plain', 'rhythm', 'cap:Cadence without the words', 'fig', '', 0],
  ['revision-arrows', 'revised', 'load', 'cap:Structure and vocabulary', 'fig', '', 1],
  ['portraits', 'revised', 'overview', 'cap:Four portraits', 'card', '', 0],
  ['glance', 'plain', 'overview', 'cap:The draft at a glance', 'fig', '', 0],
@@ -110,7 +118,7 @@ with sync_playwright() as p:
     for fn, c, lens, how, mode, pre, keep in SHOTS:
         if not (keep or ALL):
             continue
-        pg.evaluate("()=>{state.typo='';state.trunk=false;state.toul=null;state.loadAlt=false;state.raw=GEX;state.isSample=false;run();}")
+        pg.evaluate("()=>{state.typo='';state.trunk=false;state.toul=null;state.loadAlt=false;state.fp=false;state.raw=GEX;state.isSample=false;run();}")
         if c == 'revised':
             pg.evaluate(REV)
         elif c == 'sure':
@@ -152,7 +160,7 @@ with sync_playwright() as p:
             print('skipped (empty):', fn); continue
         if how == 'sel:#ms':
             # the text itself: whole paragraphs only, as many as the shape of the canvas allows
-            lim = w * 0.75
+            lim = w * (1.0 if fn.startswith('typographic') else 0.75)
             hh = pg.evaluate("([e,lim])=>{const t=e.getBoundingClientRect().top;let b=0;[...e.querySelectorAll(':scope > .pblock')].forEach(p=>{const q=p.getBoundingClientRect().bottom-t;if(q<=lim&&p.getBoundingClientRect().height>40)b=Math.max(b,q);});return b+14}", [el, lim])
         hh = min(hh, w * 1.5)
         d = 6 if how == 'sel:#ms' else 2      # inside the edge, so that no rule or rounded corner is caught

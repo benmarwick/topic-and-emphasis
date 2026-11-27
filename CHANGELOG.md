@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.47.0 (2026-11-27)
+
+- Meaning views, Map: the first time the Map is shown, by choosing its tab or by opening the lens with the Map already chosen, the dots come in one at a time in the order of the sentences. The line of reading order is drawn one join at a time, and each dot appears as the line reaches it. A step is 260 ms, or less for a long draft so that the whole drawing takes no more than about eight seconds; the 24 sentences of the Guide's example take about six. A render that falls inside the drawing picks it up where it would be by then, so typing does not restart it, and a later render does not replay it. “Still pictures” and a device's reduce-motion setting show the whole map at once.
+- Map: every dot has a thin white halo (the sheet's own colour in the dark theme, where white would glare), so that overlapping dots and the line can be told apart. To make the halo clean, a dot's closeness to the claim is now a mix of violet and the sheet's colour, not a transparent violet, so one dot no longer shows through another.
+- Cadence without the words: a citation in brackets was not counted or drawn, so a draft with eight citations read “0 pairs of brackets”. Each is now drawn as an empty pair and counted.
+- Topics: “1 sentences” reads “1 sentence”.
+- README gallery: sixteen pictures in four rows of four. The Quilt gives way to the Topics streamgraph, and four are added: the typographic view that sets each word heavier the rarer it is, and Cadence without the words (both after Brath 2020); the sparklines of the Research profile and the slopegraph of Open notes by stage (both after Tufte). Each new picture has an alternative text of 600 characters or more.
+- The pictures of the gallery, the 21 of the Guide and the animation of the tutorial are now taken with the page's own typefaces installed (Newsreader, IBM Plex Sans, IBM Plex Mono). Before, they were taken on a machine that could not reach Google Fonts and fell back to other faces, which gave the typographic views two weights instead of five.
+- None of this changes a note or the receipt.
+
 ## 0.46.3 (2026-11-27)
 
 - README: a Gallery of twelve pictures in four rows of three: Skeleton read, Topic grid, Paragraph ladder; Where the load falls, Abstraction heatmap, Abstract or concrete, calm or charged; Toulmin layout, Hedges against boosters, The draft as a line; Where each rewritten sentence started, and the Quilt and the Map of the meaning views. Each is captured from the real page at three times the screen's resolution, trimmed to what is drawn and set on a canvas of 1600 x 1200, and each has an alternative text of 460 to 880 characters that gives the values in the picture. `tools/make_gallery.py` makes them (`docs/gallery/`).

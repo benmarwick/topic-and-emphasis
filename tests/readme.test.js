@@ -1,13 +1,13 @@
-// The README's pictures: the gallery is a grid of twelve, every picture it names exists and is as large as it says,
+// The README's pictures: the gallery is a grid of sixteen, every picture it names exists and is as large as it says,
 // each has an alternative text long enough to stand in for it, and the animation of the tutorial is there.  Run:  node tests/readme.test.js
 const fs = require('fs'), path = require('path'), assert = require('assert');
 const ROOT = path.join(__dirname, '..'), md = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
 const a = md.indexOf('## 🖼️ Gallery'), b = md.indexOf('\n## ', a + 5);
 assert.ok(a >= 0 && b > a, 'the README has no Gallery section');
-const sec = md.slice(a, b), rows = sec.match(/<tr>\s*(?:<td[\s\S]*?<\/td>\s*){3}<\/tr>/g) || [];
-assert.strictEqual(rows.length, 4, 'the gallery is not four rows of three');
+const sec = md.slice(a, b), rows = sec.match(/<tr>\s*(?:<td[\s\S]*?<\/td>\s*){4}<\/tr>/g) || [];
+assert.strictEqual(rows.length, 4, 'the gallery is not four rows of four');
 const imgs = [...sec.matchAll(/<a href="([^"]+)"><img src="([^"]+)" width="100%" alt="([^"]*)"><\/a>/g)];
-assert.strictEqual(imgs.length, 12, 'the gallery does not have twelve pictures');
+assert.strictEqual(imgs.length, 16, 'the gallery does not have sixteen pictures');
 const alts = new Set();
 for (const [, href, src, alt] of imgs) {
   assert.strictEqual(href, src, 'a picture does not open itself at full size: ' + src);
@@ -17,7 +17,7 @@ for (const [, href, src, alt] of imgs) {
   assert.ok(alt.length >= 300 && /\d/.test(alt) && !/^(image|picture|screenshot) of/i.test(alt), 'the alternative text of ' + src + ' is too thin to stand in for the picture');
   alts.add(alt);
 }
-assert.strictEqual(alts.size, 12, 'two pictures share one alternative text');
+assert.strictEqual(alts.size, 16, 'two pictures share one alternative text');
 const used = new Set(imgs.map(m => path.basename(m[2])));
 for (const f of fs.readdirSync(path.join(ROOT, 'docs', 'gallery'))) assert.ok(used.has(f), 'docs/gallery/' + f + ' is not in the README');
 // the animation: present, a GIF, and described
@@ -31,4 +31,4 @@ for (let i = 0; i < g.length - 8; i++) if (g[i] === 0x21 && g[i + 1] === 0xF9 &&
 const real = delays.filter(d => d > 0.1), steps = [];
 for (let i = 0; i + 1 < real.length; i += 2) steps.push(real[i] + real[i + 1]);
 assert.ok(steps.length >= 20 && Math.min(...steps) >= 3, 'a step of the tutorial animation is on screen for less than three seconds: ' + Math.min(...steps));
-console.log('readme: gallery of 12 pictures at 1600 x 1200, alternative texts of ' + Math.min(...[...alts].map(s => s.length)) + ' characters or more; tutorial animation of ' + steps.length + ' steps, shortest ' + Math.min(...steps).toFixed(1) + ' s');
+console.log('readme: gallery of 16 pictures at 1600 x 1200, alternative texts of ' + Math.min(...[...alts].map(s => s.length)) + ' characters or more; tutorial animation of ' + steps.length + ' steps, shortest ' + Math.min(...steps).toFixed(1) + ' s');

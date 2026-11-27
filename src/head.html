@@ -801,7 +801,7 @@ span.tool{font:500 11px/1.4 var(--f-mono);letter-spacing:.02em;color:var(--viole
 .mvtop li{display:grid;grid-template-columns:14px minmax(0,1fr);gap:8px;align-items:start}
 .mvsw{width:12px;height:12px;border-radius:2px;background:var(--hb);margin-top:4px}
 .mvwalk{fill:none;stroke:var(--ink3);stroke-width:1;opacity:.6}
-.mvpt{cursor:pointer}.mvpt circle{fill:var(--hb);opacity:.88;stroke:var(--sheet);stroke-width:.8}.mvpt.byc circle{fill:var(--violet);opacity:1;stroke:var(--violet);stroke-opacity:.55}.mvpt text{font:700 15.5px var(--f-mono);fill:var(--sheet);pointer-events:none}.mvpt text.dk{fill:var(--ink)}
+.mvpt{cursor:pointer}.mvpt circle{fill:var(--hb);opacity:.88;stroke:var(--halo,#fff);stroke-width:1.6}.mvpt.byc circle{fill:color-mix(in srgb,var(--violet) var(--o,100%),var(--sheet));opacity:1}.mvpt text{font:700 15.5px var(--f-mono);fill:var(--sheet);pointer-events:none}.mvpt text.dk{fill:var(--ink)}
 .mvwas{fill:none;stroke:var(--ink2);stroke-width:1.5;stroke-dasharray:2 2}
 .mvtrail{stroke:var(--ink2);stroke-width:1;stroke-dasharray:2 3}
 .mvstar{font-size:22px;fill:var(--ink)}
@@ -1116,4 +1116,13 @@ body.touring #tip{z-index:90}
 #extra>.panel:not(.stagenudge):not(.stagebar):not(.start){background:color-mix(in srgb,var(--sheet) 70%,var(--bg));border:0;border-top:1px solid var(--line);border-left:3px solid var(--ink3);border-radius:0;padding:12px 16px 12px 20px}
 #extra>details.panel>summary.cap{padding-left:0}
 @media (max-width:720px){#extra>.panel:not(.stagenudge):not(.stagebar):not(.start){padding:12px 12px 12px 16px}}
+/* 0.47.0: the Map of the meaning views. A thin white halo keeps one dot apart from the next and from the line (the sheet's own colour in the dark theme, where white would glare). The first time the Map is shown, the dots come in one at a time in the order of the sentences, each after the line has reached it. */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--halo:var(--sheet)}}
+:root[data-theme="dark"]{--halo:var(--sheet)}
+.mvwalk line{stroke:var(--ink3);stroke-width:1}
+@media (prefers-reduced-motion:no-preference){
+:root:not(.still) .mvin .mvpt,:root:not(.still) .mvin .mvwas,:root:not(.still) .mvin .mvtrail{transform-box:fill-box;transform-origin:center;animation:mvPop .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
+:root:not(.still) .mvin .mvwalk line{stroke-dasharray:1;animation:vDraw var(--u,180ms) linear both;animation-delay:var(--d,0ms)}
+@keyframes mvPop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+}
 </style>
