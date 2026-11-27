@@ -10,18 +10,7 @@
    "research_measure": null,
    "with_meaning_model": null,
    "limits": null,
-   "sources": [
-    {
-     "citation": "Tufte, E. R. (1983). The Visual Display of Quantitative Information. Cheshire, CT: Graphics Press. [Small multiples, the range-frame and the dot-dash-plot.]",
-     "doi": null,
-     "url": null
-    },
-    {
-     "citation": "Tufte, E. R. (2006). Beautiful Evidence. Cheshire, CT: Graphics Press. [Sparklines: intense, simple, word-sized graphics.]",
-     "doi": null,
-     "url": null
-    }
-   ]
+   "sources": []
   },
   {
    "key": "load",
@@ -1400,7 +1389,7 @@
    "key": "stats",
    "name": "Statistics reporting",
    "group": "Is it polished?",
-   "reads": "Reported test results are checked by arithmetic. Each p value is recomputed from its test statistic and degrees of freedom, percentages are recomputed from their counts, and the wording around a result is checked against the numbers.",
+   "reads": "Reported test results are checked by arithmetic. Each p value is recomputed from its test statistic and degrees of freedom, percentages are recomputed from their counts, a mean is checked against the sample size beside it, and the wording around a result is checked against the numbers.",
    "to_revise": "Correct the number that is wrong, and report an effect size and an exact p with every test.",
    "marks": [
     {
@@ -1437,6 +1426,11 @@
      "url": "https://github.com/labarba/sciwrite"
     },
     {
+     "citation": "Brown, N. J. L., & Heathers, J. A. J. (2017). The GRIM test: A simple technique detects numerous anomalies in the reporting of results in psychology. Social Psychological and Personality Science, 8(4), 363–369.",
+     "doi": "10.1177/1948550616673876",
+     "url": "https://doi.org/10.1177/1948550616673876"
+    },
+    {
      "citation": "Hohmann, M. H., Barnett, A. G., King, N., & Connell, S. D. (2025). The evolution of scientific writing: An analysis of 20 million abstracts over 70 years in health and medical science. Scientometrics, 130(7), 3349–3366.",
      "doi": "10.1007/s11192-025-05353-8",
      "url": "https://doi.org/10.1007/s11192-025-05353-8"
@@ -1470,11 +1464,6 @@
      "citation": "Wasserstein, R. L., & Lazar, N. A. (2016). The ASA’s statement on p-values: Context, process, and purpose. The American Statistician, 70(2), 129–133.",
      "doi": "10.1080/00031305.2016.1154108",
      "url": "https://doi.org/10.1080/00031305.2016.1154108"
-    },
-    {
-     "citation": "Brown, N. J. L., & Heathers, J. A. J. (2017). The GRIM test: A simple technique detects numerous anomalies in the reporting of results in psychology. Social Psychological and Personality Science, 8(4), 363–369.",
-     "doi": "10.1177/1948550616673876",
-     "url": "https://doi.org/10.1177/1948550616673876"
     },
     {
      "citation": "McNamara, D. S., Graesser, A. C., McCarthy, P. M., & Cai, Z. (2014). Automated evaluation of text and discourse with Coh-Metrix. Cambridge University Press.",

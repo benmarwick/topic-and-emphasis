@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.38.0 (2026-11-26)
+
+- Fixed: the arc over the sentence bar in the rewrite box was drawn several times too tall and below the bar. A style added in 0.36.0 for a new picture also matched it.
+- GRIM (a mean that cannot come from whole-number scores for its sample size) now belongs to Statistics reporting, with its note, its mark and its measure. It was under Mechanical checks.
+- Meaning views, Map: the text says how the map is made (principal component analysis, not UMAP or t-SNE). Dot size shows the words in the sentence. With a claim written, dot colour shows closeness to the claim; without one, the paragraph. Numbers in the dots are larger, and there is a key.
+- Ladders: more room between the lines.
+- Simple view: the rewrite box shows the sentence bar, the status line, the box and the notes. The tabs, the list of marked lenses, the phrase look-up, the meaning-model line and the edit slider are hidden.
+- Fingerprints are off in every browser until switched on; an earlier setting is not carried over.
+- Tufte is no longer cited on the Overview or on "Where the load falls", which are plain bar charts.
+- About box: the entailment model's base, DeBERTa, is named with its MIT licence, and the line of figures says what is carried in the page and what is fetched when used.
+- Introduction: a sentence on working in short, focused spells with the focus timer.
+
 ## 0.37.1 (2026-11-26)
 
 - Vocabulary level: the two word lists are named wherever they are mentioned: the New General Service List (2,809 everyday words) and the New Academic Word List (957 academic words), both by Browne, Culligan and Phillips.

@@ -1325,10 +1325,10 @@ function analyze(raw,opts){opts=opts||{};let rPair=0,rPairN=0,flatN=0;
         MRE.lastIndex=0;while((m=MRE.exec(text))){const d=m[2].length,mean=parseFloat(m[1]);if(N>=Math.pow(10,d))continue;gt++;const x=mean*N,tol=0.5*Math.pow(10,-d)+1e-9,lo=Math.floor(x),hi=Math.ceil(x);
           if(Math.abs(lo/N-mean)<=tol||Math.abs(hi/N-mean)<=tol)continue;gf++;
           const a=m.index+m[0].length-m[1].length,b=m.index+m[0].length,nr=[...new Set([lo/N,hi/N].map(v=>v.toFixed(d)))].join(' and ');
-          const id=add({lens:'checks',s:st.i,a,b,sev:2,title:'A mean of '+m[1]+' with N = '+N,q:'Is each score a whole number, and did all '+N+' people give one?',
+          const id=add({lens:'stats',s:st.i,a,b,sev:2,title:'A mean of '+m[1]+' with N = '+N,q:'Is each score a whole number, and did all '+N+' people give one?',
             detail:'If '+N+' people each give a whole-number score, their mean is a whole number divided by '+N+'. No such mean rounds to '+m[1]+'. The nearest are '+nr+'. This is the GRIM test (Brown & Heathers 2017). A mean from a scale that averages several items, or from fewer people than the N in this sentence, can still be right.',
             tip:'Check the mean and the N against your data. If the scores are not whole numbers, or the scale averages several items, mark the note as checked.'});
-          (st.marks.checks||(st.marks.checks=[])).push({a,b,cls:'hl hb-olive',f:id});}});
+          (st.marks.stats||(st.marks.stats=[])).push({a,b,cls:'hl hb-violet',f:id});}});
       R.grim={tested:gt,flagged:gf};}
     /* sentence-by-sentence series for the load map, and lexical density: the share of words that carry content (Ure 1971) */
     {const ser={len:[],pre:[],ld:[],long:[],fresh:[],nom:[],conn:[],pas:[],hedge:[],force:[],evid:[],claim:[]},CK=new Set(claimTerms.map(t=>t.k)),FIG=/\d+(?:\.\d+)?\s*%|\bper ?cent\b|\bp\s*[<=>]\s*0?\.\d|\b[nN]\s*=\s*\d|\b\d+\.\d+\b/;let cwT=0;

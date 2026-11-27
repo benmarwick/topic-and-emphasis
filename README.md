@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.37.1) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.38.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.37.1},
+  version = {0.38.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -147,7 +147,7 @@ The Overview carries a **Research profile**: 23 counts, grouped under Structure,
 | Hedging | **Boosters** and **reader engagement** (reader pronouns, directives, questions, appeals to shared knowledge) counted beside hedges, and underlined in the text. | [Hyland 2005](https://doi.org/10.1177/1461445605050365) |
 | Claim strength | **Promotional adjectives** in eight groups, underlined in the text. | [Millar, Batalo & Budgell 2022](https://doi.org/10.1001/jamanetworkopen.2022.28676) |
 | Vague & worn words | Words on the **excess-vocabulary** list: style words that became much more common in research abstracts in 2023 and 2024. | [Kobak et al. 2025](https://doi.org/10.1126/sciadv.adt3813) |
-| Mechanical checks | **GRIM**: a question on any mean that cannot come from whole-number scores for the sample size in the same sentence. | [Brown & Heathers 2017](https://doi.org/10.1177/1948550616673876) |
+| Statistics reporting | **GRIM**: a question on any mean that cannot come from whole-number scores for the sample size in the same sentence. | [Brown & Heathers 2017](https://doi.org/10.1177/1948550616673876) |
 | Before & after | Each rewritten sentence is labelled as **wording only**, **content added**, **content removed** or both, and the revision receipt counts each kind. | Faigley & Witte 1981 |
 
 None of these raises a note except GRIM, which asks a question. The word norms keep their authors' non-commercial licences; see [`data/README.md`](data/README.md). The Academic Formulas List was not included at 0.7.0; since 0.18.0 it comes with the page as optional data (see below). References with no link above are books, or articles whose DOI could not be confirmed; their full details are in the page's reference list.
@@ -341,4 +341,4 @@ The application includes the **New General Service List** and the **New Academic
 
 The `data/` folder holds third-party word lists and word norms under their own licences, set out in [`data/README.md`](data/README.md). The **Academic Keyword List** (Paquot 2010) is included under **CC BY 4.0**. The Dale-Chall list, the excess-vocabulary list, the science-jargon list and the four lists from github.com/words (hedges, weasels, fillers, buzzwords) are MIT-licensed, and the syllable counts come from the CMU Pronouncing Dictionary (BSD 2-clause). The phrase bank in `data/phrases/` is under the **GNU GPL 3 or later**; it is kept apart from the application and loaded only on request. `data/lists/awl.json` and `data/lists/afl.json` hold the words and figures of the Academic Word List (Coxhead 2000) and the Academic Formulas List (Simpson-Vlach & Ellis 2010) and nothing else from those publications; no permission was sought for either, and `data/README.md` sets out the position taken and how to remove them. The four word-norm files in `data/norms/` are for **non-commercial use only** (CC BY-NC-ND 3.0 and CC BY-NC-SA 4.0) and are loaded only on request; delete that folder if you need a copy for commercial use.
 
-The `model/` folder holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT). The `lib/` folder holds **compromise** (MIT), and `src/vendor/` holds **Rough Notation** bundled with the parts of **Rough.js** it uses (MIT) and **canvas-confetti** (ISC); [`lib/README.md`](lib/README.md) gives the versions.
+The optional entailment model in `model/nli-deberta-v3-xsmall/` is a conversion of cross-encoder/nli-deberta-v3-xsmall, which is built on Microsoft's DeBERTa (MIT). The `model/` folder also holds third-party files used only by the optional meaning model: the **all-MiniLM-L6-v2** sentence-embedding model in its ONNX conversion (Apache-2.0), the **Transformers.js** library (Apache-2.0), and the **ONNX Runtime Web** engine it includes (MIT). The `lib/` folder holds **compromise** (MIT), and `src/vendor/` holds **Rough Notation** bundled with the parts of **Rough.js** it uses (MIT) and **canvas-confetti** (ISC); [`lib/README.md`](lib/README.md) gives the versions.
