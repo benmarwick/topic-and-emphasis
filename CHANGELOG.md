@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.42.0 (2026-11-26)
+
+- Hints, in both views. A note shows its question and what the rule saw. The advice comes when asked for, in up to three steps: where to look (with the marked words pulsing), what kind of change, and one way to do it (the note's own suggestion, with an invented example where there is one). No hint writes the new sentence. The third is the note's own suggestion, which for some notes names a replacement word, and a one-tap “Preview” stays where a note already had one. The second hint opens after an edit or after 20 seconds, and after two edits that leave a note open the button reads “Stuck? Take a hint”. Both numbers are working values. Asking costs nothing, and the workbench says “Resolved without a hint”. “Show all the advice at once” puts every note back to its full form, and the choice is remembered. Fifteen lenses have a written first hint and thirteen a second; the others fall back on the note's own text.
+- What is working. By fixed rule, a sentence is credited with the verb straight after its subject, an opening on a word the sentence before supplied, and a close on something new, each only where no note of that kind is open and the rule can name the words. The workbench lists these and marks any gained during a rewrite. Overview has a panel counting them across the draft and listing the sentences with nothing open and two or more. Such a sentence has a thin line under its number.
+- Reverse outline: “Try the paragraphs in another order”. Drag a paragraph or use the arrows. Each join shows the content words the lower paragraph carries over from the upper one, and a line compares the joins that carry nothing with those in the draft. The draft changes only on “Put the draft in this order”; headings stay in place and Undo restores it. The count is of repeated words and cannot judge the argument.
+- A workflow, `.github/workflows/ci.yml`, builds the page and runs the tests on every push and pull request, checks that the committed `index.html` is the built page, and on `main` publishes the site to GitHub Pages.
+- README: an animation of the tutorial replaces the screenshot. `tools/make_tutorial_gif.py` makes it.
+- `tests/hints.test.js` covers the hint tables, the strengths and the reordering of text.
+
 ## 0.41.0 (2026-11-26)
 
 - The tutorial ends in the simple view, and that view is kept for the next visit. Its last step says so and names “Show all lenses”. Leaving the first-visit tutorial early also stays in the simple view. Only a tutorial started by hand from the full view and left part-way goes back to the full view.

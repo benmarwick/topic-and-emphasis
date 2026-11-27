@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Browsers](https://img.shields.io/badge/browsers-Chrome%20%7C%20Edge%20%7C%20Safari%20%7C%20Firefox-brightgreen)
 ![Rule-based](https://img.shields.io/badge/feedback-rule--based-informational)
+[![Test and deploy](https://github.com/benmarwick/topic-and-emphasis/actions/workflows/ci.yml/badge.svg)](https://github.com/benmarwick/topic-and-emphasis/actions/workflows/ci.yml)
 
 **Topic & Emphasis** is a browser workbench for revising **research writing**. Paste a draft and it marks where the structure of each sentence and paragraph meets, or misses, what readers expect, following Gopen and Swan's ["The Science of Scientific Writing"](https://www.americanscientist.org/node/924) (1990). You then rewrite each sentence in place and watch the notes clear. It is written for **students working on their own**, in the social sciences in particular.
 
@@ -11,7 +12,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 **Use it online:** <https://benmarwick.github.io/topic-and-emphasis/>
 
-![The Stress position lens open on the built-in sample text](docs/screenshot.png)
+![The tutorial, step by step: a tour of the page, then four notes on the built-in example cleared one at a time](docs/tutorial.gif)
 
 ---
 
@@ -19,7 +20,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.41.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.42.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +29,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.41.0},
+  version = {0.42.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -157,6 +158,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Hints, what is working, and paragraphs in another order** (0.42.0). A note now gives its advice as **hints**, up to three and only when asked: where to look, what kind of change, and one way to do it. No hint writes the new sentence for you, and “Show all the advice at once” restores the full notes. The page also says **what a sentence already does well** (verb beside its subject, an opening on a known word, a close on something new), in the workbench, in the text and on the Overview. **Reverse outline** lets you drag the paragraphs into another order, shows what each would carry over from the one above, and rewrites the draft only when you ask. A **test and deploy workflow** runs on every push.
 
 - **A Guide brought up to date, and a tutorial that ends in the simple view** (0.41.0). The **Guide** now describes the simple view, the tutorial, the focus timer, the entailment model and the two optional second opinions (a parser and Harper), and its screenshots were made again from the current page, with two added (19 in all). The **Tutorial** ends in the simple view and keeps it for the next visit.
 
@@ -324,6 +327,16 @@ The lens descriptions the server gives come from `mcp/guide.json`, which is expo
 The rules read structure and have no idea what your sentences mean. There is no parser, no part-of-speech tagger (the optional lexicon lists what a word can be, and does not read it in context) and no spelling dictionary, so some sentences will be misjudged, synonyms are not recognised (unless the meaning model is on), and misspellings are not found. The word lists say how common a word is and nothing about what it means. Moves are read from cue phrases, so a move made without one is not seen. The working thresholds (for example, twelve words before the main verb, or five matching words in a row) are this tool's own values and are labelled as such in the application. They are not published norms.
 
 ---
+
+## 🧪 Tests and deployment
+
+`python3 build.py` builds `index.html` from `src/`. The tests are plain Node scripts with no dependencies:
+
+```sh
+for t in tests/*.js; do node "$t"; done
+```
+
+`.github/workflows/ci.yml` runs the build and the tests on every push and pull request, and fails if the committed `index.html` is not the built page. On a push to `main` that passes, it publishes the site to GitHub Pages. For that last step, set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. The animation at the top of this page is made by `tools/make_tutorial_gif.py`.
 
 ## 💬 Getting Help and Contributing
 
