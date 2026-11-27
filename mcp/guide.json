@@ -1174,7 +1174,7 @@
    "key": "vocab",
    "name": "Vocabulary level",
    "group": "Are the words well chosen?",
-   "reads": "Every content word is looked up in two open word lists: the 2,809 most useful everyday English words, and 957 words common across academic writing. A word on neither list is a specialist term or a rare word, and each one is a small cost to a reader outside your specialty. The panels below also count the words of the Academic Keyword List (Paquot 2010), which is built in, and the Academic Word List (Coxhead 2000), which can be loaded as optional data.",
+   "reads": "Every content word is looked up in two open word lists by Browne, Culligan and Phillips: the New General Service List, 2,809 of the most useful everyday English words, and the New Academic Word List, 957 words that are common across academic writing and are not on the first list. A word on neither list is a specialist term or a rare word, and each one is a small cost to a reader outside your specialty. The panels below also count the words of the Academic Keyword List (Paquot 2010), which is built in, and the Academic Word List (Coxhead 2000), which can be loaded as optional data.",
    "to_revise": "Define specialist terms at first use, and prefer the listed word where it says the same thing.",
    "marks": [
     {
@@ -1191,7 +1191,7 @@
     "how_this_count_differs": "Counted on word forms, not lemmas, so “study” and “studies” are two words. A count made on lemmas would come out a little lower."
    },
    "with_meaning_model": null,
-   "limits": "The two word lists cover general English. Every field has ordinary terms outside them, so an unlisted word is not an error.",
+   "limits": "The two word lists, the New General Service List and the New Academic Word List, cover everyday English and the academic words that every field shares. Every field has ordinary terms outside them, so an unlisted word is not an error.",
    "sources": [
     {
      "citation": "Browne, C., Culligan, B., & Phillips, J. (2013). The New General Service List (version 1.2) and The New Academic Word List (version 1.2). Both lists are included in this page under a Creative Commons Attribution-ShareAlike 4.0 licence.",

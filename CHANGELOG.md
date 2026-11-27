@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.37.1 (2026-11-26)
+
+- Vocabulary level: the two word lists are named wherever they are mentioned: the New General Service List (2,809 everyday words) and the New Academic Word List (957 academic words), both by Browne, Culligan and Phillips.
+- Fingerprints are off until switched on. A browser that had them switched on keeps them.
+- Paragraph ladder: drawn as the Link ladder is, with the same line weights and spacing, and with the paragraph's last sentence marked in the colour the Link ladder uses for a sentence's close.
+- Meaning views, Topics: the strip of colour blocks is gone; the topic shares picture stands in its place. The count of topic changes takes each sentence under its largest topic.
+
 ## 0.37.0 (2026-11-26)
 
 - Entailment model, optional and labelled as AI: nli-deberta-v3-xsmall in its 8-bit conversion, about 90 MB, in `model/nli-deberta-v3-xsmall/`, loaded by a button. Clutter, with the meaning model on: each pair of sentences that are close in meaning is read both ways and labelled "they say the same thing", "they contradict each other", "one implies the other" or "related, and not the same". Toulmin layout: each sentence placed in the grounds, warrant or backing is read against the claim. No note is made.
