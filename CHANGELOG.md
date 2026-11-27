@@ -7,6 +7,7 @@
 - Guide, “With the meaning model on”: Clutter, Claim tracer, Source overlap, Before & after and Meaning views now describe what the entailment model adds; Topic grid describes the steps-in-meaning picture; Meaning views describes Topics as shares along the draft and the Map as made by principal component analysis.
 - Guide, limits: Typing slips (Harper), Statistics reporting (GRIM, numbers found by form) and Dense phrases (three-noun runs).
 - Guide pictures: all 17 screenshots were made again from the current page, and two were added: the Toulmin layout drawn from filled-in boxes, and the steps in meaning from sentence to sentence. There are now 19.
+- Fixed: in current Chrome the Guide’s live pictures came out at full size, not half, and wide ones (the Link ladder, the Paragraph ladder) were cut off on the right. Chrome now takes a percentage width inside a zoomed box after the zoom. The page measures the width and sets it to fit.
 
 ## 0.40.0 (2026-11-26)
 
