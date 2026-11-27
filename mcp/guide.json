@@ -422,6 +422,49 @@
    ]
   },
   {
+   "key": "imrad",
+   "name": "Section context",
+   "group": "Is the argument clear?",
+   "reads": "Readers expect different things of an Abstract, an Introduction or Literature review, Methods, Results and a Discussion. This lens finds the sections from your headings, counts what each one is doing, and adds a line to the notes whose advice depends on the section. It raises no notes of its own and takes none away.",
+   "to_revise": "Read each section against what it is for. Where a note carries a section line, weigh the note with that line before you act on it.",
+   "marks": [],
+   "research_measure": null,
+   "with_meaning_model": null,
+   "limits": "Sections are found from headings alone, by their usual names, and you can correct each one. A draft with no headings has no sections until you say what the excerpt is. The published counts come from medical and science journals and are not targets; fields differ. Of the expectations stated here, this page has checked the figures of Millar et al. (2013) and Leong (2014) against their abstracts; the rest follow the general account in Swales (1990) and are worded as questions.",
+   "sources": [
+    {
+     "citation": "Gopen, G. D., & Swan, J. A. (1990). The science of scientific writing. American Scientist, 78(6), 550–558.",
+     "doi": null,
+     "url": "https://www.americanscientist.org/node/924"
+    },
+    {
+     "citation": "Swales, J. M. (1990). Genre analysis: English in academic and research settings. Cambridge University Press.",
+     "doi": null,
+     "url": null
+    },
+    {
+     "citation": "Millar, N., Budgell, B., & Fuller, K. (2013). ‘Use the active voice whenever possible’: The impact of style guidelines in medical journals. Applied Linguistics, 34(4), 393–414.",
+     "doi": "10.1093/applin/ams059",
+     "url": "https://doi.org/10.1093/applin/ams059"
+    },
+    {
+     "citation": "Leong, P. A. (2014). The passive voice in scientific writing. The current norm in science journals. Journal of Science Communication, 13(1), A03.",
+     "doi": null,
+     "url": "https://jcom.sissa.it/articles/author/447/"
+    },
+    {
+     "citation": "Martínez, I. A. (2001). Impersonality in the research article as revealed by analysis of the transitivity structure. English for Specific Purposes, 20(3), 227–247.",
+     "doi": "10.1016/S0889-4906(00)00013-2",
+     "url": "https://doi.org/10.1016/S0889-4906(00)00013-2"
+    },
+    {
+     "citation": "Webster, J., & Watson, R. T. (2002). Analyzing the past to prepare for the future: Writing a literature review. MIS Quarterly, 26(2), xiii–xxiii.",
+     "doi": null,
+     "url": "https://ebse.webspace.durham.ac.uk/ebse-bibliography/analysing-the-past-to-prepare-for-the-future-writing-a-literature-review/"
+    }
+   ]
+  },
+  {
    "key": "tracer",
    "name": "Claim tracer",
    "group": "Is the argument clear?",

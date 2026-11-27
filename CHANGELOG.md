@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.43.0 (2026-11-26)
+
+- Section context, a new lens (annotate only). It finds the Abstract, Introduction, Literature review, Methods, Results and Discussion from the headings, and each can be corrected; a draft with no headings can be named as an excerpt of one section. It shows a table of counts for each section (sentences with a passive, first person, past tense, hedges and boosters per 100 words, author-first against bracketed citations), a panel on whether an introduction or review joins its sources or lists them, and a panel on the abstract. Notes whose advice depends on the section carry a line that says so: Voice in every section, Hedging in Methods, Results and Discussion, Claim strength in Results and the Abstract, the “source after source” note in an Introduction or Literature review, and Stress position in the Abstract. No note is added, removed or settled, so the receipt is unchanged; a test holds the rule engine free of any reference to sections. The lens is not in the simple view.
+- What was checked for it: the figures of Millar et al. (2013) and Leong (2014) against their abstracts, and the scope of Martínez (2001). Other expectations are worded as questions and cite Swales (1990) and Gopen and Swan (1990).
+- Reverse outline, paragraphs in another order: with the meaning model on, each join also shows how close in meaning the two paragraphs are, and a line gives the mean for the trial order and for the draft. It is the figure Meaning views, Reorder uses. With the model off the panel is as before, and says what the model would add.
+- Guide: “For instructors, on one page”: what the page is, a 20-minute first session, links to share, what to look at afterwards, why it is built this way, and limits.
+- Links that open the page set up: `#step1`, `#step2` and `#step3` open the simple view with that step as the goal, and `#tutorial` starts the tutorial.
+- Meaning views, Map: the numbers in the dots are larger (15.5 against 11.5), and the dots are larger to hold them.
+- `tests/sections.test.js`.
+
 ## 0.42.0 (2026-11-26)
 
 - Hints, in both views. A note shows its question and what the rule saw. The advice comes when asked for, in up to three steps: where to look (with the marked words pulsing), what kind of change, and one way to do it (the note's own suggestion, with an invented example where there is one). No hint writes the new sentence. The third is the note's own suggestion, which for some notes names a replacement word, and a one-tap “Preview” stays where a note already had one. The second hint opens after an edit or after 20 seconds, and after two edits that leave a note open the button reads “Stuck? Take a hint”. Both numbers are working values. Asking costs nothing, and the workbench says “Resolved without a hint”. “Show all the advice at once” puts every note back to its full form, and the choice is remembered. Fifteen lenses have a written first hint and thirteen a second; the others fall back on the note's own text.

@@ -20,7 +20,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.42.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.43.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -29,7 +29,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.42.0},
+  version = {0.43.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -92,6 +92,7 @@ You do not need to clear every note. A note is a question about the sentence, an
 |---|---|---|
 | Reverse outline | The first and last sentence of each paragraph, and the point you say it makes | [Mensh & Kording (2017)](https://doi.org/10.1371/journal.pcbi.1005619); [Morris et al. (2025)](https://doi.org/10.1007/s40593-024-00395-0) |
 | Paragraph jobs | The job you give each paragraph, and the moves that job usually needs | [Swales (1990)](https://search.worldcat.org/title/23079178); [Academic Phrasebank](https://www.phrasebank.manchester.ac.uk/) |
+| Section context | The section each paragraph falls in, read from your headings. Counts by section, and a line on the notes whose advice depends on the section. Raises no notes | [Swales (1990)](https://search.worldcat.org/title/23079178); [Millar et al. (2013)](https://doi.org/10.1093/applin/ams059); Leong (2014) |
 | Claim tracer | Where the words of your central claim and your title appear | [Toulmin (2003)](https://doi.org/10.1017/CBO9780511840005); [Mihalcea & Tarau (2004)](https://aclanthology.org/W04-3252/) |
 | Claim strength | Causal, certain and absolute wording, against the evidence you name | [Toulmin (2003)](https://doi.org/10.1017/CBO9780511840005); [Haber et al. (2018)](https://doi.org/10.1371/journal.pone.0196346) |
 | Hedging | Hedges, and several in a row | [Hyland (1996)](http://hdl.handle.net/10722/130132) |
@@ -158,6 +159,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Section context, an instructor page, and links that open a step** (0.43.0). **Section context** finds the Abstract, Introduction or Literature review, Methods, Results and Discussion from your headings, counts what each is doing, and adds a line to the notes whose advice depends on the section (a passive in the Methods is usual; a hedge in the Discussion often belongs). It only annotates: no note is added or removed. The **Guide** has a one-page section for instructors, and adding `#step1`, `#step2`, `#step3` or `#tutorial` to the address opens the page already set up. With the meaning model on, the trial paragraph order in Reverse outline also shows closeness in meaning at each join.
 
 - **Hints, what is working, and paragraphs in another order** (0.42.0). A note now gives its advice as **hints**, up to three and only when asked: where to look, what kind of change, and one way to do it. No hint writes the new sentence for you, and “Show all the advice at once” restores the full notes. The page also says **what a sentence already does well** (verb beside its subject, an opening on a known word, a close on something new), in the workbench, in the text and on the Overview. **Reverse outline** lets you drag the paragraphs into another order, shows what each would carry over from the one above, and rewrites the draft only when you ask. A **test and deploy workflow** runs on every push.
 
