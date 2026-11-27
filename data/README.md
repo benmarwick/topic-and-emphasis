@@ -125,3 +125,9 @@ They are part of the application and are covered by its MIT licence.
 The NRC VAD Lexicon (Mohammad 2025) is **not** in this repository: its terms of use forbid redistribution.
 The page can read a copy that a reader chooses from their own device. Get it from
 <http://saifmohammad.com/WebPages/nrc-vad.html>.
+
+## Added in 0.46.0
+
+| File | What it is | Source | Licence |
+|---|---|---|---|
+| `norms/mwe_concreteness_Muraki_et_al_2022.tsv` | Mean concreteness, from 1 to 5, for 61,758 English expressions of two words or more (Muraki, Abdalla, Brysbaert & Pexman 2022). Expression and mean only. | [ejmuraki/multiword-exp](https://github.com/ejmuraki/multiword-exp), `MultiwordExpression_Concreteness_Ratings.csv`. Rows with one word or with characters outside ASCII were left out. | CC BY 4.0, as stated on the project's OSF page (<https://osf.io/ksypa/>). |

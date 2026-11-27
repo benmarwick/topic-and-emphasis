@@ -38,6 +38,8 @@ SHOTS = [
  ['revised', 'load', 'cap:Structure and vocabulary', 'Structure and vocabulary, with where each rewritten sentence started', ''],
  ['revised', 'rhythm', 'cap:The draft as a line', 'The draft as a line, over the starting draft', ''],
  ['data', 'load', 'cap:Structure and vocabulary', 'Sentence length against the age at which words are learned', "document.querySelector('[data-loady=\"aoa\"]').click()"],
+ ['data', 'load', 'sel:.panel.abs .abfig', 'Abstraction heatmap', ''],
+ ['data', 'load', 'sel:.panel.abs .abplot', 'Abstract or concrete, calm or charged', "vadLoad()"],
  ['data', 'load', 'sel:#ms', 'Typographic view: parts of speech', "document.querySelector('[data-typo=\"pos\"]').click()"],
  ['data', 'load', 'sel:#ms', 'Typographic view: abstract and concrete words', "document.querySelector('[data-typo=\"conc\"]').click()"],
  ['model', 'flow', 'mean', 'Old → new by meaning: the ribbon', ''],

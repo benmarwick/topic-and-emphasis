@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.46.0 (2026-11-27)
+
+- Load map: “Abstraction heatmap · optional data”. With the word norms loaded, every sentence is a block, a row for each paragraph, as wide as the sentence is long and darker the more concrete its content words (Brysbaert et al. 2014). The mean rating is written in each block that has room. The shading runs from the most abstract sentence of the draft to the most concrete. Under it: the five most abstract and most concrete sentences, and the most abstract stretch of three.
+- One press adds concreteness ratings for 61,758 expressions of two words or more (Muraki et al. 2022, CC BY 4.0, `data/norms/`), so that an expression is rated whole and not word by word.
+- Load map: “Abstract or concrete, calm or charged”. Each sentence is a dot, placed by the mean concreteness of its words across and their mean arousal up (Warriner et al. 2013). The axes run only as far as the data, with the lowest, middle and highest values written on each; dashed lines cross at the middle sentence. The sentences in the abstract and charged corner are listed.
+- Hedging: “Hedges against boosters”, by section where Section context has found sections, otherwise by paragraph. Hedges are bars to the left and boosters bars to the right, in every 100 words on one scale, each with its value. It uses the page's own two lists, so nothing is loaded. Parts where boosters outnumber hedges are named.
+- Clutter, with the plain-language pairs loaded: “If every plainer word were used”. Five small charts join each reading figure of the draft as it stands to the figure for a copy with every plainer word put in: words, words a sentence, Flesch reading ease, Flesch–Kincaid grade and long words. The draft is not changed.
+- Every mark in the four pictures has a tooltip and can be reached by keyboard, each picture has a text alternative and a line saying how to read it, values are written on the marks, and nothing depends on colour alone. `tests/pictures.test.js`.
+- Each has been run on one constructed draft only.
+
 ## 0.45.0 (2026-11-27)
 
 - Hedging, “Metadiscourse by kind”: the starter set of 106 cues is replaced by 478 items from the appendix to Hyland (2005), in his ten categories, read from the book by script (strings and category names only). The CorpusMind file and its AGPL licence are gone from the repository. An item is matched whole and by form, with no wildcard: a bracketed word is optional and a lone “x” stands for one word. The panel says that Hyland checked each item in context by hand and the page cannot.

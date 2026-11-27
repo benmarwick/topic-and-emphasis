@@ -20,7 +20,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.45.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.46.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -29,7 +29,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.45.0},
+  version = {0.46.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -159,6 +159,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **Four pictures from the word lists** (0.46.0). **Load map** has an *abstraction heatmap*: a block for every sentence, shaded by how concrete its words are, with expressions of several words rated whole once the ratings of [Muraki et al. (2022)](https://osf.io/ksypa/) are loaded. Beside it, a plot places each sentence by concreteness and by arousal. **Hedging** sets hedges against boosters for each section, as bars to either side of one line. **Clutter** shows the reading figures the draft would have with every plainer word put in, without changing it. Every mark has a tooltip and a written value.
 
 - **Four more optional lists, and Hyland's own metadiscourse items** (0.45.0). Each loads at one press, counts only, and makes no note. **Hedging** now counts 478 items from the appendix to Hyland (2005) in his ten categories, in place of the earlier starter set. **Clutter** lists the words of the draft that the US plain-language guidelines (CC0) pair with a plainer one, and **Action in verbs** lists phrases that hide a verb. **Signal phrases** counts connectives by the relation they mark, from [en_dimlex](https://github.com/discourse-lab/en_dimlex) (CC BY-NC-SA 4.0). **Old → new** tells sentences that open “This finding…” from those that open with a bare “This…”, using a list of 959 shell nouns.
 

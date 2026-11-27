@@ -49,6 +49,22 @@
  },
  {
   "lens": "load",
+  "name": "Abstraction heatmap",
+  "need": "optional data, loaded from the lens",
+  "file": "data/guide/load-abstraction-heatmap.webp",
+  "w": 1044,
+  "h": 220
+ },
+ {
+  "lens": "load",
+  "name": "Abstract or concrete, calm or charged",
+  "need": "optional data, loaded from the lens",
+  "file": "data/guide/load-abstract-or-concrete-calm-or-charged.webp",
+  "w": 1044,
+  "h": 618
+ },
+ {
+  "lens": "load",
   "name": "Typographic view: parts of speech",
   "need": "optional data, loaded from the lens",
   "file": "data/guide/load-typographic-view-parts-of-speech.webp",
