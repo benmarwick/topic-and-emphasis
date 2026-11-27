@@ -1868,7 +1868,7 @@ const TIPRULES=[
  ['#termClear',()=>'Unselect every term.'],['#pCheck',()=>'Check your answer to this drill.'],['#pNext',()=>'Go on to the next drill.'],
  ['#fsDown',()=>'Make the text of the page smaller.'],['#fsUp',()=>'Make the text of the page larger.'],
  ['#rsSpace',()=>'Put more space between the lines and words of the draft.'],['#rsColour',()=>'Use underlines and outlines in place of most background colour.'],['#rsStill',()=>'Stop the pictures from drawing themselves in when they appear.'],
- ['#tourSkip',()=>'Leave the tour and use the page freely.'],
+ ['#tourSkip',()=>'Leave the tour and use the page freely.'],['#tourPrev',()=>'Go back one step of the tour.'],
  ['[data-noun]',e=>'Put “'+e.textContent.replace(/^…\s*/,'').trim()+'” after the pointing word in the rewrite box, so that the reader knows what it points to.'],
  ['[data-pw]',()=>'Tap to choose this word as part of your answer, and again to take it back.'],
  ['summary',()=>'Open or close this section.']];
@@ -2335,10 +2335,55 @@ const TOURN=[
  {lens:'stress',act:'The sentence ends on “however”, and readers take the last words as the point. End on the news instead. Rewrite it as: “Within a year, however, those who joined a group recovered most of their lost contact.”',sel:'#wbText',show:f=>tourEdit(f,/^(\s*)Those who joined a group recovered most of their lost contact within a year, however\./,'$1Within a year, however, those who joined a group recovered most of their lost contact.')}];
 function tourEdit(f,re,to){const st=state.A.sents[f.s];if(!st)return;const cur=state.raw.slice(st.s,st.e),nx=cur.replace(re,to);if(!state.sel||!spanSents().some(x=>x.i===f.s))openWb(f.s,{hot:f.key});if(nx===cur)return;replaceRaw(st.s,st.e,nx);run();syncWbText();}
 function tourNow(){const fs=state.A.findings.filter(active),tv=TOURN.filter(n=>simpleOK(n.lens)),left=tv.map(n=>fs.find(f=>f.lens===n.lens)),k=left.findIndex(Boolean);return{k,f:k<0?null:left[k],done:left.filter(x=>!x).length,tv};}
-/* the bubble sits just under what the step is about, and the page is brought to that place once for each step */
-function tourPlace(tg,key){const el=$('#tour'),T=state.tour;if(!tg||!tg.getClientRects().length){el.classList.remove('near');el.style.top=el.style.left=el.style.width='';return;}
-  const r=tg.getBoundingClientRect(),w=Math.min(380,innerWidth-32);el.classList.add('near');el.style.width=w+'px';el.style.left=Math.max(16,Math.min(innerWidth-w-16,r.left))+'px';el.style.top=(r.bottom+window.scrollY+12)+'px';
-  if(T&&T.key!==key){T.key=key;const ph=window.matchMedia('(max-width:720px)').matches,rail=document.querySelector('.rail'),off=(ph&&rail?rail.offsetHeight:0)+Math.min(150,innerHeight*.2),y=r.top+window.scrollY-off;clearTimeout(tourPlace.t);tourPlace.t=setTimeout(()=>window.scrollTo({top:Math.max(0,y),behavior:reduced()?'auto':'smooth'}),60);}}
+/* what the tutorial shows before it asks for any work: where a draft goes in, the text, the count of open notes, the marks, the lens menu and one lens. Each step names the part of the page it is about (spot), what pulses there (pulse) and what comes to the top of the screen (scroll). */
+const TPRE=[
+ {k:'entry',lazy:1,spot:['.top .actions'],pulse:'#btnEdit',scroll:'.top .actions',txt:'A draft of your own goes in here. “Paste your text” opens a box to type or paste into, and “Open a file” reads a Word, Markdown or plain-text file. The page already holds a short example for this tutorial, so there is nothing to paste yet.'},
+ {k:'text',spot:['#ms'],scroll:'#readout',txt:'This is the text as the page has read it: seven sentences, each with a small number in front. You do not type here. You tap a sentence to open it.'},
+ {k:'count',spot:['#readout','#ms'],pulse:'#readout .status, #ms .sn.on',scroll:'#readout',txt:n=>'This line counts the open notes: '+n+' now. A note is a question that a rule has raised about one sentence. In the text, a sentence with an open note has a dark number, and the count falls as you settle each note.'},
+ {k:'marks',spot:['#ms'],pulse:'#ms .mk[data-f]',scroll:'#readout',txt:'An underline shows the words a note points at: “in order to” in sentence 2, for example. Words with no underline raised no question, so most of the text is left alone.'},
+ {k:'rail',spot:['.rail'],scroll:'#readout',txt:'This is the lens menu. Overview shows every open note at once. Each of the other lenses reads the text for one thing only, and the number beside its name counts its open notes. Press Next, and the tutorial opens one lens to show you its marks.'},
+ {k:'lens',lens:'sv',spot:['#lensCard .legend','#ms'],scroll:'#lensCard .legend',txt:'This is the Subject → verb lens. A lens marks how every sentence is built, and not only the problems. Bold with one underline is the subject. Bold with a double underline is its main verb. Shading covers the words that stand between the two. Sentence 3 makes its reader wait nine words for the verb, so its number is coloured and it carries the one note in this lens.'}];
+/* and what it shows inside the box where a sentence is rewritten, before the first note is worked on */
+const TWB=[
+ {k:'box',spot:['#wb'],txt:n=>'This is the box where you rewrite. It opens under the paragraph, and everything in it is about sentence '+n+' alone. The × in its corner closes it and keeps your edits.'},
+ {k:'bar',spot:['#wb .anatrow','#wbKey'],txt:'The bar draws the sentence to scale, one step of width for each word. Amber is the subject and its verb. Grey is the middle. Rose is the last few words, the stress position, which readers weigh most. The line under the bar says the same in words.'},
+ {k:'status',spot:['#wbStatus'],txt:'The light counts the open notes on this sentence: orange for one or two, red for three or more, green for none. The page reads the sentence again at every keystroke, so the light tells you at once whether a rewrite worked.'},
+ {k:'rewrite',spot:['#wb label.cap','#wb .tawrap'],txt:'You rewrite the sentence in this box. The shaded words, “in order to”, are the ones the open note points at. The two thin underlines show the subject and the main verb. Every mark moves as you type.'},
+ {k:'note',spot:['#pNotes .note'],txt:'This is the note. Its first line names the lens that raised it, Clutter. Under that come the words it points at, a question in italics for you to answer, and what the rule saw. “Try” gives a suggestion. “I checked this…” keeps the sentence as it is, because you may answer no.'}];
+const tourEls=sels=>{const out=[];(sels||[]).forEach(s=>document.querySelectorAll(s).forEach(e=>{if(e.getClientRects().length)out.push(e);}));return out;};
+/* Where the bubble goes. The part of the page a step is about must stay in view, with the control that pulses, so the bubble tries each place in turn: beside that part on the right, beside it on the left, just under it, just over it, and last a strip along the bottom of the screen. A step that asks for typing on a narrow touch screen puts the bubble straight under the box that is typed in, where an on-screen keyboard is less likely to hide it. The page is brought to its place once for each step: the named part comes to the top of the screen, and the page moves further only when the pulsing control would be out of sight. */
+function tourLay(S,fresh){const el=$('#tour'),sp=$('#tourSpot'),T=state.tour,els=S&&T?tourEls(S.spot):[];
+  el.classList.remove('near','fix','sheet','p-right','p-left','p-below','p-above');el.style.top=el.style.left=el.style.width='';
+  if(!els.length){sp.hidden=true;return;}
+  const vw=document.documentElement.clientWidth,vh=innerHeight,sy=window.scrollY,rail=document.querySelector('.rail'),desk=document.getElementById('desk'),isBar=rail&&desk&&rail.offsetWidth>vw*.8&&getComputedStyle(rail).position==='sticky',deskTop=desk?desk.getBoundingClientRect().top+sy:0,m=12,pad=6,gap=14;
+  /* on a narrow screen the lens menu is a bar that stays at the top once the page has reached it, and what the tutorial brings up must sit under it */
+  const barAt=yy=>isBar&&yy+1>=deskTop?rail.offsetHeight:0;let off=12;
+  const fixed=els.some(e=>/sticky|fixed/.test(getComputedStyle(e).position)),D=fixed?0:sy;
+  const box=es=>{let l=1e9,t=1e9,r=-1e9,b=-1e9;es.forEach(e=>{const q=e.getBoundingClientRect();l=Math.min(l,q.left);t=Math.min(t,q.top);r=Math.max(r,q.right);b=Math.max(b,q.bottom);});return{l,t:t+D,r,b:b+D};};
+  const R=box(els),pe=S.pulse?tourEls([S.pulse]):[],A=pe.length?box(pe.slice(0,1)):R;
+  let y=T.yt!=null?T.yt:sy;
+  if(fresh){const se=(S.scroll&&tourEls([S.scroll])[0])||els[0];const st=se.getBoundingClientRect().top+sy;y=Math.max(0,st-12);if(barAt(y))y=Math.max(0,st-12-rail.offsetHeight);if(S.lazy&&R.t>=sy+12+barAt(sy)&&R.b<=sy+vh-m)y=sy;}
+  off=barAt(y)+12;
+  let w=Math.min(360,vw-2*m),under=0;el.classList.add('near');el.style.width=w+'px';let h=el.offsetHeight,mode='sheet',x=m;
+  for(const sd of [1,-1]){const rm=sd>0?vw-m-(R.r+pad+gap):R.l-pad-gap-m;if(rm>=280){w=Math.min(360,rm);el.style.width=w+'px';h=el.offsetHeight;mode=sd>0?'right':'left';x=sd>0?R.r+pad+gap:R.l-pad-gap-w;break;}}
+  /* what must be in sight: the pulsing control, or the part itself, or as much of its top as the screen holds */
+  const sheetH=()=>{el.classList.remove('near');el.classList.add('sheet');el.style.width='';const q=el.offsetHeight;el.classList.remove('sheet');el.classList.add('near');el.style.width=w+'px';return q;};
+  const fit=low=>{if(fixed)return;const av=vh-off-m-low;let t=A.t,b=A.b;if(R.b-R.t<=av&&R.t>=A.t-av){t=R.t;b=R.b;}if(b-t>av)b=t+av;if(b>y+vh-m-low)y=b-(vh-m-low);if(t<y+off)y=t-off;y=Math.max(0,y);};
+  const Y=()=>fixed?0:y;
+  if(mode==='sheet'){fit(0);
+    if(R.b+pad+gap+h<=Y()+vh-m)mode='below';else if(R.t-pad-gap-h>=Y()+off)mode='above';
+    else if(S.under&&pe.length&&window.matchMedia('(pointer:coarse)').matches&&A.b+10+h<=Y()+vh-m){mode='below';under=1;}
+    else{const sh=sheetH();fit(sh+m);}}
+  else fit(0);
+  let top=0;
+  if(mode==='right'||mode==='left'){top=Math.max(Y()+off,Math.min(A.t-4,Y()+vh-h-m));el.style.setProperty('--ay',Math.max(12,Math.min(h-26,A.t+Math.min(14,(A.b-A.t)/2)-top-7))+'px');}
+  else if(mode==='below'||mode==='above'){x=Math.max(m,Math.min(vw-w-m,A.l));top=under?A.b+10:mode==='below'?R.b+pad+gap:R.t-pad-gap-h;el.style.setProperty('--ax',Math.max(12,Math.min(w-26,A.l+Math.min(24,(A.r-A.l)/2)-x-7))+'px');}
+  if(mode==='sheet'){el.classList.remove('near');el.classList.add('sheet');el.style.width='';}
+  else{el.classList.add('p-'+mode);el.classList.toggle('fix',fixed);el.style.left=x+'px';el.style.top=top+'px';}
+  sp.hidden=false;sp.classList.toggle('fix',fixed);sp.classList.toggle('pulse',!pe.length);{const l=Math.max(3,R.l-pad),t=fixed?Math.max(3,R.t-pad):R.t-pad,r=Math.min(vw-3,R.r+pad),b=R.b+pad;sp.style.left=l+'px';sp.style.top=t+'px';sp.style.width=(r-l)+'px';sp.style.height=(b-t)+'px';}
+  if(fresh){T.yt=y;clearTimeout(tourLay.t);if(Math.abs(y-sy)>3)tourLay.t=setTimeout(()=>window.scrollTo({top:y,behavior:reduced()?'auto':'smooth'}),40);}}
+/* the page changes shape under the tutorial as a sentence is typed, a preview opens or the window is resized; the bubble and the lit part follow, and the page is not scrolled again */
+function tourRelay(){if(tourRelay.q)return;tourRelay.q=requestAnimationFrame(()=>{tourRelay.q=0;const T=state.tour;if(T&&T.step&&!$('#tour').hidden)tourLay(T.step,performance.now()-(T.at||0)<1500);});}
 /* a draft of the writer's own is set aside before an example replaces it, and can be brought back */
 const isEx=()=>state.base===SAMPLE||state.base===SAMPLE2||state.base===SAMPLE_S;
 function hasStash(){try{const s=JSON.parse(store.get('ts.stash')||'null');return !!(s&&s.raw&&s.raw.trim());}catch(e){return false;}}
@@ -2346,26 +2391,35 @@ function stashDraft(){if(state.isSample||isEx()||!state.raw.trim())return;clearT
 function unstash(){let s=null;try{s=JSON.parse(store.get('ts.stash')||'null');}catch(e){}if(!s||!s.raw)return;state.tour=null;newDoc(s.raw,false);
   Object.assign(state,{base:s.base||s.raw,claim:s.claim||'',tags:s.tags||{},dismissed:s.dismissed||{},jobs:s.jobs||[],merges:s.merges||[],moves:s.moves||[],emph:s.emph||[],points:s.points||[],source:s.source||'',vers:s.vers||{},miles:s.miles||{},kind:s.kind||'',title:s.title||'',args:s.args||{},toul:s.toul||null,fname:s.fname||''});if(state.toul)toulSave();
   store.set('ts.fname',state.fname);store.set('ts.args',JSON.stringify(state.args));store.set('ts.stash','');setEditing(false);state.lens='overview';renderLensCard();run();save();toastQ.push('Your draft is back, as you left it.');showToast();}
-function startTour(){const was=!!state.simple;if(!was)setSimple(true,true);if(!(state.isSample&&state.base===SAMPLE&&state.raw===SAMPLE))loadEx(SAMPLE);state.lens='overview';state.sel=null;state.tab='notes';state.tour={i:0,was,ack:0};renderLensCard();renderDynamic();}
-function endTour(){const T=state.tour;state.tour=null;store.set('ts.tour','1');tourPlace(null);if(T&&T.was===false&&state.simple)setSimple(false,true);else renderDynamic();}
+function startTour(){const was=!!state.simple;if(!was)setSimple(true,true);if(!(state.isSample&&state.base===SAMPLE&&state.raw===SAMPLE))loadEx(SAMPLE);state.lens='overview';state.sel=null;state.tab='notes';state.tour={i:0,was,ack:0,pre:0,wbi:0};renderLensCard();renderDynamic();}
+function endTour(){const T=state.tour;state.tour=null;store.set('ts.tour','1');if(state.lens!=='overview'&&T&&T.step&&T.step.kind==='pre'){state.lens='overview';renderLensCard();}if(T&&T.was===false&&state.simple)setSimple(false,true);else renderDynamic();}
+/* the lens a step of the tutorial is shown in: Overview, but for the one step that opens a lens */
+function tourWant(T){const p=T.pre||0;return (p<TPRE.length&&TPRE[p].lens)||'overview';}
+function tourLens(){const T=state.tour;if(!T)return;const want=tourWant(T);if(state.lens!==want)setLens(want);else renderDynamic();}
 function tourSync(){const el=$('#tour'),T=state.tour;document.querySelectorAll('.tour-target').forEach(x=>x.classList.remove('tour-target'));
   if(T&&state.base!==SAMPLE){state.tour=null;store.set('ts.tour','1');}
-  document.body.removeAttribute('data-tour');
-  if(!state.tour||state.editing){el.hidden=true;return;}
-  const N=tourNow(),fin=N.k<0;if(state.lens!=='overview'&&!fin){el.hidden=true;return;}
-  let txt,sel=null,next=false,show=true,beat=false;const nT=N.tv.length,ack=T.ack||0,NUMW=['no','one','two','three','four','five'];
-  if(N.done>ack){const was=N.tv[ack],why=was&&ASIDE[was.lens];beat=true;next=true;show=false;sel=state.sel?'#wbStatus':null;txt='Note '+(ack+1)+' of '+nT+' is cleared. '+(why?'Why that helps: '+why[0]+'. ':'')+(N.done<nT?'Look at the sentence as it reads now, then press Next for the next note.':'Look at the sentence as it reads now, then press Next.');
-    if(T.beatFor!==N.done){T.beatFor=N.done;T.lock=performance.now()+900;const nb=$('#tourNext');nb.disabled=true;setTimeout(()=>{nb.disabled=false;},900);}}
-  else if(fin){txt='All '+(NUMW[nT]||nT)+' notes are cleared'+(nT===5?': four by rewriting, and one by deciding the sentence was right as it stood':', each by rewriting the sentence')+'. That is the whole loop: open a sentence, answer its question, then rewrite it or keep it. A draft of your own will raise more notes than this, and you do not need to clear them all.';show=false;}
+  document.body.removeAttribute('data-tour');document.body.classList.toggle('touring',!!state.tour&&!state.editing);
+  if(!state.tour||state.editing){el.hidden=true;tourLay(null);return;}
+  const N=tourNow(),fin=N.k<0,nT=N.tv.length,ack=T.ack||0,NUMW=['no','one','two','three','four','five'],nB=TPRE.length+TWB.length;
+  if(N.done>0||ack>0)T.pre=TPRE.length;
+  const pre=T.pre||0,wbi=T.wbi||0,want=tourWant(T);
+  let S;
+  if(state.lens!==want&&!fin)S={kind:'away',key:'a',want,next:1,label:'Back to the tutorial',txt:'You are in the '+LBY[state.lens].n+' lens. Look around for as long as you like. The tutorial is waiting in '+(want==='overview'?'Overview':LBY[want].n)+'.'};
+  else if(N.done>ack){const was=N.tv[ack],why=was&&ASIDE[was.lens];S={kind:'beat',key:'b'+N.done,next:1,hold:900,spot:state.sel?['#wb']:['#ms'],pulse:state.sel?'#wbStatus':null,scroll:state.sel?'#wb':'#readout',txt:'Note '+(ack+1)+' of '+nT+' is cleared. '+(why?'Why that helps: '+why[0]+'. ':'')+(N.done<nT?'Look at the sentence as it reads now, then press Next for the next note.':'Look at the sentence as it reads now, then press Next.')};}
+  else if(fin)S={kind:'fin',key:'f',next:1,label:'Done',txt:'All '+(NUMW[nT]||nT)+' notes are cleared'+(nT===5?': four by rewriting, and one by deciding the sentence was right as it stood':', each by rewriting the sentence')+'. That is the whole loop: open a sentence, answer its question, then rewrite it or keep it. A draft of your own will raise more notes than this, and you do not need to clear them all.'};
+  else if(pre<TPRE.length){const P=TPRE[pre];S={kind:'pre',key:'p'+P.k,next:1,back:pre>0,spot:P.spot,pulse:P.pulse||null,scroll:P.scroll,lazy:P.lazy,txt:'Tour '+(pre+1)+' of '+nB+'. '+(typeof P.txt==='function'?P.txt(state.A.findings.filter(active).length):P.txt)};}
   else{const f=N.f,open=state.sel&&spanSents().some(x=>x.i===f.s),lead='Note '+(N.k+1)+' of '+nT+'. ';
-    if(!open){txt=lead+(N.k===0?'Tap sentence '+(f.s+1)+' in the text. Its number is coloured because a lens has a note on it.':(N.k===1?'The first note is cleared, and the count above the text has dropped. ':'')+'Now tap sentence '+(f.s+1)+'.');sel='.sent[data-s="'+f.s+'"]';}
-    else if(N.k===0&&!T.intro){txt=lead+'This is the workbench. You rewrite in the box. The note under it starts with a question, and the advice follows.';sel='#pNotes .note';next=true;show=false;}
-    else{txt=lead+N.tv[N.k].act;sel=N.tv[N.k].sel;}}
-  document.body.setAttribute('data-tour',fin?'done':sel&&sel.startsWith('.sent')?'sent':'wb');
-  el.hidden=false;$('#tourText').textContent=txt;$('#tourNext').hidden=!(next||fin);$('#tourNext').textContent=fin?'Done':'Next';$('#tourShow').hidden=!show;$('#tourSkip').hidden=fin;$('#tourBack').hidden=!(fin&&hasStash());
-  const tg=sel&&document.querySelector(sel);if(tg&&!beat)tg.classList.add('tour-target');tourPlace(fin?null:tg,(beat?'b'+N.done:N.k+(sel||''))+':'+(T.intro||0));}
-function tourShow(){const T=state.tour;if(!T)return;const N=tourNow();if(!N.f)return;const open=state.sel&&spanSents().some(x=>x.i===N.f.s);
-  if(!open){openWb(N.f.s,{hot:N.f.key,scroll:true});return;}if(N.k===0&&!T.intro){T.intro=1;renderDynamic();return;}N.tv[N.k].show(N.f);}
+    if(!open)S={kind:'tap',key:'t'+N.k,show:1,dim:'sent',spot:['#ms'],pulse:'.sent[data-s="'+f.s+'"]',scroll:'#readout',txt:lead+(N.k===0?'Now the work starts. Tap sentence '+(f.s+1)+' in the text, the first with a dark number.':(N.k===1?'The first note is cleared, and the count above the text has dropped. ':'')+'Now tap sentence '+(f.s+1)+'.')};
+    else if(N.k===0&&wbi<TWB.length){const W=TWB[wbi];S={kind:'wb',key:'w'+W.k,next:1,back:wbi>0,spot:W.spot,scroll:'#wb',txt:'Tour '+(TPRE.length+wbi+1)+' of '+nB+'. '+(typeof W.txt==='function'?W.txt(f.s+1):W.txt)};}
+    else{const pv=tourEls(['#pNotes [data-pvgo]']).length>0;S={kind:'task',key:'k'+N.k+(pv?'v':''),show:1,under:!pv&&N.tv[N.k].sel==='#wbText',spot:['#wb'],pulse:pv?'#pNotes [data-pvgo]':N.tv[N.k].sel,scroll:'#wb',txt:lead+(pv?'The box under the button says what the change would clear. Choose “Make the change”.':N.tv[N.k].act)};}}
+  if(S.dim)document.body.setAttribute('data-tour',S.dim);
+  const nb=$('#tourNext'),fresh=T.key!==S.key;T.step=S;T.key=S.key;if(fresh)T.at=performance.now();
+  el.hidden=false;$('#tourText').textContent=S.txt;nb.hidden=!S.next;nb.textContent=S.label||'Next';$('#tourShow').hidden=!S.show;$('#tourPrev').hidden=!S.back;$('#tourSkip').hidden=S.kind==='fin';$('#tourBack').hidden=!(S.kind==='fin'&&hasStash());
+  if(fresh){clearTimeout(tourSync.t);nb.disabled=false;if(S.next){const ms=S.hold||500;T.lock=performance.now()+ms;nb.disabled=true;tourSync.t=setTimeout(()=>{nb.disabled=false;},ms);}}
+  if(S.pulse)tourEls([S.pulse]).forEach(x=>x.classList.add('tour-target'));
+  tourLay(S,fresh);}
+function tourShow(){const T=state.tour;if(!T)return;const N=tourNow(),S=T.step;if(!N.f||!S)return;
+  if(S.kind==='tap'){openWb(N.f.s,{hot:N.f.key});return;}if(S.kind==='task')N.tv[N.k].show(N.f);}
 /* ---------- live counts in the box where a draft is typed or pasted ---------- */
 let liveT=0;
 function liveM(){const el=$('#liveM'),d=$('#draft');if(!el||!d)return;const v=d.value;$('#btnEdit').classList.toggle('ready',!!state.editing&&!!v.trim());
@@ -2874,7 +2928,7 @@ function openWb(i,o){
   if(!same){state.sel={s:st.s,e:st.e};state.wbOnly=null;state.aside=null;state.pv=null;state.vcache=null;if(state.tab==='read'||state.tab==='vers'){if(!o.keepTab)state.tab='notes';}state.tiles=null;state.picked=-1;state.pick={news:new Set(),who:new Set()};state.markOut='';if(!o.keepTab)state.tab='notes';}
   state.hot=o.hot||null;if(state.guide&&state.tab!=='notes'&&o.hot)state.tab='notes';
   detectFx();renderDynamic();if(!same)syncWbText();
-  if(!same||o.scroll)requestAnimationFrame(()=>$('#wb').scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'}));
+  if((!same||o.scroll)&&!state.tour)requestAnimationFrame(()=>$('#wb').scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'}));
 }
 function closeWb(){state.sel=null;state.hot=null;state.guide=null;renderDynamic();}
 
@@ -2893,7 +2947,7 @@ function renderDynamic(){
     $('#fab').hidden=!n||state.editing||!!state.tour;$('#fab').textContent=state.sel?'Next note':'First note';}
   tourSync();
 }
-function setLens(k){if(state.simple&&!simLens(k))setSimple(false);if(state.stage&&!inStage(k)){state.stage=0;store.set('ts.stage','0');}vizIn();setTimeout(()=>{const ph=window.matchMedia('(max-width:720px)').matches,b=document.getElementById('lens-'+k),c=document.querySelector('.center');if(b&&ph)b.scrollIntoView({inline:'center',block:'nearest'});if(c){const off=ph?document.querySelector('.rail').offsetHeight+10:14,y=c.getBoundingClientRect().top+window.scrollY-off;if(Math.abs(window.scrollY-y)>4)window.scrollTo({top:Math.max(0,y),behavior:reduced()?'auto':'smooth'});}},0);state.lens=k;(state.seen||(state.seen=new Set())).add(k);state.pv=null;save();renderLensCard();renderDynamic();const ms=$('#ms');ms.classList.remove('lensin');void ms.offsetWidth;ms.classList.add('lensin');clearTimeout(lensT);lensT=setTimeout(()=>ms.classList.remove('lensin'),2200);}
+function setLens(k){if(state.simple&&!simLens(k))setSimple(false);if(state.stage&&!inStage(k)){state.stage=0;store.set('ts.stage','0');}vizIn();setTimeout(()=>{const ph=window.matchMedia('(max-width:720px)').matches,b=document.getElementById('lens-'+k),c=document.querySelector('.center');if(b&&ph)b.scrollIntoView({inline:'center',block:'nearest'});if(c&&!state.tour){const off=ph?document.querySelector('.rail').offsetHeight+10:14,y=c.getBoundingClientRect().top+window.scrollY-off;if(Math.abs(window.scrollY-y)>4)window.scrollTo({top:Math.max(0,y),behavior:reduced()?'auto':'smooth'});}},0);state.lens=k;(state.seen||(state.seen=new Set())).add(k);state.pv=null;save();renderLensCard();renderDynamic();const ms=$('#ms');ms.classList.remove('lensin');void ms.offsetWidth;ms.classList.add('lensin');clearTimeout(lensT);lensT=setTimeout(()=>ms.classList.remove('lensin'),2200);}
 function setEditing(on){
   state.editing=on;$('#desk').classList.toggle('editing',on);$('#btnClear').hidden=!on;
   $('#btnEdit').textContent=on?'Analyse':state.isSample?'Paste your text':'Edit whole text';
@@ -3010,7 +3064,13 @@ document.addEventListener('click',e=>{
   if(c('#fab')){nextNote();return;}
   if(c('#fsUp')||c('#fsDown')){const R=state.read;R.fs=Math.max(0,Math.min(FS.length-1,R.fs+(c('#fsUp')?1:-1)));applyRead();return;}
   if(c('#lnkTour')){startTour();return;}
-  if(c('#tourNext')){const T=state.tour;if(T){const N=tourNow();if(N.done>(T.ack||0)){if(performance.now()<(T.lock||0))return;T.ack=N.done;state.sel=null;state.hot=null;renderDynamic();}else if(N.k<0)endTour();else{T.intro=1;renderDynamic();}}return;}
+  if(c('#tourNext')){const T=state.tour,S=T&&T.step;if(S){if(S.next&&performance.now()<(T.lock||0))return;
+    if(S.kind==='away')setLens(S.want);
+    else if(S.kind==='beat'){T.ack=tourNow().done;state.sel=null;state.hot=null;renderDynamic();}
+    else if(S.kind==='fin')endTour();
+    else if(S.kind==='pre'){T.pre=(T.pre||0)+1;tourLens();}
+    else if(S.kind==='wb'){T.wbi=(T.wbi||0)+1;renderDynamic();}}return;}
+  if(c('#tourPrev')){const T=state.tour,S=T&&T.step;if(S&&S.kind==='pre'&&T.pre>0){T.pre--;tourLens();}else if(S&&S.kind==='wb'&&T.wbi>0){T.wbi--;renderDynamic();}return;}
   if(c('#tourShow')){tourShow();return;}
   if((el=c('[data-tlc]'))){const [k,i]=el.dataset.tlc.split(':'),st=state.A.sents[+i],T=toulS();if(st&&!T[k].includes(st.text.trim())){T[k].push(st.text.trim());toulSave();renderDynamic();}return;}
   if((el=c('[data-tlx]'))){const [k,n]=el.dataset.tlx.split(':'),T=toulS(),gone=T[k].splice(+n,1)[0];if(k==='r'&&T.ra)delete T.ra[gone];toulSave();renderDynamic();return;}
@@ -3213,7 +3273,8 @@ function renderRefs(){$('#refs').innerHTML=REFS.map(r=>'<li id="ref-'+r[0]+'">'+
   window.addEventListener('hashchange',()=>{if(location.hash==='#simple'&&!state.simple)setSimple(true);});
   state.noCel=store.get('ts.nocel')==='1';state.gpu=store.get('ts.gpu')==='1';state.harpDia=store.get('ts.harpdia')||'';
   if(state.simple){state.tab='notes';state.stage=0;if(!simLens(state.lens))state.lens='overview';if(state.isSample&&state.base===SAMPLE&&state.raw===SAMPLE){state.raw=state.base=SAMPLE_S;state.claim='';}}
-  if(state.isSample&&state.base===SAMPLE&&!state.simple&&!store.get('ts.tour')){state.tour={i:0,was:false,ack:0};state.simple=true;state.tab='notes';simpleBtn();}
+  if(state.isSample&&state.base===SAMPLE&&!state.simple&&!store.get('ts.tour')){state.tour={i:0,was:false,ack:0,pre:0,wbi:0};state.simple=true;state.tab='notes';simpleBtn();}
+  window.addEventListener('resize',tourRelay);window.addEventListener('scroll',()=>{const sp=document.getElementById('tourSpot');if(state.tour&&sp&&!sp.hidden&&sp.classList.contains('fix'))tourRelay();},{passive:true});if(window.ResizeObserver)new ResizeObserver(tourRelay).observe(document.body);
   window.matchMedia('(max-width:720px)').addEventListener('change',q=>{if(q.matches)[2,3,4,5,6,7].forEach(g=>{$('#g'+g).classList.remove('shut');});});
   renderRefs();setEditing(false);renderLensCard();applyRead();vizIn(true);run();pomoLoad();pomoUI();
 })();

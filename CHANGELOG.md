@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.40.0 (2026-11-26)
+
+- Tutorial, a tour before the work. Eleven short stops come before the first note is tackled, each with Next and Back and a count ("Tour 3 of 11"). Six are on the page: where a draft goes in, the text, the count of open notes and the dark sentence numbers, what an underline means, the lens menu, and one lens opened to show what its bold and underlined marks mean (Subject → verb). Five are inside the box where a sentence is rewritten: the box, the sentence bar and its key line, the status light, the rewrite box and its marks, and the parts of a note.
+- Tutorial, where the bubble goes. The bubble no longer sits on the thing it is about. For each step it tries, in turn: beside that part on the right, beside it on the left, just under it, just over it, and last a strip along the bottom of the screen. On a touch screen, a step that asks for typing puts it straight under the rewrite box. It follows when the page changes shape (a preview opens, the box grows, the window is resized).
+- Tutorial, scrolling. The page is moved once for each step. For every step in the rewrite box, the top of that box comes to the top of the screen (under the lens bar on a narrow screen). The page moves further only when the control to press would otherwise be out of sight. Opening a sentence or a lens no longer scrolls the page on its own while the tutorial runs.
+- Tutorial, attention. The part a step is about is lit and the rest of the page is veiled; nothing inside the rewrite box is faded out any more. The lit part pulses, or the one control to press does. With reduced motion asked for, or with "Still pictures" ticked under Reading comfort, the outline stays and does not move.
+- Tutorial: after "Preview", the step changes to point at "Make the change". Next is held for half a second on every step, and for longer after a note is cleared. Opening another lens part-way shows a "Back to the tutorial" button in place of hiding the tutorial.
+- Checked by a script at six screen sizes (1320×800, 1024×700, 768×900, 390×800, 390×664 and a 391×740 touch screen), by pressing the buttons and by "Show me": at no step does the bubble cover the lit part or the pulsing control, except the bottom strip over the lower part of a box taller than the screen, and the typing steps on a touch screen as described.
+
 ## 0.39.0 (2026-11-26)
 
 - Typing slips: "Grammar and spelling, a second check". Harper (harper.js 3.2.0, rule-based, about 20 MB) is loaded by a button from `lib/harper/` and reads each sentence. Its results are listed with its message and suggestions. Left out: spellings of capitalised words, of anything with a digit and of terms used three times or more, and anything inside a citation, code or mathematics. Spelling follows British or American English, chosen from the draft and switchable. No note is made. The unused inlined and slim builds of Harper were removed from the repository.

@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.39.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.40.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.39.0},
+  version = {0.40.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -60,7 +60,7 @@ Requires Python 3. The tests need Node.js 18 or later and no packages. `tests/sm
 
 ## 🚀 Quick Start
 
-1. **Paste your text**, or choose **Try the example** for seven sentences with five notes to clear. **Tutorial** walks you through them.
+1. **Paste your text**, or choose **Try the example** for seven sentences with five notes to clear. **Tutorial** tours the page and then walks you through them.
 2. **Pick a lens** from the list. Each lens reads the draft for one thing and marks it in the text. The Overview shows every open note at once and suggests where to start.
 3. **Tap a sentence** to open the workbench under its paragraph. Read the note, rewrite the sentence in the box, and the marks update as you type. Where a note offers a change, preview it before you accept it.
 New to revising? Press **Simple view** for eight lenses in three steps, with three notes at a time. A link that ends in `#simple` opens the page that way.
@@ -157,6 +157,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **A tutorial that tours the page first and keeps out of the way** (0.40.0). The **Tutorial** now opens with eleven short stops before any work is asked for: where a draft goes in, the text, the count of open notes, what an underline means, the lens menu, one lens opened to show its bold and underlined marks, and then the parts of the box where a sentence is rewritten (the sentence bar, the status light, the rewrite box and the note). The part each step is about is lit and pulses, and the rest of the page is veiled. The bubble takes a place beside, under or over that part, or along the bottom of the screen, so that it does not cover it. The page moves once for each step, and the top of the rewrite box comes to the top of the screen.
 
 - **Harper, the entailment model in five more places, and a tutorial in simple view** (0.39.0). *Harper* ([Automattic](https://github.com/Automattic/harper), Apache 2.0), a rule-based grammar and spelling checker, can be loaded in Typing slips; it lists places to look and makes no note. The *entailment model* now also says whether a rewrite changed what a sentence says (Before & after), lists the sentences that read as contradicting your claim and checks each rebuttal against its answer (Claim tracer), reads your closest sentences against the source (Source overlap), and reads the ending against the opening (Meaning views). It is used only on pairs the meaning model puts close together, because it calls some unrelated sentences contradictions. The *tutorial* runs in simple view on four notes, pauses after each note is cleared, and keeps its bubble beside the thing to look at. In simple view, sentence numbers with an open note carry a slow halo.
 

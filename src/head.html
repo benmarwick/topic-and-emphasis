@@ -679,7 +679,6 @@ details.rguide p{break-inside:avoid;margin:0 0 10px!important}
 .tour .btn{border-color:color-mix(in srgb,var(--sheet) 45%,transparent);background:transparent;color:var(--sheet)}
 .tour .btn.primary{background:var(--sheet);color:var(--ink);border-color:var(--sheet)}
 .tour-target{outline:2px solid var(--ink);outline-offset:3px;border-radius:3px}
-@media (prefers-reduced-motion:no-preference){.tour-target{animation:tourp 1.4s ease-in-out infinite}@keyframes tourp{50%{outline-offset:7px;outline-color:color-mix(in srgb,var(--ink) 35%,transparent)}}}
 .rg{margin-top:18px}
 .rgh{all:unset;cursor:pointer;display:block;width:100%}
 .rgh:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
@@ -992,12 +991,7 @@ details.panel.res{display:block}details.panel>summary{cursor:pointer;list-style-
 .panel.stagebar,.panel.stagenudge{padding-left:14px}
 .tools .tyflip{font-size:13px;padding:4px 2px;margin-left:6px}
 /* the tutorial: whatever is not in play for the step is faded. Nothing is switched off, so the reader can still leave the path. */
-body[data-tour="sent"] .top,body[data-tour="wb"] .top,body[data-tour="sent"] .rail,body[data-tour="wb"] .rail,body[data-tour="sent"] .notes,body[data-tour="wb"] .notes,body[data-tour="sent"] .lenscard,body[data-tour="wb"] .lenscard,body[data-tour="sent"] .stripwrap,body[data-tour="wb"] .stripwrap,body[data-tour="sent"] #extra,body[data-tour="wb"] #extra,body[data-tour="sent"] #startBox,body[data-tour="wb"] #startBox,body[data-tour="sent"] #tools,body[data-tour="wb"] #tools,body[data-tour="sent"] .foot,body[data-tour="wb"] .foot,body[data-tour="sent"] .sampletag,body[data-tour="wb"] .sampletag{opacity:.14}
-body[data-tour="sent"] #ms .para .sent:not(.tour-target),body[data-tour="wb"] #ms .para .sent:not(.sel),body[data-tour="sent"] #ms .ktag,body[data-tour="sent"] #wb{opacity:.22}
-body[data-tour="wb"] #wb>:not(:has(.tour-target)):not(.tour-target):not(.wbhead):not(.guide){opacity:.22}
-body[data-tour="wb"] #pNotes>li:not(:has(.tour-target)):not(.tour-target),body[data-tour="wb"] #pNotes .note:not(:has(.tour-target)):not(.tour-target){opacity:.22}
-body[data-tour] .top,body[data-tour] .rail,body[data-tour] .notes,body[data-tour] .lenscard,body[data-tour] .stripwrap,body[data-tour] #extra,body[data-tour] #startBox,body[data-tour] #tools,body[data-tour] .foot,body[data-tour] #ms .sent,body[data-tour] #wb>*,body[data-tour] #wb{transition:opacity .35s ease}
-body[data-tour="sent"] .top:hover,body[data-tour="wb"] .top:hover,body[data-tour="sent"] .rail:hover,body[data-tour="wb"] .rail:hover,body[data-tour="sent"] .notes:hover,body[data-tour="wb"] .notes:hover{opacity:.6}
+body[data-tour="sent"] #ms .para .sent:not(.tour-target){opacity:.35}body[data-tour] #ms .sent{transition:opacity .35s ease}
 
 .gshot-in{flex:1 1 auto;max-height:280px;overflow:hidden;background:#E8ECEB;-webkit-mask-image:linear-gradient(#000 calc(100% - 22px),transparent);mask-image:linear-gradient(#000 calc(100% - 22px),transparent)}.gviz.shot img{display:block;width:100%;height:auto}
 .gneed{display:inline-block;font:500 10.5px var(--f-mono);letter-spacing:.04em;color:var(--violet);border:1px solid currentColor;border-radius:3px;padding:0 5px;margin-left:4px;white-space:nowrap}
@@ -1068,8 +1062,23 @@ body[data-simpleview]:not([data-lens="rhythm"]) .stripwrap .strip{display:none}
 .mvleg{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font:400 12px/1.4 var(--f-ui);color:var(--ink2);margin:4px 0 6px}.mvleg span{display:inline-flex;align-items:center;gap:6px}.mvleg .lg{fill:var(--ink3);fill-opacity:.6}.mvleg .lv{fill:var(--violet)}.mvleg .mvsw{display:inline-block;margin:0 1px 0 0}
 body[data-simpleview] #wbLook,body[data-simpleview] #wbMeter,body[data-simpleview] #wbScrub,body[data-simpleview] #wbKeys,body[data-simpleview] #wbHint,body[data-simpleview] #wb .tabs{display:none!important}
 
-/* 0.39.0: tutorial bubble beside its subject; a slow halo on sentence numbers with a note, in simple view */
-.tour.near{position:absolute;right:auto;bottom:auto}.tour.near::before{content:"";position:absolute;left:22px;top:-7px;border:7px solid transparent;border-top:0;border-bottom-color:var(--ink)}
+/* 0.39.0: a slow halo on sentence numbers with a note, in simple view. 0.40.0: the tutorial lights one part of the page and places its bubble clear of it */
+/* the tutorial: one part of the page is lit and everything else is veiled; the bubble sits beside that part, under it, over it, or along the bottom of the screen */
+#tourSpot{position:absolute;z-index:84;pointer-events:none;border-radius:10px;box-shadow:0 0 0 200vmax color-mix(in srgb,var(--bg) 78%,transparent);outline:2px solid color-mix(in srgb,var(--ink) 75%,transparent);outline-offset:0}
+#tourSpot.fix{position:fixed}
+#tourSpot:not(.fix){transition:left .3s ease,top .3s ease,width .3s ease,height .3s ease}
+.tour.near{position:absolute;right:auto;bottom:auto}.tour.near.fix{position:fixed}
+.tour.near::before{content:"";position:absolute;border:7px solid transparent}
+.tour.p-below::before{left:var(--ax,22px);top:-7px;border-top:0;border-bottom-color:var(--ink)}
+.tour.p-above::before{left:var(--ax,22px);bottom:-7px;border-bottom:0;border-top-color:var(--ink)}
+.tour.p-right::before{left:-7px;top:var(--ay,16px);border-left:0;border-right-color:var(--ink)}
+.tour.p-left::before{right:-7px;top:var(--ay,16px);border-right:0;border-left-color:var(--ink)}
+.tour.sheet{position:fixed;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));width:auto;max-width:560px;margin:0 auto;padding:12px 14px;gap:8px;font-size:13.5px}
+body.touring #tip{z-index:90}
+.tour-target{outline-width:3px}.tour-target:focus{animation:none}
+@media (prefers-reduced-motion:no-preference){:root:not(.still) #tourSpot.pulse{animation:spotp 1.5s ease-in-out infinite}:root:not(.still) body.touring .tour-target{animation:tourp 1.3s ease-in-out infinite}}
+@keyframes spotp{50%{outline-offset:6px;outline-color:color-mix(in srgb,var(--ink) 22%,transparent)}}
+@keyframes tourp{50%{outline-offset:7px;outline-color:color-mix(in srgb,var(--ink) 30%,transparent);box-shadow:0 0 0 12px color-mix(in srgb,var(--ink) 10%,transparent)}}
 #tourNext:disabled{opacity:.45;cursor:default}
 @media (prefers-reduced-motion:no-preference){:root:not(.still) body[data-simpleview] #ms .sn.on{animation:snHalo 2.8s ease-in-out infinite}}
 @keyframes snHalo{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--hb) 0%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--hb) 30%,transparent)}}

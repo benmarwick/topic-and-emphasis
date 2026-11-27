@@ -50,4 +50,19 @@ for (const c of own) {
 }
 // the subtitle
 assert.deepStrictEqual(notes('A revision workbench for research writing, built on Gopen and Swan’s “The Science of Scientific Writing” (1990).'), []);
-console.log('tutorial: the example has its five notes, the tutorial clears them, ' + own.length + ' paraphrased cards raise no note and ' + quoted.length + ' quoted cards link to their sources');
+// 5 the tour that comes before the work: six stops on the page and five inside the box where a sentence is rewritten.
+//   Each stop names a part of the page, and every part named by its id must exist. Each stop has a text.
+const body = read('src/body.html');
+const stops = (a, b) => ui.slice(ui.indexOf(a), ui.indexOf(b));
+const pre = stops('const TPRE=[', 'const TWB=['), inbox = stops('const TWB=[', 'const tourEls=');
+const keys = s => [...s.matchAll(/\{k:'([a-z]+)'/g)].map(m => m[1]);
+assert.deepStrictEqual(keys(pre), ['entry', 'text', 'count', 'marks', 'rail', 'lens'], 'the stops before the work: ' + keys(pre));
+assert.deepStrictEqual(keys(inbox), ['box', 'bar', 'status', 'rewrite', 'note'], 'the stops in the rewrite box: ' + keys(inbox));
+assert.strictEqual((pre + inbox).split('txt:').length - 1, 11, 'a stop has no text');
+assert.strictEqual((pre + inbox).split('spot:[').length - 1, 11, 'a stop names no part of the page');
+const ids = new Set([...(pre + inbox).matchAll(/#([A-Za-z]\w*)/g)].map(m => m[1]));
+for (const id of [...ids, 'tour', 'tourSpot', 'tourText', 'tourNext', 'tourPrev', 'tourShow', 'tourSkip']) assert.ok(body.includes('id="' + id + '"'), 'the tour names a part the page does not have: #' + id);
+// the page leaves the scrolling to the tutorial while it runs, and the tutorial never fades the box it is teaching
+assert.ok(ui.includes("if((!same||o.scroll)&&!state.tour)"), 'opening a sentence scrolls the page during the tutorial');
+assert.ok(!/data-tour="wb"/.test(read('src/head.html')), 'the old fade of the rewrite box is back');
+console.log('tutorial: the example has its five notes, the tutorial clears them, ' + own.length + ' paraphrased cards raise no note and ' + quoted.length + ' quoted cards link to their sources, and the tour has ' + (keys(pre).length + keys(inbox).length) + ' stops before the work');
