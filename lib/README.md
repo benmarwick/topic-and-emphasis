@@ -6,6 +6,8 @@ Third-party code that the page fetches only when a view needs it.
 |---|---|---|---|
 | `compromise.min.js` | [compromise](https://github.com/spencermountain/compromise) by Spencer Kelly, a rule-based parser of English. The file `builds/compromise.js` from the repository, unchanged apart from the first comment line and two escape characters inside strings, which are written as `\x1b` so that the file is plain text. Fetched the first time the Subject → verb lens opens, for the "A second reading" panel. | 14.21.0 | MIT |
 
+`harper/` holds the [Harper](https://github.com/Automattic/harper) grammar checker (harper.js 3.2.0, Apache-2.0). Nothing in the page uses it yet.
+
 One more library is carried inside `index.html` itself, from `src/vendor/`:
 
 | File | What it is | Version | Licence |

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.37.0 (2026-11-26)
+
+- Entailment model, optional and labelled as AI: nli-deberta-v3-xsmall in its 8-bit conversion, about 90 MB, in `model/nli-deberta-v3-xsmall/`, loaded by a button. Clutter, with the meaning model on: each pair of sentences that are close in meaning is read both ways and labelled "they say the same thing", "they contradict each other", "one implies the other" or "related, and not the same". Toulmin layout: each sentence placed in the grounds, warrant or backing is read against the claim. No note is made.
+- Meaning views, Topics: "Topic shares, sentence by sentence", a stacked band along the draft. Each sentence is divided among the topics by its closeness to each topic's centre, through a softmax with a working setting of 0.15.
+- Meaning model: runs on Transformers.js 3.8.1 from `model/lib-next/`, falling back to `model/lib/`. Two fixed pairs score the same as on 3.0.0 (0.7191 and 0.1499). "Try the graphics processor" loads the half-precision file on WebGPU and keeps it only if those pairs score within 0.03 of their reference; otherwise the page says why and stays on the processor.
+- Ladders: joining lines are thinner and the lines they join thicker. The Paragraph ladder no longer clamps long paragraphs at 260 words, which had made several joining lines meet at one point.
+- Vocabulary level: the Academic Word List panel defines its ten sublists and a word family.
+
 ## 0.36.1 (2026-11-26)
 
 - Rewrite box: it now shows the marks of the lens you are in, whether or not the sentence has a note there. In Topic position that includes the words the sentence shares with what came before, and in Claim tracer the words of your claim. Before, only lenses with a note on the sentence were marked, plus the subject and verb.
