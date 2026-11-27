@@ -61,3 +61,8 @@ jobs:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+      # The deploy step sometimes fails for no reason of ours. Try once more before giving up.
+      - name: Deploy again if the first try failed
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4

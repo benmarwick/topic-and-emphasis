@@ -16,6 +16,11 @@ for (const t of [...Object.values(HQ), ...Object.values(HM)]) assert.ok(t.length
 assert.ok(ui.includes("const step=!state.hintAll&&!f.dis&&!f.ok;"), 'the note no longer holds its advice back');
 assert.ok(/const HINTWAIT=20000,HINTTRIES=2;/.test(ui), 'the working values for hints have changed: update the Guide and the changelog');
 
+// the last hint may draw on lists the writer has loaded, and on nothing else
+const hl = grab('function hintLists(f,st)', '\nfunction hintSteps');
+assert.ok(hl.includes("OPT.plain.st==='ready'") && hl.includes("OPT.shell.st==='ready'") && hl.includes('From the lists you have loaded'), 'the last hint uses a list that is not loaded');
+assert.ok(!/findings|dismissed|\.fix\b/.test(hl), 'the lists change a note');
+
 // 2 what a sentence does well is the reverse of a note: never claimed where that note is open
 const goodOf = new Function('return ' + grab('function goodOf(st,A)', '\nconst goodAll'))();
 const SAMPLE = ui.match(/const SAMPLE=`([^`]*)`/)[1], A = E.analyze(SAMPLE, {});

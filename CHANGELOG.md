@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.46.1 (2026-11-27)
+
+- Fixed: the four pictures of 0.46.0 were not on the public site. The tests passed but the step that publishes to GitHub Pages failed on that commit, so the site stayed at 0.45.0. The workflow now tries that step a second time.
+- The abstraction heatmap now sits second in the Load map, and “Hedges against boosters” first in Hedging. Both were under the folded panels, several screens down.
+- Hints: the last hint draws on lists the writer has loaded. With the plain-language pairs loaded it names the plainer word (Clutter, Vague & worn words, Vocabulary level, Length & rhythm) or the verb a phrase hides (Action in verbs, Dense phrases). With the shell nouns loaded, a “This what?” note lists the nouns the draft already uses to stand for an idea. Nothing is added when no list is loaded, and no note changes.
+
 ## 0.46.0 (2026-11-27)
 
 - Load map: “Abstraction heatmap · optional data”. With the word norms loaded, every sentence is a block, a row for each paragraph, as wide as the sentence is long and darker the more concrete its content words (Brysbaert et al. 2014). The mean rating is written in each block that has room. The shading runs from the most abstract sentence of the draft to the most concrete. Under it: the five most abstract and most concrete sentences, and the most abstract stretch of three.
