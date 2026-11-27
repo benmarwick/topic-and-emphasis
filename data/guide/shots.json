@@ -13,7 +13,7 @@
   "need": "a draft you have revised",
   "file": "data/guide/compare-open-notes-by-stage-start-to-now.webp",
   "w": 1044,
-  "h": 297
+  "h": 312
  },
  {
   "lens": "overview",
@@ -21,7 +21,7 @@
   "need": "a draft you have revised",
   "file": "data/guide/overview-four-portraits-the-start-and-now.webp",
   "w": 1044,
-  "h": 267
+  "h": 282
  },
  {
   "lens": "load",
@@ -29,7 +29,7 @@
   "need": "a draft you have revised",
   "file": "data/guide/load-structure-and-vocabulary-with-where-each-rewritten-sentence-.webp",
   "w": 1044,
-  "h": 677
+  "h": 692
  },
  {
   "lens": "rhythm",
@@ -45,23 +45,23 @@
   "need": "optional data, loaded from the lens",
   "file": "data/guide/load-sentence-length-against-the-age-at-which-words-are-learned.webp",
   "w": 1044,
-  "h": 677
+  "h": 742
  },
  {
   "lens": "load",
   "name": "Abstraction heatmap",
   "need": "optional data, loaded from the lens",
   "file": "data/guide/load-abstraction-heatmap.webp",
-  "w": 1044,
-  "h": 220
+  "w": 986,
+  "h": 209
  },
  {
   "lens": "load",
   "name": "Abstract or concrete, calm or charged",
   "need": "optional data, loaded from the lens",
   "file": "data/guide/load-abstract-or-concrete-calm-or-charged.webp",
-  "w": 1044,
-  "h": 618
+  "w": 986,
+  "h": 601
  },
  {
   "lens": "load",

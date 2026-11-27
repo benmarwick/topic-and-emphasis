@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.46.2 (2026-11-27)
+
+- Every card above the text now has one format: a tinted ground, a rule down the left edge and the same padding. An audit of all the lenses on the example draft found two formats before the change, with 34 cards as bare text and 75 as tinted cards; “Wording against evidence” was one of the bare ones. After it, all 109 share one. The stage notices keep their own smaller format, on purpose.
+- Load map: “Abstract or concrete, calm or charged” is now a view of “Structure and vocabulary”, chosen from the same row as lexical density, long words, the wait for the verb and word age. The heatmap card links to it. It appears once the word norms are loaded, and offers to load the ratings of arousal if they are missing.
+- Hedging: “Hedges against boosters” was not drawn for a draft with no headings and one paragraph, which includes the built-in example. Such a draft is now split into runs of sentences. If the draft has no hedge and no booster from the lists, the card says so. On a phone the two headings above the bars were cut off at the edges; they are shorter there now.
+- Wording: the row in “Plainer words” reads “Words per sentence”, not “Words a sentence”, and two strip labels in Load map follow.
+- Guide: the 21 pictures were taken again in the new card format.
+- None of this changes a note or the receipt.
+
 ## 0.46.1 (2026-11-27)
 
 - Fixed: the four pictures of 0.46.0 were not on the public site. The tests passed but the step that publishes to GitHub Pages failed on that commit, so the site stayed at 0.45.0. The workflow now tries that step a second time.

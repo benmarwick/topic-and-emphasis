@@ -20,7 +20,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.46.1) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.46.2) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -29,7 +29,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.46.1},
+  version = {0.46.2},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -159,6 +159,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **One card format, and two pictures easier to find** (0.46.2). Every card above the text in every lens now has the same look: a tinted ground and a rule down the left edge. Before, about a third were bare text. The plot *Abstract or concrete, calm or charged* is now one of the views of **Structure and vocabulary** in Load map, beside lexical density, long words, the wait for the verb and word age. *Hedges against boosters* is drawn for every draft of two sentences or more: by section, else by paragraph, else by runs of sentences. The row label in Plainer words reads “Words per sentence”.
 
 - **Four pictures from the word lists** (0.46.0). **Load map** has an *abstraction heatmap*: a block for every sentence, shaded by how concrete its words are, with expressions of several words rated whole once the ratings of [Muraki et al. (2022)](https://osf.io/ksypa/) are loaded. Beside it, a plot places each sentence by concreteness and by arousal. **Hedging** sets hedges against boosters for each section, as bars to either side of one line. **Clutter** shows the reading figures the draft would have with every plainer word put in, without changing it. Every mark has a tooltip and a written value.
 

@@ -5,8 +5,8 @@ type: software
 authors:
   - family-names: Marwick
     given-names: Ben
-version: 0.46.1
-date-released: 2026-11-26
+version: 0.46.2
+date-released: 2026-11-27
 license: MIT
 repository-code: "https://github.com/benmarwick/topic-and-emphasis"
 abstract: >-
