@@ -62,6 +62,10 @@ assert.strictEqual((pre + inbox).split('txt:').length - 1, 11, 'a stop has no te
 assert.strictEqual((pre + inbox).split('spot:[').length - 1, 11, 'a stop names no part of the page');
 const ids = new Set([...(pre + inbox).matchAll(/#([A-Za-z]\w*)/g)].map(m => m[1]));
 for (const id of [...ids, 'tour', 'tourSpot', 'tourText', 'tourNext', 'tourPrev', 'tourShow', 'tourSkip']) assert.ok(body.includes('id="' + id + '"'), 'the tour names a part the page does not have: #' + id);
+// the tutorial ends in the simple view: finishing keeps that view and saves it, and the first-visit tutorial keeps it when left early
+assert.ok(ui.includes("else if(S.kind==='fin')endTour(true);"), 'finishing the tutorial no longer keeps the simple view');
+assert.ok(ui.includes("if(stay&&state.simple)store.set('ts.simple','1')"), 'the simple view is not saved when the tutorial ends');
+assert.ok(ui.includes("endTour(!!(state.tour&&state.tour.auto))"), 'leaving the first-visit tutorial no longer keeps the simple view');
 // the page leaves the scrolling to the tutorial while it runs, and the tutorial never fades the box it is teaching
 assert.ok(ui.includes("if((!same||o.scroll)&&!state.tour)"), 'opening a sentence scrolls the page during the tutorial');
 assert.ok(!/data-tour="wb"/.test(read('src/head.html')), 'the old fade of the rewrite box is back');

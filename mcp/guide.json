@@ -434,7 +434,7 @@
     }
    ],
    "research_measure": null,
-   "with_meaning_model": "It names the sentence that states your claim most directly, in your words or in others, and shows how close each paragraph is to the claim.",
+   "with_meaning_model": "It names the sentence that states your claim most directly, in your words or in others, and shows how close each paragraph is to the claim. In the Toulmin layout it finds the sentence nearest to a warrant, backing or rebuttal you type. With the entailment model loaded as well, every sentence close to the claim is read against it and those that read as contradicting it are listed, and each rebuttal is read against the sentence you named as its answer.",
    "limits": "Claim words are matched by their stems, so a claim restated in other words is not seen unless the meaning model is on.",
    "sources": [
     {
@@ -603,7 +603,7 @@
     "what_the_research_found": "In 313 student essays, word overlap between neighbouring paragraphs went with higher ratings of coherence and of overall quality. Overlap between neighbouring sentences did not (Crossley, Kyle & McNamara 2016). In an earlier study of 120 essays, none of thirteen measures of overlap between sentences separated the higher-rated from the lower-rated (McNamara, Crossley & McCarthy 2010). So read the paragraph figure first. The line above each paragraph in the text names the words it carries over.",
     "how_this_count_differs": "Words are matched by their stems. There is no lemmatiser, no synonym list and no model of meaning. The published measures also use latent semantic analysis (Graesser et al. 2004) and word-vector similarity (Crossley, Kyle & Dascalu 2019)."
    },
-   "with_meaning_model": "Sentences the rules label “no link” are relabelled “meaning only” when they are close in meaning to the sentence before. The line above each paragraph adds how close it is to the paragraph before, and marks the weakest join in the draft.",
+   "with_meaning_model": "Sentences the rules label “no link” are relabelled “meaning only” when they are close in meaning to the sentence before. The line above each paragraph adds how close it is to the paragraph before, and marks the weakest join in the draft. A picture sets each sentence’s closeness to the one before against the level that three-quarters of all pairs in the draft fall below, so a sentence that steps away from its neighbour stands out.",
    "limits": "Links are judged by repeated words, matched by stem. Two sentences can be tightly connected and share no word.",
    "sources": [
     {
@@ -798,7 +798,7 @@
    "to_revise": "Each view is a way of seeing where the draft holds together and where it does not. Tap any dot, square or bar to open the sentence behind it.",
    "marks": [],
    "research_measure": null,
-   "with_meaning_model": "Eight views. Thread: closeness of each sentence to the one before, and to your claim. Quilt: every sentence against every other. Topics: the model’s grouping of sentences, as a band of colour. Map: sentences as dots on a flat map. Reorder: move paragraphs and watch the joins. Ask: find the sentences closest to a question. Abstract & ending: which opening sentences the last paragraph takes up and what is new at the end, whether the ending returns to the opening, and what the abstract covers. Drills: two exercises built from your draft.",
+   "with_meaning_model": "Eight views. Thread: closeness of each sentence to the one before, and to your claim. Quilt: every sentence against every other. Topics: the model’s grouping of sentences, drawn as the share of each topic in each sentence along the draft, since a sentence is seldom about one thing. Map: sentences as dots on a flat map made by principal component analysis, with dot size for length and colour for closeness to your claim. Reorder: move paragraphs and watch the joins. Ask: find the sentences closest to a question. Abstract & ending: which opening sentences the last paragraph takes up and what is new at the end, whether the ending returns to the opening, and what the abstract covers; the entailment model, when loaded, reads the ending against the opening sentences. Drills: two exercises built from your draft.",
    "limits": "Everything in this lens comes from the model, which does not see negation or logic, and whose scores only rank things inside one draft.",
    "sources": [
     {
@@ -966,7 +966,7 @@
     "how_this_count_differs": "Kyle and Crossley used a parser to measure every noun phrase. This page counts only the two patterns its rules can find: nouns stacked in a row before a head noun, and prepositional phrases in a row."
    },
    "with_meaning_model": null,
-   "limits": "Noun stacks and chains of prepositions are found by rules. A settled technical term can look like a stack.",
+   "limits": "Noun stacks and chains of prepositions are found by rules. A settled technical term can look like a stack, and so can a run of three nouns.",
    "sources": [
     {
      "citation": "Williams, J. M. (1990). Style: Toward clarity and grace. University of Chicago Press.",
@@ -1071,7 +1071,7 @@
     "what_the_research_found": "Coh-Metrix reports negation density among its measures of syntax (McNamara et al. 2014). One negative is plain enough. Two in a clause make the reader reverse the meaning twice, and those are the ones this lens puts a note on.",
     "how_this_count_differs": "It counts not, no, never, neither, none, nothing, without, cannot and contractions in n’t. Negative prefixes such as un- and in- are seen only in a fixed list of pairs like “not uncommon”."
    },
-   "with_meaning_model": "The pairs of sentences that are not neighbours and are closest in meaning, as candidates for a point made twice. The model scores a statement and its denial as close, so each pair needs reading.",
+   "with_meaning_model": "The pairs of sentences that are not neighbours and are closest in meaning, as candidates for a point made twice. The model scores a statement and its denial as close, so each pair needs reading. With the entailment model loaded as well, each pair is read both ways and labelled as saying the same, contradicting, or neither.",
    "limits": "Stock phrases come from a fixed list. A phrase on the list is sometimes the right one.",
    "sources": [
     {
@@ -1403,7 +1403,7 @@
    ],
    "research_measure": null,
    "with_meaning_model": null,
-   "limits": "Only results reported in the usual form, such as t(28) = 2.20, p = .036, are rechecked. A result written another way is not checked.",
+   "limits": "Only results reported in the usual form, such as t(28) = 2.20, p = .036, are rechecked. A result written another way is not checked. The check on means (GRIM) holds only for whole-number scores, such as counts or single rating items. Numbers are found by their form, so a year or a page number can be counted as a number.",
    "sources": [
     {
      "citation": "Nuijten, M. B., Hartgerink, C. H. J., van Assen, M. A. L. M., Epskamp, S., & Wicherts, J. M. (2016). The prevalence of statistical reporting errors in psychology (1985–2013). Behavior Research Methods, 48(4), 1205–1226.",
@@ -1509,7 +1509,7 @@
     "how_this_count_differs": "These are about two dozen fixed patterns, chosen so that a flag is nearly always right. There is no dictionary, so misspellings are not found, and no grammar is parsed."
    },
    "with_meaning_model": null,
-   "limits": "About two dozen patterns, chosen to be nearly always right. There is no dictionary, so misspellings are not found.",
+   "limits": "About two dozen patterns, chosen to be nearly always right. The rules have no dictionary, so they find no misspellings. Harper, a second checker that you can load in this lens, does check spelling and grammar. It lists places to look and makes no note, and it will query names and terms it does not know.",
    "sources": [
     {
      "citation": "Crossley, S. A., Bradfield, F., & Bustamante, A. (2019). Using human judgments to examine the validity of automated grammar, syntax, and mechanical errors in writing. Journal of Writing Research, 11(2), 251–270.",
@@ -1540,7 +1540,7 @@
     }
    ],
    "research_measure": null,
-   "with_meaning_model": "A table of your sentences closest in meaning to a source sentence, including restatements that share no run of words, and the parts of the source your draft says least about.",
+   "with_meaning_model": "A table of your sentences closest in meaning to a source sentence, including restatements that share no run of words, and the parts of the source your draft says least about. With the entailment model loaded as well, your closest sentences are read against the source sentences for contradiction.",
    "limits": "It compares exact words. A close paraphrase is not seen unless the meaning model is on, and this is not a plagiarism check.",
    "sources": [
     {
@@ -1558,7 +1558,7 @@
    "to_revise": null,
    "marks": [],
    "research_measure": null,
-   "with_meaning_model": "A table of rewritten sentences with how close each is to the one it replaced, lowest first. It can show drift. It cannot confirm that a meaning was kept.",
+   "with_meaning_model": "A table of rewritten sentences with how close each is to the one it replaced, lowest first. It can show drift. It cannot confirm that a meaning was kept. With the entailment model loaded as well, each rewrite is read against the sentence it replaced: does the new one still follow from the old, and the old from the new.",
    "limits": "The receipt counts notes by rule. A rewrite counts only when it keeps at least four in ten of the sentence’s content words.",
    "sources": [
     {

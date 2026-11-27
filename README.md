@@ -19,7 +19,7 @@ Every mark and note comes from a **fixed rule**. The same text always gets the s
 
 If you use Topic & Emphasis in teaching or research, please cite it:
 
-> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.40.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
+> Marwick, B. (2026). *Topic & Emphasis: A revision workbench for research writing* (Version 0.41.0) [Computer software]. https://github.com/benmarwick/topic-and-emphasis
 
 In text: (Marwick 2026).
 
@@ -28,7 +28,7 @@ In text: (Marwick 2026).
   author  = {Marwick, Ben},
   title   = {Topic \& Emphasis: A revision workbench for research writing},
   year    = {2026},
-  version = {0.40.0},
+  version = {0.41.0},
   url     = {https://github.com/benmarwick/topic-and-emphasis}
 }
 ```
@@ -157,6 +157,8 @@ None of these raises a note except GRIM, which asks a question. The word norms k
 ### Added in 0.10.0 to 0.19.0: files, stages, export, pictures, wording and moves
 
 Newest first.
+
+- **A Guide brought up to date, and a tutorial that ends in the simple view** (0.41.0). The **Guide** now describes the simple view, the tutorial, the focus timer, the entailment model and the two optional second opinions (a parser and Harper), and its screenshots were made again from the current page, with two added (19 in all). The **Tutorial** ends in the simple view and keeps it for the next visit.
 
 - **A tutorial that tours the page first and keeps out of the way** (0.40.0). The **Tutorial** now opens with eleven short stops before any work is asked for: where a draft goes in, the text, the count of open notes, what an underline means, the lens menu, one lens opened to show its bold and underlined marks, and then the parts of the box where a sentence is rewritten (the sentence bar, the status light, the rewrite box and the note). The part each step is about is lit and pulses, and the rest of the page is veiled. The bubble takes a place beside, under or over that part, or along the bottom of the screen, so that it does not cover it. The page moves once for each step, and the top of the rewrite box comes to the top of the screen.
 

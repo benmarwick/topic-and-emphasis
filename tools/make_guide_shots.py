@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Screenshots for the Guide of the pictures that the built-in example cannot draw by itself:
-those that need a revised draft, optional data, or the meaning model.
+those that need entries of the writer's own, a revised draft, optional data, or the meaning model.
 
 The Guide draws most pictures live from an example draft (guidePics in src/ui.js). These few
 depend on something the Guide does not have when it opens, so they are captured here from the
@@ -32,6 +32,7 @@ REV = """()=>{let t=GEX;[['Supporters argue that caps keep tenants in their home
 PANEL = "(cap)=>[...document.querySelectorAll('#extra > .panel')].find(e=>e.querySelector('.cap')&&e.querySelector('.cap').textContent.trim().startsWith(cap))"
 # [condition, lens, how to find the element, name in the Guide, what to do first]
 SHOTS = [
+ ['entries', 'tracer', 'sel:#extra svg.td', 'Toulmin layout, drawn from what you put in the boxes', "(()=>{const s=p=>state.A.sents.find(x=>x.text.trim().startsWith(p)).text.trim();state.toul={g:[s('We found that forced moves doubled'),s('Tenants in capped flats moved far less')],w:[],b:[],r:[s('Critics reply that caps shrink')],wt:'Fewer forced moves mean a more stable tenancy.',bt:'',rt:'',qt:'in the three cities studied'};renderDynamic();document.querySelectorAll('#extra details').forEach(d=>{d.open=true;});})()"],
  ['revised', 'compare', 'cap:Open notes by stage', 'Open notes by stage, start to now', ''],
  ['revised', 'overview', 'cap:Four portraits', 'Four portraits: the start and now', ''],
  ['revised', 'load', 'cap:Structure and vocabulary', 'Structure and vocabulary, with where each rewritten sentence started', ''],
@@ -41,6 +42,7 @@ SHOTS = [
  ['data', 'load', 'sel:#ms', 'Typographic view: abstract and concrete words', "document.querySelector('[data-typo=\"conc\"]').click()"],
  ['model', 'flow', 'mean', 'Old → new by meaning: the ribbon', ''],
  ['model', 'outline', 'mean', 'Sentences that sit far from their paragraph', ''],
+ ['model', 'grid', 'mean', 'Steps in meaning, sentence by sentence', ''],
  ['model', 'mviews', 'mean', 'Meaning views: Thread', "document.querySelector('[data-mvt=\"thread\"]').click()"],
  ['model', 'mviews', 'mean', 'Meaning views: Quilt', "document.querySelector('[data-mvt=\"quilt\"]').click()"],
  ['model', 'mviews', 'mean', 'Meaning views: Topics', "document.querySelector('[data-mvt=\"stripe\"]').click()"],
@@ -50,7 +52,7 @@ SHOTS = [
  ['model', 'load', 'sel:#ms', 'Typographic view: closeness to your claim', "document.querySelector('[data-typo=\"mclaim\"]').click()"],
  ['model', 'sv', 'sel:#ms', 'Trunk view: what the sentence can lose', "document.querySelector('[data-trunk]').click()"],
 ]
-NEED = {'revised': 'a draft you have revised', 'data': 'optional data, loaded from the lens', 'model': 'the meaning model'}
+NEED = {'entries': 'what you put in the boxes', 'revised': 'a draft you have revised', 'data': 'optional data, loaded from the lens', 'model': 'the meaning model'}
 # a box that starts folded is opened first; its text is hidden so that the picture fills the shot
 HIDE = """(el)=>{if(el.tagName==='DETAILS')el.open=true;const s=el.querySelector(':scope > summary');if(s)s.style.display='none';const b=el.querySelector(':scope > .rp-in')||el;
  b.querySelectorAll(':scope > p:not([class]), :scope > .lm-key, :scope > .hint, :scope > .tilebar, :scope > details, :scope > .cap, :scope > ul.obs, .mvask').forEach(e=>{if(!e.querySelector('svg,canvas'))e.style.display='none';});}"""
@@ -76,7 +78,7 @@ with sync_playwright() as p:
     for c, lens, how, name, pre in SHOTS:
         if c != cond:
             cond = c
-            pg.evaluate("()=>{state.typo='';state.trunk=false;state.raw=GEX;run();}")
+            pg.evaluate("()=>{state.typo='';state.trunk=false;state.toul=null;state.raw=GEX;run();}")
             if c == 'revised':
                 pg.evaluate(REV)
             elif c == 'data':

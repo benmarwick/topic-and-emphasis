@@ -1,5 +1,13 @@
 [
  {
+  "lens": "tracer",
+  "name": "Toulmin layout, drawn from what you put in the boxes",
+  "need": "what you put in the boxes",
+  "file": "data/guide/tracer-toulmin-layout-drawn-from-what-you-put-in-the-boxes.webp",
+  "w": 986,
+  "h": 452
+ },
+ {
   "lens": "compare",
   "name": "Open notes by stage, start to now",
   "need": "a draft you have revised",
@@ -70,6 +78,14 @@
   "file": "data/guide/outline-sentences-that-sit-far-from-their-paragraph.webp",
   "w": 1044,
   "h": 791
+ },
+ {
+  "lens": "grid",
+  "name": "Steps in meaning, sentence by sentence",
+  "need": "the meaning model",
+  "file": "data/guide/grid-steps-in-meaning-sentence-by-sentence.webp",
+  "w": 1044,
+  "h": 339
  },
  {
   "lens": "mviews",

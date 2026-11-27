@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.41.0 (2026-11-26)
+
+- The tutorial ends in the simple view, and that view is kept for the next visit. Its last step says so and names “Show all lenses”. Leaving the first-visit tutorial early also stays in the simple view. Only a tutorial started by hand from the full view and left part-way goes back to the full view.
+- Guide, brought up to date with 0.33 to 0.40. “How the page works” has new entries for the simple view, the tutorial, the focus timer and the entailment model. It no longer says the meaning model is the only AI on the page, or that the page has no spelling check: the two optional second opinions (a parser in Subject → verb, Harper in Typing slips) are named. Citations in brackets are listed among the things not counted as words. The list of pictures names the paragraph ladder, “Where the numbers are” and the meaning-model pictures.
+- Guide, “With the meaning model on”: Clutter, Claim tracer, Source overlap, Before & after and Meaning views now describe what the entailment model adds; Topic grid describes the steps-in-meaning picture; Meaning views describes Topics as shares along the draft and the Map as made by principal component analysis.
+- Guide, limits: Typing slips (Harper), Statistics reporting (GRIM, numbers found by form) and Dense phrases (three-noun runs).
+- Guide pictures: all 17 screenshots were made again from the current page, and two were added: the Toulmin layout drawn from filled-in boxes, and the steps in meaning from sentence to sentence. There are now 19.
+
 ## 0.40.0 (2026-11-26)
 
 - Tutorial, a tour before the work. Eleven short stops come before the first note is tackled, each with Next and Back and a count ("Tour 3 of 11"). Six are on the page: where a draft goes in, the text, the count of open notes and the dark sentence numbers, what an underline means, the lens menu, and one lens opened to show what its bold and underlined marks mean (Subject → verb). Five are inside the box where a sentence is rewritten: the box, the sentence bar and its key line, the status light, the rewrite box and its marks, and the parts of a note.
