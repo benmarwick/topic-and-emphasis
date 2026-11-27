@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.36.1 (2026-11-26)
+
+- Rewrite box: it now shows the marks of the lens you are in, whether or not the sentence has a note there. In Topic position that includes the words the sentence shares with what came before, and in Claim tracer the words of your claim. Before, only lenses with a note on the sentence were marked, plus the subject and verb.
+- Rewrite box: it stays where it is on the screen while you type. Before, it moved when the sentence above it wrapped onto another line or the status line grew.
+- A sentence coloured only because a note about its whole paragraph is attached to it now says so in its tooltip, and the status line in the rewrite box points to that note under Notes.
+
 ## 0.36.0 (2026-11-26)
 
 - Topic grid, meaning model: "meaning steps". One dot for each sentence at its closeness in meaning to the sentence before, on a stem from the 75th-percentile level of all sentence pairs in the draft, with a band down to the median pair. Dots above the line are the sentences the count calls closer than most pairs; a ring is one of those that repeats no word. Gaps are paragraph breaks.
